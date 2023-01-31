@@ -29,8 +29,13 @@ jobs:
 
     - name: Install dependencies
       run: |
+        # update ubuntu
         sudo apt-get update
+        # install python3 and pip3
         sudo apt-get install -y python3 python3-pip
+        # install tesseract
+        sudo apt install tesseract-ocr
+        # install python dependencies
         pip3 install -r requirements.txt
 
     - name: Run tests
