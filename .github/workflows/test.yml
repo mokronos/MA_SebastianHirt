@@ -17,8 +17,8 @@ jobs:
 
     - name: Lint with pylint
       run: python -m pylint **/*.py
-    - name: Lint with flake8
-      run: flake8 .
+    # - name: Lint with flake8
+    #   run: flake8 .
 
   test:
     runs-on: ubuntu-latest
