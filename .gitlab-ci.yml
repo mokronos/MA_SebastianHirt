@@ -8,7 +8,7 @@ lint:
   stage: lint
   script:
     - pip install pylint
-    - pylint src/*.py 
+    - pylint **/*.py
 
 test:
   stage: test
