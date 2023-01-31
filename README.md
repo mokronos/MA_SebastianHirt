@@ -1,4 +1,5 @@
 # Master Thesis (Sebastian Hirt)
+![Unit Tests](https://github.com/Mokronos/MA_SebastianHirt/workflows/Unit%20Tests/badge.svg)
 
 # Setup
 
