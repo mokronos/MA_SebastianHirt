@@ -1,0 +1,17 @@
+# image: python: 3.8
+
+stages:
+  - lint
+  - test
+
+lint:
+  stage: lint
+  script:
+    - pip install pylint
+    - pylint src/*.py 
+
+test:
+  stage: test
+  script:
+    - pip install -r requirements.txt
+    - python -m unittest
