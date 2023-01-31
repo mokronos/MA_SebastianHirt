@@ -1,4 +1,5 @@
-import unittest  # import unittest module
+"""Module providing testing"""
+import unittest
 
 
 class TestMetric(unittest.TestCase):
