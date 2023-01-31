@@ -1,11 +1,11 @@
 image: python:3.8
 
 stages:
-  - lint
+  - check
   - test
 
-lint:
-  stage: lint
+check:
+  stage: check
   script:
     - pip install pylint
     - pylint **/*.py
