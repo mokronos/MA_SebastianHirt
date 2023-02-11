@@ -23,3 +23,8 @@ An algorithm that recognizes text even if the human can't would be useless.
 If we would use that as a metric for compression algorithms, the results might be images that humans can't read but computers can.
 So the objective metric should be as close as possible to the MOS.
 If we plot MOS vs. Metric we want to have a straight line.
+
+## random ideas
+- check how the datasets are actually annotated and what annotations the algorithms produce
+- subjective metric should be comparison with original image, not absolute. Full reference, not no reference.
+- why not train a model to predict human score?
