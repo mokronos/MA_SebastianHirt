@@ -12,4 +12,4 @@ all :
 
 
 clean :
-	rm -f *.bbl *.aux *.blg *.log *.lof *.lot *.toc
+	rm -f *.acn *.aux *.bbl *.blg *.brf *.glo *.glsdefs *.ist *.lof *.log *.lot *.out *.toc
