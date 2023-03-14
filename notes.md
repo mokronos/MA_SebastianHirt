@@ -93,6 +93,14 @@ https://paperswithcode.com/paper/maskocr-text-recognition-with-masked-encoder
 
 ## Datasets
 
+### Applicable
+
+- Paper http://smartviplab.org/pubilcations/SCID/zkni_TIP_ESIM_2017.pdf
+    - Alternative Paper: https://ieeexplore.ieee.org/document/8266580
+    - Dataset Download/Website http://smartviplab.org/pubilcations/SCID.html
+
+- Paper https://arxiv.org/pdf/2008.08561.pdf
+    - link is dead, contacted all 3 authors, no response
 ### Not applicable
 
 - https://sites.google.com/site/zhangxinf07/fg-iqa (FG-IQA)
