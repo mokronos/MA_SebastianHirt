@@ -1,6 +1,10 @@
 # file for helper functions
 import editdistance
 import os
+import pytesseract
+import re
+import pandas as pd
+from PIL import Image
 
 # i/o functions
 
@@ -49,6 +53,45 @@ def get_filenames(directory):
 
     # Return the filenames.
     return filenames
+
+
+def read_mos(path):
+
+    print(f'Reading MOS from {path}')
+    with open(path, encoding='utf-16') as f:
+        text = f.read()
+
+    match = r'(SCI(\d\d))\s+(SCI(\d\d)_(\d)_(\d))\s+([\d\.]+)'
+    result = re.findall(match, text)
+
+    cols = ['ref', 'ref_num', 'img', 'img_num', 'comp', 'qual', 'mos']
+    types = ['str', 'int', 'str', 'int', 'int', 'int', 'float']
+    types = dict(zip(cols, types))
+
+    df = pd.DataFrame(result, columns=cols)
+    df = df.astype(types)
+
+    return df
+
+
+def pred_img(img_path, label_path):
+
+    # load image
+    with Image.open(img_path) as img:
+        # run tesseract and save prediction
+        pred = pytesseract.image_to_string(img)
+
+    # img_name = img_path.split('/')[-1]
+    # print(f'Ran tesseract on {img_name}')
+
+    # load label, compare and save text-error-rate
+    with open(label_path) as f:
+        label = f.read()
+    ter = text_error_rate(pred, label)
+
+    # print(f'Calculated text error rate for {img_name}, TER: {ter}')
+
+    return ter
 
 
 if __name__ == '__main__':
