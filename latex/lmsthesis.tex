@@ -46,17 +46,22 @@ numbers=noenddot        % no dot after chapter heading prefixes
 \renewcommand\backrefxxx[3]{%
   \hyperlink{page.#1}{$\uparrow$#1}%
 }
+% better than actronym package, makes them auto alphabetically sorted
+\usepackage[toc]{glossaries}
 
-\graphicspath{{figures/}}
+\graphicspath{{../images/}}
 
 \recalctypearea
+
+% define acronyms, need to be in preamble
+\input{texfiles/acronyms}
 
 \begin{document}
 
     \pagenumbering{Alph} % will not be displayed
     \input{texfiles/titlepage}
     \cleardoublepage
-    \includepdf[pages={1},scale={0.95}]{topic/topic}
+    \includepdf[pages={1},scale={0.95}]{../organizing/MA_AufgabenstellungUnterzeichnet_searchable.pdf}
     \cleardoublepage
     
     %\input{texfiles/erklaerung}
@@ -69,12 +74,17 @@ numbers=noenddot        % no dot after chapter heading prefixes
     \input{texfiles/kurzfassung}
     \input{texfiles/abstract}
     \input{texfiles/symbols}
-    \input{texfiles/acronyms}
+
+    % glossary, makes them auto alphabetically sorted
+    \printnoidxglossary[title=Abbreviations and Acronyms]
 
     \mainmatter
     \input{texfiles/introduction}
+    \input{texfiles/methods}
+    \input{texfiles/dataset}
+    \input{texfiles/evaluation}
 
-    \input{texfiles/examples} % delete in final version!
+    % \input{texfiles/examples} % delete in final version!
     %%%% insert your chapters here %%%%
     %%%% make sure that included files are encoded in UTF-8 %%%%
 
