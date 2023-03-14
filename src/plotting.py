@@ -40,7 +40,9 @@ for g in gs:
     ax.imshow(reference_images.pop(0))
     ax.set_xticks([])
     ax.set_yticks([])
-    ax.set_title(f'{reference_filenames.pop(0)}')
+    ax.set_title(f'{reference_filenames.pop(0)}', fontsize=6)
 #    ax.set_aspect('auto')
 
-plt.savefig(os.path.join(image_dir, 'reference_images.pdf'), dpi=2000)
+plt.savefig(os.path.join(image_dir, 'reference_images.pdf'), dpi=300)
+# 35MB laggy
+# plt.savefig(os.path.join(image_dir, 'reference_images_HD.pdf'), dpi=3000)
