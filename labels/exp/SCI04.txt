@@ -1,0 +1,42 @@
+Histogram based Enhancement
+
+We have discussed various forms of mapping
+
+function f(x) that leads to different
+
+enhancement results
+
+ee
+
+The natural question is: How to select an
+
+or rnssott
+
+tS;
+
+hy
+
+£
+
+appropriate f(x) for an arbitrary image?
+
+Rv
+
+ta
+
+‘0a mr
+
+One systematic solution is based on the
+
+are Ser
+
+histogram information of an image
+
+Histogram of an image represents the relative
+
+frequency of occurrence of various gray levels
+
+in the image
+
+: JT
+

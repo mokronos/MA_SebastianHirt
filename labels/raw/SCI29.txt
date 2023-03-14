@@ -1,0 +1,61 @@
+Abstract
+
+In this paper, we propose multimodal convolutional neu-
+ral networks (m-CNNs) for matching image and sentence.
+Our m-CNN provides an end-to-end framework with convo-
+lutional architectures to exploit image representation, word
+composition, and the matching relations between the two
+modalities. More specifically, it consists of one image CNN
+encoding the image content and one matching CNN mod-
+eling the joint representation of image and sentence. The
+matching CNN composes different semantic fragments from
+words and learns the inter-modal relations between image
+and the composed fragments at different levels, thus ful-
+ly exploit the matching relations between image and sen-
+tence. Experimental results demonstrate that the proposed
+m-CNNs can effectively capture the information necessary
+for image and sentence matching. More specifically, our
+proposed m-CNN%s significantly outperform the state-of-
+the-art approaches for bidirectional image and sentence re-
+trieval on the Flickr8K and Flickr30K datasets.
+
+1. Introduction
+
+Associating image with natural language sentence plays
+
+small black and brown dog play with a red ball in the grass
+
+u
+
+dog play witha red ballin
+the grass
+
+     
+     
+
+  
+ 
+ 
+ 
+  
+
+(mall black and brown do]
+play with a red ball
+
+Figure 1. Multimodal matching relations between image and
+sentence. The words and phrases, such as “grass”, “a red
+ball”, and “small black and brown dog play
+with a red ball”, correspond to the image areas of their
+grounding meanings. The sentence “small black and
+brown dog play with a red ball in the grass”
+expresses the meaning of the whole image.
+
+whole sentence “small black and brown dog play
+with a red ball in the grass”, expressing a com-
+plete meaning, associates with the whole image. These
+matching relations should be all taken into consideration for
+an accurate multimodal matching between image and sen-
+tence. Recently, much research work focuses on modeling
+
+the image and sentence matching relation at the specific lev-
+
