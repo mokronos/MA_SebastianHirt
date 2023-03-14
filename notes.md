@@ -91,6 +91,26 @@ Maybe look for stuff here: https://huggingface.co/models?sort=downloads&search=o
 https://paperswithcode.com/paper/maskocr-text-recognition-with-masked-encoder
 
 
+## Datasets
+
+### Not applicable
+
+- https://sites.google.com/site/zhangxinf07/fg-iqa (FG-IQA)
+    - not applicable, not screen content, nor text of any kind
+
+- https://live.ece.utexas.edu/research/Quality/live_multidistortedimage.html
+    - no text
+
+### Not sure
+- https://iopscience.iop.org/article/10.1088/1742-6596/1828/1/012033
+    - http://cvbrain.cn/download/#
+    - document image quality assessment
+    - no reference images, that's fine
+    - just document images, not screen content with MOS scores
+- https://www.sciencedirect.com/science/article/abs/pii/S1296207417303382
+    - no link to dataset found
+    - might be applicable
+
 ## Annotations
 
 Image annotation formats: [link](https://www.edge-ai-vision.com/2022/04/exploring-data-labeling-and-the-6-different-types-of-image-annotation/)
@@ -142,22 +162,36 @@ Annotations from algorithms are similar, bbox + text. So it would be reasonable 
 | 5 | Revise and refine your thesis chapters, including the discussion and conclusion. Write your abstract, acknowledgements, and list of references. |
 | 6 | Finalize your thesis and prepare for submission. Review and proofread your thesis. |
 
-## random ideas
-- subjective metric should be comparison with original image, not absolute. Full reference, not no reference.
-- why not train a model to predict human score?
-- separate position and text recognition in metric?
+## Random ideas
+- Subjective metric should be comparison with original image, not absolute. Double stimulus.
+- Why not train a model to predict human score?
+- Separate position and text recognition in metric?
 
 
-## questions
+## Questions
 - minimal setup
     - just text, ignore bounding box/position
     - run on different compression levels (SCID dataset)
-    - calculate character error rate, or similar
+    - calculate text error rate, or similar
     - compare to MOS of dataset, somehow
 
-## notes
+## Notes
 
 - one deep learning method, check annotation 
+    - annotations are sorted by height --> width (like reading)
+    - might be useful to use a mixed metric of bounding box error IoU and text error rate
+    --> using prediction of method on reference image as ground truth, as humans would compare against that too.
+    --> pick "easy" images with well structured text from dataset; look for document dataset with MOS
+    --> other two datasets, no response from either of the three authors
+
 - citation manager, check for consistency
+    - done
+
 - scatter or correlation plots
+    - scatter done
 - document quality assessment, maybe dataset
+    - not much found, need very specific data:
+        - text, ideally screenshots/documents
+        - different compression types or levels
+        - MOS for each of them
+        - annotations are not necessary
