@@ -163,43 +163,30 @@ Annotations from algorithms are similar, bbox + text. So it would be reasonable 
 
 | Month | Tasks |
 | --- | --- |
-| 1 | Choose a specific research question and finalize your thesis proposal. Conduct a thorough literature review to understand the state-of-the-art in text recognition algorithms and human judgement on compressed screen content data. Draft your introduction and methodology chapters. |
-| 2 | Collect and preprocess your dataset. Implement and compare different text recognition algorithms on your dataset. |
-| 3 | Analyze the collected data and compare the performance of the text recognition algorithms against human judgement. |
-| 4 | Evaluate the robustness and limitations of the text recognition algorithms and human judgement data. Discuss the results and draw conclusions on the research question. |
-| 5 | Revise and refine your thesis chapters, including the discussion and conclusion. Write your abstract, acknowledgements, and list of references. |
+| 1 | Choose a specific research question. Conduct a thorough literature review to understand the state-of-the-art in text recognition algorithms and MOS on compressed screen content data. |
+| 2 | Collect and preprocess your dataset. Implement and compare different text recognition algorithms on the dataset. Draft the introduction and methodology chapters. |
+| 3 | Analyze the collected data and compare the performance of the text recognition algorithms against MOS. |
+| 4 | Evaluate the robustness and limitations of the text recognition algorithms and MOS data. Discuss the results and draw conclusions on the research question. Write Evaluation, identify what else is needed to explain results. |
+| 5 | Refine the thesis chapters, including the discussion and conclusion. Draft the abstract and connect chapters. |
 | 6 | Finalize your thesis and prepare for submission. Review and proofread your thesis. |
 
 ## Random ideas
-- Subjective metric should be comparison with original image, not absolute. Double stimulus.
+- Subjective metric should be comparison with original image, not absolute. Double stimulus.(for SCID dataset)
 - Why not train a model to predict human score?
-- Separate position and text recognition in metric?
-
-
-## Questions
-- minimal setup
-    - just text, ignore bounding box/position
-    - run on different compression levels (SCID dataset)
-    - calculate text error rate, or similar
-    - compare to MOS of dataset, somehow
 
 ## Notes
+- check which for what images/compressions the correlation is high
+- pick "easy" images with mostly text from dataset
+- nonlinear transformation of TER/CER
+- test different ocr settings, different algorithms besides tesseract
+- ground truth label would still be nice, as it's in the instructions
+- write section for TER/CER and MOS
+- try labeling bounding boxes
+    - use bounding boxes to run OCR on each box
+- might be useful to use a mixed metric of bounding box error IoU and text error rate
+- document quality assessment dataset; missing MOS? Check if in last package
 
-- one deep learning method, check annotation 
-    - annotations are sorted by height --> width (like reading)
-    - might be useful to use a mixed metric of bounding box error IoU and text error rate
-    --> using prediction of method on reference image as ground truth, as humans would compare against that too.
-    --> pick "easy" images with well structured text from dataset; look for document dataset with MOS
-    --> other two datasets, no response from either of the three authors
+## Questions
+- active "we" or passive "the authors" style?
 
-- citation manager, check for consistency
-    - done
 
-- scatter or correlation plots
-    - scatter done
-- document quality assessment, maybe dataset
-    - not much found, need very specific data:
-        - text, ideally screenshots/documents
-        - different compression types or levels
-        - MOS for each of them
-        - annotations are not necessary
