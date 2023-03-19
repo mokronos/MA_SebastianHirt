@@ -1,0 +1,103 @@
+%%%% File:           lmsthesis.tex
+%%%% Created:        2015-08-20
+%%%% Modified:       2015-10-05
+%%%% Author:         Dipl.-Ing. Marcus Laumer
+%%%% Description:    This LaTeX template is supposed to be used for writing a thesis at the chair of
+%%%%                 Multimedia Communications and Signal Processing (LMS) at the Friedrich-Alexander-Universität Erlangen-Nürnberg (FAU)
+
+\documentclass[
+paper=A4,               % paper format
+pagesize=auto,          % provide page size for compiler
+fontsize=12pt,          % font size
+DIV=16,                 % type area calculation
+twoside=true,           % two-sided layout for printing
+BCOR=20mm,              % binding correction for printing (ask at copy shop!)
+parskip=false,          % space between paragraphs
+chapterprefix=true,     % prefix before chapter names: Chapter #
+appendixprefix=true,    % prefix before appendix names: Appendix #
+listof=totoc,           % include lists of figures and tables in TOC
+bibliography=totoc,     % include bibliography in TOC
+headinclude=true,       % header included in type area
+footinclude=false,      % footer included in type area
+headsepline=true,       % separation line between header and text
+footsepline=false,      % separation line between footer and text
+headings=small,         % size of headings
+numbers=noenddot        % no dot after chapter heading prefixes
+] {scrbook}
+
+\usepackage{lmodern}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+%\usepackage[ngerman]{babel} % can be used for writing the thesis in German
+\usepackage[onehalfspacing]{setspace}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\usepackage[caption=false]{subfig}
+\usepackage{booktabs}
+\usepackage[printonlyused]{acronym}
+\usepackage{pdfpages}
+
+\usepackage{blindtext} % delete in final version!
+
+% custom packages
+\usepackage[backref=page]{hyperref}
+% for backreference with arrow
+\renewcommand\backrefxxx[3]{%
+  \hyperlink{page.#1}{$\uparrow$#1}%
+}
+% better than actronym package, makes them auto alphabetically sorted
+\usepackage[toc]{glossaries}
+
+\graphicspath{{../images/}}
+
+\recalctypearea
+
+% define acronyms, need to be in preamble
+\input{texfiles/acronyms}
+
+\begin{document}
+
+    \pagenumbering{Alph} % will not be displayed
+    \input{texfiles/titlepage}
+    \cleardoublepage
+    \includepdf[pages={1},scale={0.95}]{../organizing/MA_AufgabenstellungUnterzeichnet_searchable.pdf}
+    \cleardoublepage
+    
+    %\input{texfiles/erklaerung}
+    % or
+    \input{texfiles/declaration}
+
+    \frontmatter
+    \pagenumbering{Roman}
+    \tableofcontents
+    \input{texfiles/kurzfassung}
+    \input{texfiles/abstract}
+    \input{texfiles/symbols}
+
+    % glossary, makes them auto alphabetically sorted
+    \printnoidxglossary[title=Abbreviations and Acronyms]
+
+    \mainmatter
+    \input{texfiles/introduction}
+    \input{texfiles/methods}
+    \input{texfiles/dataset}
+    \input{texfiles/evaluation}
+
+    % \input{texfiles/examples} % delete in final version!
+    %%%% insert your chapters here %%%%
+    %%%% make sure that included files are encoded in UTF-8 %%%%
+
+    \input{texfiles/conclusion}
+
+
+    \appendix
+    \input{texfiles/appendix}
+
+    \backmatter
+    \listoffigures
+    \listoftables
+    \bibliographystyle{IEEEtran}
+    \bibliography{bibfiles/references}
+    \input{texfiles/cv}
+\end{document}

@@ -7,7 +7,7 @@ Just run
 ```bash
 $ pip install -r requirements.txt
 ```
-to install all the dependencies. Best in a virtual environment with Python 3.8.2.
+to install all the dependencies. Best in a virtual environment with Python 3.11.2.
 
 # Project Structure
 
@@ -30,7 +30,7 @@ Run
 ```bash  
 $ python -m unittest
 ```
-to run all tests.
+in project root, to run all tests.
 
 # Timeline
 

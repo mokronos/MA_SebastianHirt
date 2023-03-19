@@ -1,0 +1,78 @@
+\chapter{Examples}
+\label{chap:Examples}
+
+\section{Figures}
+\label{sec:Figures}
+
+\blindtext
+This is illustrated in Figure~\ref{fig:samplefigure}.
+
+\begin{figure}[t]
+    \centering
+    %\includegraphics[width=0.99\textwidth]{figure}
+    \rule{0.99\textwidth}{5cm}
+    \caption{Sample figure with caption below.}
+    \label{fig:samplefigure}
+\end{figure}
+
+\Blindtext
+\blindtext
+Please refer to Figures~\ref{subfig:samplesubfigure1}, \ref{subfig:samplesubfigure2}, \ref{subfig:samplesubfigure3}, and \ref{subfig:samplesubfigure4}.
+
+\begin{figure}[t]
+  \centering
+  \subfloat[Caption a]{\rule{0.22\textwidth}{2cm}\label{subfig:samplesubfigure1}}\quad
+  \subfloat[Caption b]{\rule{0.22\textwidth}{2cm}\label{subfig:samplesubfigure2}}\quad
+  \subfloat[Caption c]{\rule{0.22\textwidth}{2cm}\label{subfig:samplesubfigure3}}\quad
+  \subfloat[Caption d]{\rule{0.22\textwidth}{2cm}\label{subfig:samplesubfigure4}}
+  \caption{Caption for all subfigures.}
+  \label{fig:samplesubfigures}
+\end{figure}
+
+
+\section{Tables}
+\label{sec:Tables}
+
+\blindtext
+Results can be found in Table~\ref{tab:sampletable}.
+
+\begin{table}[t]
+    \caption{Sample table with caption above.}
+    \centering
+    \begin{tabular}{ccc}
+        \toprule
+        Column 1    &   Column 2    &   Column 3\\
+        \midrule
+        One         &   Two         &   Three\\
+        Un          &   Deux        &   Trois\\
+        Eins        &   Zwei        &   Drei\\
+        \bottomrule
+    \end{tabular}
+    \label{tab:sampletable}
+\end{table}
+
+\Blindtext
+
+\section{Equations}
+\label{sec:Equations}
+
+\blindtext
+Hence, the energy \(E\) is defined as
+\begin{equation}
+    E = mc^2 \text{ .}
+    \label{eq:sampleequation}
+\end{equation}
+Thereby, the kinetic energy \(E_k\) of a moving object is defined as follows.
+\begin{equation}
+    \begin{aligned}
+        E_k &= m_0\left(\gamma - 1\right) c^2 =\\
+        &= \frac{m_0 c^2}{\sqrt{1 - \frac{v^2}{c^2}}} - m_0 c^2
+    \end{aligned}
+\end{equation}
+Furthermore, the total momentum \(P\) of a particle and the relativistic mass \(m\) are:
+\begin{align}
+    P &= \frac{m_0 v}{\sqrt{1 - \frac{v^2}{c^2}}}\\
+    m &= \frac{m_0}{\sqrt{1 - \frac{v^2}{c^2}}}
+\end{align}
+
+\Blindtext

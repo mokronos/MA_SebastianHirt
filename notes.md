@@ -91,6 +91,37 @@ Maybe look for stuff here: https://huggingface.co/models?sort=downloads&search=o
 https://paperswithcode.com/paper/maskocr-text-recognition-with-masked-encoder
 
 
+<<<<<<< HEAD
+=======
+## Datasets
+
+### Applicable
+
+- Paper http://smartviplab.org/pubilcations/SCID/zkni_TIP_ESIM_2017.pdf
+    - Alternative Paper: https://ieeexplore.ieee.org/document/8266580
+    - Dataset Download/Website http://smartviplab.org/pubilcations/SCID.html
+
+- Paper https://arxiv.org/pdf/2008.08561.pdf
+    - link is dead, contacted all 3 authors, no response
+### Not applicable
+
+- https://sites.google.com/site/zhangxinf07/fg-iqa (FG-IQA)
+    - not applicable, not screen content, nor text of any kind
+
+- https://live.ece.utexas.edu/research/Quality/live_multidistortedimage.html
+    - no text
+
+### Not sure
+- https://iopscience.iop.org/article/10.1088/1742-6596/1828/1/012033
+    - http://cvbrain.cn/download/#
+    - document image quality assessment
+    - no reference images, that's fine
+    - just document images, not screen content with MOS scores
+- https://www.sciencedirect.com/science/article/abs/pii/S1296207417303382
+    - no link to dataset found
+    - might be applicable
+
+>>>>>>> a72cbc8b8960fad6f9c7c5dd620a7a8ae827f018
 ## Annotations
 
 Image annotation formats: [link](https://www.edge-ai-vision.com/2022/04/exploring-data-labeling-and-the-6-different-types-of-image-annotation/)
@@ -135,29 +166,28 @@ Annotations from algorithms are similar, bbox + text. So it would be reasonable 
 
 | Month | Tasks |
 | --- | --- |
-| 1 | Choose a specific research question and finalize your thesis proposal. Conduct a thorough literature review to understand the state-of-the-art in text recognition algorithms and human judgement on compressed screen content data. Draft your introduction and methodology chapters. |
-| 2 | Collect and preprocess your dataset. Implement and compare different text recognition algorithms on your dataset. |
-| 3 | Analyze the collected data and compare the performance of the text recognition algorithms against human judgement. |
-| 4 | Evaluate the robustness and limitations of the text recognition algorithms and human judgement data. Discuss the results and draw conclusions on the research question. |
-| 5 | Revise and refine your thesis chapters, including the discussion and conclusion. Write your abstract, acknowledgements, and list of references. |
+| 1 | Choose a specific research question. Conduct a thorough literature review to understand the state-of-the-art in text recognition algorithms and MOS on compressed screen content data. |
+| 2 | Collect and preprocess your dataset. Implement and compare different text recognition algorithms on the dataset. Draft the introduction and methodology chapters. |
+| 3 | Analyze the collected data and compare the performance of the text recognition algorithms against MOS. |
+| 4 | Evaluate the robustness and limitations of the text recognition algorithms and MOS data. Discuss the results and draw conclusions on the research question. Write Evaluation, identify what else is needed to explain results. |
+| 5 | Refine the thesis chapters, including the discussion and conclusion. Draft the abstract and connect chapters. |
 | 6 | Finalize your thesis and prepare for submission. Review and proofread your thesis. |
 
-## random ideas
-- subjective metric should be comparison with original image, not absolute. Full reference, not no reference.
-- why not train a model to predict human score?
-- separate position and text recognition in metric?
+## Random ideas
+- Subjective metric should be comparison with original image, not absolute. Double stimulus.(for SCID dataset)
+- Why not train a model to predict human score?
 
+## Notes
+- check which for what images/compressions the correlation is high
+- pick "easy" images with mostly text from dataset
+- nonlinear transformation of TER/CER
+- test different ocr settings, different algorithms besides tesseract
+- ground truth label would still be nice, as it's in the instructions
+- write section for TER/CER and MOS
+- try labeling bounding boxes
+    - use bounding boxes to run OCR on each box
+- might be useful to use a mixed metric of bounding box error IoU and text error rate
+- document quality assessment dataset; missing MOS? Check if in last package
 
-## questions
-- minimal setup
-    - just text, ignore bounding box/position
-    - run on different compression levels (SCID dataset)
-    - calculate character error rate, or similar
-    - compare to MOS of dataset, somehow
-
-## notes
-
-- one deep learning method, check annotation 
-- citation manager, check for consistency
-- scatter or correlation plots
-- document quality assessment, maybe dataset
+## Questions
+- active "we" or passive "the authors" style?
