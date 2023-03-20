@@ -4,6 +4,9 @@ import os
 import pytesseract
 import re
 import pandas as pd
+import numpy as np
+from scipy.stats import spearmanr, pearsonr
+from scipy.optimize import curve_fit
 from PIL import Image
 
 # i/o functions
@@ -92,6 +95,40 @@ def pred_img(img_path, label_path):
     # print(f'Calculated text error rate for {img_name}, TER: {ter}')
 
     return ter
+
+
+def nonlinearfitting(objvals, subjvals):
+    """
+    code adapted from:
+    https://github.com/lllllllllllll-llll/SROCC_PLCC_calculate/blob/master/nonlinearfitting.m
+    """
+
+    # calculate SROCC before the non-linear mapping
+    srocc, _ = spearmanr(objvals, subjvals)
+
+    # define the nonlinear fitting function
+    # found in this paper:
+    # https://arxiv.org/pdf/1810.08169.pdf
+    # originally from this:
+    # https://www.researchgate.net/publication/221458323_Video_Quality_Experts_Group_current_results_and_future_directions
+    def model(x, a, b, c, d):
+        return ((a-b)/(1+np.exp((-x+c)/d)))+b
+
+    # initialize the parameters used by the nonlinear fitting function
+    beta0 = [np.max(subjvals), np.min(subjvals),
+             np.mean(objvals), np.std(objvals)/4]
+
+    # fitting a curve using the data
+    max_nfev = 400
+    betam, _ = curve_fit(model, objvals, subjvals, p0=beta0, method='lm',
+                         maxfev=max_nfev)
+
+    # given an objective value,
+    # predict the corresponding MOS (ypre) using the fitted curve
+    ypre = model(np.array(objvals), *betam)
+
+    plcc, _ = pearsonr(subjvals, ypre)  # pearson linear coefficient
+    return srocc, plcc, ypre
 
 
 if __name__ == '__main__':
