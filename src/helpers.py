@@ -97,7 +97,7 @@ def pred_img(img_path, label_path):
     return ter
 
 
-def nonlinearfitting(objvals, subjvals):
+def nonlinearfitting(objvals, subjvals, max_nfev=400):
     """
     code adapted from:
     https://github.com/lllllllllllll-llll/SROCC_PLCC_calculate/blob/master/nonlinearfitting.m
@@ -119,7 +119,6 @@ def nonlinearfitting(objvals, subjvals):
              np.mean(objvals), np.std(objvals)/4]
 
     # fitting a curve using the data
-    max_nfev = 400
     betam, _ = curve_fit(model, objvals, subjvals, p0=beta0, method='lm',
                          maxfev=max_nfev)
 
