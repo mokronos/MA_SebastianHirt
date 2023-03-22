@@ -171,23 +171,23 @@ Annotations from algorithms are similar, bbox + text. So it would be reasonable 
 | 3 | Analyze the collected data and compare the performance of the text recognition algorithms against MOS. |
 | 4 | Evaluate the robustness and limitations of the text recognition algorithms and MOS data. Discuss the results and draw conclusions on the research question. Write Evaluation, identify what else is needed to explain results. |
 | 5 | Refine the thesis chapters, including the discussion and conclusion. Draft the abstract and connect chapters. |
-| 6 | Finalize your thesis and prepare for submission. Review and proofread your thesis. |
+| 6 | Finalize the thesis and prepare for submission. Review and proofread the thesis. |
 
 ## Random ideas
 - Subjective metric should be comparison with original image, not absolute. Double stimulus.(for SCID dataset)
 - Why not train a model to predict human score?
 
 ## Notes
-- check which for what images/compressions the correlation is high
-- pick "easy" images with mostly text from dataset
-- nonlinear transformation of TER/CER
-- test different ocr settings, different algorithms besides tesseract
-- ground truth label would still be nice, as it's in the instructions
-- write section for TER/CER and MOS
-- try labeling bounding boxes
+- [ ] check which for what images/compressions the correlation is high
+- [ ] pick "easy" images with mostly text from dataset
+- [ ] ground truth label would still be nice, as it's in the instructions
+- [x] nonlinear transformation of TER/CER
+- [ ] test different ocr settings, different algorithms besides tesseract
+- [ ] write section for TER/CER and MOS
+- [ ] try labeling bounding boxes
     - use bounding boxes to run OCR on each box
-- might be useful to use a mixed metric of bounding box error IoU and text error rate
-- document quality assessment dataset; missing MOS? Check if in last package
+- [ ] might be useful to use a mixed metric of bounding box error IoU and text error rate
+- [ ] document quality assessment dataset; missing MOS? Check if in last package
 
 ## Questions
 - active "we" or passive "the authors" style?
