@@ -91,8 +91,6 @@ Maybe look for stuff here: https://huggingface.co/models?sort=downloads&search=o
 https://paperswithcode.com/paper/maskocr-text-recognition-with-masked-encoder
 
 
-<<<<<<< HEAD
-=======
 ## Datasets
 
 ### Applicable
@@ -121,7 +119,6 @@ https://paperswithcode.com/paper/maskocr-text-recognition-with-masked-encoder
     - no link to dataset found
     - might be applicable
 
->>>>>>> a72cbc8b8960fad6f9c7c5dd620a7a8ae827f018
 ## Annotations
 
 Image annotation formats: [link](https://www.edge-ai-vision.com/2022/04/exploring-data-labeling-and-the-6-different-types-of-image-annotation/)
@@ -178,16 +175,29 @@ Annotations from algorithms are similar, bbox + text. So it would be reasonable 
 - Why not train a model to predict human score?
 
 ## Notes
-- [ ] check which for what images/compressions the correlation is high
-- [ ] pick "easy" images with mostly text from dataset
-- [ ] ground truth label would still be nice, as it's in the instructions
+- [x] pick "easy" images with mostly text from dataset
+- [x] ground truth label would still be nice, as it's in the instructions
+    - done for some images with predominantly text
+    - some text is bad english, so "errors" in ground truth.
+    - how to manage divider at end of line? ezocr devides with -, but keeps it in one line.
+    - tesseract divides by line with - too.
 - [x] nonlinear transformation of TER/CER
-- [ ] test different ocr settings, different algorithms besides tesseract
+- [x] test different ocr settings, different algorithms besides tesseract
+    - easyocr works well, even for compressed images
+    - tesseract still not working with compressed images, might be that preprocessing removes all information
+- [x] document quality assessment dataset; missing MOS? Check if in last package
+    - scores are in last package, but still need to download all
+    - need to connect first then unzip, .zip.001 to .zip.024 extensions
 - [ ] write section for TER/CER and MOS
+    - need to flesh out and add sources
+- [ ] check which for what images/compressions the correlation is high
+    - need to color code the figures to differentiate between the different
+      images, compressions and qualities
 - [ ] try labeling bounding boxes
     - use bounding boxes to run OCR on each box
+    - like paragraphs from easyocr
+    - tesseract hast similar thing in data representation
 - [ ] might be useful to use a mixed metric of bounding box error IoU and text error rate
-- [ ] document quality assessment dataset; missing MOS? Check if in last package
 
 ## Questions
 - active "we" or passive "the authors" style?
