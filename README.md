@@ -7,7 +7,7 @@ Just run
 ```bash
 $ pip install -r requirements.txt
 ```
-to install all the dependencies. Best in a virtual environment with Python 3.11.2.
+to install all the dependencies. Best in a virtual environment with Python 3.8.10.
 
 # Project Structure
 
