@@ -2,6 +2,7 @@
 import editdistance
 import os
 import pytesseract
+import easyocr
 import re
 import pandas as pd
 import numpy as np
@@ -77,24 +78,22 @@ def read_mos(path):
     return df
 
 
-def pred_img(img_path, label_path):
+def pred_img(img_path, label_path, algo='easyocr'):
 
     # load image
-    with Image.open(img_path) as img:
-        # run tesseract and save prediction
-        pred = pytesseract.image_to_string(img)
+    pred = ''
+    if algo == 'ezocr':
+        # lead easyocr
+        # might make sense to init object once pass list to function
+        reader = easyocr.Reader(['en'])
+        pred = reader.readtext(img_path, detail=0, paragraph=True)
+    elif algo == 'tess':
+        with Image.open(img_path) as img:
+            # run tesseract and save prediction
+            pred = pytesseract.image_to_string(img)
+            pred = pred.splitlines()
 
-    # img_name = img_path.split('/')[-1]
-    # print(f'Ran tesseract on {img_name}')
-
-    # load label, compare and save text-error-rate
-    with open(label_path) as f:
-        label = f.read()
-    ter = text_error_rate(pred, label)
-
-    # print(f'Calculated text error rate for {img_name}, TER: {ter}')
-
-    return ter
+    return pred
 
 
 def nonlinearfitting(objvals, subjvals, max_nfev=400):
