@@ -164,8 +164,8 @@ Annotations from algorithms are similar, bbox + text. So it would be reasonable 
 | Month | Tasks |
 | --- | --- |
 | 1 | Choose a specific research question. Conduct a thorough literature review to understand the state-of-the-art in text recognition algorithms and MOS on compressed screen content data. |
-| 2 | Collect and preprocess your dataset. Implement and compare different text recognition algorithms on the dataset. Draft the introduction and methodology chapters. |
-| 3 | Analyze the collected data and compare the performance of the text recognition algorithms against MOS. |
+| 2 | Collect and preprocess your dataset. Implement and compare different text recognition algorithms on the dataset.|
+| 3 | Analyze the collected data and compare the performance of the text recognition algorithms against MOS. Draft the introduction and methodology chapters.|
 | 4 | Evaluate the robustness and limitations of the text recognition algorithms and MOS data. Discuss the results and draw conclusions on the research question. Write Evaluation, identify what else is needed to explain results. |
 | 5 | Refine the thesis chapters, including the discussion and conclusion. Draft the abstract and connect chapters. |
 | 6 | Finalize the thesis and prepare for submission. Review and proofread the thesis. |
@@ -173,31 +173,39 @@ Annotations from algorithms are similar, bbox + text. So it would be reasonable 
 ## Random ideas
 - Subjective metric should be comparison with original image, not absolute. Double stimulus.(for SCID dataset)
 - Why not train a model to predict human score?
+- might be useful to use a mixed metric of bounding box error IoU and text error rate
 
 ## Notes
-- [x] pick "easy" images with mostly text from dataset
-- [x] ground truth label would still be nice, as it's in the instructions
-    - done for some images with predominantly text
-    - some text is bad english, so "errors" in ground truth.
-    - how to manage divider at end of line? ezocr devides with -, but keeps it in one line.
-    - tesseract divides by line with - too.
-- [x] nonlinear transformation of TER/CER
-- [x] test different ocr settings, different algorithms besides tesseract
-    - easyocr works well, even for compressed images
-    - tesseract still not working with compressed images, might be that preprocessing removes all information
-- [x] document quality assessment dataset; missing MOS? Check if in last package
-    - scores are in last package, but still need to download all
-    - need to connect first then unzip, .zip.001 to .zip.024 extensions
 - [ ] write section for TER/CER and MOS
     - need to flesh out and add sources
-- [ ] check which for what images/compressions the correlation is high
-    - need to color code the figures to differentiate between the different
-      images, compressions and qualities
-- [ ] try labeling bounding boxes
+    - add other common metrics (mentioned in the task as well)
+
+- [ ] add bounding boxes in ground truth, as detection is mentioned too in the task
     - use bounding boxes to run OCR on each box
-    - like paragraphs from easyocr
-    - tesseract hast similar thing in data representation
-- [ ] might be useful to use a mixed metric of bounding box error IoU and text error rate
+    - plan
+        - just sort every word by y coordinate, then by x coordinate
+        - easyocr and tesseract have bbox data and corresponding words
+        - combine into long string and compare with ground truth
+        - need to modify ground truth
+        - need to check exact positions of words
+        - might make sense to go straight to bounding box labeling
+        - doesn't work, bounding boxes have different heights for bigger letters, gets messy
+        - plus, bounding box definitions/thresholds are different for tesseract and easyocr
+    - or use dameru levenshtein distance
+        - would work, with "range" set to word
+    - using full data representations, but just take text in the order given by the algorithm. Its the same order the direct string methods have, but I'm carrying more information.
+
+- [ ] check which for what images/compressions the correlation is high
+    - need to color code the figures to differentiate between the different images, compressions and qualities
+    - need to custom colorcode probably, or check seaborn library, works well with pandas
+
+- [ ] figure out the inner workings of tesseract
+    - when it fails, why does it fail?
+    - what preprocessing is applied automatically?
+    - still no result for some compressed images
+
+- [ ] document quality assessment dataset; missing MOS? Check if in last package
+    - scores are in last package, but still need to download all
+    - need to connect first then unzip, .zip.001 to .zip.024 extensions
 
 ## Questions
-- active "we" or passive "the authors" style?
