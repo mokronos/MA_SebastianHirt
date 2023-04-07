@@ -110,6 +110,7 @@ def nonlinearfitting(objvals, subjvals, max_nfev=400):
     # https://arxiv.org/pdf/1810.08169.pdf
     # originally from this:
     # https://www.researchgate.net/publication/221458323_Video_Quality_Experts_Group_current_results_and_future_directions
+    # humans might be less sensitive to the difference between images
     def model(x, a, b, c, d):
         return ((a-b)/(1+np.exp((-x+c)/d)))+b
 
@@ -123,6 +124,7 @@ def nonlinearfitting(objvals, subjvals, max_nfev=400):
 
     # given an objective value,
     # predict the corresponding MOS (ypre) using the fitted curve
+    # ypre are the modified objective values, not subjective (90% sure)
     ypre = model(np.array(objvals), *betam)
 
     plcc, _ = pearsonr(subjvals, ypre)  # pearson linear coefficient

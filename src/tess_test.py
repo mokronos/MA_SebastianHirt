@@ -27,7 +27,9 @@ def img_to_text(image_name, output_name):
     image = Image.open(image_path)
 
     # read text from image
-    text = tess.image_to_string(image, config='--oem 1')
+    text = tess.image_to_data(image)
+    print(text)
+    print(type(text))
 
     # write text to file
     with open(output_path, 'w') as f:
@@ -35,8 +37,8 @@ def img_to_text(image_name, output_name):
 
 
 # define output name
-output_name = "sampleoutput.txt"
-image_path = "data/raw/DistortedSCIs/SCI01_1_5.bmp"
+output_name = "expout.tsv"
+image_path = "data/raw/scid/DistortedSCIs/SCI03_9_5.bmp"
 
 # big_bbox(image_path, output_name)
 img_to_text(image_path, output_name)

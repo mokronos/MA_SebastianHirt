@@ -29,10 +29,12 @@ data.dropna(inplace=True)
 # data['adj_mos'] = adj_mos
 
 algos = ['tess', 'ezocr']
-
-ax = data.plot.scatter(x='mos', y=f'ter_comp_{algos[0]}', color='blue')
-data.plot.scatter(x='mos', y=f'ter_comp_{algos[1]}', ax=ax, color='red')
+print(data[~data[f'ter_comp_{algos[0]}'].isna()])
+ax = data.plot.scatter(x='mos', y=f'ter_comp_{algos[0]}', c='img_num', cmap='viridis', label='tess')
+data.plot.scatter(x='mos', y=f'ter_comp_{algos[1]}', ax=ax, c='img_num', cmap='inferno', label='ezocr')
 plt.xlim(0, 100)
 plt.ylim(0, 100)
+plt.legend()
+plt.ylabel('CER')
 plt.grid()
 plt.show()
