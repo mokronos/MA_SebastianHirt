@@ -173,14 +173,10 @@ Annotations from algorithms are similar, bbox + text. So it would be reasonable 
 ## Random ideas
 - Subjective metric should be comparison with original image, not absolute. Double stimulus.(for SCID dataset)
 - Why not train a model to predict human score?
-- might be useful to use a mixed metric of bounding box error IoU and text error rate
 
 ## Notes
-- [ ] write section for TER/CER and MOS
-    - need to flesh out and add sources
-    - add other common metrics (mentioned in the task as well)
 
-- [ ] add bounding boxes in ground truth, as detection is mentioned too in the task
+- [x] add bounding boxes in ground truth, as detection is mentioned too in the task
     - use bounding boxes to run OCR on each box
     - plan
         - just sort every word by y coordinate, then by x coordinate
@@ -195,6 +191,10 @@ Annotations from algorithms are similar, bbox + text. So it would be reasonable 
         - would work, with "range" set to word
     - using full data representations, but just take text in the order given by the algorithm. Its the same order the direct string methods have, but I'm carrying more information.
 
+- [ ] write section for TER/CER and MOS
+    - need to flesh out and add sources
+    - add other common metrics (mentioned in the task as well)
+
 - [ ] check which for what images/compressions the correlation is high
     - need to color code the figures to differentiate between the different images, compressions and qualities
     - need to custom colorcode probably, or check seaborn library, works well with pandas
@@ -208,4 +208,6 @@ Annotations from algorithms are similar, bbox + text. So it would be reasonable 
     - scores are in last package, but still need to download all
     - need to connect first then unzip, .zip.001 to .zip.024 extensions
 
+- [ ] make config file with all the paths
+    - generate all the paths so the folders exist
 ## Questions
