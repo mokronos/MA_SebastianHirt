@@ -9,9 +9,11 @@ import numpy as np
 from scipy.stats import spearmanr, pearsonr
 from scipy.optimize import curve_fit
 from PIL import Image
+import logging as log
 
-# i/o functions
-
+# logging
+log.basicConfig(level=log.DEBUG, format='%(asctime)s \n %(message)s')
+log.disable(level=log.DEBUG)
 
 def text_error_rate(label, prediction):
     """
@@ -61,7 +63,7 @@ def get_filenames(directory):
 
 def read_mos(path):
 
-    print(f'Reading MOS from {path}')
+    log.info(f'Reading MOS from {path}')
     with open(path, encoding='utf-16') as f:
         text = f.read()
 
@@ -77,23 +79,135 @@ def read_mos(path):
 
     return df
 
+def easy_to_df(pred):
+    """
+    Converts the easyocr prediction to a dataframe.
+    Parameters
+    ----------
+    pred : tuple
+        The easyocr prediction.
+    Returns
+    -------
+    pd.DataFrame
+        The prediction as dataframe.
+    """
 
-def pred_img(img_path, label_path, algo='easyocr'):
+    left = []
+    top = []
+    right = []
+    bottom = []
+    text = []
+    conf = []
+
+    for p in pred:
+        left.append(p[0][0][0])
+        top.append(p[0][0][1])
+        right.append(p[0][1][0])
+        bottom.append(p[0][2][1])
+        text.append(p[1])
+        conf.append(p[2])
+
+    df = pd.DataFrame({'left': left, 'top': top, 'right': right, 'bottom': bottom, 'text': text, 'conf': conf})
+    log.debug(f'easyocr prediction: {df}')
+    df = df.round({'left': 0, 'top': 0, 'right': 0, 'bottom': 0, 'conf': 2})
+    df = df.astype({'left': 'int', 'top': 'int', 'right': 'int', 'bottom': 'int'})
+
+    return df
+
+def pred_easy(img_paths):
+    """
+    Predicts the text in images using easyocr.
+    Parameters
+    ----------
+    img_path : list(str)
+        The paths to the images.
+    Returns
+    -------
+    list
+        The predicted texts as list of dataframes.
+    """
 
     # load image
-    pred = ''
-    if algo == 'ezocr':
-        # lead easyocr
-        # might make sense to init object once pass list to function
-        reader = easyocr.Reader(['en'])
-        pred = reader.readtext(img_path, detail=0, paragraph=True)
-    elif algo == 'tess':
-        with Image.open(img_path) as img:
-            # run tesseract and save prediction
-            pred = pytesseract.image_to_string(img)
-            pred = pred.splitlines()
+    results = []
+    log.info('Loading easyocr reader')
+    reader = easyocr.Reader(['en'])
+    log.info('Reader loaded')
+    for img_path in img_paths:
+        pred = reader.readtext(img_path)
 
-    return pred
+        # convert to dataframe
+        pred = easy_to_df(pred)
+        results.append(pred)
+
+    return results
+
+
+def tess_trans_df(pred):
+
+    pred = pred[~pred['text'].isna()]
+
+    df = pd.DataFrame()
+    df['left'] = pred['left']
+    df['top'] = pred['top']
+    df['right'] = pred['left'] + pred['width']
+    df['bottom'] = pred['top'] + pred['height']
+    df['text'] = pred['text']
+    df['conf'] = pred['conf']/100
+
+    return df
+
+def pred_tess(img_paths):
+    """
+    Predicts the text in images using tesseract.
+    Parameters
+    ----------
+    img_path : list(str)
+        The paths to the images.
+    Returns
+    -------
+    list
+        The predicted texts as list of dataframes.
+    """
+
+    results = []
+    for img_path in img_paths:
+        # load image
+        with Image.open(img_path) as img:
+            pred = pytesseract.image_to_data(img, output_type=pytesseract.Output.DATAFRAME)
+        # convert dataframe to standard format
+        pred = tess_trans_df(pred)
+        results.append(pred)
+
+    
+    return results
+
+
+def pred_data(img_paths, algo='easyocr'):
+    """
+    Predicts the text in a list of images in data format
+    Parameters
+    ----------
+    img_paths : list
+        The list of image paths.
+    algo : str
+        The algorithm to use for prediction.
+    Returns
+    -------
+    list
+        list of dataframes with predictions
+    """
+
+    if type(img_paths) is str:
+        img_paths = [img_paths]
+        
+    results = []
+    # Read the images.
+    if algo == 'easyocr':
+        results = pred_easy(img_paths)
+    elif algo == 'tess':
+        results = pred_tess(img_paths)
+
+    return results
 
 
 def nonlinearfitting(objvals, subjvals, max_nfev=400):
@@ -132,7 +246,12 @@ def nonlinearfitting(objvals, subjvals, max_nfev=400):
 
 
 if __name__ == '__main__':
-    # Compute the text error rate between two strings.
-    label = 'this is a test'
-    prediction = 'this is a test!'
-    print(text_error_rate(label, prediction))
+
+    numbers = [1,3,4,5]
+    paths = [f"data/raw/scid/ReferenceSCIs/SCI0{num}.bmp" for num in numbers]
+    paths = "data/raw/scid/ReferenceSCIs/SCI01.bmp"
+    pred_easy = pred_data(paths)
+    log.info(pred_easy[0].head())
+    pred_tess = pred_data(paths, algo='tess')
+
+    log.info(pred_tess[0].head())
