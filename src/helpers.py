@@ -12,8 +12,8 @@ from PIL import Image
 import logging as log
 
 # logging
-log.basicConfig(level=log.DEBUG, format='%(asctime)s \n %(message)s')
-log.disable(level=log.DEBUG)
+# log.basicConfig(level=log.DEBUG, format='%(asctime)s \n %(message)s')
+# log.disable(level=log.DEBUG)
 
 def text_error_rate(label, prediction):
     """
@@ -182,7 +182,7 @@ def pred_tess(img_paths):
     return results
 
 
-def pred_data(img_paths, algo='easyocr'):
+def pred_data(img_paths, algo='ezocr'):
     """
     Predicts the text in a list of images in data format
     Parameters
@@ -202,7 +202,7 @@ def pred_data(img_paths, algo='easyocr'):
         
     results = []
     # Read the images.
-    if algo == 'easyocr':
+    if algo == 'ezocr':
         results = pred_easy(img_paths)
     elif algo == 'tess':
         results = pred_tess(img_paths)
@@ -245,13 +245,17 @@ def nonlinearfitting(objvals, subjvals, max_nfev=400):
     return srocc, plcc, ypre
 
 
+def csv_to_text(df):
+
+    text = df['text'].tolist()
+    text = ' '.join(text)
+
+    return text
+
+
 if __name__ == '__main__':
 
     numbers = [1,3,4,5]
     paths = [f"data/raw/scid/ReferenceSCIs/SCI0{num}.bmp" for num in numbers]
     paths = "data/raw/scid/ReferenceSCIs/SCI01.bmp"
     pred_easy = pred_data(paths)
-    log.info(pred_easy[0].head())
-    pred_tess = pred_data(paths, algo='tess')
-
-    log.info(pred_tess[0].head())
