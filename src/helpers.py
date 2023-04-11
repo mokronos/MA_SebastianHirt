@@ -15,7 +15,30 @@ import logging as log
 # log.basicConfig(level=log.DEBUG, format='%(asctime)s \n %(message)s')
 # log.disable(level=log.DEBUG)
 
-def text_error_rate(label, prediction):
+def load_line_text(path):
+    """
+    Loads the text from a line image.
+    Parameters
+    ----------
+    path : str
+        The path to the line formatted text file.
+    Returns
+    -------
+    str
+        The text as full string.
+    """
+
+    # read text file
+    with open(path, 'r') as f:
+        text = f.read()
+
+    # remove newlines
+    text = text.replace('/n', ' ')
+
+    # Return the text.
+    return text
+
+def char_error_rate(label, prediction):
     """
     Computes the text error rate (TER) between two strings.
     Parameters
