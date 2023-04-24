@@ -242,7 +242,7 @@ def nonlinearfitting(objvals, subjvals, max_nfev=400):
     """
 
     # calculate SROCC before the non-linear mapping
-    srocc, _ = spearmanr(objvals, subjvals)
+    # srocc, _ = spearmanr(objvals, subjvals)
 
     # define the nonlinear fitting function
     # found in this paper:
@@ -266,8 +266,9 @@ def nonlinearfitting(objvals, subjvals, max_nfev=400):
     # ypre are the modified objective values, not subjective (90% sure)
     ypre = model(np.array(objvals), *betam)
 
-    plcc, _ = pearsonr(subjvals, ypre)  # pearson linear coefficient
-    return srocc, plcc, ypre
+    # plcc, _ = pearsonr(subjvals, ypre)  # pearson linear coefficient
+    # return srocc, plcc, ypre
+    return ypre
 
 
 def csv_to_text(df):
