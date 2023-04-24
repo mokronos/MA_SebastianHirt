@@ -179,25 +179,17 @@ Annotations from algorithms are similar, bbox + text. So it would be reasonable 
 - [x] add bounding boxes in ground truth, as detection is mentioned too in the task
     - use bounding boxes to run OCR on each box
     - plan
-        - just sort every word by y coordinate, then by x coordinate
-        - easyocr and tesseract have bbox data and corresponding words
-        - combine into long string and compare with ground truth
-        - need to modify ground truth
-        - need to check exact positions of words
-        - might make sense to go straight to bounding box labeling
         - doesn't work, bounding boxes have different heights for bigger letters, gets messy
         - plus, bounding box definitions/thresholds are different for tesseract and easyocr
+        - can mby use height of big letters to determine threshold for line
     - or use dameru levenshtein distance
         - would work, with "range" set to word
     - using full data representations, but just take text in the order given by the algorithm. Its the same order the direct string methods have, but I'm carrying more information.
 
-- [ ] write section for TER/CER and MOS
-    - need to flesh out and add sources
-    - add other common metrics (mentioned in the task as well)
-
-- [ ] check which for what images/compressions the correlation is high
+- [x] check which for what images/compressions the correlation is high
     - need to color code the figures to differentiate between the different images, compressions and qualities
-    - need to custom colorcode probably, or check seaborn library, works well with pandas
+    - better to do subplots for each compression, too messy
+    - need to check correlation values
 
 - [ ] figure out the inner workings of tesseract
     - when it fails, why does it fail?
@@ -207,7 +199,12 @@ Annotations from algorithms are similar, bbox + text. So it would be reasonable 
 - [ ] document quality assessment dataset; missing MOS? Check if in last package
     - scores are in last package, but still need to download all
     - need to connect first then unzip, .zip.001 to .zip.024 extensions
+    - annoying to decompress
 
 - [ ] make config file with all the paths
     - generate all the paths so the folders exist
+
+- [ ] write section for TER/CER and MOS
+    - need to flesh out and add sources
+    - add other common metrics (mentioned in the task as well)
 ## Questions

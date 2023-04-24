@@ -237,6 +237,8 @@ def nonlinearfitting(objvals, subjvals, max_nfev=400):
     """
     code adapted from:
     https://github.com/lllllllllllll-llll/SROCC_PLCC_calculate/blob/master/nonlinearfitting.m
+    probably should be done on one or two images to fit the curve
+    then use those parameters to predict/transform the rest
     """
 
     # calculate SROCC before the non-linear mapping
