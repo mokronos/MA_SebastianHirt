@@ -191,6 +191,24 @@ Annotations from algorithms are similar, bbox + text. So it would be reasonable 
     - better to do subplots for each compression, too messy
     - need to check correlation values
 
+- [x] some compressions (Contrast change/4) MOS not in "correct" order
+    - it is actually correct
+    - last time numbers/compressions were wrongly labeled
+
+- [x] subplots for each compression
+
+- [ ] compare gt to ocr on reference images
+
+- [ ] compare ocr on reference images to ocr on compressed images
+
+- [ ] move fitting out of plotting file
+
+- [ ] "train" fitting with 2 images, use on other
+
+- [ ] do everything for tesseract too
+
+- [ ] convert bmp images to png for latex
+
 - [ ] figure out the inner workings of tesseract
     - when it fails, why does it fail?
     - what preprocessing is applied automatically?
@@ -200,11 +218,41 @@ Annotations from algorithms are similar, bbox + text. So it would be reasonable 
     - scores are in last package, but still need to download all
     - need to connect first then unzip, .zip.001 to .zip.024 extensions
     - annoying to decompress
+    - RAM leak
 
 - [ ] make config file with all the paths
-    - generate all the paths so the folders exist
+    - generate all the paths so the folders exist, done
+    - need to update other files
 
 - [ ] write section for TER/CER and MOS
     - need to flesh out and add sources
     - add other common metrics (mentioned in the task as well)
+
+## Results
+
+1. Research state-of-the-art text recognition and detection methods.
+
+2. Generate a labeled dataset to evaluate the efficiency of the researched algorithms
+on screen content data.
+
+- easy ocr
+    - Easy ocr generally performs well even on distorted images
+    - for motion blur the performance is worse for the 2 worst quality levels for most images
+    - image 4 performs better for worse quality, because gt doesn't contain text on coin
+- tesseract
+
+3. Available datasets with subjective quality scores will be utilized to investigate
+the correlation between text recognition rates and human judgement.
+
+- easy ocr
+    - no clear correlation, ocr not getting substantially worse with worse quality
+    - transformation via fitted model might help
+- tesseract
+
+4. Since most datasets do not contain textual ground truth information,
+   in a further step, Mr Hirt will investigate the feasibility of
+   using recognized text from pristine images as ground truth instead.
+
 ## Questions
+
+- Need "trained" curve? Inference can be only one image + no mos available
