@@ -161,3 +161,18 @@ cython_debug/
 
 # custom stuff
 data/raw
+
+# LaTeX
+*.acn
+*.aux
+*.bbl
+*.blg
+*.brf
+*.glo
+*.glsdefs
+*.ist
+*.lof
+*.log
+*.lot
+*.out
+*.toc
