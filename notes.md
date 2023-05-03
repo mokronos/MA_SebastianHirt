@@ -197,13 +197,13 @@ Annotations from algorithms are similar, bbox + text. So it would be reasonable 
 
 - [x] subplots for each compression
 
+- [ ] spearman ranked, pearson for whole dataset, and each compresssion
+
 - [ ] compare gt to ocr on reference images
 
 - [ ] compare ocr on reference images to ocr on compressed images
 
 - [ ] move fitting out of plotting file
-
-- [ ] "train" fitting with 2 images, use on other
 
 - [ ] do everything for tesseract too
 
@@ -220,21 +220,35 @@ Annotations from algorithms are similar, bbox + text. So it would be reasonable 
     - annoying to decompress
     - RAM leak
 
-- [ ] make config file with all the paths
-    - generate all the paths so the folders exist, done
-    - need to update other files
-
 - [ ] write section for TER/CER and MOS
     - need to flesh out and add sources
     - add other common metrics (mentioned in the task as well)
 
+table
+http://smartviplab.org/pubilcations/SCID/zkni_TIP_ESIM_2017.pdf
+
+comparison of gt vs pseudo gt
+vtm/hm vs cer
+https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=9747633
+
 ## Results
 
+!!! add hypotheses, experiments, results, discussion, conclusion for each
+hypothesis that certain distortions affect the performance of the OCR algorithm more
+
+
 1. Research state-of-the-art text recognition and detection methods.
+
+- easy ocr
+    - simple neural network based (lstm)
+- tesseract
+    - google ocr engine
+    - has lstm mode
 
 2. Generate a labeled dataset to evaluate the efficiency of the researched algorithms
 on screen content data.
 
+- general difficulty to determine position/order of text elements
 - easy ocr
     - Easy ocr generally performs well even on distorted images
     - for motion blur the performance is worse for the 2 worst quality levels for most images
@@ -250,9 +264,10 @@ the correlation between text recognition rates and human judgement.
 - tesseract
 
 4. Since most datasets do not contain textual ground truth information,
-   in a further step, Mr Hirt will investigate the feasibility of
-   using recognized text from pristine images as ground truth instead.
+   investigate the feasibility of using recognized text from pristine images as ground truth instead.
+
+    - hypothesis: should perform well, but position needs to be determined
+    
 
 ## Questions
 
-- Need "trained" curve? Inference can be only one image + no mos available

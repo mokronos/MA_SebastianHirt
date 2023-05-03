@@ -60,7 +60,7 @@ def plot_fitted():
         tmp = data.loc[(data.img_num == num) & (data.comp == 1)].copy()
         fitted_tmp = helpers.nonlinearfitting(tmp['cer_comp'],
                                               tmp['mos'],
-                                              max_nfev=10000)
+                                              max_nfev=20000)
         tmp['cer_comp_fitted'] = fitted_tmp
         ax = tmp.plot.scatter(x='mos',
                               y='cer_comp_fitted',
@@ -73,7 +73,7 @@ def plot_fitted():
             tmp = data.loc[(data.img_num == num) & (data.comp == comp)].copy()
             fitted_tmp = helpers.nonlinearfitting(tmp['cer_comp'],
                                                   tmp['mos'],
-                                                  max_nfev=10000)
+                                                  max_nfev=20000)
             tmp['cer_comp_fitted'] = fitted_tmp
             # print(f'data for comp {comp}:\n{tmp}')
             tmp.plot.scatter(x='mos',
@@ -149,7 +149,7 @@ def plot_fitted_sub():
             tmp = data.loc[(data.img_num == num) & (data.comp == comp)].copy()
             fitted_tmp = helpers.nonlinearfitting(tmp['cer_comp'],
                                                   tmp['mos'],
-                                                  max_nfev=10000)
+                                                  max_nfev=20000)
             tmp['cer_comp_fitted'] = fitted_tmp
             # print(f'data for comp {comp}:\n{tmp}')
             tmp.plot.scatter(x='mos',
@@ -170,7 +170,7 @@ def plot_fitted_sub():
         plt.close()
 
 if __name__ == '__main__':
-    plot()
+    # plot()
+    # plot_sub()
     plot_fitted()
-    plot_sub()
     plot_fitted_sub()

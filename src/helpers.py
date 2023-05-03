@@ -12,7 +12,7 @@ from PIL import Image
 import logging as log
 
 # logging
-# log.basicConfig(level=log.DEBUG, format='%(asctime)s \n %(message)s')
+log.basicConfig(level=log.DEBUG, format='%(asctime)s \n %(message)s')
 # log.disable(level=log.DEBUG)
 
 def load_line_text(path):
@@ -194,6 +194,7 @@ def pred_tess(img_paths):
 
     results = []
     for img_path in img_paths:
+        log.info(f'Tesseract predicting text in {img_path}')
         # load image
         with Image.open(img_path) as img:
             pred = pytesseract.image_to_data(img, output_type=pytesseract.Output.DATAFRAME)
@@ -259,7 +260,7 @@ def nonlinearfitting(objvals, subjvals, max_nfev=400):
 
     # fitting a curve using the data
     betam, _ = curve_fit(model, objvals, subjvals, p0=beta0, method='lm',
-                         maxfev=max_nfev)
+                         maxfev=max_nfev, ftol=1e-3, xtol=1e-3)
 
     # given an objective value,
     # predict the corresponding MOS (ypre) using the fitted curve

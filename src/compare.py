@@ -30,7 +30,8 @@ qualities = [1, 2, 3, 4, 5]
 # read mos data into dataframe
 data = helpers.read_mos(mos_path)
 
-algo = 'ezocr'
+# algo = 'ezocr'
+algo = 'tess'
 
 data[f'cer'] = np.nan
 for num in numbers:

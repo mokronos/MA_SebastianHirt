@@ -2,7 +2,7 @@ import helpers
 import logging as log
 
 log.basicConfig(level=log.DEBUG, format='%(asctime)s \n %(message)s')
-log.disable(level=log.DEBUG)
+# log.disable(level=log.DEBUG)
 
 # maybe put paths in config json file
 ref_dir = 'data/raw/scid/ReferenceSCIs'
@@ -37,6 +37,7 @@ for num in numbers:
 log.debug(f'created list of paths: {paths}')
 algos = ['tess', 'ezocr']
 algos = ['ezocr']
+algos = ['tess']
 
 save_dir = 'results/pred'
 
