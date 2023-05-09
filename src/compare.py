@@ -1,63 +1,115 @@
+# create dataframes with all the information needed to create results
 import helpers
 import logging as log
-import numpy as np
+import scipy.stats
+from config import PATHS, CONFIG
 
-log.basicConfig(level=log.DEBUG, format='%(asctime)s \n %(message)s')
-# log.disable(level=log.DEBUG)
+log.basicConfig(level=log.DEBUG, format="%(asctime)s \n %(message)s")
+log.disable(level=log.DEBUG)
 
-# maybe put paths in config json file
-ref_dir = 'data/raw/scid/ReferenceSCIs'
-dist_dir = 'data/raw/scid/DistortedSCIs'
-mos_path = 'data/raw/scid/MOS_SCID.txt'
-gt_dir = 'data/gt/scid/line'
 
-image_ext = '.bmp'
-label_ext = '.txt'
-prefix = 'SCI'
+def setup():
+    # read mos data into dataframe
+    data = helpers.read_mos(PATHS["mos_scid"])
 
-# get filenames
-# numbers = list(range(1, 41))
-# selected subset of images with a lot of text focus and cleaned ground truth
-amt = 3
-numbers = [1, 3, 4, 5, 29]
-# numbers = numbers[:amt]
-numbers = [x if x > 9 else f'0{x}' for x in numbers]
-compressions = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-# compressions = compressions[-amt:]
-qualities = [1, 2, 3, 4, 5]
-# qualities = qualities[-amt:]
+    # get configuaration of images, compression and quality
+    img_id = CONFIG["scid_img_ids"]
+    comps = CONFIG["scid_comps"]
+    quals = CONFIG["scid_quals"]
 
-# read mos data into dataframe
-data = helpers.read_mos(mos_path)
+    # filter data by img_id, comp and qual
+    filtered_data = data.loc[data["img_num"].isin(img_id) &
+                             data["comp"].isin(comps) &
+                             data["qual"].isin(quals)].reset_index(drop=True)
 
-# algo = 'ezocr'
-algo = 'tess'
+    return filtered_data
 
-data[f'cer'] = np.nan
-for num in numbers:
-    for comp in compressions:
-        for qual in qualities:
-            # just text, ignore bounding box/position
-            # run on different compression levels (SCID dataset)
-            img_name = f'{prefix}{num}_{comp}_{qual}'
-            label_name = f'{prefix}{num}'
-            label_path = f'{gt_dir}/{label_name}_gt{label_ext}'
-            pred_path = f'results/pred/{algo}/comp/{img_name}{label_ext}'
+def add_cer(data, algo="ezocr"):
+    # add cer column
+    data[f"cer_{algo}"] = data.apply(
+            lambda row:
+            helpers.char_error_rate(
+                helpers.load_line_text(
+                    PATHS["gt_scid_line"](row["img_num"])),
+                helpers.load_line_text(
+                    PATHS["pred_dist"](row["img_num"],
+                                       row["comp"],
+                                       row["qual"],
+                                       algo = algo,
+                                       ext="txt")
+                    )
+                ),
+            axis=1)
 
-            log.debug(f'Comparing for {img_name} with {algo} ...')
-            pred = helpers.load_line_text(pred_path)
+def add_cer_comp(data, algo="ezocr"):
+    data[f"cer_comp_{algo}"] = (1 - data[f"cer_{algo}"]) * 100
 
-            # load label, compare and save text-error-rate
-            with open(label_path) as f:
-                label = f.read()
-            cer = helpers.char_error_rate(pred, label)
+def add_fitted(data, algo="ezocr"):
 
-            data.loc[(data.img_num == int(num))
-                     & (data.comp == comp)
-                     & (data.qual == qual), f'cer'] = cer
+    # loop through all images and compression
+    data_grouped = data.groupby(["img_num", "comp"])
 
-# compare to MOS of dataset, somehow
-data[f'cer_comp'] = (1 - data[f'cer']) * 100
+    for name, group in data_grouped:
 
-# dont overwrite cer.csv
-data.to_csv(f'results/cer_{algo}.csv', index=False)
+        fitted = helpers.nonlinearfitting(group[f"cer_{algo}"], group["mos"])
+        data.loc[(data["img_num"] == name[0]) & (data["comp"] == name[1]), f"cer_fitted_{algo}"] = fitted
+        
+        comp_fitted = helpers.nonlinearfitting(group[f"cer_comp_{algo}"], group["mos"])
+        data.loc[(data["img_num"] == name[0]) & (data["comp"] == name[1]), f"cer_comp_fitted_{algo}"] = comp_fitted
+
+
+def add_pearson(data, algo="ezocr"):
+    
+    # loop through all images and compression
+    data_grouped = data.groupby(["img_num", "comp"])
+
+    for name, group in data_grouped:
+        # calculate pearson correlation coefficient
+        # between mos and cer_comp for the quality levels
+        p = scipy.stats.pearsonr(group[f"mos"], group[f"cer_comp_{algo}"])
+        data.loc[(data["img_num"] == name[0]) & (data["comp"] == name[1]), f"pearson_{algo}"] = p[0]
+
+        # calculate pearson correlation coefficient
+        # between mos and cer_comp_fitted for the quality levels
+        p = scipy.stats.pearsonr(group[f"mos"], group[f"cer_comp_fitted_{algo}"])
+        data.loc[(data["img_num"] == name[0]) & (data["comp"] == name[1]), f"pearson_fitted_{algo}"] = p[0]
+
+def add_spearman_ranked(data, algo="ezocr"):
+    
+    # loop through all images and compression
+    data_grouped = data.groupby(["img_num", "comp"])
+
+    for name, group in data_grouped:
+        # calculate spearman ranked correlation coefficient
+        # between mos and cer_comp for the quality levels
+        p = scipy.stats.spearmanr(group[f"mos"], group[f"cer_comp_{algo}"])
+        data.loc[(data["img_num"] == name[0]) & (data["comp"] == name[1]), f"spearmanr_{algo}"] = p[0]
+
+        # calculate spearman ranked correlation coefficient
+        # between mos and cer_comp_fitted for the quality levels
+        p = scipy.stats.spearmanr(group[f"mos"], group[f"cer_comp_fitted_{algo}"])
+        data.loc[(data["img_num"] == name[0]) & (data["comp"] == name[1]), f"spearmanr_fitted_{algo}"] = p[0]
+
+
+if __name__ == "__main__":
+    algos = CONFIG["ocr_algos"]
+    data = setup()
+
+    for algo in algos:
+        print(data)
+        add_cer(data, algo=algo)
+        print(data)
+        add_cer_comp(data, algo=algo)
+        print(data)
+        add_fitted(data, algo=algo)
+        print(data)
+        add_pearson(data, algo=algo)
+        print(data)
+        add_spearman_ranked(data, algo=algo)
+        print(data)
+
+    # data.to_csv(PATHS["results_scid"], index=False)
+
+    # show pearson, spearman for all images and compressions
+    disp = data.pivot_table(index=["img_num", "comp"], values=["pearson_ezocr", "pearson_fitted_ezocr", "spearmanr_ezocr", "spearmanr_fitted_ezocr"])
+    print(disp)

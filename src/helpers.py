@@ -10,10 +10,12 @@ from scipy.stats import spearmanr, pearsonr
 from scipy.optimize import curve_fit
 from PIL import Image
 import logging as log
+from config import PATHS, CONFIG
+import itertools
 
 # logging
 log.basicConfig(level=log.DEBUG, format='%(asctime)s \n %(message)s')
-# log.disable(level=log.DEBUG)
+log.disable(level=log.DEBUG)
 
 def load_line_text(path):
     """
@@ -156,6 +158,8 @@ def pred_easy(img_paths):
     reader = easyocr.Reader(['en'])
     log.info('Reader loaded')
     for img_path in img_paths:
+
+        log.info(f'easyocr predicting text in {img_path}')
         pred = reader.readtext(img_path)
 
         # convert to dataframe
@@ -198,6 +202,7 @@ def pred_tess(img_paths):
         # load image
         with Image.open(img_path) as img:
             pred = pytesseract.image_to_data(img, output_type=pytesseract.Output.DATAFRAME)
+
         # convert dataframe to standard format
         pred = tess_trans_df(pred)
         results.append(pred)
@@ -279,10 +284,16 @@ def csv_to_text(df):
 
     return text
 
+def create_paths(path, *args, **kwargs):
+    
+    paths = []
+    perm = list(itertools.product(*args))
+    for p in perm:
+        paths.append(path(*p, **kwargs))
+
+    return paths
+
 
 if __name__ == '__main__':
 
-    numbers = [1,3,4,5]
-    paths = [f"data/raw/scid/ReferenceSCIs/SCI0{num}.bmp" for num in numbers]
-    paths = "data/raw/scid/ReferenceSCIs/SCI01.bmp"
-    pred_easy = pred_data(paths)
+    print(create_paths(PATHS['images_scid_dist'], CONFIG['exp_imgs'], CONFIG['exp_comps'], CONFIG['exp_quals']))

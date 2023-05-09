@@ -1,57 +1,47 @@
 import helpers
 import logging as log
+from config import PATHS, CONFIG
 
 log.basicConfig(level=log.DEBUG, format='%(asctime)s \n %(message)s')
-# log.disable(level=log.DEBUG)
+log.disable(level=log.DEBUG)
 
-# maybe put paths in config json file
-ref_dir = 'data/raw/scid/ReferenceSCIs'
-dist_dir = 'data/raw/scid/DistortedSCIs'
 
-image_ext = '.bmp'
-prefix = 'SCI'
+def pred():
+    ocr_algos = CONFIG["ocr_algos"]
 
-# get filenames
-# numbers = list(range(1, 41))
-# selected subset of images with a lot of text focus and cleaned ground truth
-amt = 3
-numbers = [1, 3, 4, 5, 29]
-# numbers = numbers[:amt]
-numbers = [x if x > 9 else f'0{x}' for x in numbers]
-compressions = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-# compressions = compressions[-amt:]
-qualities = [1, 2, 3, 4, 5]
-# qualities = qualities[-amt:]
+    # get paths
+    load_paths = helpers.create_paths(PATHS["images_scid_dist"],
+                                      CONFIG["scid_img_ids"],
+                                      CONFIG["scid_comps"],
+                                      CONFIG["scid_quals"])
 
-# generate list with paths
-paths = []
-names = []
-for num in numbers:
-    for comp in compressions:
-        for qual in qualities:
-            img_name = f'{prefix}{num}_{comp}_{qual}'
-            img_path = f'{dist_dir}/{img_name}{image_ext}'
-            paths.append(img_path)
-            names.append(img_name)
+    # run prediction
+    for algo in ocr_algos:
 
-log.debug(f'created list of paths: {paths}')
-algos = ['tess', 'ezocr']
-algos = ['ezocr']
-algos = ['tess']
+        preds = helpers.pred_data(load_paths, algo=algo)
 
-save_dir = 'results/pred'
+                    
+        save_paths_csv = helpers.create_paths(PATHS["pred_dist"],
+                                            CONFIG["scid_img_ids"],
+                                            CONFIG["scid_comps"],
+                                            CONFIG["scid_quals"],
+                                            algo=algo, ext="csv")
 
-# run prediction
-for algo in algos:
-    preds = helpers.pred_data(paths, algo=algo)
+        save_paths_txt = helpers.create_paths(PATHS["pred_dist"],
+                                            CONFIG["scid_img_ids"],
+                                            CONFIG["scid_comps"],
+                                            CONFIG["scid_quals"],
+                                            algo=algo, ext="txt")
 
-    # save predictions
-    for pred, name in zip(preds, names):
-        log.debug(f'saving prediction for {name} with {algo} ...')
-        pred_path = f'{save_dir}/{algo}/comp/{name}'
-        pred.to_csv(f'{pred_path}.csv', index=False)
-        text = helpers.csv_to_text(pred)
-        with open(f'{pred_path}.txt', 'w') as f:
-            f.write(text)
+        # save predictions
+        for pred, save_path_txt, save_path_csv in zip(preds, save_paths_txt, save_paths_csv):
+            pred.to_csv(save_path_csv, index=False)
+            text = helpers.csv_to_text(pred)
+            with open(save_path_txt, 'w') as f:
+                f.write(text)
 
-log.info('done')
+    log.info('done')
+
+
+if __name__ == "__main__":
+    pred()

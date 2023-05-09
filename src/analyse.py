@@ -172,5 +172,7 @@ def plot_fitted_sub():
 if __name__ == '__main__':
     # plot()
     # plot_sub()
-    plot_fitted()
-    plot_fitted_sub()
+    # plot_fitted()
+    # plot_fitted_sub()
+
+    print(PATHS["images_scid_dist"](1,2,3))
