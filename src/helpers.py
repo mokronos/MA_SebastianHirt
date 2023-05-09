@@ -102,6 +102,9 @@ def read_mos(path):
     df = pd.DataFrame(result, columns=cols)
     df = df.astype(types)
 
+    comp_names = {1: 'GN', 2: 'GB', 3: 'MB', 4: 'CC', 5: 'JPEG', 6: 'JPEG2000', 7: 'CSC', 8: 'HEVC-SCC', 9: 'CQD'}
+    df['comp_names'] = df['comp'].map(comp_names)
+
     return df
 
 def easy_to_df(pred):

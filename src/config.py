@@ -10,8 +10,8 @@ CONFIG = {
         "scid_quals": [1, 2, 3, 4, 5],
 
         # ocr algorithms to use for experiments
-        # "ocr_algos": ["ezocr", "tess"],
-        "ocr_algos": ["ezocr"],
+        "ocr_algos": ["ezocr", "tess"],
+        # "ocr_algos": ["ezocr"],
         }
 
 
@@ -54,8 +54,16 @@ PATHS = {
 
         # Path to the folder containing experiment images
         "images_exp": "exp",
+
         # Path to the folder containing result images
         "analyze":
         lambda suff:
         f"images/analyze/{suff}",
+
+        # Path to the folder containing latex tables
+        "latex_tables":
+        lambda suff:
+        f"latex/tables/{suff}.tex",
         }
+
+        

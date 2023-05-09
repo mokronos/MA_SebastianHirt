@@ -5,7 +5,7 @@ import scipy.stats
 from config import PATHS, CONFIG
 
 log.basicConfig(level=log.DEBUG, format="%(asctime)s \n %(message)s")
-log.disable(level=log.DEBUG)
+# log.disable(level=log.DEBUG)
 
 
 def setup():
@@ -71,6 +71,9 @@ def add_pearson(data, algo="ezocr"):
 
         # calculate pearson correlation coefficient
         # between mos and cer_comp_fitted for the quality levels
+        if group[f"cer_comp_fitted_{algo}"].isnull().values.any():
+            log.info(f"cer_comp_fitted_{algo} is null")
+            continue
         p = scipy.stats.pearsonr(group[f"mos"], group[f"cer_comp_fitted_{algo}"])
         data.loc[(data["img_num"] == name[0]) & (data["comp"] == name[1]), f"pearson_fitted_{algo}"] = p[0]
 
@@ -96,20 +99,22 @@ if __name__ == "__main__":
     data = setup()
 
     for algo in algos:
-        print(data)
+        # print(data)
         add_cer(data, algo=algo)
-        print(data)
+        # print(data)
         add_cer_comp(data, algo=algo)
-        print(data)
+        # print(data)
         add_fitted(data, algo=algo)
-        print(data)
+        # print(data)
         add_pearson(data, algo=algo)
-        print(data)
+        # print(data)
         add_spearman_ranked(data, algo=algo)
-        print(data)
+        # print(data)
 
     # data.to_csv(PATHS["results_scid"], index=False)
 
     # show pearson, spearman for all images and compressions
-    disp = data.pivot_table(index=["img_num", "comp"], values=["pearson_ezocr", "pearson_fitted_ezocr", "spearmanr_ezocr", "spearmanr_fitted_ezocr"])
-    print(disp)
+    disp = data.pivot_table(index=["img_num", "comp_names"], values=["pearson_ezocr", "pearson_fitted_ezocr", "spearmanr_ezocr", "spearmanr_fitted_ezocr",
+                                                               "pearson_tess", "pearson_fitted_tess", "spearmanr_tess", "spearmanr_fitted_tess",])
+
+    disp.to_csv(PATHS["analyze"]("pearson_spear.csv"), index=True)

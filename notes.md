@@ -197,17 +197,26 @@ Annotations from algorithms are similar, bbox + text. So it would be reasonable 
 
 - [x] subplots for each compression
 
-- [ ] spearman ranked, pearson for whole dataset, and each compresssion
+- [x] spearman ranked, pearson for each compresssion 
+    - [ ] for whole dataset
+    - [x] table http://smartviplab.org/pubilcations/SCID/zkni_TIP_ESIM_2017.pdf
+
+- [x] move fitting out of plotting file
+
+- [x] do everything for tesseract too
+
+- [ ] need to change paths for visualizations
 
 - [ ] compare gt to ocr on reference images
 
 - [ ] compare ocr on reference images to ocr on compressed images
 
-- [ ] move fitting out of plotting file
-
-- [ ] do everything for tesseract too
+- [ ] comparison of gt vs pseudo gt
+    - vtm/hm vs cer https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=9747633
+    - plot
 
 - [ ] convert bmp images to png for latex
+    - can do with convert, same as for RAW files for codec
 
 - [ ] figure out the inner workings of tesseract
     - when it fails, why does it fail?
@@ -224,12 +233,7 @@ Annotations from algorithms are similar, bbox + text. So it would be reasonable 
     - need to flesh out and add sources
     - add other common metrics (mentioned in the task as well)
 
-table
-http://smartviplab.org/pubilcations/SCID/zkni_TIP_ESIM_2017.pdf
 
-comparison of gt vs pseudo gt
-vtm/hm vs cer
-https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=9747633
 
 ## Results
 
