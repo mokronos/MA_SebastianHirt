@@ -12,7 +12,7 @@ def pred():
     # get paths
     load_paths = helpers.create_paths(PATHS["images_scid_dist"],
                                       CONFIG["scid_img_ids"],
-                                      CONFIG["scid_comps"],
+                                      CONFIG["scid_dists"],
                                       CONFIG["scid_quals"])
 
     # run prediction
@@ -23,13 +23,13 @@ def pred():
                     
         save_paths_csv = helpers.create_paths(PATHS["pred_dist"],
                                             CONFIG["scid_img_ids"],
-                                            CONFIG["scid_comps"],
+                                            CONFIG["scid_dists"],
                                             CONFIG["scid_quals"],
                                             algo=algo, ext="csv")
 
         save_paths_txt = helpers.create_paths(PATHS["pred_dist"],
                                             CONFIG["scid_img_ids"],
-                                            CONFIG["scid_comps"],
+                                            CONFIG["scid_dists"],
                                             CONFIG["scid_quals"],
                                             algo=algo, ext="txt")
 

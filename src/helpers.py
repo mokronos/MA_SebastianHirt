@@ -95,15 +95,15 @@ def read_mos(path):
     match = r'(SCI(\d\d))\s+(SCI(\d\d)_(\d)_(\d))\s+([\d\.]+)'
     result = re.findall(match, text)
 
-    cols = ['ref', 'ref_num', 'img', 'img_num', 'comp', 'qual', 'mos']
+    cols = ['ref', 'ref_num', 'img', 'img_num', 'dist', 'qual', 'mos']
     types = ['str', 'int', 'str', 'int', 'int', 'int', 'float']
     types = dict(zip(cols, types))
 
     df = pd.DataFrame(result, columns=cols)
     df = df.astype(types)
 
-    comp_names = {1: 'GN', 2: 'GB', 3: 'MB', 4: 'CC', 5: 'JPEG', 6: 'JPEG2000', 7: 'CSC', 8: 'HEVC-SCC', 9: 'CQD'}
-    df['comp_names'] = df['comp'].map(comp_names)
+    dist_names = CONFIG['dist_names']
+    df['dist_names'] = df['dist'].map(dist_names)
 
     return df
 
@@ -296,7 +296,5 @@ def create_paths(path, *args, **kwargs):
 
     return paths
 
-
 if __name__ == '__main__':
-
-    print(create_paths(PATHS['images_scid_dist'], CONFIG['exp_imgs'], CONFIG['exp_comps'], CONFIG['exp_quals']))
+    pass

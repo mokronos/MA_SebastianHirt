@@ -1,10 +1,10 @@
 CONFIG = {
         # images to use for experiments
-        # "scid_img_ids": [1, 3, 4, 5, 29],
-        "scid_img_ids": [1, 3],
+        "scid_img_ids": [1, 3, 4, 5, 29],
+        # "scid_img_ids": [1, 3],
 
-        # compression levels to use for experiments
-        "scid_comps": [1, 2, 3, 4, 5, 6, 7, 8, 9],
+        # distortions levels to use for experiments
+        "scid_dists": [1, 2, 3, 4, 5, 6, 7, 8, 9],
 
         # quality levels to use for experiments
         "scid_quals": [1, 2, 3, 4, 5],
@@ -12,6 +12,12 @@ CONFIG = {
         # ocr algorithms to use for experiments
         "ocr_algos": ["ezocr", "tess"],
         # "ocr_algos": ["ezocr"],
+
+        # distortion names
+        # GN: Gaussian Noise, GB: Gaussian Blur, MB: Motion Blur, CC: Contrast Change
+        # JPEG: JPEG, JPEG2000: JPEG2000, CSC: Color Saturation Change, HEVC-SCC: HEVC-SCC
+        # CQD: Color Quantization with dithering
+        "dist_names": {1: 'GN', 2: 'GB', 3: 'MB', 4: 'CC', 5: 'JPEG', 6: 'JPEG2000', 7: 'CSC', 8: 'HEVC-SCC', 9: 'CQD'}
         }
 
 
@@ -19,8 +25,8 @@ PATHS = {
         # Path to the folder containing the images
         # distorted images
         "images_scid_dist":
-        lambda num, comp, qual:
-        f"data/raw/scid/DistortedSCIs/SCI{num if num > 9 else f'0{num}'}_{comp}_{qual}.bmp",
+        lambda num, dist, qual:
+        f"data/raw/scid/DistortedSCIs/SCI{num if num > 9 else f'0{num}'}_{dist}_{qual}.bmp",
 
         # reference images
         "images_scid_ref":
@@ -44,8 +50,8 @@ PATHS = {
         # Path to the folder containing the predictions
         # prediction on distorted images
         "pred_dist":
-        lambda num, comp, qual, algo = "ezocr", ext="txt":
-        f"results/pred/scid/dist/{algo}/SCI{num if num > 9 else f'0{num}'}_{comp}_{qual}.{ext}",
+        lambda num, dist, qual, algo = "ezocr", ext="txt":
+        f"results/pred/scid/dist/{algo}/SCI{num if num > 9 else f'0{num}'}_{dist}_{qual}.{ext}",
 
         # prediction on reference images
         "pred_ref":
@@ -59,6 +65,10 @@ PATHS = {
         "analyze":
         lambda suff:
         f"images/analyze/{suff}",
+
+        # Path to dataframe with results
+        "results":
+        f"results/results.csv",
 
         # Path to the folder containing latex tables
         "latex_tables":

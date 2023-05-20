@@ -7,7 +7,7 @@ from config import PATHS
 
 def plot():
     # compare to MOS of dataset, somehow
-    data = pd.read_csv('results/cer_ezocr.csv')
+    data = pd.read_csv(PATHS['results'])
     data.dropna(inplace=True)
 
     # plot
@@ -47,7 +47,7 @@ def plot():
 
 def plot_fitted():
     # compare to MOS of dataset, somehow
-    data = pd.read_csv('results/cer_ezocr.csv')
+    data = pd.read_csv(PATHS['results'])
     data.dropna(inplace=True)
 
     # plot
@@ -94,7 +94,7 @@ def plot_fitted():
 
 def plot_sub():
     # compare to MOS of dataset, somehow
-    data = pd.read_csv('results/cer_ezocr.csv')
+    data = pd.read_csv(PATHS['results'])
     data.dropna(inplace=True)
 
     # plot
@@ -130,7 +130,7 @@ def plot_sub():
 
 def plot_fitted_sub():
     # compare to MOS of dataset, somehow
-    data = pd.read_csv('results/cer_ezocr.csv')
+    data = pd.read_csv(PATHS['results'])
     data.dropna(inplace=True)
 
     # plot
