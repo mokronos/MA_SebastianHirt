@@ -116,12 +116,12 @@ convert_back() {
     q=$2
     codec=$3
 
-    final_dir_spec=$final_dir"/"$codec
+    result_dir_spec=$result_dir"/"$codec
     decoded_dir_spec=$decoded_dir"/"$codec
     filenameraw=$decoded_dir_spec"/"$fbname"_CTC_dec_reco_"$q".raw"
-    filenameoriginal=$final_dir_spec"/"$fbname$codec$q$ext
+    filenameoriginal=$result_dir_spec"/"$fbname$codec$q$ext
 
-    mkdir -p "$final_dir_spec"
+    mkdir -p "$result_dir_spec"
 
     # Reconstruction
     width=$(identify -format '%w' $1)
@@ -157,7 +157,7 @@ raw_dir="images/raw"
 config_dir="images/config"
 encoded_dir="images/encoded"
 decoded_dir="images/decoded"
-final_dir="images/final_"$ext
+result_dir="images/results"
 
 # names=("images/original/SCI01.bmp")
 
