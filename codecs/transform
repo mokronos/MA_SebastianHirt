@@ -12,7 +12,7 @@ convert_to_raw() {
 
     mkdir -p "$raw_dir"
 
-    convert "$1" -interlace plane rgb:$raw_dir/$(basename "$1" .bmp).raw
+    convert "$1" -interlace plane rgb:$raw_dir/$(basename "$1" "$ext").raw
 
     echo "converted $1 to raw"
 }
@@ -20,7 +20,7 @@ convert_to_raw() {
 
 generate_config() {
 
-    fbname=$(basename "$1" .bmp)
+    fbname=$(basename "$1" "$ext")
 
     mkdir -p "$config_dir"
 
@@ -51,7 +51,7 @@ generate_config() {
 
 encode() {
 
-    fbname=$(basename "$1" .bmp)
+    fbname=$(basename "$1" "$ext")
     q=$2
     codec=$3
 
@@ -88,7 +88,7 @@ encode() {
 
 decode() {
 
-    fbname=$(basename "$1" .bmp)
+    fbname=$(basename "$1" "$ext")
     q=$2
     codec=$3
 
@@ -110,53 +110,65 @@ decode() {
 }
 
 
-convert_to_bmp() {
+convert_back() {
 
-    fbname=$(basename "$1" .bmp)
+    fbname=$(basename "$1" "$ext")
     q=$2
     codec=$3
 
     final_dir_spec=$final_dir"/"$codec
     decoded_dir_spec=$decoded_dir"/"$codec
     filenameraw=$decoded_dir_spec"/"$fbname"_CTC_dec_reco_"$q".raw"
-    filenamebmp_dec=$final_dir_spec"/"$fbname$codec$q".bmp"
+    filenameoriginal=$final_dir_spec"/"$fbname$codec$q$ext
 
     mkdir -p "$final_dir_spec"
 
     # Reconstruction
     width=$(identify -format '%w' $1)
     height=$(identify -format '%h' $1)
-    do_back_convertion="convert -size "$width"x"$height" -depth 8 -interlace plane rgb:$filenameraw $filenamebmp_dec"
+    do_back_convertion="convert -size "$width"x"$height" -depth 8 -interlace plane rgb:$filenameraw $filenameoriginal"
 
     echo $do_back_convertion
     $do_back_convertion
 
-    echo "converted $1 back to bmp with q=$q with codec $codec"
+    echo "converted $1 back to $ext with q=$q with codec $codec"
 }
 
 
+pipeline() {
+    fname=$(basename "$1" "$ext")
+    q=$2
+    codec=$3
+    echo "Running pipeline for $fname with q=$q with codec $codec"
+    convert_to_raw "$filename"
+    generate_config "$filename"
+    encode "$filename" "$q" "$codec"
+    decode "$filename" "$q" "$codec"
+    convert_back "$filename" "$q" "$codec"
+}
+
 # get filenames from args
 names=("$@")
+
+ext=".bmp"
 
 # define directories
 raw_dir="images/raw"
 config_dir="images/config"
 encoded_dir="images/encoded"
 decoded_dir="images/decoded"
-final_dir="images/final_bmp"
+final_dir="images/final_"$ext
 
-# names=("images/bmp/SCI01.bmp")
+# names=("images/original/SCI01.bmp")
 
-for codec in "VTM" "HM"; do
-    for q in {35..50..5}; do
-        for filename in "${names[@]}"; do
-            fname=$(basename "$filename" .bmp)
-            echo "$fname"
-            convert_to_raw "$filename"
-            generate_config "$filename"
-            encode "$filename" "$q" "$codec"
-            decode "$filename" "$q" "$codec"
-            convert_to_bmp "$filename" "$q" "$codec"
-        done
-    done
+for filename in "${names[@]}"; do
+   pipeline "$filename" "35" "HM"
 done
+
+# for codec in "VTM" "HM"; do
+#     for q in {35..50..5}; do
+#         for filename in "${names[@]}"; do
+#             pipeline "$filename" "$q" "$codec"
+#         done
+#     done
+# done
