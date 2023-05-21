@@ -1,0 +1,162 @@
+#!/usr/bin/env bash
+# This scipt is used to
+# 1. transform images to RAW format
+# 2. generate config files for all images
+# 3. transform raw images with codecs
+# 4. decode back to original format
+
+# encoding goes down in time with increasing q
+
+
+convert_to_raw() {
+
+    mkdir -p "$raw_dir"
+
+    convert "$1" -interlace plane rgb:$raw_dir/$(basename "$1" .bmp).raw
+
+    echo "converted $1 to raw"
+}
+
+
+generate_config() {
+
+    fbname=$(basename "$1" .bmp)
+
+    mkdir -p "$config_dir"
+
+    filenameraw=$raw_dir"/"$fbname".raw"
+    config=$config_dir"/"$fbname".cfg"
+    width=$(identify -format '%w' "$1")
+    height=$(identify -format '%h' "$1")
+
+    echo "#======== File I/O ===============" > "$config"
+    echo "InputFile                     : $filenameraw" >> "$config"
+    echo "InputBitDepth                 : 8           # Input bitdepth" >> "$config"
+    echo "InputChromaFormat             : 444         # Ratio of luminance to chrominance samples" >> "$config"
+    echo "FrameRate                     : 60          # Frame Rate per second" >> "$config"
+    echo "FrameSkip                     : 0           # Number of frames to be skipped in input" >> "$config"
+    echo "SourceWidth                   : $width      # Input  frame width" >> "$config"
+    echo "SourceHeight                  : $height     # Input  frame height" >> "$config"
+    echo "FramesToBeEncoded             : 1           # Number of frames to be coded" >> "$config"
+    echo "InputColourSpaceConvert       : RGBtoGBR    # Non-normative colour space conversion to apply to input video" >> "$config"
+    echo "SNRInternalColourSpace        : 1           # Evaluate SNRs in GBR order" >> "$config"
+    echo "OutputInternalColourSpace     : 0           # Convert recon output back to RGB order. Use --OutputColourSpaceConvert GBRtoRGB on decoder to produce a matching output file." >> "$config"
+    echo " " >> "$config"
+    echo "Level                         : 6.2" >> "$config"
+
+
+    echo "generated config file for $1"
+}
+
+
+encode() {
+
+    fbname=$(basename "$1" .bmp)
+    q=$2
+    codec=$3
+
+    encoded_dir_spec=$encoded_dir"/"$codec
+    config=$config_dir"/"$fbname".cfg"
+    bitstream=$encoded_dir_spec"/"$fbname"_CTC_"$q".bin"
+    reconst=$encoded_dir_spec"/"$fbname"_CTC_dec_"$q".raw"
+
+    mkdir -p "$encoded_dir_spec"
+    echo > HEVC_SCC_CTC_constIBC_log.txt
+
+    if [ "$codec" == "HM" ]; then
+        enc_config=HM/HEVC_SCC_CTC_cfgs/encoder_intra_main_scc_constIBC.cfg
+    elif [ "$codec" == "VTM" ]; then
+        enc_config=VTM/CTC_cfgs/encoder_intra_vtm.cfg
+        class_config=VTM/CTC_cfgs/classSCC.cfg
+        format_config=VTM/CTC_cfgs/formatRGB.cfg
+    fi
+
+    echo "Encoding $1 with q=$q with codec $codec ..."
+    start_time="$(date -u +%s)"
+    if [ "$codec" == "HM" ]; then
+        ./HM_codec/bin/TAppEncoderStatic -c "$enc_config" -c "$config" -f 1 -q $q --BitstreamFile=$bitstream --ReconFile=$reconst >> HEVC_SCC_CTC_constIBC_log.txt
+    elif [ "$codec" == "VTM" ]; then
+        ./VTM_codec/bin/EncoderAppStatic -c "$enc_config" -c "$config" -c "$class_config" -c "$format_config" -f 1 -q $q --BitstreamFile=$bitstream --ReconFile=$reconst >> CTC_log.txt
+    fi
+
+    end_time="$(date -u +%s)"
+    elapsed_time="$(($end_time-$start_time))"
+
+    echo "encoded $1 with q=$q with codec $codec"
+    echo "Encoding took $((elapsed_time / 60)) minutes and $((elapsed_time % 60)) seconds to complete."
+}
+
+decode() {
+
+    fbname=$(basename "$1" .bmp)
+    q=$2
+    codec=$3
+
+    decoded_dir_spec=$decoded_dir"/"$codec
+    bitstream=$encoded_dir_spec"/"$fbname"_CTC_"$q".bin"
+    reconst=$decoded_dir_spec"/"$fbname"_CTC_dec_reco_"$q".raw"
+
+    mkdir -p "$decoded_dir_spec"
+
+    # Decoding
+    if [ "$codec" == "HM" ]; then
+        ./HM_codec/bin/TAppDecoderStatic -b "$bitstream" -o "$reconst" --OutputColourSpaceConvert=GBRtoRGB --OutputBitDepth=8
+    elif [ "$codec" == "VTM" ]; then
+        ./VTM_codec/bin/DecoderAppStatic -b "$bitstream" -o "$reconst" --OutputColourSpaceConvert=GBRtoRGB --OutputBitDepth=8
+    fi
+        
+
+    echo "decoded $1 with q=$q with codec $codec"
+}
+
+
+convert_to_bmp() {
+
+    fbname=$(basename "$1" .bmp)
+    q=$2
+    codec=$3
+
+    final_dir_spec=$final_dir"/"$codec
+    decoded_dir_spec=$decoded_dir"/"$codec
+    filenameraw=$decoded_dir_spec"/"$fbname"_CTC_dec_reco_"$q".raw"
+    filenamebmp_dec=$final_dir_spec"/"$fbname$codec$q".bmp"
+
+    mkdir -p "$final_dir_spec"
+
+    # Reconstruction
+    width=$(identify -format '%w' $1)
+    height=$(identify -format '%h' $1)
+    do_back_convertion="convert -size "$width"x"$height" -depth 8 -interlace plane rgb:$filenameraw $filenamebmp_dec"
+
+    echo $do_back_convertion
+    $do_back_convertion
+
+    echo "converted $1 back to bmp with q=$q with codec $codec"
+}
+
+
+# get filenames from args
+names=("$@")
+
+# define directories
+raw_dir="images/raw"
+config_dir="images/config"
+encoded_dir="images/encoded"
+decoded_dir="images/decoded"
+final_dir="images/final_bmp"
+
+# names=("images/bmp/SCI01.bmp")
+
+for codec in "VTM" "HM"; do
+    for q in {35..50..5}; do
+        for filename in "${names[@]}"; do
+            fname=$(basename "$filename" .bmp)
+            echo "$fname"
+            convert_to_raw "$filename"
+            generate_config "$filename"
+            encode "$filename" "$q" "$codec"
+            decode "$filename" "$q" "$codec"
+            convert_to_bmp "$filename" "$q" "$codec"
+        done
+    done
+done

@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+raw_dir="images/raw"
+config_dir="images/config"
+encoded_dir="images/encoded"
+decoded_dir="images/decoded"
+
+rm -rf "$raw_dir"
+rm -rf "$config_dir"
+rm -rf "$encoded_dir"
+rm -rf "$decoded_dir"
+rm *.txt

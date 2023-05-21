@@ -32,6 +32,10 @@ $ python -m unittest
 ```
 in project root, to run all tests.
 
+# Codecs
+
+For transformation of images look [here](codecs/README.md).
+
 # Timeline
 
 - Begin: 01.02.2023

@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+# This script is used to download the codecs and build them
+vtm_url="https://vcgit.hhi.fraunhofer.de/jvet/VVCSoftware_VTM.git"
+hm_url="https://vcgit.hhi.fraunhofer.de/jvet/HM.git"
+
+vtm_tag="VTM-17.2"
+hm_tag="HM-16.21+SCM-8.8"
+
+vtm_dir="VTM_codec"
+hm_dir="HM_codec"
+
+rm -rf ${vtm_dir}
+rm -rf ${hm_dir}
+
+git clone --depth 1 --branch ${vtm_tag} ${vtm_url} ${vtm_dir}
+git clone --depth 1 --branch ${hm_tag} ${hm_url} ${hm_dir}
+
+build() {
+    cd $1
+    mkdir build
+    cd build
+    cmake ..
+    make
+    cd ../..
+    echo "Built $1"
+}
+
+build ${vtm_dir}
+build ${hm_dir}
+
+echo "Done building codecs"
