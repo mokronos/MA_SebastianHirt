@@ -107,7 +107,7 @@ def add_spearman_ranked(data, algo="ezocr"):
         p = scipy.stats.spearmanr(group[f"mos"], group[f"cer_comp_fitted_{algo}"])
         data.loc[(data["img_num"] == name[0]) & (data["dist"] == name[1]), f"spearmanr_fitted_{algo}"] = p[0]
 
-def create_summary(data):
+def create_summary(data, algo="ezocr"):
 
     # table with:
     # indices:
@@ -116,7 +116,7 @@ def create_summary(data):
     # values: (value used in comparison with MOS in correlation computation)
     # - CER
 
-    fit = "cer_fitted_ezocr"
+    fit = f"cer_fitted_{algo}"
     data_grouped = data.groupby("dist")
     cer = []
     crit = []
@@ -131,8 +131,7 @@ def create_summary(data):
     dist_names = [CONFIG["dist_names"][id] for id in dist]
     table = pd.DataFrame({"crit": crit, "dist": dist, "dist_name": dist_names, fit: cer})
     table.sort_values(by=["crit", "dist"], inplace=True, ignore_index=True)
-    print(table.pivot_table(index=["crit", "dist_name"], values=[fit]))
-
+    table = table.pivot_table(index=["crit", "dist_name"], values=[fit])
 
     return table
 
@@ -149,9 +148,11 @@ if __name__ == "__main__":
         # add_fitted(data, algo=algo)
         # add_pearson(data, algo=algo)
     #     add_spearman_ranked(data, algo=algo)
+        table = create_summary(data, algo=algo)
+        print(table)
+        table.to_csv(PATHS["results_spearman_pearson"](algo))
 
-    create_summary(data)
-    # data.to_csv(PATHS["results_scid"], index=False)
+    data.to_csv(PATHS["results_dist"])
 
     # show pearson, spearman for all images and distortions
     # disp = data.pivot_table(index=["img_num", "dist_names"], values=["pearson_ezocr", "pearson_fitted_ezocr", "spearmanr_ezocr", "spearmanr_fitted_ezocr",
