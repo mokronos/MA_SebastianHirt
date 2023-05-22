@@ -175,30 +175,44 @@ def plot_codec_comparison():
 
     ocr_algos = CONFIG['ocr_algos']
 
+    divider = 1_000_000
+
     # plot in same figure
     for algo in ocr_algos:
-        data_spec = data.loc[(data.ocr_algo == "ezocr")]
-        plt.plot(data_spec.loc[(data_spec.codec == "vtm")].q,
+        data_spec = data.loc[(data.ocr_algo == algo)]
+        plt.plot(data_spec.loc[(data_spec.codec == "vtm")].groupby('q')["size"].mean()/divider,
                  data_spec.loc[(data_spec.codec == "vtm")].groupby('q')["cer_true"].mean(),
                  label='VTM true GT',
                  marker='s')
-        plt.plot(data_spec.loc[(data_spec.codec == "vtm")].q,
+        plt.plot(data_spec.loc[(data_spec.codec == "vtm")].groupby('q')["size"].mean()/divider,
                  data_spec.loc[(data_spec.codec == "vtm")].groupby('q')["cer_pseudo"].mean(),
                  label='VTM pseudo GT',
                  marker='8')
-        plt.plot(data_spec.loc[(data_spec.codec == "hm")].q,
+        plt.plot(data_spec.loc[(data_spec.codec == "hm")].groupby('q')["size"].mean()/divider,
                  data_spec.loc[(data_spec.codec == "hm")].groupby('q')["cer_true"].mean(),
                  label='HM true GT',
                  marker='^')
-        plt.plot(data_spec.loc[(data_spec.codec == "hm")].q,
+        plt.plot(data_spec.loc[(data_spec.codec == "hm")].groupby('q')["size"].mean()/divider,
                  data_spec.loc[(data_spec.codec == "hm")].groupby('q')["cer_pseudo"].mean(),
                  label='HM pseudo GT',
                  marker='v')
 
-        plt.xlim(30, 55)
-        plt.ylim(0, 0.2)
-        plt.xlabel("QP")
+        qvalues = data_spec.q.unique()
+        xvalues = data_spec.loc[(data_spec.codec == "vtm")].groupby('q')["size"].mean()/divider
+        yvalues = data_spec.loc[(data_spec.codec == "vtm")].groupby('q')["cer_pseudo"].mean()
+
+        for q, x, y in zip(qvalues, xvalues, yvalues):
+            plt.annotate(f"QP={q}", (x, y), textcoords="offset points", xytext=(0, 10), ha='center')
+
+                            
+                        
+
+        plt.xlim(0, 0.4)
+        plt.ylim(0, 0.35)
+        plt.xlabel("Avg size of images in Mbit")
         plt.ylabel("CER")
+        plt.title(f"Comparison of codecs for {algo}")
+        plt.grid()
         plt.legend()
         savepath=PATHS['analyze'](f'codec_comparison_{algo}.pdf')
         plt.savefig(savepath)

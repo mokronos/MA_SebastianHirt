@@ -13,11 +13,12 @@ CONFIG = {
         "codecs": ["vtm", "hm"],
 
         # images to use for codec experiments
-        "codecs_img_ids": [1],
-        # "codecs_img_ids": [1, 3, 4, 5, 29],
+        # "codecs_img_ids": [1],
+        "codecs_img_ids": [1, 3, 4, 5, 29],
 
         # q's levels to use for experiments
-        "codecs_qs": [35, 40, 45],
+        "codecs_qs": [35, 40, 45, 50],
+        # "codecs_qs": [22, 27, 32, 37],
 
         # ocr algorithms to use for experiments
         "ocr_algos": ["ezocr", "tess"],
@@ -91,12 +92,12 @@ PATHS = {
         # predition on images transformed with VTM(VVC codec)
         "pred_vtm":
         lambda num, q, algo = "ezocr", ext="txt":
-        f"results/pred/scid/vtm/{algo}/SCI{num if num > 9 else f'0{num}'}VTM{q}.{ext}",
+        f"results/pred/scid/vtm/{algo}/SCI{num if num > 9 else f'0{num}'}vtm{q}.{ext}",
 
         # predition on images transformed with HM(HEVC codec)
         "pred_hm":
         lambda num, q, algo = "ezocr", ext="txt":
-        f"results/pred/scid/hm/{algo}/SCI{num if num > 9 else f'0{num}'}HM{q}.{ext}",
+        f"results/pred/scid/hm/{algo}/SCI{num if num > 9 else f'0{num}'}hm{q}.{ext}",
 
         # Path to the folder containing experiment images
         "images_exp": "exp",
@@ -107,12 +108,17 @@ PATHS = {
         f"images/analyze/{suff}",
 
         # Path to dataframe with distorted images results
-        "results":
-        f"results/results_dist.csv",
+        "results_dist":
+        f"results/summaries/results_dist.csv",
+
+        # Path to dataframe with distorted images results
+        "results_spearman_pearson":
+        lambda algo:
+        f"results/summaries/results_dist_spear_pears_{algo}.csv",
 
         # Path to dataframe with codec comparison results
         "results_codecs":
-        f"results/results_codecs.csv",
+        f"results/summaries/results_codecs.csv",
 
         # Path to the folder containing latex tables
         "latex_tables":

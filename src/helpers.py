@@ -316,10 +316,9 @@ def get_size(path):
     """
 
     with open(path, 'r') as f:
-        size = f.readline().strip()
+        size = f.readlines().pop(1).strip()
 
     # read size from second line
-    size = size.split(' ')[1]
     size = int(size) * 8
 
     return size
