@@ -198,26 +198,26 @@ Annotations from algorithms are similar, bbox + text. So it would be reasonable 
 - [x] subplots for each compression
 
 - [x] spearman ranked, pearson for each compresssion 
-    - [ ] for whole dataset
+    - [x] for whole dataset
     - [x] table http://smartviplab.org/pubilcations/SCID/zkni_TIP_ESIM_2017.pdf
 
 - [x] move fitting out of plotting file
 
 - [x] do everything for tesseract too
 
-- [ ] need to change paths for visualizations
+- [x] comparison of gt vs pseudo gt
+    - vtm/hm vs cer https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=9747633
+    - for VTM and HM: mean cer over all images, compare txt to
+        - real gt (label uncompressed images yourself)
+        - pseudo gt (run ocr on uncompressed images, use that as gt)
+    - [x] need to make x-axis size of bitstream
+
+- [x] fix label of the coin image
 
 - [ ] compare gt to ocr on reference images
 
 - [ ] compare ocr on reference images to ocr on compressed images
 
-- [ ] comparison of gt vs pseudo gt
-    - vtm/hm vs cer https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=9747633
-    - for VTM and HM: mean cer over all images, compare txt to
-        - real gt (label uncompressed images yourself)
-        - pseudo gt (run ocr on uncompressed images, use that as gt)
-
-- [ ] fix label of the coin image
 - [ ] convert bmp images to png for latex
     - can do with convert, same as for RAW files for codec
 
@@ -225,6 +225,8 @@ Annotations from algorithms are similar, bbox + text. So it would be reasonable 
     - when it fails, why does it fail?
     - what preprocessing is applied automatically?
     - still no result for some compressed images
+
+- [ ] need to change paths for visualizations
 
 - [ ] document quality assessment dataset; missing MOS? Check if in last package
     - scores are in last package, but still need to download all
