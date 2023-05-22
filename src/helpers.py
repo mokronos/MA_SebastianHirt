@@ -309,5 +309,20 @@ def create_dir(paths):
     dir = os.path.dirname(paths)
     os.makedirs(dir, exist_ok=True)
 
+def get_size(path):
+    """
+    parses the text file and extracts the size information in bytes
+    then returns it in bits
+    """
+
+    with open(path, 'r') as f:
+        size = f.readline().strip()
+
+    # read size from second line
+    size = size.split(' ')[1]
+    size = int(size) * 8
+
+    return size
+
 if __name__ == '__main__':
     pass

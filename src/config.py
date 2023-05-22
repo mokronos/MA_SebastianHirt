@@ -46,12 +46,22 @@ PATHS = {
         # Path to images transformed with VTM(VVC codec)
         "images_vtm":
         lambda num, q:
-        f"data/raw/scid/vtm/SCI{num if num > 9 else f'0{num}'}VTM{q}.bmp",
+        f"data/raw/scid/vtm/SCI{num if num > 9 else f'0{num}'}vtm{q}.bmp",
 
         # Path to images transformed with HM(HEVC codec)
         "images_hm":
         lambda num, q:
-        f"data/raw/scid/hm/SCI{num if num > 9 else f'0{num}'}HM{q}.bmp",
+        f"data/raw/scid/hm/SCI{num if num > 9 else f'0{num}'}hm{q}.bmp",
+
+        # Path to size text file for VTM images
+        "size_vtm":
+        lambda num, q:
+        f"data/raw/scid/vtm/SCI{num if num > 9 else f'0{num}'}vtm{q}.txt",
+
+        # Path to size text file for HM images
+        "size_hm":
+        lambda num, q:
+        f"data/raw/scid/hm/SCI{num if num > 9 else f'0{num}'}hm{q}.txt",
 
         # Path to MOS txt file for scid dataset
         "mos_scid":
@@ -96,9 +106,13 @@ PATHS = {
         lambda suff:
         f"images/analyze/{suff}",
 
-        # Path to dataframe with results
+        # Path to dataframe with distorted images results
         "results":
-        f"results/results.csv",
+        f"results/results_dist.csv",
+
+        # Path to dataframe with codec comparison results
+        "results_codecs":
+        f"results/results_codecs.csv",
 
         # Path to the folder containing latex tables
         "latex_tables":

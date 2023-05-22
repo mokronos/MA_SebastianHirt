@@ -20,9 +20,9 @@ def setup():
 
     return data
 
-def add_cer_real(data):
+def add_cer_true(data):
     # add cer column
-    data[f"cer_real"] = data.apply(
+    data[f"cer_true"] = data.apply(
             lambda row:
             helpers.char_error_rate(
                 helpers.load_line_text(
@@ -52,9 +52,22 @@ def add_cer_pseudo(data):
                 ),
             axis=1)
 
+def add_size(data):
+
+    data["size"] = data.apply(
+            lambda row:
+            helpers.get_size(
+                PATHS[f"pred_{row['codec']}"](row["img_num"],
+                                             row["q"])
+                ),
+            axis=1)
+    
+
 if __name__ == "__main__":
 
     data = setup()
-    add_cer_real(data)
+    add_cer_true(data)
     add_cer_pseudo(data)
+    # add_size(data)
+    data.to_csv(PATHS["results_codecs"], index=False)
     print(data)

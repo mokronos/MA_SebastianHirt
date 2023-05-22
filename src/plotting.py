@@ -3,7 +3,7 @@ import matplotlib.image as mpimg
 import matplotlib.pyplot as plt
 import logging as log
 import helpers
-from config import PATHS
+from config import CONFIG, PATHS
 
 def plot():
     # compare to MOS of dataset, somehow
@@ -168,10 +168,46 @@ def plot_fitted_sub():
         plt.savefig(f'images/analyze/mos_ter_fit_ezocr_sub_img{num}.pdf')
         plt.close()
 
+def plot_codec_comparison():
+
+    # load dataframe
+    data = pd.read_csv(PATHS['results_codecs'])
+
+    ocr_algos = CONFIG['ocr_algos']
+
+    # plot in same figure
+    for algo in ocr_algos:
+        data_spec = data.loc[(data.ocr_algo == "ezocr")]
+        plt.plot(data_spec.loc[(data_spec.codec == "vtm")].q,
+                 data_spec.loc[(data_spec.codec == "vtm")].groupby('q')["cer_true"].mean(),
+                 label='VTM true GT',
+                 marker='s')
+        plt.plot(data_spec.loc[(data_spec.codec == "vtm")].q,
+                 data_spec.loc[(data_spec.codec == "vtm")].groupby('q')["cer_pseudo"].mean(),
+                 label='VTM pseudo GT',
+                 marker='8')
+        plt.plot(data_spec.loc[(data_spec.codec == "hm")].q,
+                 data_spec.loc[(data_spec.codec == "hm")].groupby('q')["cer_true"].mean(),
+                 label='HM true GT',
+                 marker='^')
+        plt.plot(data_spec.loc[(data_spec.codec == "hm")].q,
+                 data_spec.loc[(data_spec.codec == "hm")].groupby('q')["cer_pseudo"].mean(),
+                 label='HM pseudo GT',
+                 marker='v')
+
+        plt.xlim(30, 55)
+        plt.ylim(0, 0.2)
+        plt.xlabel("QP")
+        plt.ylabel("CER")
+        plt.legend()
+        savepath=PATHS['analyze'](f'codec_comparison_{algo}.pdf')
+        plt.savefig(savepath)
+        plt.show()
+
+
 if __name__ == '__main__':
     # plot()
     # plot_sub()
     # plot_fitted()
     # plot_fitted_sub()
-
-    print(PATHS["images_scid_dist"](1,2,3))
+    plot_codec_comparison()
