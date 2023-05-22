@@ -63,9 +63,9 @@ encode() {
     mkdir -p "$encoded_dir_spec"
     echo > HEVC_SCC_CTC_constIBC_log.txt
 
-    if [ "$codec" == "HM" ]; then
+    if [ "$codec" == "hm" ]; then
         enc_config=HM/HEVC_SCC_CTC_cfgs/encoder_intra_main_scc_constIBC.cfg
-    elif [ "$codec" == "VTM" ]; then
+    elif [ "$codec" == "vtm" ]; then
         enc_config=VTM/CTC_cfgs/encoder_intra_vtm.cfg
         class_config=VTM/CTC_cfgs/classSCC.cfg
         format_config=VTM/CTC_cfgs/formatRGB.cfg
@@ -73,9 +73,9 @@ encode() {
 
     echo "Encoding $1 with q=$q with codec $codec ..."
     start_time="$(date -u +%s)"
-    if [ "$codec" == "HM" ]; then
+    if [ "$codec" == "hm" ]; then
         ./HM_codec/bin/TAppEncoderStatic -c "$enc_config" -c "$config" -f 1 -q $q --BitstreamFile=$bitstream --ReconFile=$reconst >> HEVC_SCC_CTC_constIBC_log.txt
-    elif [ "$codec" == "VTM" ]; then
+    elif [ "$codec" == "vtm" ]; then
         ./VTM_codec/bin/EncoderAppStatic -c "$enc_config" -c "$config" -c "$class_config" -c "$format_config" -f 1 -q $q --BitstreamFile=$bitstream --ReconFile=$reconst >> CTC_log.txt
     fi
 
@@ -99,9 +99,9 @@ decode() {
     mkdir -p "$decoded_dir_spec"
 
     # Decoding
-    if [ "$codec" == "HM" ]; then
+    if [ "$codec" == "hm" ]; then
         ./HM_codec/bin/TAppDecoderStatic -b "$bitstream" -o "$reconst" --OutputColourSpaceConvert=GBRtoRGB --OutputBitDepth=8
-    elif [ "$codec" == "VTM" ]; then
+    elif [ "$codec" == "vtm" ]; then
         ./VTM_codec/bin/DecoderAppStatic -b "$bitstream" -o "$reconst" --OutputColourSpaceConvert=GBRtoRGB --OutputBitDepth=8
     fi
         
@@ -161,14 +161,17 @@ result_dir="images/results"
 
 # names=("images/original/SCI01.bmp")
 
-for filename in "${names[@]}"; do
-   pipeline "$filename" "35" "HM"
-done
-
-# for codec in "VTM" "HM"; do
-#     for q in {35..50..5}; do
-#         for filename in "${names[@]}"; do
-#             pipeline "$filename" "$q" "$codec"
-#         done
-#     done
+# for filename in "${names[@]}"; do
+#    pipeline "$filename" "35" "hm"
 # done
+
+# qs=($(seq 35 5 50))
+qs=($(seq 22 5 37))
+
+for codec in "vtm" "hm"; do
+    for q in "${qs[@]}"; do
+        for filename in "${names[@]}"; do
+            pipeline "$filename" "$q" "$codec"
+        done
+    done
+done
