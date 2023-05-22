@@ -86,6 +86,26 @@ encode() {
     echo "Encoding took $((elapsed_time / 60)) minutes and $((elapsed_time % 60)) seconds to complete."
 }
 
+measure_size() {
+    # measure size of encoded bitstream and save to result folder for later use
+
+    fbname=$(basename "$1" "$ext")
+    q=$2
+    codec=$3
+
+    result_dir_spec=$result_dir"/"$codec
+    encoded_dir_spec=$encoded_dir"/"$codec
+    bitstream=$encoded_dir_spec"/"$fbname"_CTC_"$q".bin"
+    textfile=$result_dir_spec"/"$fbname$codec$q".txt"
+
+    mkdir -p "$result_dir_spec"
+
+    size=$(stat -c%s "$bitstream")
+    # save size to text file for later use
+    echo "size of $fbname with q=$q with codec $codec in bytes:" > "$textfile"
+    echo "$size" >> "$textfile"
+}
+
 decode() {
 
     fbname=$(basename "$1" "$ext")
@@ -143,6 +163,7 @@ pipeline() {
     convert_to_raw "$filename"
     generate_config "$filename"
     encode "$filename" "$q" "$codec"
+    measure_size "$filename" "$q" "$codec"
     decode "$filename" "$q" "$codec"
     convert_back "$filename" "$q" "$codec"
 }
@@ -172,6 +193,7 @@ for codec in "vtm" "hm"; do
     for q in "${qs[@]}"; do
         for filename in "${names[@]}"; do
             pipeline "$filename" "$q" "$codec"
+            # measure_size "$filename" "$q" "$codec"
         done
     done
 done
