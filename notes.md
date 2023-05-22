@@ -213,8 +213,11 @@ Annotations from algorithms are similar, bbox + text. So it would be reasonable 
 
 - [ ] comparison of gt vs pseudo gt
     - vtm/hm vs cer https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=9747633
-    - plot
+    - for VTM and HM: mean cer over all images, compare txt to
+        - real gt (label uncompressed images yourself)
+        - pseudo gt (run ocr on uncompressed images, use that as gt)
 
+- [ ] fix label of the coin image
 - [ ] convert bmp images to png for latex
     - can do with convert, same as for RAW files for codec
 

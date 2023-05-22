@@ -136,6 +136,7 @@ def create_summary(data):
 
     return table
 
+
 if __name__ == "__main__":
     algos = CONFIG["ocr_algos"]
     data = setup()

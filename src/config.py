@@ -9,6 +9,16 @@ CONFIG = {
         # quality levels to use for experiments
         "scid_quals": [1, 2, 3, 4, 5],
 
+        # codecs to use for experiments
+        "codecs": ["vtm", "hm"],
+
+        # images to use for codec experiments
+        "codecs_img_ids": [1],
+        # "codecs_img_ids": [1, 3, 4, 5, 29],
+
+        # q's levels to use for experiments
+        "codecs_qs": [35, 40, 45],
+
         # ocr algorithms to use for experiments
         "ocr_algos": ["ezocr", "tess"],
         # "ocr_algos": ["ezocr"],
@@ -32,6 +42,16 @@ PATHS = {
         "images_scid_ref":
         lambda num:
         f"data/raw/scid/ReferenceSCIs/SCI{num if num > 9 else f'0{num}'}.bmp",
+
+        # Path to images transformed with VTM(VVC codec)
+        "images_vtm":
+        lambda num, q:
+        f"data/raw/scid/vtm/SCI{num if num > 9 else f'0{num}'}VTM{q}.bmp",
+
+        # Path to images transformed with HM(HEVC codec)
+        "images_hm":
+        lambda num, q:
+        f"data/raw/scid/hm/SCI{num if num > 9 else f'0{num}'}HM{q}.bmp",
 
         # Path to MOS txt file for scid dataset
         "mos_scid":
@@ -57,6 +77,16 @@ PATHS = {
         "pred_ref":
         lambda num, algo = "ezocr", ext="txt":
         f"results/pred/scid/ref/{algo}/SCI{num if num > 9 else f'0{num}'}.{ext}",
+
+        # predition on images transformed with VTM(VVC codec)
+        "pred_vtm":
+        lambda num, q, algo = "ezocr", ext="txt":
+        f"results/pred/scid/vtm/{algo}/SCI{num if num > 9 else f'0{num}'}VTM{q}.{ext}",
+
+        # predition on images transformed with HM(HEVC codec)
+        "pred_hm":
+        lambda num, q, algo = "ezocr", ext="txt":
+        f"results/pred/scid/hm/{algo}/SCI{num if num > 9 else f'0{num}'}HM{q}.{ext}",
 
         # Path to the folder containing experiment images
         "images_exp": "exp",

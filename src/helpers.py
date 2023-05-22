@@ -296,5 +296,18 @@ def create_paths(path, *args, **kwargs):
 
     return paths
 
+def create_dir(paths):
+    """
+    creates directories if they do not exist
+    for paths, takes first path if list of paths is given
+    """
+    
+    # check if paths is list of strings or one string
+    if type(paths) is list:
+        paths = paths[0]
+    
+    dir = os.path.dirname(paths)
+    os.makedirs(dir, exist_ok=True)
+
 if __name__ == '__main__':
     pass
