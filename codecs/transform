@@ -61,10 +61,15 @@ encode() {
     reconst=$encoded_dir_spec"/"$fbname"_CTC_dec_"$q".raw"
 
     mkdir -p "$encoded_dir_spec"
-    echo > HEVC_SCC_CTC_constIBC_log.txt
 
     if [ "$codec" == "hm" ]; then
-        enc_config=HM/HEVC_SCC_CTC_cfgs/encoder_intra_main_scc_constIBC.cfg
+        if [ "$conf" == "scc" ]; then
+            echo "using hm with scc config"
+            enc_config=HM/HEVC_SCC_CTC_cfgs/encoder_intra_main_scc_constIBC.cfg
+        elif [ "$conf" == "default" ]; then
+            echo "using hm with default config"
+            enc_config=HM/HEVC_SCC_CTC_cfgs/encoder_intra_main.cfg
+        fi
     elif [ "$codec" == "vtm" ]; then
         enc_config=VTM/CTC_cfgs/encoder_intra_vtm.cfg
         class_config=VTM/CTC_cfgs/classSCC.cfg
@@ -76,7 +81,13 @@ encode() {
     if [ "$codec" == "hm" ]; then
         ./HM_codec/bin/TAppEncoderStatic -c "$enc_config" -c "$config" -f 1 -q $q --BitstreamFile=$bitstream --ReconFile=$reconst >> HEVC_SCC_CTC_constIBC_log.txt
     elif [ "$codec" == "vtm" ]; then
-        ./VTM_codec/bin/EncoderAppStatic -c "$enc_config" -c "$config" -c "$class_config" -c "$format_config" -f 1 -q $q --BitstreamFile=$bitstream --ReconFile=$reconst >> CTC_log.txt
+        if [ "$conf" == "scc" ]; then
+            echo "using vtm with scc config"
+            ./VTM_codec/bin/EncoderAppStatic -c "$enc_config" -c "$config" -c "$class_config" -c "$format_config" -f 1 -q $q --BitstreamFile=$bitstream --ReconFile=$reconst >> CTC_log.txt
+        elif [ "$conf" == "default" ]; then
+            echo "using vtm with default config"
+            ./VTM_codec/bin/EncoderAppStatic -c "$enc_config" -c "$config" -c "$format_config" -f 1 -q $q --BitstreamFile=$bitstream --ReconFile=$reconst >> CTC_log.txt
+        fi
     fi
 
     end_time="$(date -u +%s)"
@@ -173,12 +184,15 @@ names=("$@")
 
 ext=".bmp"
 
+# conf="scc"
+conf="default"
+
 # define directories
-raw_dir="images/raw"
-config_dir="images/config"
-encoded_dir="images/encoded"
-decoded_dir="images/decoded"
-result_dir="images/results"
+raw_dir="images/"$conf"/raw"
+config_dir="images/"$conf"/config"
+encoded_dir="images/"$conf"/encoded"
+decoded_dir="images/"$conf"/decoded"
+result_dir="images/"$conf"/results"
 
 # names=("images/original/SCI01.bmp")
 
@@ -189,11 +203,11 @@ result_dir="images/results"
 # qs=($(seq 35 5 50))
 qs=($(seq 22 5 37))
 
-for codec in "vtm" "hm"; do
+# for codec in "vtm" "hm"; do
+for codec in "hm"; do
     for q in "${qs[@]}"; do
         for filename in "${names[@]}"; do
-            pipeline "$filename" "$q" "$codec"
-            # measure_size "$filename" "$q" "$codec"
+            pipeline "$filename" "$q" "$codec" $"conf"
         done
     done
 done
