@@ -77,24 +77,24 @@ def pred_ref():
     log.info(f"done with predictions on reference images")
 
 
-def pred_codec(codec="vtm"):
+def pred_codec(codec="vtm", config="scc"):
 
     ocr_algos = CONFIG["ocr_algos"]
     # ocr_algos = ["ezocr"]
 
     # get paths
-    load_paths_vtm = helpers.create_paths(PATHS[f"images_{codec}"],
+    load_paths_vtm = helpers.create_paths(PATHS[f"images_{codec}_{config}"],
                                           CONFIG["codecs_img_ids"],
                                           CONFIG["codecs_qs"])
 
     for algo in ocr_algos:
 
-        save_paths_csv = helpers.create_paths(PATHS[f"pred_{codec}"],
+        save_paths_csv = helpers.create_paths(PATHS[f"pred_{codec}_{config}"],
                                                   CONFIG["codecs_img_ids"],
                                                   CONFIG["codecs_qs"],
                                                   algo=algo, ext="csv")
 
-        save_paths_txt = helpers.create_paths(PATHS[f"pred_{codec}"],
+        save_paths_txt = helpers.create_paths(PATHS[f"pred_{codec}_{config}"],
                                                   CONFIG["codecs_img_ids"],
                                                   CONFIG["codecs_qs"],
                                                   algo=algo, ext="txt")
@@ -119,6 +119,6 @@ def pred_codec(codec="vtm"):
 
 if __name__ == "__main__":
     # pred_dist()
-    pred_ref()
-    # pred_codec(codec="vtm")
-    # pred_codec(codec="hm")
+    # pred_ref()
+    pred_codec(codec="vtm", config="scc")
+    pred_codec(codec="hm", config="scc")

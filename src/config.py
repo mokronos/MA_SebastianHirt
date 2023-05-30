@@ -20,6 +20,9 @@ CONFIG = {
         "codecs_qs": [35, 40, 45, 50],
         # "codecs_qs": [22, 27, 32, 37],
 
+        # codec config (scc or default)
+        "codecs_config": "scc",
+
         # ocr algorithms to use for experiments
         "ocr_algos": ["ezocr", "tess"],
         # "ocr_algos": ["ezocr"],
@@ -28,7 +31,8 @@ CONFIG = {
         # GN: Gaussian Noise, GB: Gaussian Blur, MB: Motion Blur, CC: Contrast Change
         # JPEG: JPEG, JPEG2000: JPEG2000, CSC: Color Saturation Change, HEVC-SCC: HEVC-SCC
         # CQD: Color Quantization with dithering
-        "dist_names": {1: 'GN', 2: 'GB', 3: 'MB', 4: 'CC', 5: 'JPEG', 6: 'JPEG2000', 7: 'CSC', 8: 'HEVC-SCC', 9: 'CQD'}
+        "dist_names": {1: 'GN', 2: 'GB', 3: 'MB', 4: 'CC', 5: 'JPEG',
+                       6: 'JPEG2000', 7: 'CSC', 8: 'HEVC-SCC', 9: 'CQD'}
         }
 
 
@@ -44,25 +48,45 @@ PATHS = {
         lambda num:
         f"data/raw/scid/ReferenceSCIs/SCI{num if num > 9 else f'0{num}'}.bmp",
 
-        # Path to images transformed with VTM(VVC codec)
-        "images_vtm":
+        # Path to images transformed with VTM(VVC codec), scc config
+        "images_vtm_scc":
         lambda num, q:
-        f"data/raw/scid/vtm/SCI{num if num > 9 else f'0{num}'}vtm{q}.bmp",
+        f"data/raw/scid/scc/vtm/SCI{num if num > 9 else f'0{num}'}vtm{q}.bmp",
 
-        # Path to images transformed with HM(HEVC codec)
-        "images_hm":
+        # Path to images transformed with HM(HEVC codec) scc config
+        "images_hm_scc":
         lambda num, q:
-        f"data/raw/scid/hm/SCI{num if num > 9 else f'0{num}'}hm{q}.bmp",
+        f"data/raw/scid/scc/hm/SCI{num if num > 9 else f'0{num}'}hm{q}.bmp",
 
-        # Path to size text file for VTM images
-        "size_vtm":
+        # Path to size text file for VTM images scc config
+        "size_vtm_scc":
         lambda num, q:
-        f"data/raw/scid/vtm/SCI{num if num > 9 else f'0{num}'}vtm{q}.txt",
+        f"data/raw/scid/scc/vtm/SCI{num if num > 9 else f'0{num}'}vtm{q}.txt",
 
-        # Path to size text file for HM images
-        "size_hm":
+        # Path to size text file for HM images scc config
+        "size_hm_scc":
         lambda num, q:
-        f"data/raw/scid/hm/SCI{num if num > 9 else f'0{num}'}hm{q}.txt",
+        f"data/raw/scid/scc/hm/SCI{num if num > 9 else f'0{num}'}hm{q}.txt",
+
+        # Path to images transformed with VTM(VVC codec), default config
+        "images_vtm_default":
+        lambda num, q:
+        f"data/raw/scid/default/vtm/SCI{num if num > 9 else f'0{num}'}vtm{q}.bmp",
+
+        # Path to images transformed with HM(HEVC codec) default config
+        "images_hm_default":
+        lambda num, q:
+        f"data/raw/scid/default/hm/SCI{num if num > 9 else f'0{num}'}hm{q}.bmp",
+
+        # Path to size text file for VTM images default config
+        "size_vtm_default":
+        lambda num, q:
+        f"data/raw/scid/default/vtm/SCI{num if num > 9 else f'0{num}'}vtm{q}.txt",
+
+        # Path to size text file for HM images default config
+        "size_hm_default":
+        lambda num, q:
+        f"data/raw/scid/default/hm/SCI{num if num > 9 else f'0{num}'}hm{q}.txt",
 
         # Path to MOS txt file for scid dataset
         "mos_scid":
@@ -89,15 +113,25 @@ PATHS = {
         lambda num, algo = "ezocr", ext="txt":
         f"results/pred/scid/ref/{algo}/SCI{num if num > 9 else f'0{num}'}.{ext}",
 
-        # predition on images transformed with VTM(VVC codec)
-        "pred_vtm":
+        # predition on images transformed with VTM(VVC codec), scc config
+        "pred_vtm_scc":
         lambda num, q, algo = "ezocr", ext="txt":
-        f"results/pred/scid/vtm/{algo}/SCI{num if num > 9 else f'0{num}'}vtm{q}.{ext}",
+        f"results/pred/scid/scc/vtm/{algo}/SCI{num if num > 9 else f'0{num}'}vtm{q}.{ext}",
 
-        # predition on images transformed with HM(HEVC codec)
-        "pred_hm":
+        # predition on images transformed with HM(HEVC codec), scc config
+        "pred_hm_scc":
         lambda num, q, algo = "ezocr", ext="txt":
-        f"results/pred/scid/hm/{algo}/SCI{num if num > 9 else f'0{num}'}hm{q}.{ext}",
+        f"results/pred/scid/scc/hm/{algo}/SCI{num if num > 9 else f'0{num}'}hm{q}.{ext}",
+
+        # predition on images transformed with VTM(VVC codec), default config
+        "pred_vtm_default":
+        lambda num, q, algo = "ezocr", ext="txt":
+        f"results/pred/scid/default/vtm/{algo}/SCI{num if num > 9 else f'0{num}'}vtm{q}.{ext}",
+
+        # predition on images transformed with HM(HEVC codec), default config
+        "pred_hm_default":
+        lambda num, q, algo = "ezocr", ext="txt":
+        f"results/pred/scid/default/hm/{algo}/SCI{num if num > 9 else f'0{num}'}hm{q}.{ext}",
 
         # Path to the folder containing experiment images
         "images_exp": "exp",
@@ -113,12 +147,15 @@ PATHS = {
 
         # Path to dataframe with distorted images results
         "results_spearman_pearson":
-        lambda algo:
-        f"results/summaries/results_dist_spear_pears_{algo}.csv",
+        lambda algo, ext:
+        f"results/summaries/results_dist_spear_pears_{algo}.{ext}",
 
         # Path to dataframe with codec comparison results
-        "results_codecs":
-        f"results/summaries/results_codecs.csv",
+        "results_codecs_scc":
+        f"results/summaries/results_codecs_scc.csv",
+
+        "results_codecs_default":
+        f"results/summaries/results_codecs_default.csv",
 
         # Path to the folder containing latex tables
         "latex_tables":

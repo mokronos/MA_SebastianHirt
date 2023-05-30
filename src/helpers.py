@@ -12,6 +12,7 @@ from PIL import Image
 import logging as log
 from config import PATHS, CONFIG
 import itertools
+import cv2
 
 # logging
 log.basicConfig(level=log.DEBUG, format='%(asctime)s \n %(message)s')
@@ -322,6 +323,17 @@ def get_size(path):
     size = int(size) * 8
 
     return size
+
+def get_psnr(refpath, distpath):
+    
+    # read images
+    ref = cv2.imread(refpath)
+    dist = cv2.imread(distpath)
+
+    # calculate psnr
+    psnr = cv2.PSNR(ref, dist)
+
+    return psnr
 
 if __name__ == '__main__':
     pass
