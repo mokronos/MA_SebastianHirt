@@ -15,13 +15,15 @@ CONFIG = {
         # images to use for codec experiments
         # "codecs_img_ids": [1],
         "codecs_img_ids": [1, 3, 4, 5, 29],
+        "codecs_img_ids_extra": [2, 6, 7, 8, 9, 11, 12, 13, 15, 16],
 
         # q's levels to use for experiments
         "codecs_qs": [35, 40, 45, 50],
         # "codecs_qs": [22, 27, 32, 37],
 
         # codec config (scc or default)
-        "codecs_config": "scc",
+        "codecs_config": ["scc", "default"],
+        # "codecs_config": ["scc"],
 
         # ocr algorithms to use for experiments
         "ocr_algos": ["ezocr", "tess"],
@@ -151,11 +153,8 @@ PATHS = {
         f"results/summaries/results_dist_spear_pears_{algo}.{ext}",
 
         # Path to dataframe with codec comparison results
-        "results_codecs_scc":
-        f"results/summaries/results_codecs_scc.csv",
-
-        "results_codecs_default":
-        f"results/summaries/results_codecs_default.csv",
+        "results_codecs":
+        f"results/summaries/results_codecs.csv",
 
         # Path to the folder containing latex tables
         "latex_tables":

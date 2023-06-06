@@ -148,9 +148,10 @@ if __name__ == "__main__":
         # add_fitted(data, algo=algo)
         # add_pearson(data, algo=algo)
     #     add_spearman_ranked(data, algo=algo)
-        table = create_summary(data, algo=algo)
+        table = create_summary(data, algo=algo).round(2)
         print(table)
-        table.to_csv(PATHS["results_spearman_pearson"](algo))
+        table.to_csv(PATHS["results_spearman_pearson"](algo, "csv"))
+        table.to_markdown(PATHS["results_spearman_pearson"](algo, "md"))
 
     data.to_csv(PATHS["results_dist"])
 
