@@ -7,3 +7,4 @@ pytesseract==0.3.10
 pandas==1.5.3
 scipy==1.10.1
 easyocr==1.6.2
+bjontegaard==1.2.0
