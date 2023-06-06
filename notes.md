@@ -7,6 +7,9 @@ Just some notes that don't belong in the README.
 ## SCID
 https://eezkni.github.io/publications/ESIM.html
 paper: https://eezkni.github.io/publications/journal/ESIM/ESIM_ZKNI_TIP17.pdf
+
+![SCID Dataset](./images/reference_images.png)
+
 ## CIQAD
 https://sites.google.com/site/ciqadatabase/
 paper: https://sci-hub.ru/10.1016/j.jvcir.2014.11.001
@@ -159,6 +162,71 @@ Annotations from algorithms are similar, bbox + text. So it would be reasonable 
     - Text extraction using OCR: A Systematic Review
     - might be a good overview
 
+### Distortions
+
+1. Gaussian Noise (GN)
+
+<p align="center">
+    <img src="./data/raw/scid/ReferenceSCIs/SCI01.png" width="400" />
+    <img src="./data/raw/scid/DistortedSCIs/SCI01_1_5.png" width="400" />
+</p>
+
+2. Gaussian Blur (GB)
+
+<p align="center">
+    <img src="./data/raw/scid/ReferenceSCIs/SCI01.png" width="400" />
+    <img src="./data/raw/scid/DistortedSCIs/SCI01_2_5.png" width="400" />
+</p>
+
+3. Motion Blur (MB)
+
+<p align="center">
+    <img src="./data/raw/scid/ReferenceSCIs/SCI01.png" width="400" />
+    <img src="./data/raw/scid/DistortedSCIs/SCI01_3_5.png" width="400" />
+</p>
+
+4. Contrast Change (CC)
+
+<p align="center">
+    <img src="./data/raw/scid/ReferenceSCIs/SCI01.png" width="400" />
+    <img src="./data/raw/scid/DistortedSCIs/SCI01_4_5.png" width="400" />
+</p>
+
+5. JPEG Compression (JPEG)
+
+<p align="center">
+    <img src="./data/raw/scid/ReferenceSCIs/SCI01.png" width="400" />
+    <img src="./data/raw/scid/DistortedSCIs/SCI01_5_5.png" width="400" />
+</p>
+
+6. JPEG2000 Compression (JPEG2000)
+
+<p align="center">
+    <img src="./data/raw/scid/ReferenceSCIs/SCI01.png" width="400" />
+    <img src="./data/raw/scid/DistortedSCIs/SCI01_6_5.png" width="400" />
+</p>
+
+7. Color Saturation Change (CSC)
+
+<p align="center">
+    <img src="./data/raw/scid/ReferenceSCIs/SCI01.png" width="400" />
+    <img src="./data/raw/scid/DistortedSCIs/SCI01_7_5.png" width="400" />
+</p>
+
+8. HEVC Screen Content Coding (HEVC-SCC)
+
+<p align="center">
+    <img src="./data/raw/scid/ReferenceSCIs/SCI01.png" width="400" />
+    <img src="./data/raw/scid/DistortedSCIs/SCI01_8_5.png" width="400" />
+</p>
+
+9. Color Quantization Dither (CQD)
+
+<p align="center">
+    <img src="./data/raw/scid/ReferenceSCIs/SCI01.png" width="400" />
+    <img src="./data/raw/scid/DistortedSCIs/SCI01_9_5.png" width="400" />
+</p>
+
 ## schedule
 
 | Month | Tasks |
@@ -169,6 +237,17 @@ Annotations from algorithms are similar, bbox + text. So it would be reasonable 
 | 4 | Evaluate the robustness and limitations of the text recognition algorithms and MOS data. Discuss the results and draw conclusions on the research question. Write Evaluation, identify what else is needed to explain results. |
 | 5 | Refine the thesis chapters, including the discussion and conclusion. Draft the abstract and connect chapters. |
 | 6 | Finalize the thesis and prepare for submission. Review and proofread the thesis. |
+
+| Week | Tasks |
+| --- | --- |
+| 1 | Finalize plots, add more images/labels, get things in order, look for inconsistencies|
+| 2 | Write evaluation, draw conclusions from all the plots/data, identify recurring themes?|
+| 3 | Write supporting chapters, methodology, dataset labeling, metrics, codecs|
+| 4 | Write introduction, abstract, conclusion, connect chapters |
+| 5 | Look for inconsistencies, proofread, finalize thesis |
+| 6 | Buffer |
+| 7 | Buffer |
+| 8 | Buffer |
 
 ## Random ideas
 - Subjective metric should be comparison with original image, not absolute. Double stimulus.(for SCID dataset)
@@ -214,11 +293,31 @@ Annotations from algorithms are similar, bbox + text. So it would be reasonable 
 
 - [x] fix label of the coin image
 
+- [x] plot avg bitrate vs avg psnr
+    - [x] might want to put everything into one dataframe
+        - QPs, configs(scc, default), codec(HM, VTM)
+        - then plot stuff
+
+- [ ] add labels/gt for all other images
+    - images: 2, 6, 7, 8, 9, 11, 12, 13, 15, 16
+    - did not included UI elements like > in navigation in gt
+
+- [ ] Bjøntegaard Delta Rate LMS
+    - need more images, data not strictly increasing
+    - might need to invert cer values, to make it increase with increasing bitrate 
+
+- [ ] different config files for non-screen content codec
+
+- [ ] reflect on all the data we have now
+    - plots
+    - tables/correlations
+    - [ ] check what questions i can answer with this data and what i still need
+
 - [ ] compare gt to ocr on reference images
 
 - [ ] compare ocr on reference images to ocr on compressed images
 
-- [ ] convert bmp images to png for latex
+- [x] convert bmp images to png for latex
     - can do with convert, same as for RAW files for codec
 
 - [ ] figure out the inner workings of tesseract
@@ -272,11 +371,111 @@ the correlation between text recognition rates and human judgement.
     - transformation via fitted model might help
 - tesseract
 
+<table>
+<tr><th>EasyOCR</th><th>Tesseract</th></tr>
+<tr><td>
+
+|                          |   cer_fitted_ezocr |
+|:-------------------------|-------------------:|
+| ('pearson', 'CC')        |               0.37 |
+| ('pearson', 'CQD')       |               0.38 |
+| ('pearson', 'CSC')       |               0.07 |
+| ('pearson', 'GB')        |               0.64 |
+| ('pearson', 'GN')        |               0.09 |
+| ('pearson', 'HEVC-SCC')  |               0.41 |
+| ('pearson', 'JPEG')      |               0.6  |
+| ('pearson', 'JPEG2000')  |               0.3  |
+| ('pearson', 'MB')        |               0.83 |
+| ('spearman', 'CC')       |               0.48 |
+| ('spearman', 'CQD')      |               0.53 |
+| ('spearman', 'CSC')      |               0.04 |
+| ('spearman', 'GB')       |               0.6  |
+| ('spearman', 'GN')       |               0.17 |
+| ('spearman', 'HEVC-SCC') |               0.27 |
+| ('spearman', 'JPEG')     |               0.37 |
+| ('spearman', 'JPEG2000') |               0.24 |
+| ('spearman', 'MB')       |               0.87 |
+
+</td><td>
+
+|                          |   cer_fitted_tess |
+|:-------------------------|------------------:|
+| ('pearson', 'CC')        |              0.29 |
+| ('pearson', 'CQD')       |              0.37 |
+| ('pearson', 'CSC')       |              0.19 |
+| ('pearson', 'GB')        |              0.56 |
+| ('pearson', 'GN')        |              0.87 |
+| ('pearson', 'HEVC-SCC')  |              0.45 |
+| ('pearson', 'JPEG')      |              0.38 |
+| ('pearson', 'JPEG2000')  |              0.47 |
+| ('pearson', 'MB')        |              0.61 |
+| ('spearman', 'CC')       |              0.21 |
+| ('spearman', 'CQD')      |              0.15 |
+| ('spearman', 'CSC')      |              0.04 |
+| ('spearman', 'GB')       |              0.49 |
+| ('spearman', 'GN')       |              0.78 |
+| ('spearman', 'HEVC-SCC') |              0.33 |
+| ('spearman', 'JPEG')     |              0.23 |
+| ('spearman', 'JPEG2000') |              0.45 |
+| ('spearman', 'MB')       |              0.68 |
+
+</td></tr> </table>
+
+Observations:
+- Tesseract aligns with human judgement better for images with gaussian noise, 0.09 ezocr vs 0.87 tess, similar for spearman ranked
+- both do well for:
+    - Gaussian Blur (GB) (0.64 ezocr vs 0.56 tess)
+    - Motion Blur (MB) (0.83 ezocr vs 0.61 tess), spearman even higher (0.87 ezocr vs 0.68 tess)
+        - might be because motion blur heavily distorts text
+- the lowest correlations are for:
+    - Color Quantization Dither (CQD) (0.38 ezocr vs 0.15 tess)
+        - only really affects objects in the images, not text
+    - Color Saturation Change (CSC) (0.07 ezocr vs 0.19 tess)
+        - doesn't change much in regards to text readability but image looks worse
+    - Gaussian Noise (GN) (0.09 for ezocr)
+        - ezocr still performs well, even if the text is impaired
+
+Conclusion:
+Correlations are high when the distortion heavily affects the text, but low when the distortion doesn't.
+    
+
 4. Since most datasets do not contain textual ground truth information,
    investigate the feasibility of using recognized text from pristine images as ground truth instead.
 
     - hypothesis: should perform well, but position needs to be determined
     
 
-## Questions
+True GT:
 
+The image gets encoded with the corresponding codec and quality level.
+The resulting image is then fed into the OCR algorithm.
+The recognized text is then compared to the human label (true GT) and the prediction of the OCR algorithm  on the non-encoded image (pseudo GT). The resulting CER is plotted.
+
+If the difference between the pseudo GT values of the comparing codecs is similar to the difference between the true GT values, the OCR algorithm might be good to use as a pseudo GT.
+One can then use the OCR algorithm to create a GT without the need for human labeling. This pseudo GT can then be used to evaluate the performance of codecs, compared to each other.
+
+![easy ocr](./images/analyze/codec_comparison_ezocr.png)
+![tesseract](./images/analyze/codec_comparison_tess.png)
+
+Observations:
+- the distance between true and pseudo GT is lower for ezocr than for tesseract
+    - ezocr seems to be less affected by the distortions induced by the codecs
+- ocr performance gets worse with higher QP, but only slightly
+    - makes sense
+
+Weirdness:
+
+- I's are often missed
+
+- Image 3:
+    - has worse (higher) CER for QP 35 than for QP 45, so ocr performs better for worse quality
+    - but pseudo GT CERs are strictly increasing with QP
+
+|  QP |   CER_true_gt   | CER_pseudo_gt |
+|----:|----------------:|--------------:|
+|  35 |            0.173 |          0.002 |
+|  40 |            0.178 |          0.015 |
+|  45 |            0.170 |          0.039 |
+|  50 |            0.181 |          0.073 |
+
+## Questions
