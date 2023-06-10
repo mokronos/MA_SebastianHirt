@@ -1,0 +1,20 @@
+KEY STAGES IN DIGITAL IMAGE PROCESSING:
+MORPHOLOGICAL PROCESSING
+Image
+Morphological
+Restoration
+Processing
+Image
+Segmentation
+Enhancement
+Image
+Object
+Acquisition
+Recognition
+Representation
+Problem Domain
+& Description
+Colour Image
+Image
+Processing
+Compression
