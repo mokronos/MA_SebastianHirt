@@ -240,7 +240,7 @@ Annotations from algorithms are similar, bbox + text. So it would be reasonable 
 
 | Week | Tasks |
 | --- | --- |
-| 1 | Finalize plots, add more images/labels, get things in order, look for inconsistencies|
+| 1 | Finalize plots, add more images/labels, get things in order, look for inconsistencies, Gliederung|
 | 2 | Write evaluation, draw conclusions from all the plots/data, identify recurring themes?|
 | 3 | Write supporting chapters, methodology, dataset labeling, metrics, codecs|
 | 4 | Write introduction, abstract, conclusion, connect chapters |
@@ -249,6 +249,7 @@ Annotations from algorithms are similar, bbox + text. So it would be reasonable 
 | 7 | Buffer |
 | 8 | Buffer |
 
+maybe bad introduction first
 ## Random ideas
 - Subjective metric should be comparison with original image, not absolute. Double stimulus.(for SCID dataset)
 - Why not train a model to predict human score?
@@ -298,15 +299,27 @@ Annotations from algorithms are similar, bbox + text. So it would be reasonable 
         - QPs, configs(scc, default), codec(HM, VTM)
         - then plot stuff
 
-- [ ] add labels/gt for all other images
+- [x] add labels/gt for all other images
     - images: 2, 6, 7, 8, 9, 11, 12, 13, 15, 16
     - did not included UI elements like > in navigation in gt
+    - included double spaces in gt
+    - really weird english in some images, should find out if ocr uses a dictionary, could impact performance
+
+- [x] different config files for non-screen content codec
+    - just loop over them, and save as two different plots
+
+- [x] convert bmp images to png for latex
+    - can do with convert, same as for RAW files for codec
+
+- [x] need to change paths for visualizations
+
+- [x] basic introduction and outline
+
+- [ ] absolute differenz pixel
 
 - [ ] Bjøntegaard Delta Rate LMS
     - need more images, data not strictly increasing
     - might need to invert cer values, to make it increase with increasing bitrate 
-
-- [ ] different config files for non-screen content codec
 
 - [ ] reflect on all the data we have now
     - plots
@@ -317,15 +330,10 @@ Annotations from algorithms are similar, bbox + text. So it would be reasonable 
 
 - [ ] compare ocr on reference images to ocr on compressed images
 
-- [x] convert bmp images to png for latex
-    - can do with convert, same as for RAW files for codec
-
 - [ ] figure out the inner workings of tesseract
     - when it fails, why does it fail?
     - what preprocessing is applied automatically?
     - still no result for some compressed images
-
-- [ ] need to change paths for visualizations
 
 - [ ] document quality assessment dataset; missing MOS? Check if in last package
     - scores are in last package, but still need to download all
@@ -336,8 +344,6 @@ Annotations from algorithms are similar, bbox + text. So it would be reasonable 
 - [ ] write section for TER/CER and MOS
     - need to flesh out and add sources
     - add other common metrics (mentioned in the task as well)
-
-
 
 ## Results
 
@@ -479,3 +485,5 @@ Weirdness:
 |  50 |            0.181 |          0.073 |
 
 ## Questions
+
+- bitdepth of images is 24/32 bit? but codec config says 8?
