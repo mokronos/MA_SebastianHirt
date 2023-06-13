@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import logging as log
 import helpers
 from config import CONFIG, PATHS
+import cv2
 
 def plot():
     # compare to MOS of dataset, somehow
@@ -217,7 +218,7 @@ def plot_codec_comparison_cer():
                             
 
             # plt.xlim(0, 0.4)
-            plt.ylim(0, 0.35)
+            plt.ylim(0, 0.6)
             plt.xlabel("Avg size of images in Mbit")
             plt.ylabel("Avg CER")
             plt.title(f"Comparison of codecs for {algo} with {codec_config} codec config")
@@ -280,10 +281,28 @@ def plot_codec_comparison_psnr():
         plt.close()
         # plt.show()
 
+def image_diff():
+    # calculate difference between reference and q=50 compressed image
+    # load images
+    ids = CONFIG['codecs_img_ids_combined']
+
+    ref_paths = helpers.create_paths(PATHS["images_scid_ref"], ids)
+    codec_paths = helpers.create_paths(PATHS["images_hm_scc"], ids, [50])
+
+    for ref, codec, id in zip(ref_paths, codec_paths, ids):
+
+        ref_img = cv2.imread(ref, cv2.IMREAD_GRAYSCALE)
+        codec_img = cv2.imread(codec, cv2.IMREAD_GRAYSCALE)
+
+        diff = cv2.absdiff(ref_img, codec_img)
+        cv2.imwrite(f"images/diff_{id}_q50.png", diff)
+        
+
 if __name__ == '__main__':
     # plot()
     # plot_sub()
     # plot_fitted()
     # plot_fitted_sub()
     # plot_codec_comparison_cer()
-    plot_codec_comparison_psnr()
+    # plot_codec_comparison_psnr()
+    image_diff()
