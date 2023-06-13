@@ -46,15 +46,21 @@ numbers=noenddot        % no dot after chapter heading prefixes
 \renewcommand\backrefxxx[3]{%
   \hyperlink{page.#1}{$\uparrow$#1}%
 }
-% better than actronym package, makes them auto alphabetically sorted
-\usepackage[toc]{glossaries}
+% better than acronym package, makes them auto alphabetically sorted
+\usepackage[toc,nonumberlist,nomain,nopostdot,acronym,style=long]{glossaries}
 
-\graphicspath{{../images/}{../images/analyze/}}
+\graphicspath{{../images/}{../images/analyze/}{./images/}}
 
 \recalctypearea
 
-% define acronyms, need to be in preamble
+% define symbols and acronyms, need to be in preamble
+\newglossary*{symbols}{Symbols and Notations}
+% \newglossary*{acronym}{Abbreviations and Acronyms}
+\makeglossaries
+\input{texfiles/symbols}
 \input{texfiles/acronyms}
+\glsfindwidesttoplevelname
+\setglossarystyle{alttree}
 
 \begin{document}
 
@@ -73,21 +79,17 @@ numbers=noenddot        % no dot after chapter heading prefixes
     \tableofcontents
     \input{texfiles/kurzfassung}
     \input{texfiles/abstract}
-    \input{texfiles/symbols}
 
     % glossary, makes them auto alphabetically sorted
-    \printnoidxglossary[title=Abbreviations and Acronyms]
+    \printglossary[type=\acronymtype]
+    \printglossary[type=symbols]
 
     \mainmatter
     \input{texfiles/introduction}
+    \input{texfiles/relatedwork}
     \input{texfiles/methods}
     \input{texfiles/dataset}
     \input{texfiles/evaluation}
-
-    % \input{texfiles/examples} % delete in final version!
-    %%%% insert your chapters here %%%%
-    %%%% make sure that included files are encoded in UTF-8 %%%%
-
     \input{texfiles/conclusion}
 
 

@@ -15,9 +15,10 @@
 
 \end{enumerate}
 
-\section{Efficiency of ocr algorithms}
+\section{Performance of ocr algorithms}
+\label{sec:ocr_performance}
 
-Generate a labeled dataset to evaluate the efficiency of the researched algorithms
+Generate a labeled dataset to evaluate the performance of the researched algorithms
 on screen content data.
 
 \begin{itemize}
@@ -34,12 +35,14 @@ on screen content data.
 % \label{fig:img4}
 % \end{figure}
 
-\section{Comparison of ocr CER score and MOS}
+\section{Comparison against human judgement}
+\label{sec:comparison_against_human_judgement}
 
 Available datasets with subjective quality scores will be utilized to investigate
 the correlation between text recognition rates and human judgement.
 
 \subsection{Easy Ocr}
+\label{subsec:easy_ocr}
 
 \begin{itemize}
 \item no clear correlation, ocr not getting substantially worse with worse quality \autoref{fig:sub29} and \autoref{fig:sub3}
@@ -81,8 +84,15 @@ the correlation between text recognition rates and human judgement.
 \label{fig:sub3}
 \end{figure}
 
+\subsection{Tesseract}
+\label{subsec:tesseract}
+
 \section{Usage of recognized text as ground truth}
+\label{sec:usage_of_recognized_text_as_ground_truth}
 
 Since most datasets do not contain textual ground truth information,
 in a further step, Mr Hirt will investigate the feasibility of
 using recognized text from pristine images as ground truth instead.
+
+\section{Codec comparison}
+\label{sec:codec_comparison}

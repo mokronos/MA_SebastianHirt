@@ -1,23 +1,79 @@
 \chapter{Methods}
 \label{chap:methods}
 
+In this chapter, the methods used in this thesis are described.
+
 \section{Optical Character Recognition}
 \label{sec:ocr}
+
+In this section, the \gls{ocr} methods used in this thesis are described.
+
+\subsection{EasyOCR}
+\label{subsec:easyocr}
+
+EasyOCR is a Python library for \gls{ocr} \cite{easyocr}. It uses a deep learning model to detect text.
+
+\subsection{Tesseract}
+\label{subsec:tesseract}
+
+Tesseract is an \gls{ocr} engine \cite{tesseract}. It is open-source and was developed by Google. It is written in C++ and has a Python wrapper.
 
 \section{Metrics}
 \label{sec:metrics}
 
-The \gls{ter} is defined as follows:
+In this section, the metrics used in this thesis are described.
+
+\subsection{Character Error Rate}
+\label{subsec:cer}
+
+The \gls{cer} is defined as follows:
 
 \begin{equation}
-    \text{TER} = \frac{S + D + I}{N}
-    \label{eq:ter}
+    \text{CER} = \frac{S + D + I}{N}
+    \label{eq:cer}
 \end{equation}
 with \(S\) being the number of substitutions, \(D\) the number of deletions, \(I\) the number of insertions, and \(N\) the total number of characters of the text prediction.
-The \gls{ter} ranges from 0 to 1, where 0 means perfect recognition and 1 means no correct characters.
+The \gls{cer} ranges from 0 to 1, where 0 means perfect recognition and 1 means no correct characters.
 Because the \gls{mos} is defined in the range 0 to 100 and 100 represents a high subjective quality, the two metrics are unintuitive to compare.
-Therefore, transform the TER by subtracting it from 1 and multiplying it by 100 to get a \gls{mos}-like value, see \autoref{eq:ter2mos}.
+Therefore, transform the CER by subtracting it from 1 and multiplying it by 100 to get a \gls{mos}-like value, see \autoref{eq:cer2mos}.
 \begin{equation}
-    \text{TER} = (1 - \text{TER}_{raw}) \cdot 100.
-    \label{eq:ter2mos}
+    \text{CER} = (1 - \text{TER}_{raw}) \cdot 100.
+    \label{eq:cer2mos}
 \end{equation}
+
+\subsection{Peak Signal-to-Noise Ratio}
+\label{subsec:psnr}
+
+The \gls{psnr} is defined as follows:
+
+\begin{equation}
+    \text{PSNR} = 10 \cdot \log_{10} \left( \frac{R^2}{\text{MSE}} \right)
+    \label{eq:psnr}
+\end{equation}
+
+with \(R\) being the maximum possible pixel value of the image and \gls{mse} being the mean squared error between the original and the reconstructed image.
+
+\subsection{Bjøntegaard Delta Rate}
+\label{subsec:bdrate}
+
+The \gls{bdrate} is defined by the difference between the integration of curves of the codecs to compare. The first curve is the reference curve and the second the test curve. Both are plotting some average metric over the average bitrate of some images.
+
+\begin{equation}
+    \text{BDRate} = https://arxiv.org/pdf/2202.12565.pdf
+    \label{eq:bdrate}
+\end{equation}
+
+\section{Codecs}
+\label{sec:codecs}
+
+In this section, the codecs used in this thesis are described.
+
+\subsection{High Efficiency Video Coding}
+\label{subsec:hevc}
+
+\gls{hevc} is a video codec.
+
+\subsection{Versatile Video Coding}
+\label{subsec:vvc}
+
+\gls{vvc} is a video codec.
