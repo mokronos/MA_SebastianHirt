@@ -43,7 +43,7 @@ def load_line_text(path):
 
 def char_error_rate(label, prediction):
     """
-    Computes the text error rate (TER) between two strings.
+    Computes the character error rate (CER) between two strings.
     Parameters
     ----------
     label : str
@@ -53,13 +53,13 @@ def char_error_rate(label, prediction):
     Returns
     -------
     float
-        The text error rate between the two strings.
+        The character error rate between the two strings.
     """
     # Compute the edit distance between the two strings.
     distance = editdistance.eval(label, prediction)
 
-    # Compute the length of the longest string.
-    length = max(len(label), len(prediction))
+    # Get the length of the label, thus CER can be in [0, inf).
+    length = len(label)
 
     # Return the edit distance divided by the length of the longest string.
     return distance / length
