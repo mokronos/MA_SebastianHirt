@@ -33,7 +33,8 @@ numbers=noenddot        % no dot after chapter heading prefixes
 \usepackage{amsmath,amssymb}
 \usepackage{graphicx}
 \usepackage{wrapfig}
-\usepackage[caption=false]{subfig}
+% \usepackage[caption=false]{subfig}
+\usepackage{subcaption}
 \usepackage{booktabs}
 \usepackage[printonlyused]{acronym}
 \usepackage{pdfpages}
@@ -64,6 +65,7 @@ numbers=noenddot        % no dot after chapter heading prefixes
 
 \begin{document}
 
+    % \input{texfiles/examples}
     \pagenumbering{Alph} % will not be displayed
     \input{texfiles/titlepage}
     \cleardoublepage
@@ -87,6 +89,8 @@ numbers=noenddot        % no dot after chapter heading prefixes
     \mainmatter
     \input{texfiles/introduction}
     \input{texfiles/relatedwork}
+    % \chapter{Optical Character Recognition}
+    % \chapter{Quality Assessment}
     \input{texfiles/methods}
     \input{texfiles/dataset}
     \input{texfiles/evaluation}

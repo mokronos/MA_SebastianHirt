@@ -32,8 +32,8 @@ The \gls{cer} is defined as follows:
     \text{CER} = \frac{S + D + I}{N}
     \label{eq:cer}
 \end{equation}
-with \(S\) being the number of substitutions, \(D\) the number of deletions, \(I\) the number of insertions, and \(N\) the total number of characters of the text prediction.
-The \gls{cer} ranges from 0 to 1, where 0 means perfect recognition and 1 means no correct characters.
+with \(S\) being the number of substitutions, \(D\) the number of deletions, \(I\) the number of insertions, and \(N\) the total number of characters of the label.
+The \gls{cer} ranges from 0 to $\infty$, where 0 means perfect recognition and the higher the worse the recognition.
 Because the \gls{mos} is defined in the range 0 to 100 and 100 represents a high subjective quality, the two metrics are unintuitive to compare.
 Therefore, transform the CER by subtracting it from 1 and multiplying it by 100 to get a \gls{mos}-like value, see \autoref{eq:cer2mos}.
 \begin{equation}
@@ -77,3 +77,16 @@ In this section, the codecs used in this thesis are described.
 \label{subsec:vvc}
 
 \gls{vvc} is a video codec.
+
+\section{Nonlinear Transformation}
+\label{sec:nonlinear}
+
+In this section, we describe the nonlinear transformation used to tranform the \gls{mos} to better fit the \gls{cer}.
+The transformation is defined as follows:
+
+\begin{equation}
+    \text{MOS}_{trans} = \frac{a - b}{1 + \exp \left( \frac{-\text{MOS} + c}{d} \right)} + b
+    \label{eq:nonlinear}
+\end{equation}
+    
+We fit the parameters \(a\), \(b\), \(c\), and \(d\) to the data of all the test images. We then fit use the function to transform the MOS into the $\text{MOS}_{trans}$.
