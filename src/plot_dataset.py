@@ -3,6 +3,12 @@ import matplotlib.pyplot as plt
 import helpers
 from config import PATHS
 
+plt.rcParams.update({
+    "text.usetex": True,
+    "font.family": "serif",
+    # "font.serif": ["Computer Modern Roman"],
+    })
+
 ids = list(range(1, 41))
 ref_paths = helpers.create_paths(PATHS["images_scid_ref"], ids)
 
@@ -20,9 +26,19 @@ for idx, g in enumerate(gs):
     ax.set_yticks([])
     ax.set_title(f'Image: {idx+1}', fontsize=6)
 
+# X = [1,2,3,4]
+# Y = [1,2,3,4]
+# plt.plot(X, Y)
+# plt.xlabel(r'$\alpha$')
+# plt.ylabel(r'$\beta$')
+# plt.text(1.5, 3,"40 reference images")
+# plt.title("40 reference images")
+
+# plt.show()
+# plt.close()
 
 plt.savefig(save_path + "reference_images.pdf", dpi=300)
-plt.savefig(save_path + "reference_images.png", dpi=300)
-# 35MB laggy
-plt.savefig(save_path + "reference_images_HD.pdf", dpi=3000)
-plt.savefig(save_path + "reference_images_HD.png", dpi=3000)
+# plt.savefig(save_path + "reference_images.png", dpi=300)
+# # 35MB laggy
+# plt.savefig(save_path + "reference_images_HD.pdf", dpi=3000)
+# plt.savefig(save_path + "reference_images_HD.png", dpi=3000)

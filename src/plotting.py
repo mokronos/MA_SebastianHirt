@@ -1,10 +1,14 @@
 import pandas as pd
-import matplotlib.image as mpimg
 import matplotlib.pyplot as plt
-import logging as log
 import helpers
 from config import CONFIG, PATHS
 import cv2
+
+plt.rcParams.update({
+    "text.usetex": True,
+    "font.family": "serif",
+    # "font.serif": ["Computer Modern Roman"],
+    })
 
 def plot():
     # compare to MOS of dataset, somehow
