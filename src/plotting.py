@@ -46,7 +46,7 @@ def plot():
         plt.title(f'Image: {num}')
         plt.xlabel("$MOS$")
         plt.ylabel("$1-CER$")
-        plt.savefig(f'images/analyze/mos_ter_ezocr_img{num}.pdf')
+        plt.savefig(f'images/analyze/mos_cer_ezocr_img{num}.pdf')
         plt.close()
 
 
@@ -93,7 +93,7 @@ def plot_fitted():
         plt.title(f'Image: {num}')
         plt.xlabel("$MOS$")
         plt.ylabel("$1-CER$")
-        plt.savefig(f'images/analyze/mos_ter_fit_ezocr_img{num}.pdf')
+        plt.savefig(f'images/analyze/mos_cer_fit_ezocr_img{num}.pdf')
         plt.close()
 
 
@@ -309,4 +309,5 @@ if __name__ == '__main__':
     # plot_fitted_sub()
     # plot_codec_comparison_cer()
     # plot_codec_comparison_psnr()
-    image_diff()
+    # image_diff()
+

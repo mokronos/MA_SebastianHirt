@@ -1,6 +1,7 @@
 import bjontegaard as bd
 import pandas as pd
-from config import PATHS
+from config import PATHS, CONFIG
+import scipy
 
 
 def get_bjontegaard(data):
@@ -54,13 +55,62 @@ def get_bjontegaard(data):
 
     return bd_rate, bd_psnr
 
+
+def create_summary(data):
+
+    # table with:
+    # indices:
+    # - spearman ranked, pearson
+    # - distortions, overall 
+    # values: (value used in comparison with MOS in correlation computation)
+    # - CER
+
+    data_grouped = data.groupby(["dist_names", "ocr_algo"])
+    table = data_grouped[['pearson', 'spearmanr']]
+    table = table.mean().reset_index()
+    table = pd.melt(table,
+                    id_vars=["dist_names", "ocr_algo"],
+                    value_vars=['pearson', 'spearmanr'],
+                    var_name="corr",
+                    value_name="CER_comp")
+
+    table = table.pivot(index=["corr", "dist_names"], columns=["ocr_algo"])
+
+
+    data_grouped = data.groupby(["dist_names", "ocr_algo"])
+    table_fitted = data_grouped[['pearson_fitted', 'spearmanr_fitted']]
+    table_fitted = table_fitted.mean().reset_index()
+    table_fitted = pd.melt(table_fitted,
+                    id_vars=["dist_names", "ocr_algo"],
+                    value_vars=['pearson_fitted', 'spearmanr_fitted'],
+                    var_name="corr",
+                    value_name="CER_comp_fitted")
+
+    table_fitted = table_fitted.pivot(index=["corr", "dist_names"], columns=["ocr_algo"])
+
+    table.to_csv(PATHS["results_spearman_pearson"]("base", "csv"))
+    table.to_markdown(PATHS["results_spearman_pearson"]("base", "md"))
+    table_fitted.to_csv(PATHS["results_spearman_pearson"]("fitted", "csv"))
+    table_fitted.to_markdown(PATHS["results_spearman_pearson"]("fitted", "md"))
+
+    return table, table_fitted
+
+
 def setup_codecs():
 
     data = pd.read_csv(PATHS[f"results_codecs"])
     return data
 
+def setup_dists():
+
+    data = pd.read_csv(PATHS[f"results_dist"])
+    return data
+
 if __name__ == "__main__":
 
-    data = setup_codecs()
-    print(data)
-    get_bjontegaard(data)
+    # data_codecs = setup_codecs()
+    # get_bjontegaard(data_codecs)
+
+    data_dists = setup_dists()
+
+    table, table_fitted = create_summary(data_dists)

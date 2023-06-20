@@ -13,9 +13,16 @@ CONFIG = {
         "codecs": ["vtm", "hm"],
 
         # images to use for codec experiments
-        # "codecs_img_ids": [1],
+        # images where text is most dominant
         "codecs_img_ids": [1, 3, 4, 5, 29],
-        "codecs_img_ids_extra": [2, 6, 7, 8, 9, 11, 12, 13, 15, 16],
+        # "codecs_img_ids": [1],
+        # images with text, but also lots of other content (distracting for MOS)
+        "codecs_img_ids_extra": [2, 6, 7, 8, 9, 11, 12, 13, 15, 16, 18, 19, 20,
+                                 21, 22, 23, 24, 25, 27],
+        # both combined
+        "codecs_img_ids_combined": [1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 12, 13,
+                                    15, 16, 18, 19, 20, 21, 22, 23, 24, 25,
+                                    27, 29],
 
         # q's levels to use for experiments
         "codecs_qs": [35, 40, 45, 50],
@@ -149,8 +156,8 @@ PATHS = {
 
         # Path to dataframe with distorted images results
         "results_spearman_pearson":
-        lambda algo, ext:
-        f"results/summaries/results_dist_spear_pears_{algo}.{ext}",
+        lambda suffix, ext:
+        f"results/summaries/results_dist_spear_pears_{suffix}.{ext}",
 
         # Path to dataframe with codec comparison results
         "results_codecs":

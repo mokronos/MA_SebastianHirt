@@ -243,7 +243,7 @@ def pred_data(img_paths, algo='ezocr'):
     return results
 
 
-def nonlinearfitting(objvals, subjvals, max_nfev=400):
+def nonlinearfitting(objvals, subjvals, max_nfev=4000):
     """
     code adapted from:
     https://github.com/lllllllllllll-llll/SROCC_PLCC_calculate/blob/master/nonlinearfitting.m

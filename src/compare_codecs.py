@@ -1,16 +1,15 @@
 import pandas as pd
 import itertools
 import helpers
-import bjontegaard as bd
 from config import PATHS, CONFIG
 
 
-def setup():
+def setup(ids="codecs_img_ids"):
     """
     Read image ids into dataframe
     """
 
-    ids = CONFIG["codecs_img_ids"]
+    ids = CONFIG[ids]
     qs = CONFIG["codecs_qs"]
     codec = CONFIG["codecs"]
     ocr_algos = CONFIG["ocr_algos"]
@@ -19,7 +18,6 @@ def setup():
     perm = itertools.product(ids, qs, codec, codec_config, ocr_algos)
 
     data = pd.DataFrame(perm, columns=["img_num", "q", "codec", "codec_config", "ocr_algo"])
-    print(data)
 
     return data
 
@@ -76,21 +74,24 @@ def add_psnr(data):
                 ),
             axis=1)
 
+def add_cer_comp(data, algo="ezocr"):
+    data[f"cer_comp_{algo}"] = (1 - data[f"cer_{algo}"]) * 100
+
 if __name__ == "__main__":
 
-    data = setup()
+    data = setup(ids="codecs_img_ids_combined")
     add_cer_true(data)
     add_cer_pseudo(data)
     add_size(data)
     add_psnr(data)
 
-    # data.to_csv(PATHS[f"results_codecs"], index=False)
+    data.to_csv(PATHS[f"results_codecs"], index=False)
     print(data)
 
-    slice = data.loc[
-            (data["ocr_algo"] == "ezocr")
-            # & (data["img_num"] == 1)
-            & (data["codec"] == "vtm")
-            & (data["codec_config"] == "scc")
-            ]
-    print(slice)
+    # slice = data.loc[
+    #         (data["ocr_algo"] == "ezocr")
+    #         # & (data["img_num"] == 1)
+    #         & (data["codec"] == "vtm")
+    #         & (data["codec_config"] == "scc")
+    #         ]
+    # print(slice)
