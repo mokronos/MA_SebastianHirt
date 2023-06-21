@@ -491,13 +491,32 @@ Weirdness:
 |  50 |            0.181 |          0.073 |
 
 ## Plots to generate
+generally:
+- ocr algorithms seperatly
+- try to average over images, unless issues
 ### 1. Generate a labeled dataset | evaluate efficiency of ocr on screen content data.
 
-- CER(against gt)
+- CER(against gt), seperate by dist type, highlight distortion quality, y(cer) x(qual)
 
 ### 2. Datasets with MOS used to check correlation between text recognition rates and human judgement.
 
+- CER(against ref) vs mos, mos is relative to ref, subplot for every dist type, colormap for quality, maybe seperate and combine in latex
+- CER_fitted(against ref) vs mos
+
+- pearson, spearman table with different criteria: CER, CER_fitted (vs ref and gt)
+
+
 ### 3. most datasets do not have textual ground truth, investigate using recognized text from pristine images as gt.
+
+- just check CER ref vs gt, average over all images, no plots
+
+### 4. check how OCR performs for different quality levels for HEVC and VVC
+
+- mby for both configs, show difference
+- for both qual lists, show no performance loss with higher quality
+- CER(against ref), y(CER) x(qual/size), against ref how much worse it gets
+- CER(against gt), y(CER) x(qual/size), make absolute statement about how good OCR is
+- bdRate, no plot needed
 
 ## Questions
 
