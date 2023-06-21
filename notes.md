@@ -315,7 +315,13 @@ maybe bad introduction first
 
 - [x] basic introduction and outline
 
-- [ ] absolute differenz pixel
+- [x] absolute differenz pixel
+
+- [x] cer implementation!!
+
+- [ ] computer readability for certain codecs config/level
+
+- [ ] keine abkürzungen in gliederung
 
 - [ ] Bjøntegaard Delta Rate LMS
     - need more images, data not strictly increasing
