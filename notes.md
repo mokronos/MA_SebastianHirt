@@ -490,6 +490,18 @@ Weirdness:
 |  45 |            0.170 |          0.039 |
 |  50 |            0.181 |          0.073 |
 
+## Plots to generate
+### 1. Generate a labeled dataset to evaluate the efficiency of the researched algorithms
+on screen content data.
+
+- CER(against gt)
+
+### 2. Available datasets with subjective quality scores will be utilized to investigate
+the correlation between text recognition rates and human judgement.
+
+### 3. Since most datasets do not contain textual ground truth information,
+   investigate the feasibility of using recognized text from pristine images as ground truth instead.
+
 ## Questions
 
 - bitdepth of images is 24/32 bit? but codec config says 8?
