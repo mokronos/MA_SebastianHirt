@@ -491,16 +491,13 @@ Weirdness:
 |  50 |            0.181 |          0.073 |
 
 ## Plots to generate
-### 1. Generate a labeled dataset to evaluate the efficiency of the researched algorithms
-on screen content data.
+### 1. Generate a labeled dataset | evaluate efficiency of ocr on screen content data.
 
 - CER(against gt)
 
-### 2. Available datasets with subjective quality scores will be utilized to investigate
-the correlation between text recognition rates and human judgement.
+### 2. Datasets with MOS used to check correlation between text recognition rates and human judgement.
 
-### 3. Since most datasets do not contain textual ground truth information,
-   investigate the feasibility of using recognized text from pristine images as ground truth instead.
+### 3. most datasets do not have textual ground truth, investigate using recognized text from pristine images as gt.
 
 ## Questions
 
