@@ -13,4 +13,4 @@ all :
 
 
 clean :
-	rm -f *.acn *.aux *.bbl *.blg *.brf *glo *.glsdefs *.ist *.lof *.log *.lot *.out *.toc *gls *glg
+	rm -f *.acn *.aux *.bbl *.blg *.brf *glo *.glsdefs *.ist *.lof *.log *.lot *.out *.toc *gls *glg *.acr *.alg

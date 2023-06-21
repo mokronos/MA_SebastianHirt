@@ -4,7 +4,17 @@ This folder contains the source code for generating the thesis in PDF format.
 
 ## Requirements
 
-pdfLaTeX
+```bash
+sudo apt-get install texlive-latex-extra
+```
+
+I get the error that IEEEtran file is not found, so I also installed:
+
+```bash
+sudo apt-get install texlive-publishers
+```
+
+Then its fine.
 
 ## Usage
 
