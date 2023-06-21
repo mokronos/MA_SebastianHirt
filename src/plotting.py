@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import helpers
 from config import CONFIG, PATHS
 import cv2
+from itertools import islice
 
 plt.rcParams.update({
     "text.usetex": True,
@@ -12,166 +13,171 @@ plt.rcParams.update({
 
 def plot():
     # compare to MOS of dataset, somehow
-    data = pd.read_csv(PATHS['results'])
-    data.dropna(inplace=True)
-
-    # plot
+    data = pd.read_csv(PATHS['results_dist'])
+    
     markers = ['v', '2', 's', 'P', 'x', 'd', '.', 'p', '*']
-    comps = ["GN", "GB", "MB", "CC", "JPEG", "JPEG2000", "CSC", "HEVC-SCC", "CQD"]
     colormap = 'copper_r'
-    # print(f'data:\n{data}')
-    for num in data.img_num.unique():
-        print(f'Plotting normal values for img {num}')
-        tmp = data[(data.img_num == num) & (data.comp == 1)]
-        ax = tmp.plot.scatter(x='mos',
-                              y='cer_comp',
-                              c='qual',
-                              colormap=colormap,
-                              marker=markers[0],
-                              label=f'{comps[0]}')
-        for idx, comp in enumerate(data.comp.unique()[1:], start=1):
-            # print(f'Plotting for comp {comp}')
-            tmp = data[(data.img_num == num) & (data.comp == comp)]
-            # print(f'data for comp {comp}:\n{tmp}')
-            tmp.plot.scatter(x='mos',
-                             y='cer_comp',
-                             c='qual',
-                             colormap=colormap,
-                             marker=markers[idx],
-                             ax=ax,
-                             colorbar=False,
-                             label=f'{comps[idx]}')
-        plt.xlim(0, 100)
-        plt.ylim(0, 100)
-        plt.title(f'Image: {num}')
-        plt.xlabel("$MOS$")
-        plt.ylabel("$1-CER$")
-        plt.savefig(f'images/analyze/mos_cer_ezocr_img{num}.pdf')
-        plt.close()
+
+    grp_ocr = data.groupby('ocr_algo')
+
+    for name_ocr, group_ocr in grp_ocr:
+
+        grp_img = group_ocr.groupby('img_num')
+        grp_img = islice(grp_img, 1)
+        for name_img, group_img in grp_img:
+
+            grp_dist = group_img.groupby('dist') 
+
+            for idx, (name_dist, group_dist) in enumerate(grp_dist):
+                plt.scatter(group_dist['mos'],
+                            group_dist['cer_comp'],
+                            label=group_dist['dist_name'].iloc[0],
+                            marker=markers[idx],
+                            cmap=colormap,
+                            c=group_dist['qual'])
+
+            plt.colorbar(label='Quality')
+            plt.xlabel("$MOS$")
+            plt.ylabel("$CER_{comp}$")
+            plt.title(f'Image: {name_img} - OCR: {name_ocr}')
+            plt.xlim(0, 100)
+            plt.ylim(0, 100)
+            legend = plt.legend()
+
+            # change marker color in legend to black
+            for handle in legend.legend_handles:
+                handle.set_color('black')
+
+            # plt.savefig(f"images/mos_cer_{name_ocr}_img{name_img}.pdf")
+            plt.show()
+            plt.clf()
+            plt.close()
 
 
 def plot_fitted():
     # compare to MOS of dataset, somehow
-    data = pd.read_csv(PATHS['results'])
-    data.dropna(inplace=True)
-
-    # plot
+    data = pd.read_csv(PATHS['results_dist'])
+    
     markers = ['v', '2', 's', 'P', 'x', 'd', '.', 'p', '*']
-    comps = ["GN", "GB", "MB", "CC", "JPEG", "JPEG2000", "CSC", "HEVC-SCC", "CQD"]
     colormap = 'copper_r'
-    for num in data.img_num.unique():
-        print(f'Plotting fitted values for img {num}')
-        tmp = data.loc[(data.img_num == num) & (data.comp == 1)].copy()
-        fitted_tmp = helpers.nonlinearfitting(tmp['cer_comp'],
-                                              tmp['mos'],
-                                              max_nfev=20000)
-        tmp['cer_comp_fitted'] = fitted_tmp
-        ax = tmp.plot.scatter(x='mos',
-                              y='cer_comp_fitted',
-                              c='qual',
-                              colormap=colormap,
-                              marker=markers[0],
-                              label=f'{comps[0]}')
-        for idx, comp in enumerate(data.comp.unique()[1:], start=1):
-            # print(f'Plotting for comp {comp}')
-            tmp = data.loc[(data.img_num == num) & (data.comp == comp)].copy()
-            fitted_tmp = helpers.nonlinearfitting(tmp['cer_comp'],
-                                                  tmp['mos'],
-                                                  max_nfev=20000)
-            tmp['cer_comp_fitted'] = fitted_tmp
-            # print(f'data for comp {comp}:\n{tmp}')
-            tmp.plot.scatter(x='mos',
-                             y='cer_comp_fitted',
-                             c='qual',
-                             colormap=colormap,
-                             marker=markers[idx],
-                             ax=ax,
-                             colorbar=False,
-                             label=f'{comps[idx]}')
-        plt.xlim(0, 100)
-        plt.ylim(0, 100)
-        plt.title(f'Image: {num}')
-        plt.xlabel("$MOS$")
-        plt.ylabel("$1-CER$")
-        plt.savefig(f'images/analyze/mos_cer_fit_ezocr_img{num}.pdf')
-        plt.close()
+
+    grp_ocr = data.groupby('ocr_algo')
+
+    for name_ocr, group_ocr in grp_ocr:
+
+        grp_img = group_ocr.groupby('img_num')
+        grp_img = islice(grp_img, 1)
+        for name_img, group_img in grp_img:
+
+            grp_dist = group_img.groupby('dist') 
+
+            for idx, (name_dist, group_dist) in enumerate(grp_dist):
+                plt.scatter(group_dist['mos'],
+                            group_dist['cer_comp_fitted'],
+                            label=group_dist['dist_name'].iloc[0],
+                            marker=markers[idx],
+                            cmap=colormap,
+                            c=group_dist['qual'])
+
+            plt.colorbar(label='Quality')
+            plt.xlabel("$MOS$")
+            plt.ylabel("$CER_{comp} (fitted)$")
+            plt.title(f'Image: {name_img} - OCR: {name_ocr}')
+            plt.xlim(0, 100)
+            plt.ylim(0, 100)
+            legend = plt.legend()
+
+            # change marker color in legend to black
+            for handle in legend.legend_handles:
+                handle.set_color('black')
+
+            # plt.savefig(f"images/mos_cer_fitted_{name_ocr}_img{name_img}.pdf")
+            plt.show()
+            plt.clf()
+            plt.close()
 
 
 def plot_sub():
-    # compare to MOS of dataset, somehow
-    data = pd.read_csv(PATHS['results'])
-    data.dropna(inplace=True)
 
-    # plot
+    data = pd.read_csv(PATHS['results_dist'])
+    
     markers = ['v', '2', 's', 'P', 'x', 'd', '.', 'p', '*']
-    comps = ["GN", "GB", "MB", "CC", "JPEG", "JPEG2000", "CSC", "HEVC-SCC", "CQD"]
     colormap = 'copper_r'
-    # print(f'data:\n{data}')
-    for num in data.img_num.unique():
-        print(f'Plotting normal values for img {num}')
-        # define subplots
-        fig, axs = plt.subplots(3, 3, figsize=(10, 10))
 
-        for idx, (comp,ax) in enumerate(zip(data.comp.unique(), axs.flatten())):
-            # print(f'Plotting for comp {comp}')
-            tmp = data[(data.img_num == num) & (data.comp == comp)]
-            # print(f'data for comp {comp}:\n{tmp}')
-            tmp.plot.scatter(x='mos',
-                             y='cer_comp',
-                             c='qual',
-                             colormap=colormap,
-                             marker=markers[idx],
-                             ax=ax,
-                             colorbar=True)
-            ax.set_xlim(0, 100)
-            ax.set_ylim(0, 100)
-            ax.set_xlabel("$MOS$")
-            ax.set_ylabel("$1-CER$")
-            ax.set_title(f'{comps[idx]} ({comp})')
-        fig.suptitle(f'Image: {num}')
-        plt.tight_layout()
-        plt.savefig(f'images/analyze/mos_ter_ezocr_sub_img{num}.pdf')
-        plt.close()
+    grp_ocr = data.groupby('ocr_algo')
+
+    for name_ocr, group_ocr in grp_ocr:
+
+        grp_img = group_ocr.groupby('img_num')
+        grp_img = islice(grp_img, 1)
+        for name_img, group_img in grp_img:
+
+            grp_dist = group_img.groupby('dist') 
+
+            fig, axs = plt.subplots(3, 3, figsize=(10, 10))
+
+            for idx, ((name_dist, group_dist), ax) in enumerate(zip(grp_dist, axs.flatten())):
+                im = ax.scatter(group_dist['mos'],
+                                group_dist['cer_comp'],
+                                label=group_dist['dist_name'].iloc[0],
+                                marker=markers[idx],
+                                cmap=colormap,
+                                c=group_dist['qual'])
+
+
+                fig.colorbar(im, ax=ax,label='Quality')
+                ax.set_xlabel("$MOS$")
+                ax.set_ylabel("$CER_{comp}$")
+                ax.set_xlim(0, 100)
+                ax.set_ylim(0, 100)
+                ax.set_title(f'Dist. type: {group_dist["dist_name"].iloc[0]}')
+
+            # plt.savefig(f"images/mos_cer_sub_{name_ocr}_img{name_img}.pdf")
+            plt.tight_layout()
+            plt.show()
+            plt.clf()
+            plt.close()
 
 def plot_fitted_sub():
-    # compare to MOS of dataset, somehow
-    data = pd.read_csv(PATHS['results'])
-    data.dropna(inplace=True)
 
-    # plot
+    data = pd.read_csv(PATHS['results_dist'])
+    
     markers = ['v', '2', 's', 'P', 'x', 'd', '.', 'p', '*']
-    comps = ["GN", "GB", "MB", "CC", "JPEG", "JPEG2000", "CSC", "HEVC-SCC", "CQD"]
     colormap = 'copper_r'
-    # print(f'data:\n{data}')
-    for num in data.img_num.unique():
-        print(f'Plotting fitted values for img {num}')
-        # define subplots
-        fig, axs = plt.subplots(3, 3, figsize=(10, 10))
 
-        for idx, (comp,ax) in enumerate(zip(data.comp.unique(), axs.flatten())):
-            # print(f'Plotting for comp {comp}')
-            tmp = data.loc[(data.img_num == num) & (data.comp == comp)].copy()
-            fitted_tmp = helpers.nonlinearfitting(tmp['cer_comp'],
-                                                  tmp['mos'],
-                                                  max_nfev=20000)
-            tmp['cer_comp_fitted'] = fitted_tmp
-            # print(f'data for comp {comp}:\n{tmp}')
-            tmp.plot.scatter(x='mos',
-                             y='cer_comp_fitted',
-                             c='qual',
-                             colormap=colormap,
-                             marker=markers[idx],
-                             ax=ax,
-                             colorbar=True)
-            ax.set_xlim(0, 100)
-            ax.set_ylim(0, 100)
-            ax.set_xlabel("$MOS$")
-            ax.set_ylabel("$1-CER$")
-            ax.set_title(f'{comps[idx]} ({comp})')
-        fig.suptitle(f'Image: {num}')
-        plt.tight_layout()
-        plt.savefig(f'images/analyze/mos_ter_fit_ezocr_sub_img{num}.pdf')
-        plt.close()
+    grp_ocr = data.groupby('ocr_algo')
+
+    for name_ocr, group_ocr in grp_ocr:
+
+        grp_img = group_ocr.groupby('img_num')
+        grp_img = islice(grp_img, 1)
+        for name_img, group_img in grp_img:
+
+            grp_dist = group_img.groupby('dist') 
+
+            fig, axs = plt.subplots(3, 3, figsize=(10, 10))
+
+            for idx, ((name_dist, group_dist), ax) in enumerate(zip(grp_dist, axs.flatten())):
+                im = ax.scatter(group_dist['mos'],
+                                group_dist['cer_comp_fitted'],
+                                label=group_dist['dist_name'].iloc[0],
+                                marker=markers[idx],
+                                cmap=colormap,
+                                c=group_dist['qual'])
+
+
+                fig.colorbar(im, ax=ax,label='Quality')
+                ax.set_xlabel("$MOS$")
+                ax.set_ylabel("$CER_{comp} (fitted)$")
+                ax.set_xlim(0, 100)
+                ax.set_ylim(0, 100)
+                ax.set_title(f'Dist. type: {group_dist["dist_name"].iloc[0]}')
+
+            # plt.savefig(f"images/mos_cer_fitted_sub_{name_ocr}_img{name_img}.pdf")
+            plt.tight_layout()
+            plt.show()
+            plt.clf()
+            plt.close()
 
 def plot_codec_comparison_cer():
 
@@ -218,8 +224,8 @@ def plot_codec_comparison_cer():
             for q, x, y in zip(qvalues, xvalues, yvalues):
                 plt.annotate(f"QP={q}", (x, y), textcoords="offset points", xytext=(0, 10), ha='center')
 
-                                
-                            
+
+
 
             # plt.xlim(0, 0.4)
             plt.ylim(0, 0.6)
@@ -300,13 +306,13 @@ def image_diff():
 
         diff = cv2.absdiff(ref_img, codec_img)
         cv2.imwrite(f"images/diff_{id}_q50.png", diff)
-        
+
 
 if __name__ == '__main__':
     # plot()
     # plot_sub()
     # plot_fitted()
-    # plot_fitted_sub()
+    plot_fitted_sub()
     # plot_codec_comparison_cer()
     # plot_codec_comparison_psnr()
     # image_diff()

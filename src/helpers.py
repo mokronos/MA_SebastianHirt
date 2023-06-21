@@ -104,7 +104,7 @@ def read_mos(path):
     df = df.astype(types)
 
     dist_names = CONFIG['dist_names']
-    df['dist_names'] = df['dist'].map(dist_names)
+    df['dist_name'] = df['dist'].map(dist_names)
 
     return df
 
