@@ -19,10 +19,20 @@ def setup(ids="scid_img_ids"):
     dists = CONFIG["scid_dists"]
     quals = CONFIG["scid_quals"]
     ocr_algos = CONFIG["ocr_algos"]
+    targets = CONFIG["targets"]
 
+    # add column for which ocr algo was used
     tmp = pd.DataFrame(columns=data.columns)
     for algo in ocr_algos:
         data["ocr_algo"] = algo
+        tmp = pd.concat([tmp, data])
+
+    data = tmp
+
+    # add column for which target to calculate the CER was used (gt or ref)
+    tmp = pd.DataFrame(columns=data.columns)
+    for target in targets:
+        data["target"] = target
         tmp = pd.concat([tmp, data])
 
     data = tmp
@@ -38,21 +48,29 @@ def setup(ids="scid_img_ids"):
     return filtered_data
 
 def add_cer(data):
+
+    def cer(row):
+        pred = helpers.load_line_text(PATHS["pred_dist"](row["img_num"],
+                                                         row["dist"],
+                                                         row["qual"],
+                                                         algo = row["ocr_algo"],
+                                                         ext="txt"))
+
+        # get label either from prediction on reference image or from ground truth
+        if row["target"] == "ref":
+            label = helpers.load_line_text(PATHS["pred_ref"](row["img_num"],
+                                                             algo = row["ocr_algo"],
+                                                             ext="txt"))
+        elif row["target"] == "gt":
+            label = helpers.load_line_text(PATHS["gt_scid_line"](row["img_num"]))
+
+        else:
+            raise ValueError("target must be gt or ref")
+
+        return helpers.char_error_rate(label, pred)
+
     # add cer column
-    data["cer"] = data.apply(
-            lambda row:
-            helpers.char_error_rate(
-                helpers.load_line_text(
-                    PATHS["gt_scid_line"](row["img_num"])),
-                helpers.load_line_text(
-                    PATHS["pred_dist"](row["img_num"],
-                                       row["dist"],
-                                       row["qual"],
-                                       algo = row["ocr_algo"],
-                                       ext="txt")
-                    )
-                ),
-            axis=1)
+    data["cer"] = data.apply(cer, axis=1)
 
     print(f"added CER")
 

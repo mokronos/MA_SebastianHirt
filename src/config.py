@@ -36,6 +36,9 @@ CONFIG = {
         "ocr_algos": ["ezocr", "tess"],
         # "ocr_algos": ["ezocr"],
 
+        # target to use for experiments
+        "targets": ["gt", "ref"],
+
         # distortion names
         # GN: Gaussian Noise, GB: Gaussian Blur, MB: Motion Blur, CC: Contrast Change
         # JPEG: JPEG, JPEG2000: JPEG2000, CSC: Color Saturation Change, HEVC-SCC: HEVC-SCC
