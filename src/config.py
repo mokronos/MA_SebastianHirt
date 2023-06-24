@@ -61,115 +61,79 @@ PATHS = {
         f"data/raw/scid/ReferenceSCIs/SCI{num if num > 9 else f'0{num}'}.bmp",
 
         # Path to images transformed with VTM(VVC codec), scc config
-        "images_vtm_scc":
-        lambda num, q:
-        f"data/raw/scid/scc/vtm/SCI{num if num > 9 else f'0{num}'}vtm{q}.bmp",
-
-        # Path to images transformed with HM(HEVC codec) scc config
-        "images_hm_scc":
-        lambda num, q:
-        f"data/raw/scid/scc/hm/SCI{num if num > 9 else f'0{num}'}hm{q}.bmp",
+        "images_codec":
+        lambda num, q, codec_config = "default", codec = "hm":
+        f"data/raw/scid/{codec_config}/{codec}/SCI{num if num > 9 else f'0{num}'}{codec}{q}.bmp",
 
         # Path to size text file for VTM images scc config
-        "size_vtm_scc":
-        lambda num, q:
-        f"data/raw/scid/scc/vtm/SCI{num if num > 9 else f'0{num}'}vtm{q}.txt",
-
-        # Path to size text file for HM images scc config
-        "size_hm_scc":
-        lambda num, q:
-        f"data/raw/scid/scc/hm/SCI{num if num > 9 else f'0{num}'}hm{q}.txt",
-
-        # Path to images transformed with VTM(VVC codec), default config
-        "images_vtm_default":
-        lambda num, q:
-        f"data/raw/scid/default/vtm/SCI{num if num > 9 else f'0{num}'}vtm{q}.bmp",
-
-        # Path to images transformed with HM(HEVC codec) default config
-        "images_hm_default":
-        lambda num, q:
-        f"data/raw/scid/default/hm/SCI{num if num > 9 else f'0{num}'}hm{q}.bmp",
-
-        # Path to size text file for VTM images default config
-        "size_vtm_default":
-        lambda num, q:
-        f"data/raw/scid/default/vtm/SCI{num if num > 9 else f'0{num}'}vtm{q}.txt",
-
-        # Path to size text file for HM images default config
-        "size_hm_default":
-        lambda num, q:
-        f"data/raw/scid/default/hm/SCI{num if num > 9 else f'0{num}'}hm{q}.txt",
+        "size_codec":
+        lambda num, q, codec_config = "default", codec = "hm":
+        f"data/raw/scid/{codec_config}/{codec}/SCI{num if num > 9 else f'0{num}'}{codec}{q}.txt",
 
         # Path to MOS txt file for scid dataset
         "mos_scid":
-        "data/raw/scid/MOS_SCID.txt",
+            "data/raw/scid/MOS_SCID.txt",
 
         # Path to the folder containing the ground truth
         # formatted by line, disregarding paragraphs
         "gt_scid_line":
-        lambda num:
-        f"data/gt/scid/line/SCI{num if num > 9 else f'0{num}'}_gt.txt",
+            lambda num:
+                f"data/gt/scid/line/SCI{num if num > 9 else f'0{num}'}_gt.txt",
         # formatted by paragraph, disregarding lines
         "gt_scid_para":
-        lambda num:
-        f"data/gt/scid/para/SCI{num if num > 9 else f'0{num}'}_gt.txt",
+            lambda num:
+                f"data/gt/scid/para/SCI{num if num > 9 else f'0{num}'}_gt.txt",
 
         # Path to the folder containing the predictions
         # prediction on distorted images
         "pred_dist":
-        lambda num, dist, qual, algo = "ezocr", ext="txt":
-        f"results/pred/scid/dist/{algo}/SCI{num if num > 9 else f'0{num}'}_{dist}_{qual}.{ext}",
+            lambda num, dist, qual, algo = "ezocr", ext="txt":
+                f"results/pred/scid/dist/{algo}/SCI{num if num > 9 else f'0{num}'}_{dist}_{qual}.{ext}",
 
         # prediction on reference images
         "pred_ref":
-        lambda num, algo = "ezocr", ext="txt":
-        f"results/pred/scid/ref/{algo}/SCI{num if num > 9 else f'0{num}'}.{ext}",
+            lambda num, algo = "ezocr", ext="txt":
+                f"results/pred/scid/ref/{algo}/SCI{num if num > 9 else f'0{num}'}.{ext}",
 
         # predition on images transformed with VTM(VVC codec), scc config
-        "pred_vtm_scc":
-        lambda num, q, algo = "ezocr", ext="txt":
-        f"results/pred/scid/scc/vtm/{algo}/SCI{num if num > 9 else f'0{num}'}vtm{q}.{ext}",
-
-        # predition on images transformed with HM(HEVC codec), scc config
-        "pred_hm_scc":
-        lambda num, q, algo = "ezocr", ext="txt":
-        f"results/pred/scid/scc/hm/{algo}/SCI{num if num > 9 else f'0{num}'}hm{q}.{ext}",
-
-        # predition on images transformed with VTM(VVC codec), default config
-        "pred_vtm_default":
-        lambda num, q, algo = "ezocr", ext="txt":
-        f"results/pred/scid/default/vtm/{algo}/SCI{num if num > 9 else f'0{num}'}vtm{q}.{ext}",
-
-        # predition on images transformed with HM(HEVC codec), default config
-        "pred_hm_default":
-        lambda num, q, algo = "ezocr", ext="txt":
-        f"results/pred/scid/default/hm/{algo}/SCI{num if num > 9 else f'0{num}'}hm{q}.{ext}",
+        "pred_codec":
+            lambda num, q, codec_config = "default", codec = "hm", algo = "ezocr", ext="txt":
+                f"results/pred/scid/{codec_config}/{codec}/{algo}/SCI{num if num > 9 else f'0{num}'}{codec}{q}.{ext}",
 
         # Path to the folder containing experiment images
         "images_exp": "exp",
 
         # Path to the folder containing result images
         "analyze":
-        lambda suff:
-        f"images/analyze/{suff}",
+            lambda suff:
+                f"images/analyze/{suff}",
 
         # Path to dataframe with distorted images results
         "results_dist":
-        f"results/summaries/results_dist.csv",
+            f"results/summaries/results_dist.csv",
 
         # Path to dataframe with distorted images results
         "results_spearman_pearson":
-        lambda suffix, ext:
-        f"results/summaries/results_dist_spear_pears_{suffix}.{ext}",
+            lambda suffix, ext:
+                f"results/summaries/results_dist_spear_pears_{suffix}.{ext}",
 
         # Path to dataframe with codec comparison results
         "results_codecs":
-        f"results/summaries/results_codecs.csv",
+            f"results/summaries/results_codecs.csv",
+
+        # Path to dataframe with comparison of reference and gt predictions
+        "results_ref":
+            f"results/summaries/results_ref.csv",
+
+        # Path to dataframe with comparison of reference and gt predictions
+        "results_ref_mean":
+            lambda ext:
+                f"results/summaries/results_ref_mean.{ext}",
 
         # Path to the folder containing latex tables
         "latex_tables":
-        lambda suff:
-        f"latex/tables/{suff}.tex",
+            lambda suff:
+                f"latex/tables/{suff}.tex",
         }
 
-        
+

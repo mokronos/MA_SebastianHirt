@@ -132,7 +132,7 @@ def add_pearson(data):
         group[f"pearson_fitted"] = p[0]
         return group
 
-    data = data.groupby(["img_num", "dist", "ocr_algo"], group_keys=True).apply(pearson)
+    data = data.groupby(["img_num", "dist", "ocr_algo", "target"], group_keys=True).apply(pearson)
     data.reset_index(drop=True, inplace=True)
 
     print(f"calculated pearson correlation")
@@ -148,7 +148,7 @@ def add_spearman_ranked(data):
         group[f"spearmanr_fitted"] = p[0]
         return group
 
-    data = data.groupby(["img_num", "dist", "ocr_algo"], group_keys=True).apply(spearman_ranked)
+    data = data.groupby(["img_num", "dist", "ocr_algo", "target"], group_keys=True).apply(spearman_ranked)
     data.reset_index(drop=True, inplace=True)
 
     print(f"calculated spearman ranked correlation")

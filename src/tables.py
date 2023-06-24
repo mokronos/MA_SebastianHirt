@@ -4,7 +4,9 @@ from config import PATHS, CONFIG
 import scipy
 
 
-def get_bjontegaard(data):
+def get_bjontegaard():
+
+    data = pd.read_csv(PATHS["results_codecs"])
 
     divider = 1_000_000
     divider = 1
@@ -56,7 +58,7 @@ def get_bjontegaard(data):
     return bd_rate, bd_psnr
 
 
-def create_summary(data):
+def create_summary():
 
     # table with:
     # indices:
@@ -65,52 +67,64 @@ def create_summary(data):
     # values: (value used in comparison with MOS in correlation computation)
     # - CER
 
-    data_grouped = data.groupby(["dist_names", "ocr_algo"])
+    data = pd.read_csv(PATHS["results_dist"])
+
+    data_grouped = data.groupby(["dist_name", "ocr_algo", "target"])
     table = data_grouped[['pearson', 'spearmanr']]
     table = table.mean().reset_index()
     table = pd.melt(table,
-                    id_vars=["dist_names", "ocr_algo"],
+                    id_vars=["dist_name", "ocr_algo", "target"],
                     value_vars=['pearson', 'spearmanr'],
                     var_name="corr",
                     value_name="CER_comp")
 
-    table = table.pivot(index=["corr", "dist_names"], columns=["ocr_algo"])
+    table = table.pivot(index=["corr", "dist_name"], columns=["ocr_algo", "target"])
 
 
-    data_grouped = data.groupby(["dist_names", "ocr_algo"])
+    data_grouped = data.groupby(["dist_name", "ocr_algo", "target"])
     table_fitted = data_grouped[['pearson_fitted', 'spearmanr_fitted']]
     table_fitted = table_fitted.mean().reset_index()
     table_fitted = pd.melt(table_fitted,
-                    id_vars=["dist_names", "ocr_algo"],
+                    id_vars=["dist_name", "ocr_algo", "target"],
                     value_vars=['pearson_fitted', 'spearmanr_fitted'],
                     var_name="corr",
                     value_name="CER_comp_fitted")
 
-    table_fitted = table_fitted.pivot(index=["corr", "dist_names"], columns=["ocr_algo"])
+    table_fitted = table_fitted.pivot(index=["corr", "dist_name"], columns=["ocr_algo", "target"])
 
     table.to_csv(PATHS["results_spearman_pearson"]("base", "csv"))
     table.to_markdown(PATHS["results_spearman_pearson"]("base", "md"))
     table_fitted.to_csv(PATHS["results_spearman_pearson"]("fitted", "csv"))
     table_fitted.to_markdown(PATHS["results_spearman_pearson"]("fitted", "md"))
 
+    print(table)
+    print(table_fitted)
+
     return table, table_fitted
 
 
-def setup_codecs():
+def cer_ref_gt():
+    """
+    Table with mean CER (CER_comp) for gt vs ref, for each ocr_algo
+    """
 
-    data = pd.read_csv(PATHS[f"results_codecs"])
-    return data
+    data = pd.read_csv(PATHS["results_ref"])
 
-def setup_dists():
+    print(data)
 
-    data = pd.read_csv(PATHS[f"results_dist"])
-    return data
+    data_grouped = data.groupby("ocr_algo")
+
+    table = data_grouped[["cer", "cer_comp"]].mean()
+    print(table)
+
+    table.to_csv(PATHS["results_ref_mean"]("csv"))
+    table.to_markdown(PATHS["results_ref_mean"]("md"))
+
 
 if __name__ == "__main__":
 
-    # data_codecs = setup_codecs()
-    # get_bjontegaard(data_codecs)
+    # get_bjontegaard()
 
-    data_dists = setup_dists()
+    # table, table_fitted = create_summary()
 
-    table, table_fitted = create_summary(data_dists)
+    cer_ref_gt()

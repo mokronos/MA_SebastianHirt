@@ -14,54 +14,69 @@ def setup(ids="codecs_img_ids"):
     codec = CONFIG["codecs"]
     ocr_algos = CONFIG["ocr_algos"]
     codec_config = CONFIG["codecs_config"]
+    targets = CONFIG["targets"]
 
-    perm = itertools.product(ids, qs, codec, codec_config, ocr_algos)
+    perm = itertools.product(ids, qs, codec, codec_config, ocr_algos, targets)
 
-    data = pd.DataFrame(perm, columns=["img_num", "q", "codec", "codec_config", "ocr_algo"])
+    data = pd.DataFrame(perm, columns=["img_num", "q", "codec", "codec_config", "ocr_algo", "target"])
 
     return data
 
-def add_cer_true(data):
-    # add cer column
-    data[f"cer_true"] = data.apply(
-            lambda row:
-            helpers.char_error_rate(
-                helpers.load_line_text(
-                    PATHS["gt_scid_line"](row["img_num"])),
-                helpers.load_line_text(
-                    PATHS[f"pred_{row['codec']}_{row['codec_config']}"](row["img_num"],
-                                                                        row["q"],
-                                                                        algo=row["ocr_algo"],
-                                                                        ext="txt")
-                    )
-                ),
-            axis=1)
+def add_cer(data):
 
-def add_cer_pseudo(data):
+    def cer(row):
+        pred = helpers.load_line_text(
+                PATHS[f"pred_codec"](row["img_num"],
+                                     row["q"],
+                                     codec_config=row["codec_config"],
+                                     codec=row["codec"],
+                                     algo=row["ocr_algo"],
+                                     ext="txt")
+                )
+
+        # get label either from prediction on reference image or from ground truth
+        if row["target"] == "ref":
+            label = helpers.load_line_text(PATHS["pred_ref"](row["img_num"],
+                                                             algo = row["ocr_algo"],
+                                                             ext="txt"))
+        elif row["target"] == "gt":
+            label = helpers.load_line_text(PATHS["gt_scid_line"](row["img_num"]))
+
+        else:
+            raise ValueError("target must be gt or ref")
+
+        return helpers.char_error_rate(label, pred)
+
     # add cer column
-    data[f"cer_pseudo"] = data.apply(
-            lambda row:
-            helpers.char_error_rate(
-                helpers.load_line_text(
-                    PATHS["pred_ref"](row["img_num"], algo=row["ocr_algo"])),
-                helpers.load_line_text(
-                    PATHS[f"pred_{row['codec']}_{row['codec_config']}"](row["img_num"],
-                                                                        row["q"],
-                                                                        algo=row["ocr_algo"],
-                                                                        ext="txt")
-                    )
-                ),
-            axis=1)
+    data["cer"] = data.apply(cer, axis=1)
+
+    print(f"added CER")
+
+    return data
+
+
+def add_cer_comp(data):
+    data["cer_comp"] = (1 - data["cer"]) * 100
+
+    print(f"added CER_comp")
+
+    return data
+
 
 def add_size(data):
 
     data["size"] = data.apply(
             lambda row:
             helpers.get_size(
-                PATHS[f"size_{row['codec']}_{row['codec_config']}"](row["img_num"],
-                                                                    row["q"])
+                PATHS[f"size_codec"](row["img_num"],
+                                     row["q"],
+                                     codec_config=row["codec_config"],
+                                     codec=row["codec"]
+                                     )
                 ),
             axis=1)
+
+    return data
 
 def add_psnr(data):
 
@@ -69,29 +84,24 @@ def add_psnr(data):
             lambda row:
             helpers.get_psnr(
                 PATHS[f"images_scid_ref"](row["img_num"]),
-                PATHS[f"images_{row['codec']}_{row['codec_config']}"](row["img_num"],
-                                                                            row["q"])
+                PATHS[f"images_codec"](row["img_num"],
+                                       row["q"],
+                                       codec_config=row["codec_config"],
+                                       codec=row["codec"])
                 ),
             axis=1)
 
-def add_cer_comp(data, algo="ezocr"):
-    data[f"cer_comp_{algo}"] = (1 - data[f"cer_{algo}"]) * 100
+    return data
+
 
 if __name__ == "__main__":
 
     data = setup(ids="codecs_img_ids_combined")
-    add_cer_true(data)
-    add_cer_pseudo(data)
-    add_size(data)
-    add_psnr(data)
-
-    data.to_csv(PATHS[f"results_codecs"], index=False)
     print(data)
+    data = add_cer(data)
+    data = add_cer_comp(data)
+    data = add_size(data)
+    data = add_psnr(data)
 
-    # slice = data.loc[
-    #         (data["ocr_algo"] == "ezocr")
-    #         # & (data["img_num"] == 1)
-    #         & (data["codec"] == "vtm")
-    #         & (data["codec_config"] == "scc")
-    #         ]
-    # print(slice)
+    print(data)
+    # data.to_csv(PATHS[f"results_codecs"], index=False)

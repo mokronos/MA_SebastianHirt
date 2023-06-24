@@ -83,21 +83,27 @@ def pred_codec(codec="vtm", config="scc", ids="codecs_img_ids"):
     # ocr_algos = ["ezocr"]
 
     # get paths
-    load_paths_vtm = helpers.create_paths(PATHS[f"images_{codec}_{config}"],
-                                          CONFIG[ids],
-                                          CONFIG["codecs_qs"])
+    load_paths = helpers.create_paths(PATHS[f"images_codec"],
+                                      CONFIG[ids],
+                                      CONFIG["codecs_qs"],
+                                      codec_config = config,
+                                      codec=codec)
 
     for algo in ocr_algos:
 
-        save_paths_csv = helpers.create_paths(PATHS[f"pred_{codec}_{config}"],
-                                                  CONFIG[ids],
-                                                  CONFIG["codecs_qs"],
-                                                  algo=algo, ext="csv")
+        save_paths_csv = helpers.create_paths(PATHS[f"pred_codec"],
+                                              CONFIG[ids],
+                                              CONFIG["codecs_qs"],
+                                              codec_config = config,
+                                              codec=codec,
+                                              algo=algo, ext="csv")
 
-        save_paths_txt = helpers.create_paths(PATHS[f"pred_{codec}_{config}"],
-                                                  CONFIG[ids],
-                                                  CONFIG["codecs_qs"],
-                                                  algo=algo, ext="txt")
+        save_paths_txt = helpers.create_paths(PATHS[f"pred_codec"],
+                                              CONFIG[ids],
+                                              CONFIG["codecs_qs"],
+                                              codec_config = config,
+                                              codec=codec,
+                                              algo=algo, ext="txt")
 
         # create directories if not exist
         helpers.create_dir(save_paths_csv)
@@ -105,7 +111,7 @@ def pred_codec(codec="vtm", config="scc", ids="codecs_img_ids"):
 
 
         # run prediction
-        preds = helpers.pred_data(load_paths_vtm, algo=algo)
+        preds = helpers.pred_data(load_paths, algo=algo)
 
         # save predictions
         for pred, save_path_txt, save_path_csv in zip(preds, save_paths_txt, save_paths_csv):
