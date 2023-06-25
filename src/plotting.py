@@ -278,74 +278,68 @@ def plot_cer_fitted_mos_sub_mean():
 # codec plots
 ############################################################################################################
 
-
-def plot_codec_comparison_cer():
-    """
-    Plot CER vs quality for different codecs
-    """
-
-    # codec_config = CONFIG['codecs_config']
-    # codec_config = 'scc'
-    codecs_configs = ['scc', 'default']
+def plot_codec_cer_size():
 
     # load dataframe
     data = pd.read_csv(PATHS['results_codecs'])
 
-    ocr_algos = CONFIG['ocr_algos']
-
     divider = 1_000_000
 
-    # plot in same figure
-    for codec_config in codecs_configs:
-        for algo in ocr_algos:
-            data_spec = data.loc[(data.ocr_algo == algo) & (data.codec_config == codec_config)]
-            plt.plot(data_spec.loc[(data_spec.codec == "vtm")].groupby('q')["size"].mean()/divider,
-                     data_spec.loc[(data_spec.codec == "vtm")].groupby('q')["cer_true"].mean(),
-                     label='VTM true GT',
-                     marker='s',
-                     color='blue')
-            plt.plot(data_spec.loc[(data_spec.codec == "hm")].groupby('q')["size"].mean()/divider,
-                     data_spec.loc[(data_spec.codec == "hm")].groupby('q')["cer_true"].mean(),
-                     label='HM true GT',
-                     marker='^',
-                     color='cyan')
-            plt.plot(data_spec.loc[(data_spec.codec == "vtm")].groupby('q')["size"].mean()/divider,
-                     data_spec.loc[(data_spec.codec == "vtm")].groupby('q')["cer_pseudo"].mean(),
-                     label='VTM pseudo GT',
-                     marker='8',
-                     color='red')
-            plt.plot(data_spec.loc[(data_spec.codec == "hm")].groupby('q')["size"].mean()/divider,
-                     data_spec.loc[(data_spec.codec == "hm")].groupby('q')["cer_pseudo"].mean(),
-                     label='HM pseudo GT',
-                     marker='v',
-                     color='orange')
+    grp_codec_config = data.groupby('codec_config')
+    for name_codec_config, group_codec_config in grp_codec_config:
 
-            qvalues = data_spec.q.unique()
-            xvalues = data_spec.loc[(data_spec.codec == "vtm")].groupby('q')["size"].mean()/divider
-            yvalues = data_spec.loc[(data_spec.codec == "vtm")].groupby('q')["cer_pseudo"].mean()
+        grp_ocr = group_codec_config.groupby('ocr_algo')
+
+        for name_ocr, group_ocr in grp_ocr:
+
+            data_true = group_ocr.loc[group_ocr.target == "gt"]
+            data_pseudo = group_ocr.loc[group_ocr.target == "ref"]
+
+            plt.plot(data_true.loc[(data_true.codec == "vtm")].groupby('q')["size"].mean()/divider,
+                        data_true.loc[(data_true.codec == "vtm")].groupby('q')["cer_comp"].mean(),
+                        label='VTM true GT',
+                        marker='s',
+                        color='blue')
+            plt.plot(data_true.loc[(data_true.codec == "hm")].groupby('q')["size"].mean()/divider,
+                        data_true.loc[(data_true.codec == "hm")].groupby('q')["cer_comp"].mean(),
+                        label='HM true GT',
+                        marker='^',
+                        color='cyan')
+            plt.plot(data_pseudo.loc[(data_pseudo.codec == "vtm")].groupby('q')["size"].mean()/divider,
+                        data_pseudo.loc[(data_pseudo.codec == "vtm")].groupby('q')["cer_comp"].mean(),
+                        label='VTM pseudo GT',
+                        marker='8',
+                        color='red')
+            plt.plot(data_pseudo.loc[(data_pseudo.codec == "hm")].groupby('q')["size"].mean()/divider,
+                        data_pseudo.loc[(data_pseudo.codec == "hm")].groupby('q')["cer_comp"].mean(),
+                        label='HM pseudo GT',
+                        marker='v',
+                        color='orange')
+
+            qvalues = data_true.q.unique()
+            xvalues = data_true.loc[(data_true.codec == "vtm")].groupby('q')["size"].mean()/divider
+            yvalues = data_true.loc[(data_true.codec == "vtm")].groupby('q')["cer_comp"].mean()
 
             for q, x, y in zip(qvalues, xvalues, yvalues):
                 plt.annotate(f"QP={q}", (x, y), textcoords="offset points", xytext=(0, 10), ha='center')
 
-
-
-
             # plt.xlim(0, 0.4)
-            plt.ylim(0, 0.6)
-            plt.xlabel("Avg size of images in Mbit")
-            plt.ylabel("Avg CER")
-            plt.title(f"Comparison of codecs for {algo} with {codec_config} codec config")
+            plt.ylim(0, 100)
+            plt.xlabel("Mean size of images in Mbit")
+            plt.ylabel("$\overline{CER}_{comp}$")
             plt.grid()
             plt.legend()
-            savepath_pdf=PATHS['analyze'](f'codec_comparison_{algo}_{codec_config}.pdf')
-            savepath_png=PATHS['analyze'](f'codec_comparison_{algo}_{codec_config}.png')
+            plt.tight_layout()
+            savepath_pdf=PATHS['analyze'](f'codec_cer_size_{name_ocr}_{name_codec_config}.pdf')
             plt.savefig(savepath_pdf)
-            plt.savefig(savepath_png)
+            # savepath_png=PATHS['analyze'](f'codec_cer_size_{name_ocr}_{name_codec_config}.png')
+            # plt.savefig(savepath_png)
+            plt.title(f"Comparison of codecs for {name_ocr} with {name_codec_config} codec config")
+            # plt.show()
             plt.clf()
             plt.close()
-            # plt.show()
 
-    print(f"plotted CER against quality for each codec")
+    print(f"plotted CER_comp against size for each codec config and OCR")
 
 
 def plot_codec_comparison_psnr():
@@ -389,13 +383,14 @@ def plot_codec_comparison_psnr():
         # plt.ylim(0, 0.35)
         plt.xlabel("Avg size of images in Mbit")
         plt.ylabel("Avg PSNR in dB")
-        plt.title(f"Comparison of codecs PSNR with {codec_config} codec config")
         plt.grid()
         plt.legend()
+        plt.tight_layout()
         savepath_pdf=PATHS['analyze'](f'codec_comparison_PSNR_{codec_config}.pdf')
         savepath_png=PATHS['analyze'](f'codec_comparison_PSNR_{codec_config}.png')
         plt.savefig(savepath_pdf)
         plt.savefig(savepath_png)
+        plt.title(f"Comparison of codecs PSNR with {codec_config} codec config")
         plt.clf()
         plt.close()
         # plt.show()
@@ -447,6 +442,8 @@ def pipeline():
     plot_cer_fitted_mos_sub_mean()
 
     # plot codec comparison
+    plot_codec_cer_size()
+
     # plot psnr of different codecs for different qps
     # plot_codec_comparison_psnr()
 

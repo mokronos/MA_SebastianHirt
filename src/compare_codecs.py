@@ -104,4 +104,4 @@ if __name__ == "__main__":
     data = add_psnr(data)
 
     print(data)
-    # data.to_csv(PATHS[f"results_codecs"], index=False)
+    data.to_csv(PATHS[f"results_codecs"], index=False)
