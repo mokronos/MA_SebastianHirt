@@ -23,6 +23,36 @@ They are distorted with 9 different distortion types, each with 5 different dist
 In this section we will discuss the different distortion types used in the dataset.
 The nine different distortion types can be seen in \autoref{fig:distortion_types}, applied to the image in \autoref{fig:img29}.
 
+\begin{table}[h]
+\centering
+\caption{Distortion types used in the dataset.}
+\begin{tabular}{|p{6cm}|l|p{6cm}|}
+\hline
+\textbf{Distortion Type} & \textbf{Abbreviation} & \textbf{Description} \\
+\hline
+Contrast Change & CC & Changes in the contrast of an image \\
+\hline
+Color Quantization with Dithering & CQD & Reduction of colors in an image using dithering \\
+\hline
+Color Saturation Change & CSC & Changes in the color saturation of an image \\
+\hline
+Gaussian Blur & GB & Blurring of an image using a Gaussian function \\
+\hline
+Gaussian Noise & GN & Addition of noise to an image using a Gaussian distribution \\
+\hline
+High Efficiency Video Coding-Screen Content Coding & HEVC-SCC & Video compression standard for screen content \\
+\hline
+Joint Photographic Experts Group & JPEG & Image compression standard \\
+\hline
+Joint Photographic Experts Group 2000 & JPEG2000 & Image compression standard \\
+\hline
+Motion Blur & MB & Blurring of an image due to movement \\
+\hline
+\end{tabular}
+\label{tab:distortion_types}
+\end{table}
+
+
 \begin{figure}[h]
     \centering
     \begin{subfigure}[b]{0.3\textwidth}
@@ -85,7 +115,6 @@ The nine different distortion types can be seen in \autoref{fig:distortion_types
 We can see, that the different distortion types have different effects on the text in the image.
 Distortions like the contrast change don't affect the text much.
 However, Gaussian noise or blur can make the text unreadable.
-
 \section{Labeling}
 \label{sec:dataset_labeling}
 
@@ -132,3 +161,11 @@ These images (SCI4, SCI5, SCI6, SCI22 and SCI29) have their main focus on text, 
     \caption{\gls{cer} of a selection of distorted images compared to their reference image.}
     \label{fig:cer_vs_mos_456}
 \end{figure}
+
+- Select based on how hard to label
+- Select based on how much text/objects
+- very subjective
+- different metric with IoU and CER combined might be helpful
+
+- go through all the distortions and make hypothesis on how they affect the ocr, check for literature on this
+- check later in evaluation if true/false

@@ -1,48 +1,44 @@
 \chapter{Evaluation}
 \label{chap:evaluation}
 
-\begin{enumerate}
-\item Research state-of-the-art text recognition and detection methods.
+In this chapter, we first go over the performance of the \gls{ocr} algorithms.
+Then we compare the performance of the \gls{ocr} algorithms against human judgement.
+Additionally, we investigate the feasibility of using recognized text from pristine images as ground truth.
+Finally, we evaluate the performance of the \gls{ocr} algorithms on different quality levels of the HM and VTM codecs.
 
-\item Generate a labeled dataset to evaluate the efficiency of the researched algorithms
-   on screen content data.
-
-\item Available datasets with subjective quality scores will be utilized to investigate
-   the correlation between text recognition rates and human judgment.
-
-\item Since most datasets do not contain textual ground truth information,
-   investigate the feasibility of using recognized text from pristine images as ground truth instead.
-\end{enumerate}
-
-\section{Performance of ocr algorithms}
+\section{Performance of Optical Character Recognition}
 \label{sec:ocr_performance}
 
-Generate a labeled dataset to evaluate the performance of the researched algorithms
-on screen content data.
+First, we evaluate the impact of different distortion types on \gls{ocr} performance by comparing the mean \gls{cer} for various quality levels.
+This analysis is performed separately for EasyOCR and Tesseract \gls{ocr} to determine which performs better.
 
-\begin{itemize}
-\item Easy ocr generally performs well even on distorted images
-\item for motion blur the performance is worse for the 2 worst quality levels for most images
-\item image 4 performs better for worse quality, because gt doesn't contain text on coin
-\end{itemize}
+For the comparison, we plot the mean \gls{cer} with regards to the \gls{gt} on the y-axis against different quality levels on the x-axis.
+We do this for all the distortion types.
 
 \begin{figure}[h]
 \centering
     \includegraphics[width=0.9\textwidth]{../../images/analyze/cer_dist_quality_gt_ezocr.pdf}
-    \caption{Mean \gls{cer} against gt for different quality levels with EasyOCR.}
+    \caption{Mean \gls{cer} against \gls{gt} for different quality levels with EasyOCR.}
 \label{fig:cer_dist_quality_gt_ezocr}
 \end{figure}
 
-In \autoref{fig:cer_dist_quality_gt_ezocr} we can see the mean \gls{cer} against the gt for different quality levels with EasyOCR.
+In \autoref{fig:cer_dist_quality_gt_ezocr} we can see the mean \gls{cer} with regards to the \gls{gt} for different quality levels with EasyOCR.
+We can clearly see that, motion blur is impacting the performance of EasyOCR the most, going down from 80 to 20 almost linearly.
 
 \begin{figure}[h]
 \centering
     \includegraphics[width=0.9\textwidth]{../../images/analyze/cer_dist_quality_gt_tess.pdf}
-    \caption{Mean \gls{cer} against gt for different quality levels with Tesseract \gls{ocr}.}
+    \caption{Mean \gls{cer} against \gls{gt} for different quality levels with Tesseract \gls{ocr}.}
 \label{fig:cer_dist_quality_gt_tesseract}
 \end{figure}
 
-In \autoref{fig:cer_dist_quality_gt_tesseract} we can see the mean \gls{cer} against the gt for different quality levels with Tesseract \gls{ocr}.
+In \autoref{fig:cer_dist_quality_gt_tesseract} we can see the mean \gls{cer} against the \gls{gt} for different quality levels with Tesseract \gls{ocr}.
+
+\begin{itemize}
+\item Easy ocr generally performs well even on distorted images
+\item for motion blur the performance is worse for the 2 worst quality levels for most images
+\item image 4 performs better for worse quality, because \gls{gt} doesn't contain text on coin
+\end{itemize}
 
 \section{Comparison against human judgement}
 \label{sec:comparison_against_human_judgement}
@@ -91,6 +87,72 @@ In \autoref{fig:mos_cer_ref_fitted_sub_mean_ezocr} we can see the mean \gls{cer}
 \end{figure}
 
 In \autoref{fig:mos_cer_ref_fitted_sub_mean_tesseract} we can see the mean \gls{cer} (fitted) against the mean \gls{mos} over selected images for all distortions with Tesseract \gls{ocr}.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{llrrrr}
+\toprule
+          & {} & \multicolumn{4}{l}{CER\_comp} \\
+          & ocr\_algo & \multicolumn{2}{l}{ezocr} & \multicolumn{2}{l}{tess} \\
+          & target &       \gls{gt} &   ref &    \gls{gt} &   ref \\
+corr & dist\_name &          &       &       &       \\
+\midrule
+pearson & CC &     0.27 &  0.58 & -0.15 & -0.48 \\
+          & CQD &     0.26 &  0.78 & -0.32 &  0.26 \\
+          & CSC &    -0.06 &  0.73 &  0.08 &  0.13 \\
+          & GB &     0.23 &  0.81 & -0.04 &  0.66 \\
+          & GN &     0.32 &  0.83 &  0.87 &  0.88 \\
+          & HEVC-SCC &     0.00 &  0.91 &  0.24 &  0.76 \\
+          & JPEG &     0.74 &  0.89 &  0.56 &  0.83 \\
+          & JPEG2000 &     0.02 &  0.89 &  0.45 &  0.59 \\
+          & MB &     0.81 &  0.84 &  0.62 &  0.82 \\
+spearmanr & CC &     0.22 &  0.42 & -0.18 & -0.58 \\
+          & CQD &     0.23 &  0.79 & -0.44 &  0.27 \\
+          & CSC &    -0.07 &  0.71 & -0.10 &  0.25 \\
+          & GB &     0.46 &  0.94 &  0.08 &  0.61 \\
+          & GN &     0.34 &  0.80 &  0.81 &  0.88 \\
+          & HEVC-SCC &    -0.03 &  0.84 &  0.13 &  0.50 \\
+          & JPEG &     0.70 &  0.98 &  0.56 &  0.81 \\
+          & JPEG2000 &     0.09 &  0.95 &  0.35 &  0.63 \\
+          & MB &     0.90 &  0.92 &  0.78 &  0.87 \\
+\bottomrule
+\end{tabular}
+\caption{Correlation between CER\_comp and MOS for different distortion types}
+\label{tab:pearson_spear}
+\end{table}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{llrrrr}
+\toprule
+                 & {} & \multicolumn{4}{l}{CER\_comp\_fitted} \\
+                 & ocr\_algo & \multicolumn{2}{l}{ezocr} & \multicolumn{2}{l}{tess} \\
+                 & target &              \gls{gt} &   ref &    \gls{gt} &   ref \\
+corr & dist\_name &                 &       &       &       \\
+\midrule
+pearson\_fitted & CC &            0.45 &  0.67 &  0.18 &  0.49 \\
+                 & CQD &            0.52 &  0.75 &  0.32 &  0.34 \\
+                 & CSC &            0.16 &  0.30 &  0.37 &  0.25 \\
+                 & GB &            0.40 &  0.81 &  0.21 &  0.31 \\
+                 & GN &            0.50 &  0.81 &  0.88 &  0.91 \\
+                 & HEVC-SCC &           -0.01 &  0.85 &  0.16 &  0.09 \\
+                 & JPEG &            0.72 &  0.92 &  0.81 &  0.86 \\
+                 & JPEG2000 &            0.02 &  0.90 &  0.66 &  0.51 \\
+                 & MB &            0.87 &  0.92 &  0.85 &  0.84 \\
+spearmanr\_fitted & CC &            0.42 &  0.41 &  0.18 &  0.52 \\
+                 & CQD &            0.38 &  0.79 &  0.06 &  0.33 \\
+                 & CSC &            0.09 &  0.31 &  0.20 &  0.48 \\
+                 & GB &            0.46 &  0.94 &  0.26 &  0.42 \\
+                 & GN &            0.34 &  0.80 &  0.81 &  0.88 \\
+                 & HEVC-SCC &           -0.03 &  0.84 &  0.25 &  0.19 \\
+                 & JPEG &            0.70 &  0.98 &  0.75 &  0.81 \\
+                 & JPEG2000 &            0.12 &  0.95 &  0.74 &  0.56 \\
+                 & MB &            0.90 &  0.92 &  0.90 &  0.87 \\
+\bottomrule
+\end{tabular}
+    \caption{Correlation between $CER_{comp}$ (fitted) and MOS for different distortion types}
+\label{tab:pearson_spear_fitted}
+\end{table}
     
 \section{Usage of recognized text as ground truth}
 \label{sec:usage_of_recognized_text_as_ground_truth}
@@ -119,3 +181,31 @@ With a $CER_{comp}$ of 83.794 its difficult to recommend using EasyOCR as a grou
 
 \section{Codec comparison}
 \label{sec:codec_comparison}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.9\textwidth]{../images/analyze/codec_cer_size_ezocr_default.pdf}
+    \caption{Comparison of $CER_{comp}$ and size for HM and VTM codec for ezocr}
+    \label{fig:codec_cer_size_ezocr_default}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.9\textwidth]{../images/analyze/codec_cer_size_tess_default.pdf}
+    \caption{Comparison of $CER_{comp}$ and size for HM and VTM codec for tess}
+    \label{fig:codec_cer_size_tess_default}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.9\textwidth]{../images/analyze/codec_cer_size_ezocr_scc.pdf}
+    \caption{Comparison of $CER_{comp}$ and size for HM and VTM codec with SCC configuration for ezocr}
+    \label{fig:codec_cer_size_ezocr_scc}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.9\textwidth]{../images/analyze/codec_cer_size_tess_scc.pdf}
+    \caption{Comparison of $CER_{comp}$ and size for HM and VTM codec with SCC configuration for tess}
+    \label{fig:codec_cer_size_tess_scc}
+\end{figure}
