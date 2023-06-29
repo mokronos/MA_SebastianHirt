@@ -80,6 +80,8 @@ def create_summary():
 
     table = table.pivot(index=["corr", "dist_name"], columns=["ocr_algo", "target"])
 
+    table = table.round(2)
+
 
     data_grouped = data.groupby(["dist_name", "ocr_algo", "target"])
     table_fitted = data_grouped[['pearson_fitted', 'spearmanr_fitted']]
@@ -92,15 +94,17 @@ def create_summary():
 
     table_fitted = table_fitted.pivot(index=["corr", "dist_name"], columns=["ocr_algo", "target"])
 
+    table_fitted = table_fitted.round(2)
+
     table.to_csv(PATHS["results_spearman_pearson"]("base", "csv"))
     table.to_markdown(PATHS["results_spearman_pearson"]("base", "md"))
+    table.to_latex(PATHS["results_spearman_pearson"]("base", "tex"))
     table_fitted.to_csv(PATHS["results_spearman_pearson"]("fitted", "csv"))
     table_fitted.to_markdown(PATHS["results_spearman_pearson"]("fitted", "md"))
+    table_fitted.to_latex(PATHS["results_spearman_pearson"]("fitted", "tex"))
 
     print(table)
     print(table_fitted)
-
-    return table, table_fitted
 
 
 def cer_ref_gt():
@@ -125,6 +129,6 @@ if __name__ == "__main__":
 
     # get_bjontegaard()
 
-    # table, table_fitted = create_summary()
+    create_summary()
 
-    cer_ref_gt()
+    # cer_ref_gt()

@@ -1,7 +1,8 @@
 CONFIG = {
         # images to use for experiments
-        "scid_img_ids": [1, 3, 4, 5, 29],
-        # "scid_img_ids": [1, 3],
+        # images where text is most dominant, content not distracting for MOS
+        # "scid_img_ids": [1, 3, 4, 5, 29],
+        "scid_img_ids": [1, 2, 3, 4, 5, 6, 7, 8, 11, 12, 15, 18, 20, 21, 24, 29],
 
         # distortions levels to use for experiments
         "scid_dists": [1, 2, 3, 4, 5, 6, 7, 8, 9],

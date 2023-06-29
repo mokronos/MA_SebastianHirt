@@ -490,6 +490,8 @@ Weirdness:
 |  45 |            0.170 |          0.039 |
 |  50 |            0.181 |          0.073 |
 
+- Tesseract stops detecting for gaussian noise 4 and 5 for all images ???
+
 ## Plots to generate
 generally:
 - ocr algorithms seperatly
@@ -513,11 +515,12 @@ generally:
 ### 4. check how OCR performs for different quality levels for HEVC and VVC
 
 - mby for both configs, show difference
-- for both qual lists, show no performance loss with higher quality
-- CER(against ref), y(CER) x(qual/size), against ref how much worse it gets
-- CER(against gt), y(CER) x(qual/size), make absolute statement about how good OCR is
+- for both qual lists, check if performance loss with higher q
+    - CER(against ref|pseudo), y(CER) x(qual/size), against ref how much worse it gets
+    - CER(against gt|true), y(CER) x(qual/size), make absolute statement about how good OCR is
 - bdRate, no plot needed
 
 ## Questions
 
 - bitdepth of images is 24/32 bit? but codec config says 8?
+- use HM/VTM or hevc/vvc? HM/VTM is the reference software, but hevc/vvc is the standard?

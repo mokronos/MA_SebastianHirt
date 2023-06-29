@@ -124,10 +124,9 @@ def pred_codec(codec="vtm", config="scc", ids="codecs_img_ids"):
 
 
 if __name__ == "__main__":
-    # pred_dist()
+    pred_dist()
     # pred_ref()
-    # ids = CONFIG["codecs_img_ids"]
-    ids = "codecs_img_ids_combined"
-    pred_ref(ids=ids)
+    # ids = "codecs_img_ids_combined"
+    # pred_ref(ids=ids)
     # pred_codec(codec="vtm", config="scc", ids=ids)
     # pred_codec(codec="hm", config="scc", ids=ids)
