@@ -22,8 +22,12 @@ We do this for all the distortion types.
 \label{fig:cer_dist_quality_gt_ezocr}
 \end{figure}
 
-In \autoref{fig:cer_dist_quality_gt_ezocr} we can see the mean \gls{cer} with regards to the \gls{gt} for different quality levels with EasyOCR.
-We can clearly see that, motion blur is impacting the performance of EasyOCR the most, going down from 80 to 20 almost linearly.
+In \autoref{fig:cer_dist_quality_gt_ezocr}, we observe the mean \gls{cer} in relation to the ground truth (\gls{gt}) for different quality levels using EasyOCR.
+A noticeable trend is that motion blur has the most significant impact on EasyOCR's performance, exhibiting a nearly linear decrease from 80 to 20.
+Both JPEG and Gaussian blur display similar behavior until quality level 4, after which Gaussian blur experiences a steeper decline.
+Notably, the blurring of images greatly affects the legibility of text, with letters becoming indistinct and merging together, resulting in the poorest performance for EasyOCR.
+Gaussian noise, JPEG2000, and HEVC-SCC exhibit comparable performance, all experiencing a decline at quality level 5.
+The remaining distortions have minimal impact on performance, which is expected since color distortions do not directly affect text shapes.
 
 \begin{figure}[h]
 \centering
@@ -32,13 +36,22 @@ We can clearly see that, motion blur is impacting the performance of EasyOCR the
 \label{fig:cer_dist_quality_gt_tesseract}
 \end{figure}
 
-In \autoref{fig:cer_dist_quality_gt_tesseract} we can see the mean \gls{cer} against the \gls{gt} for different quality levels with Tesseract \gls{ocr}.
+In \autoref{fig:cer_dist_quality_gt_tesseract}, we observe the mean \gls{cer} plotted in relation the ground truth (\gls{gt}) for various quality levels using Tesseract \gls{ocr}.
+A steady decrease in \gls{cer} can be seen for motion blur and Gaussian blur, with the former exhibiting a 20-point higher value compared to the latter.
+However, the most noteworthy finding is the significant drop in \gls{cer} for Gaussian noise at quality level 4, reaching 0 at quality level 5.
+This sudden decline is particularly surprising when compared to other types of distortions.
+Among the distortions analyzed, CC, CQD, and CSC perform the best, with CC even demonstrating a slightly higher \gls{cer} at quality level 5 compared to previous levels.
+This phenomenon can possibly be attributed to CC's ability to enhance the distinction between the text and the background, acting almost like an image preprocessing step for the \gls{ocr}.
+Interestingly, the \gls{cer} for HEVC-SCC slightly increases at quality level 4 and then decreases again at quality level 5.
+A plausible explanation for this behavior is that certain portions of the text are not well recognized at quality 4, and since these unrecognized parts are not included in the \gls{gt}, it leads to a higher \gls{cer}.
+Then at level 5, more parts, that are in the ground truth, are not recognized well.
+Consequently, the \gls{cer} decreases.
 
-\begin{itemize}
-\item Easy ocr generally performs well even on distorted images
-\item for motion blur the performance is worse for the 2 worst quality levels for most images
-\item image 4 performs better for worse quality, because \gls{gt} doesn't contain text on coin
-\end{itemize}
+In summary, our observations reveal that motion blur and Gaussian blur have a substantial impact on the performance of both EasyOCR and Tesseract \gls{ocr} algorithms.
+Additionally, both \gls{ocr} algorithms perform demonstrate superior performance across images with CC, CQD, and CSC.
+However, the most remarkable discovery is the significant drop in the \gls{cer} for Gaussian noise at quality level 4, reaching 0 at quality level 5, specifically for Tesseract OCR.
+This suggests that EasyOCR exhibits greater robustness to Gaussian noise compared to Tesseract \gls{ocr} .
+Overall, EasyOCR outperforms Tesseract \gls{ocr} , with a performance ceiling of approximately 83 \gls{cer} for EasyOCR, while Tesseract \gls{ocr} only achieves around 70 \gls{cer}.
 
 \section{Comparison against human judgement}
 \label{sec:comparison_against_human_judgement}

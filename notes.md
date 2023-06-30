@@ -524,3 +524,4 @@ generally:
 
 - bitdepth of images is 24/32 bit? but codec config says 8?
 - use HM/VTM or hevc/vvc? HM/VTM is the reference software, but hevc/vvc is the standard?
+- difficult to always say "better performance of ocr on images with CC distortion", instead of "CC performs better"
