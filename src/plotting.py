@@ -10,7 +10,7 @@ plt.rcParams.update({
     "text.usetex": True,
     "font.family": "serif",
     # "font.serif": ["Computer Modern Roman"],
-    "font.size": 30,
+    "font.size": 35,
     })
 
 MARKER_SIZE = 400
