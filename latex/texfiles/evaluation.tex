@@ -2,7 +2,7 @@
 \label{chap:evaluation}
 
 In this chapter, we first go over the performance of the \gls{ocr} algorithms.
-Then we compare the performance of the \gls{ocr} algorithms against human judgement.
+Then we compare the performance of the \gls{ocr} algorithms against human judgment.
 Additionally, we investigate the feasibility of using recognized text from pristine images as ground truth.
 Finally, we evaluate the performance of the \gls{ocr} algorithms on different quality levels of the HM and VTM codecs.
 
@@ -53,50 +53,269 @@ However, the most remarkable discovery is the significant drop in the \gls{cer} 
 This suggests that EasyOCR exhibits greater robustness to Gaussian noise compared to Tesseract \gls{ocr} .
 Overall, EasyOCR outperforms Tesseract \gls{ocr} , with a performance ceiling of approximately 83 \gls{cer} for EasyOCR, while Tesseract \gls{ocr} only achieves around 70 \gls{cer}.
 
-\section{Comparison against human judgement}
-\label{sec:comparison_against_human_judgement}
+\section{Comparison against human judgment}
+\label{sec:comparison_against_human_judgment}
 
-Available datasets with subjective quality scores will be utilized to investigate
-the correlation between text recognition rates and human judgement.
+In this section, we compare the performance of the \gls{ocr} algorithms with human judgment.
+We use the subjective quality scores to investigate the correlation between the \gls{cer} and the \gls{mos}.
+However, compared to the last section, we calculate the \gls{cer} in relation to the reference image instead of the ground truth.
+This makes it a fairer comparison as the humans that rated the images, compared the distorted images to the reference image to arrive at the \gls{mos}.
 
-\begin{itemize}
-\item no clear correlation, ocr not getting substantially worse with worse quality \autoref{fig:sub29} and \autoref{fig:sub3}
-\item transformation via fitted model might help
-\end{itemize}
 
+% mos vs cer mean in relation to reference for easyocr
 \begin{figure}[h]
 \centering
-    \includegraphics[width=0.9\textwidth]{../../images/analyze/mos_cer_ref_sub_mean_ezocr.pdf}
-    \caption{Mean \gls{cer} against mean \gls{mos} for different reference images with EasyOCR.}
-\label{fig:mos_cer_ref_sub_mean_ezocr}
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{../../images/analyze/mos_cer_ref_mean_ezocr_GN.pdf}
+        \caption{GN}
+        \label{fig:mos_cer_ref_mean_ezocr_GN}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{../../images/analyze/mos_cer_ref_mean_ezocr_GB.pdf}
+        \caption{GB}
+        \label{fig:mos_cer_ref_mean_ezocr_GB}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{../../images/analyze/mos_cer_ref_mean_ezocr_MB.pdf}
+        \caption{MB}
+        \label{fig:mos_cer_ref_mean_ezocr_MB}
+    \end{subfigure}
+    \newline
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{../../images/analyze/mos_cer_ref_mean_ezocr_CC.pdf}
+        \caption{CC}
+        \label{fig:mos_cer_ref_mean_ezocr_CC}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{../../images/analyze/mos_cer_ref_mean_ezocr_JPEG.pdf}
+        \caption{JPEG}
+        \label{fig:mos_cer_ref_mean_ezocr_JPEG}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{../../images/analyze/mos_cer_ref_mean_ezocr_JPEG2000.pdf}
+        \caption{JPEG2000}
+        \label{fig:mos_cer_ref_mean_ezocr_JPEG2000}
+    \end{subfigure}
+    \newline
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{../../images/analyze/mos_cer_ref_mean_ezocr_CSC.pdf}
+        \caption{CSC}
+        \label{fig:mos_cer_ref_mean_ezocr_CSC}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{../../images/analyze/mos_cer_ref_mean_ezocr_HEVC-SCC.pdf}
+        \caption{HEVC-SCC}
+        \label{fig:mos_cer_ref_mean_ezocr_HEVC-SCC}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{../../images/analyze/mos_cer_ref_mean_ezocr_CQD.pdf}
+        \caption{CQD}
+        \label{fig:mos_cer_ref_mean_ezocr_CQD}
+    \end{subfigure}
+\caption{Mean \gls{cer} against mean \gls{mos} for different distortion types with EasyOCR.}
+\label{fig:mos_cer_ref_mean_ezocr}
 \end{figure}
 
-In \autoref{fig:mos_cer_ref_sub_mean_ezocr} we can see the mean \gls{cer} against the mean \gls{mos} over selected images for all distortions with EasyOCR.
+In \autoref{fig:mos_cer_ref_sub_mean_ezocr} we can see the mean \gls{cer} in relation to the reference image against the mean \gls{mos} over selected images for all distortions with EasyOCR.
+The first general thing to notice is that the performance ceiling for the \gls{cer} is now up to almost 100.
+This is because the \gls{cer} is calculated in relation to the reference image, which is not necessarily the ground truth.
+So it is clear, that the performance on CSC and CC are not impacted much by the distortions, as we saw in the previous section.
+The \gls{mos} for CSC varies more than the \gls{cer}, but not as much as for other distortion types.
+This suggests at least a slight correlation between the \gls{mos} and the \gls{cer}.
+For CC neither metric shows a clear trend.
+It is not clear why the \gls{mos} for CC is not strictly decreasing with the quality level.
+All other distortions show this trend.
+Contrast levels do not clearly reach from good to bad, it might be that humans found specific contrast levels more appealing than others.
 
+% mos vs cer mean in relation to reference for Tesseract
 \begin{figure}[h]
 \centering
-    \includegraphics[width=0.9\textwidth]{../../images/analyze/mos_cer_ref_sub_mean_tess.pdf}
-    \caption{Mean \gls{cer} against mean \gls{mos} for different reference images with Tesseract \gls{ocr}.}
-\label{fig:mos_cer_ref_sub_mean_tesseract}
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{../../images/analyze/mos_cer_ref_mean_tess_GN.pdf}
+        \caption{GN}
+        \label{fig:mos_cer_ref_mean_tess_GN}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{../../images/analyze/mos_cer_ref_mean_tess_GB.pdf}
+        \caption{GB}
+        \label{fig:mos_cer_ref_mean_tess_GB}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{../../images/analyze/mos_cer_ref_mean_tess_MB.pdf}
+        \caption{MB}
+        \label{fig:mos_cer_ref_mean_tess_MB}
+    \end{subfigure}
+    \newline
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{../../images/analyze/mos_cer_ref_mean_tess_CC.pdf}
+        \caption{CC}
+        \label{fig:mos_cer_ref_mean_tess_CC}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{../../images/analyze/mos_cer_ref_mean_tess_JPEG.pdf}
+        \caption{JPEG}
+        \label{fig:mos_cer_ref_mean_tess_JPEG}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{../../images/analyze/mos_cer_ref_mean_tess_JPEG2000.pdf}
+        \caption{JPEG2000}
+        \label{fig:mos_cer_ref_mean_tess_JPEG2000}
+    \end{subfigure}
+    \newline
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{../../images/analyze/mos_cer_ref_mean_tess_CSC.pdf}
+        \caption{CSC}
+        \label{fig:mos_cer_ref_mean_tess_CSC}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{../../images/analyze/mos_cer_ref_mean_tess_HEVC-SCC.pdf}
+        \caption{HEVC-SCC}
+        \label{fig:mos_cer_ref_mean_tess_HEVC-SCC}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{../../images/analyze/mos_cer_ref_mean_tess_CQD.pdf}
+        \caption{CQD}
+        \label{fig:mos_cer_ref_mean_tess_CQD}
+    \end{subfigure}
+    \caption{Mean \gls{cer} against mean \gls{mos} for different distortion types with Tesseract \gls{ocr}.}
+\label{fig:mos_cer_ref_mean_tess}
 \end{figure}
 
 In \autoref{fig:mos_cer_ref_sub_mean_tesseract} we can see the mean \gls{cer} against the mean \gls{mos} over selected images for all distortions with Tesseract \gls{ocr}.
 
 
+% mos vs cer mean in relation to reference for ezocr
 \begin{figure}[h]
 \centering
-    \includegraphics[width=0.9\textwidth]{../../images/analyze/mos_cer_ref_fitted_sub_mean_ezocr.pdf}
-    \caption{Mean \gls{cer} (fitted) against mean \gls{mos} for different reference images with EasyOCR.}
-\label{fig:mos_cer_ref_fitted_sub_mean_ezocr}
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{../../images/analyze/mos_cer_ref_fitted_mean_ezocr_GN.pdf}
+        \caption{GN}
+        \label{fig:mos_cer_ref_fitted_mean_ezocr_GN}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{../../images/analyze/mos_cer_ref_fitted_mean_ezocr_GB.pdf}
+        \caption{GB}
+        \label{fig:mos_cer_ref_fitted_mean_ezocr_GB}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{../../images/analyze/mos_cer_ref_fitted_mean_ezocr_MB.pdf}
+        \caption{MB}
+        \label{fig:mos_cer_ref_fitted_mean_ezocr_MB}
+    \end{subfigure}
+    \newline
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{../../images/analyze/mos_cer_ref_fitted_mean_ezocr_CC.pdf}
+        \caption{CC}
+        \label{fig:mos_cer_ref_fitted_mean_ezocr_CC}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{../../images/analyze/mos_cer_ref_fitted_mean_ezocr_JPEG.pdf}
+        \caption{JPEG}
+        \label{fig:mos_cer_ref_fitted_mean_ezocr_JPEG}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{../../images/analyze/mos_cer_ref_fitted_mean_ezocr_JPEG2000.pdf}
+        \caption{JPEG2000}
+        \label{fig:mos_cer_ref_fitted_mean_ezocr_JPEG2000}
+    \end{subfigure}
+    \newline
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{../../images/analyze/mos_cer_ref_fitted_mean_ezocr_CSC.pdf}
+        \caption{CSC}
+        \label{fig:mos_cer_ref_fitted_mean_ezocr_CSC}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{../../images/analyze/mos_cer_ref_fitted_mean_ezocr_HEVC-SCC.pdf}
+        \caption{HEVC-SCC}
+        \label{fig:mos_cer_ref_fitted_mean_ezocr_HEVC-SCC}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{../../images/analyze/mos_cer_ref_fitted_mean_ezocr_CQD.pdf}
+        \caption{CQD}
+        \label{fig:mos_cer_ref_fitted_mean_ezocr_CQD}
+    \end{subfigure}
+    \caption{Mean \gls{cer} (fitted) against mean \gls{mos} for different distortion types with EasyOCR.}
+\label{fig:mos_cer_ref_fitted_mean_ezocr}
 \end{figure}
 
 In \autoref{fig:mos_cer_ref_fitted_sub_mean_ezocr} we can see the mean \gls{cer} (fitted) against the mean \gls{mos} over selected images for all distortions with EasyOCR.
 
+% mos vs cer (fitted) mean in relation to reference for Tesseract
 \begin{figure}[h]
 \centering
-    \includegraphics[width=0.9\textwidth]{../../images/analyze/mos_cer_ref_fitted_sub_mean_tess.pdf}
-    \caption{Mean \gls{cer} (fitted) against mean \gls{mos} for different reference images with Tesseract \gls{ocr}.}
-\label{fig:mos_cer_ref_fitted_sub_mean_tesseract}
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{../../images/analyze/mos_cer_ref_fitted_mean_tess_GN.pdf}
+        \caption{GN}
+        \label{fig:mos_cer_ref_fitted_mean_tess_GN}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{../../images/analyze/mos_cer_ref_fitted_mean_tess_GB.pdf}
+        \caption{GB}
+        \label{fig:mos_cer_ref_fitted_mean_tess_GB}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{../../images/analyze/mos_cer_ref_fitted_mean_tess_MB.pdf}
+        \caption{MB}
+        \label{fig:mos_cer_ref_fitted_mean_tess_MB}
+    \end{subfigure}
+    \newline
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{../../images/analyze/mos_cer_ref_fitted_mean_tess_CC.pdf}
+        \caption{CC}
+        \label{fig:mos_cer_ref_fitted_mean_tess_CC}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{../../images/analyze/mos_cer_ref_fitted_mean_tess_JPEG.pdf}
+        \caption{JPEG}
+        \label{fig:mos_cer_ref_fitted_mean_tess_JPEG}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{../../images/analyze/mos_cer_ref_fitted_mean_tess_JPEG2000.pdf}
+        \caption{JPEG2000}
+        \label{fig:mos_cer_ref_fitted_mean_tess_JPEG2000}
+    \end{subfigure}
+    \newline
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{../../images/analyze/mos_cer_ref_fitted_mean_tess_CSC.pdf}
+        \caption{CSC}
+        \label{fig:mos_cer_ref_fitted_mean_tess_CSC}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{../../images/analyze/mos_cer_ref_fitted_mean_tess_HEVC-SCC.pdf}
+        \caption{HEVC-SCC}
+        \label{fig:mos_cer_ref_fitted_mean_tess_HEVC-SCC}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{../../images/analyze/mos_cer_ref_fitted_mean_tess_CQD.pdf}
+        \caption{CQD}
+        \label{fig:mos_cer_ref_fitted_mean_tess_CQD}
+    \end{subfigure}
+    \caption{Mean \gls{cer} (fitted) against mean \gls{mos} for different distortion types with Tesseract \gls{ocr}.}
+\label{fig:mos_cer_ref_fitted_mean_tess}
 \end{figure}
 
 In \autoref{fig:mos_cer_ref_fitted_sub_mean_tesseract} we can see the mean \gls{cer} (fitted) against the mean \gls{mos} over selected images for all distortions with Tesseract \gls{ocr}.
