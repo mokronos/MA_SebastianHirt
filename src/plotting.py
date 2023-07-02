@@ -5,6 +5,7 @@ from config import CONFIG, PATHS
 import cv2
 from itertools import islice
 from mpl_toolkits.axes_grid1 import make_axes_locatable
+import numpy as np
 
 plt.rcParams.update({
     "text.usetex": True,
@@ -29,7 +30,7 @@ def plot_cer_dist_quality():
     """
 
     # load dataframe
-    data = pd.read_csv(PATHS['results_dist'])
+    data = pd.read_csv(PATHS['results_dist']())
 
 
     grp_target = data.groupby('target')
@@ -70,7 +71,7 @@ def plot_cer_mos_sub():
     Subplots
     """
 
-    data = pd.read_csv(PATHS['results_dist'])
+    data = pd.read_csv(PATHS['results_dist']())
     
     markers = ['v', '2', 's', 'P', 'x', 'd', '.', 'p', '*']
     colormap = 'copper_r'
@@ -121,7 +122,7 @@ def plot_cer_fitted_mos_sub():
     Subplots
     """
 
-    data = pd.read_csv(PATHS['results_dist'])
+    data = pd.read_csv(PATHS['results_dist']())
     
     markers = ['v', '2', 's', 'P', 'x', 'd', '.', 'p', '*']
     colormap = 'copper_r'
@@ -172,7 +173,7 @@ def plot_cer_mos_mean():
     Plot for every distortion type
     """
 
-    data = pd.read_csv(PATHS['results_dist'])
+    data = pd.read_csv(PATHS['results_dist']())
     
     markers = ['v', '2', 's', 'P', 'x', 'd', '.', 'p', '*']
     colormap = 'copper_r'
@@ -228,18 +229,18 @@ def plot_cer_mos_mean():
     print(f"plotted CER_comp against MOS for each distortion type, mean over all images")
 
 
-def plot_cer_fitted_mos_mean():
+def plot_cer_mos_fitted_mean():
     """
     Plot CER_comp against different targets fitted on all images (total), for different distortion types
     Plot for every distortion type
     """
 
-    data = pd.read_csv(PATHS['results_dist'])
+    data = pd.read_pickle(PATHS['results_dist'](ext='pkl'))
     
-    markers = ['v', '2', 's', 'P', 'x', 'd', '.', 'p', '*']
+    # markers = ['v', '2', 's', 'P', 'x', 'd', '.', 'p', '*']
     colormap = 'copper_r'
 
-    crit = 'cer_comp_fitted_total'
+    crit = 'mos_comp_fitted_total'
 
     grp_target = data.groupby('target')
     for name_target, group_target in grp_target:
@@ -252,23 +253,36 @@ def plot_cer_fitted_mos_mean():
 
                 fig = plt.figure(figsize=(FIGSIZE, FIGSIZE))
 
-                mean_dist = group_dist.groupby('qual')[[crit, 'mos']].mean().reset_index()
+                mean_dist = group_dist.groupby('qual')[[crit, 'cer_comp']].mean().reset_index()
                 dist_name = group_dist['dist_name'].iloc[0]
+                help = np.arange(0, 100, 0.1)
+                model_params = group_dist['model_params_comp_total'].iloc[0]
+
+                # plot point cloud
+                plt.scatter(group_dist["mos"],
+                            group_dist['cer_comp'],
+                            label='single datapoints',
+                            marker='.',
+                            cmap=colormap,
+                            c=group_dist['qual'])
+                # plot fitted function
+                plt.plot(helpers.model(help, *model_params), help, color='black', linestyle='--', label='fitted model')
 
                 # plot mean cer/mos over images for each quality
-                plt.scatter(mean_dist['mos'],
-                                mean_dist[crit],
-                                label=dist_name,
-                                marker=markers[idx],
+                plt.scatter(mean_dist[crit],
+                                mean_dist['cer_comp'],
+                                label="mean fitted",
+                                marker='x',
                                 cmap=colormap,
                                 c=mean_dist['qual'],
                                 s=MARKER_SIZE)
 
-                plt.xlabel("$\overline{MOS}$")
-                plt.ylabel("$\overline{CER}_{comp} (fitted)$")
+                plt.xlabel("$MOS$")
+                plt.ylabel("$CER_{comp}$")
                 plt.xlim(0, 100)
                 plt.ylim(0, 100)
                 plt.grid()
+                plt.legend()
 
                 # make plot square and add colorbar
                 ax = plt.gca()
@@ -282,12 +296,12 @@ def plot_cer_fitted_mos_mean():
                 # savepath_png=PATHS['analyze'](f'mos_cer_{name_target}_fitted_mean_{name_ocr}_{dist_name}.png')
                 # plt.savefig(savepath_png, bbox_inches='tight', pad_inches=0)
 
-                plt.title(f"Comparison of CER (fitted) with target {name_target} for {dist_name} with {name_ocr} OCR")
+                plt.title(f"Comparison of CER with target {name_target} for {dist_name} with {name_ocr} OCR (fitted)")
                 # plt.show()
                 plt.clf()
                 plt.close()
 
-    print(f"plotted fitted CER_comp against MOS for each distortion type, mean over all images")
+    print(f"plotted CER_comp against MOS for each distortion type, mean over all images (fitted)")
 
 
 ############################################################################################################
@@ -471,5 +485,5 @@ if __name__ == '__main__':
 
     pass
     # pipeline()
-    plot_cer_mos_mean()
-    plot_cer_fitted_mos_mean()
+    # plot_cer_mos_mean()
+    plot_cer_mos_fitted_mean()

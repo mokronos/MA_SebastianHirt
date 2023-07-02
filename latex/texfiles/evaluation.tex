@@ -18,7 +18,7 @@ We do this for all the distortion types.
 \begin{figure}[h]
 \centering
     \includegraphics[width=0.9\textwidth]{../../images/analyze/cer_dist_quality_gt_ezocr.pdf}
-    \caption{Mean \gls{cer} against \gls{gt} for different quality levels with EasyOCR.}
+    \caption{Mean \gls{cer} in relation to the \gls{gt} for different quality levels with EasyOCR.}
 \label{fig:cer_dist_quality_gt_ezocr}
 \end{figure}
 
@@ -32,7 +32,7 @@ The remaining distortions have minimal impact on performance, which is expected 
 \begin{figure}[h]
 \centering
     \includegraphics[width=0.9\textwidth]{../../images/analyze/cer_dist_quality_gt_tess.pdf}
-    \caption{Mean \gls{cer} against \gls{gt} for different quality levels with Tesseract \gls{ocr}.}
+    \caption{Mean \gls{cer} in relation to the \gls{gt} for different quality levels with Tesseract \gls{ocr}.}
 \label{fig:cer_dist_quality_gt_tesseract}
 \end{figure}
 
@@ -118,11 +118,11 @@ This makes it a fairer comparison as the humans that rated the images, compared 
         \caption{CQD}
         \label{fig:mos_cer_ref_mean_ezocr_CQD}
     \end{subfigure}
-\caption{Mean \gls{cer} against mean \gls{mos} for different distortion types with EasyOCR.}
+\caption{Mean \gls{cer} in relation to the reference against mean \gls{mos} for different distortion types with EasyOCR.}
 \label{fig:mos_cer_ref_mean_ezocr}
 \end{figure}
 
-In \autoref{fig:mos_cer_ref_sub_mean_ezocr} we can see the mean \gls{cer} in relation to the reference image against the mean \gls{mos} over selected images for all distortions with EasyOCR.
+In \autoref{fig:mos_cer_ref_mean_ezocr} we can see the mean \gls{cer} in relation to the reference image against the mean \gls{mos} over selected images for all distortions with EasyOCR.
 The first general thing to notice is that the performance ceiling for the \gls{cer} is now up to almost 100.
 This is because the \gls{cer} is calculated in relation to the reference image, which is not necessarily the ground truth.
 So it is clear, that the performance on CSC and CC are not impacted much by the distortions, as we saw in the previous section.
@@ -189,14 +189,14 @@ Contrast levels do not clearly reach from good to bad, it might be that humans f
         \caption{CQD}
         \label{fig:mos_cer_ref_mean_tess_CQD}
     \end{subfigure}
-    \caption{Mean \gls{cer} against mean \gls{mos} for different distortion types with Tesseract \gls{ocr}.}
+    \caption{Mean \gls{cer} in relation to the reference against mean \gls{mos} for different distortion types with Tesseract \gls{ocr}.}
 \label{fig:mos_cer_ref_mean_tess}
 \end{figure}
 
-In \autoref{fig:mos_cer_ref_sub_mean_tesseract} we can see the mean \gls{cer} against the mean \gls{mos} over selected images for all distortions with Tesseract \gls{ocr}.
+In \autoref{fig:mos_cer_ref_mean_tess} we can see the mean \gls{cer} against the mean \gls{mos} over selected images for all distortions with Tesseract \gls{ocr}.
 
 
-% mos vs cer mean in relation to reference for ezocr
+% mos vs cer (fitted) mean in relation to reference for ezocr
 \begin{figure}[h]
 \centering
     \begin{subfigure}[b]{0.3\textwidth}
@@ -252,11 +252,11 @@ In \autoref{fig:mos_cer_ref_sub_mean_tesseract} we can see the mean \gls{cer} ag
         \caption{CQD}
         \label{fig:mos_cer_ref_fitted_mean_ezocr_CQD}
     \end{subfigure}
-    \caption{Mean \gls{cer} (fitted) against mean \gls{mos} for different distortion types with EasyOCR.}
+    \caption{Mean \gls{cer} (fitted) in relation to the reference against mean \gls{mos} for different distortion types with EasyOCR.}
 \label{fig:mos_cer_ref_fitted_mean_ezocr}
 \end{figure}
 
-In \autoref{fig:mos_cer_ref_fitted_sub_mean_ezocr} we can see the mean \gls{cer} (fitted) against the mean \gls{mos} over selected images for all distortions with EasyOCR.
+In \autoref{fig:mos_cer_ref_fitted_mean_ezocr} we can see the mean \gls{cer} (fitted) against the mean \gls{mos} over selected images for all distortions with EasyOCR.
 
 % mos vs cer (fitted) mean in relation to reference for Tesseract
 \begin{figure}[h]
@@ -314,11 +314,11 @@ In \autoref{fig:mos_cer_ref_fitted_sub_mean_ezocr} we can see the mean \gls{cer}
         \caption{CQD}
         \label{fig:mos_cer_ref_fitted_mean_tess_CQD}
     \end{subfigure}
-    \caption{Mean \gls{cer} (fitted) against mean \gls{mos} for different distortion types with Tesseract \gls{ocr}.}
+    \caption{Mean \gls{cer} (fitted) in relation to the reference against mean \gls{mos} for different distortion types with Tesseract \gls{ocr}.}
 \label{fig:mos_cer_ref_fitted_mean_tess}
 \end{figure}
 
-In \autoref{fig:mos_cer_ref_fitted_sub_mean_tesseract} we can see the mean \gls{cer} (fitted) against the mean \gls{mos} over selected images for all distortions with Tesseract \gls{ocr}.
+In \autoref{fig:mos_cer_ref_fitted_mean_tess} we can see the mean \gls{cer} (fitted) against the mean \gls{mos} over selected images for all distortions with Tesseract \gls{ocr}.
 
 \begin{table}[h]
 \centering

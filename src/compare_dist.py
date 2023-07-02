@@ -87,9 +87,12 @@ def add_cer_comp(data):
 
 def add_fitted(data):
 
+    # fit data once with cer and once with cer_comp
     def fit_data(group):
-        group["cer_fitted"] = helpers.nonlinearfitting(group["cer"], group["mos"])
-        group["cer_comp_fitted"] = helpers.nonlinearfitting(group["cer_comp"], group["mos"])
+        group["mos_fitted"], model_params = helpers.nonlinearfitting(group["cer"], group["mos"])
+        group["model_params"] = [model_params] * len(group)
+        group["mos_comp_fitted"], model_params_comp = helpers.nonlinearfitting(group["cer_comp"], group["mos"])
+        group["model_params_comp"] = [model_params_comp] * len(group)
         return group
 
     # add cer fitted for every image separately
@@ -104,8 +107,10 @@ def add_fitted(data):
 def add_fitted_total(data):
 
     def fit_data(group):
-        group["cer_fitted_total"] = helpers.nonlinearfitting(group["cer"], group["mos"])
-        group["cer_comp_fitted_total"] = helpers.nonlinearfitting(group["cer_comp"], group["mos"])
+        group["mos_fitted_total"], model_params = helpers.nonlinearfitting(group["cer"], group["mos"])
+        group["model_params_total"] = [model_params] * len(group)
+        group["mos_comp_fitted_total"], model_params_comp = helpers.nonlinearfitting(group["cer_comp"], group["mos"])
+        group["model_params_comp_total"] = [model_params_comp] * len(group)
         return group
 
     # add cer fitted for every all images together
@@ -125,10 +130,10 @@ def add_pearson(data):
 
         # pearson cant deal with nan values
         # fitting sometimes fails so we skip if there are nan values
-        if group[f"cer_comp_fitted"].isnull().values.any():
+        if group[f"mos_comp_fitted_total"].isnull().values.any():
             log.info(f"cer_comp_fitted is null for {group.name[2]}")
             return group
-        p = scipy.stats.pearsonr(group[f"mos"], group[f"cer_comp_fitted"])
+        p = scipy.stats.pearsonr(group[f"mos_comp_fitted_total"], group[f"cer_comp"])
         group[f"pearson_fitted"] = p[0]
         return group
 
@@ -144,7 +149,7 @@ def add_spearman_ranked(data):
     def spearman_ranked(group):
         p = scipy.stats.spearmanr(group[f"mos"], group[f"cer_comp"])
         group[f"spearmanr"] = p[0]
-        p = scipy.stats.spearmanr(group[f"mos"], group[f"cer_comp_fitted"])
+        p = scipy.stats.spearmanr(group[f"mos_comp_fitted_total"], group[f"cer_comp"])
         group[f"spearmanr_fitted"] = p[0]
         return group
 
@@ -169,5 +174,7 @@ if __name__ == "__main__":
     data = add_spearman_ranked(data)
 
     # print(data[['img_num', 'mos', 'cer_comp', 'cer_comp_fitted', 'spearmanr']])
+    print(data)
 
-    data.to_csv(PATHS["results_dist"])
+    data.to_csv(PATHS["results_dist"]())
+    data.to_pickle(PATHS["results_dist"](ext="pkl"))

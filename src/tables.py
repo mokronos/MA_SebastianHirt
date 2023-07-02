@@ -67,7 +67,7 @@ def create_summary():
     # values: (value used in comparison with MOS in correlation computation)
     # - CER
 
-    data = pd.read_csv(PATHS["results_dist"])
+    data = pd.read_pickle(PATHS["results_dist"](ext="pkl"))
 
     data_grouped = data.groupby(["dist_name", "ocr_algo", "target"])
     table = data_grouped[['pearson', 'spearmanr']]

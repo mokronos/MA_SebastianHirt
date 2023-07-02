@@ -242,6 +242,8 @@ def pred_data(img_paths, algo='ezocr'):
 
     return results
 
+def model(x, a, b, c, d):
+    return ((a-b)/(1+np.exp((-x+c)/d)))+b
 
 def nonlinearfitting(objvals, subjvals, max_nfev=4000):
     """
@@ -259,9 +261,8 @@ def nonlinearfitting(objvals, subjvals, max_nfev=4000):
     # https://arxiv.org/pdf/1810.08169.pdf
     # originally from this:
     # https://www.researchgate.net/publication/221458323_Video_Quality_Experts_Group_current_results_and_future_directions
+    # has weighted alternative, but not sure if necessary
     # humans might be less sensitive to the difference between images
-    def model(x, a, b, c, d):
-        return ((a-b)/(1+np.exp((-x+c)/d)))+b
 
     # initialize the parameters used by the nonlinear fitting function
     beta0 = [np.max(subjvals), np.min(subjvals),
@@ -274,11 +275,12 @@ def nonlinearfitting(objvals, subjvals, max_nfev=4000):
     # given an objective value,
     # predict the corresponding MOS (ypre) using the fitted curve
     # ypre are the modified objective values, not subjective (90% sure)
+    # no, ypred are the predicted subjective values, model(obj) = subj
     ypre = model(np.array(objvals), *betam)
 
     # plcc, _ = pearsonr(subjvals, ypre)  # pearson linear coefficient
     # return srocc, plcc, ypre
-    return ypre
+    return ypre, betam
 
 
 def csv_to_text(df):

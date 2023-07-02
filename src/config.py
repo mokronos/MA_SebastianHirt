@@ -111,7 +111,8 @@ PATHS = {
 
         # Path to dataframe with distorted images results
         "results_dist":
-            f"results/summaries/results_dist.csv",
+            lambda ext="csv":
+                f"results/summaries/results_dist.{ext}",
 
         # Path to dataframe with distorted images results
         "results_spearman_pearson":
