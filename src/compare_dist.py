@@ -91,12 +91,14 @@ def add_fitted(data):
     def fit_data(group):
         group["mos_fitted"], model_params = helpers.nonlinearfitting(group["cer"], group["mos"])
         group["model_params"] = [model_params] * len(group)
+        print(f"calculated fitted single values for group {group.name}, non-comp")
         group["mos_comp_fitted"], model_params_comp = helpers.nonlinearfitting(group["cer_comp"], group["mos"])
         group["model_params_comp"] = [model_params_comp] * len(group)
+        print(f"calculated fitted single values for group {group.name}, comp")
         return group
 
     # add cer fitted for every image separately
-    data = data.groupby(["img_num", "dist", "ocr_algo"], group_keys=True).apply(fit_data)
+    data = data.groupby(["img_num", "dist", "ocr_algo", "target"], group_keys=True).apply(fit_data)
     data.reset_index(drop=True, inplace=True)
 
     print(f"calculated fitted values for every image separately")
@@ -109,12 +111,14 @@ def add_fitted_total(data):
     def fit_data(group):
         group["mos_fitted_total"], model_params = helpers.nonlinearfitting(group["cer"], group["mos"])
         group["model_params_total"] = [model_params] * len(group)
+        print(f"calculated fitted total values for group {group.name}, non-comp")
         group["mos_comp_fitted_total"], model_params_comp = helpers.nonlinearfitting(group["cer_comp"], group["mos"])
         group["model_params_comp_total"] = [model_params_comp] * len(group)
+        print(f"calculated fitted total values for group {group.name}, comp")
         return group
 
     # add cer fitted for every all images together
-    data = data.groupby(["dist", "ocr_algo"], group_keys=True).apply(fit_data)
+    data = data.groupby(["dist", "ocr_algo", "target"], group_keys=True).apply(fit_data)
     data.reset_index(drop=True, inplace=True)
 
     print(f"calculated fitted values on all images together")
@@ -127,6 +131,7 @@ def add_pearson(data):
     def pearson(group):
         p = scipy.stats.pearsonr(group[f"mos"], group[f"cer_comp"])
         group[f"pearson"] = p[0]
+        print(f"calculated pearson correlation for group {group.name}, non-fitted")
 
         # pearson cant deal with nan values
         # fitting sometimes fails so we skip if there are nan values
@@ -135,6 +140,7 @@ def add_pearson(data):
             return group
         p = scipy.stats.pearsonr(group[f"mos_comp_fitted_total"], group[f"cer_comp"])
         group[f"pearson_fitted"] = p[0]
+        print(f"calculated pearson correlation for group {group.name}, fitted")
         return group
 
     data = data.groupby(["img_num", "dist", "ocr_algo", "target"], group_keys=True).apply(pearson)
@@ -149,8 +155,10 @@ def add_spearman_ranked(data):
     def spearman_ranked(group):
         p = scipy.stats.spearmanr(group[f"mos"], group[f"cer_comp"])
         group[f"spearmanr"] = p[0]
+        print(f"calculated spearman ranked correlation for group {group.name}, non-fitted")
         p = scipy.stats.spearmanr(group[f"mos_comp_fitted_total"], group[f"cer_comp"])
         group[f"spearmanr_fitted"] = p[0]
+        print(f"calculated spearman ranked correlation for group {group.name}, fitted")
         return group
 
     data = data.groupby(["img_num", "dist", "ocr_algo", "target"], group_keys=True).apply(spearman_ranked)

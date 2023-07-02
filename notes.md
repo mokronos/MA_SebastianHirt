@@ -527,3 +527,12 @@ generally:
 - difficult to always say "better performance of ocr on images with CC distortion", instead of "CC performs better"
 - made images square, but font still too small in subplots, higher font --> destroys aspect ratio/layout
 - fitting makes only sense when "transforming" the mos, as they are "wrong" because of human source (model(objvals) = mos, makes sense)
+- overflow warning is most likely coming from numpy not handeling large negative numbers well, but its fine, just gets approximated to 0
+    - https://stackoverflow.com/questions/40726490/overflow-error-in-pythons-numpy-exp-function
+- optimize warning: covariance could not be estimated
+    - suggestions that starting parameters are bad, but they should be correct (from paper)
+- optimize warning: constant input
+    - fitted function is flat, so produced values are constant
+    - ![fitted function](./exp/fitting_issue.png)
+    - ![fitted function](./exp/fitting_issue_const.png)
+    
