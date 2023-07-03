@@ -11,7 +11,6 @@ plt.rcParams.update({
     "text.usetex": True,
     "font.family": "serif",
     # "font.serif": ["Computer Modern Roman"],
-    "font.size": 35,
     })
 
 MARKER_SIZE = 400
@@ -29,6 +28,10 @@ def plot_cer_dist_quality():
     Single Line plot
     """
 
+    plt.rcParams.update({
+        "font.size": 12
+        })
+
     # load dataframe
     data = pd.read_csv(PATHS['results_dist']())
 
@@ -39,15 +42,18 @@ def plot_cer_dist_quality():
         grp_ocr = group_target.groupby('ocr_algo')
         for name_ocr, group_ocr in grp_ocr:
 
+            # fig = plt.figure(figsize=(FIGSIZE, FIGSIZE))
+
             grp_dist = group_ocr.groupby('dist_name')
             for name_dist, group_dist in grp_dist:
+
 
                 plt.plot(group_dist.groupby('qual')['cer_comp'].mean(),
                          label=name_dist,
                          marker='s')
 
             plt.xlabel("Distortion quality")
-            plt.ylabel("$\overline{CER}_{comp}$")
+            plt.ylabel("$CER_{comp}$")
             plt.xticks(list(range(1, 6)))
             plt.ylim(0, 100)
             plt.grid()
@@ -65,113 +71,16 @@ def plot_cer_dist_quality():
     print(f"plotted CER_comp against distortion quality for each distortion type")
 
 
-def plot_cer_mos_sub():
-    """
-    Plot non fitted CER against MOS for each distortion type, for single image (not mean)
-    Subplots
-    """
-
-    data = pd.read_csv(PATHS['results_dist']())
-    
-    markers = ['v', '2', 's', 'P', 'x', 'd', '.', 'p', '*']
-    colormap = 'copper_r'
-
-    grp_target = data.groupby('target')
-    for name_target, group_target in grp_target:
-
-        grp_ocr = group_target.groupby('ocr_algo')
-
-        for name_ocr, group_ocr in grp_ocr:
-
-            grp_img = group_ocr.groupby('img_num')
-            grp_img = islice(grp_img, 1)
-            for name_img, group_img in grp_img:
-
-                grp_dist = group_img.groupby('dist') 
-
-                fig, axs = plt.subplots(3, 3, figsize=(10, 10))
-
-                for idx, ((name_dist, group_dist), ax) in enumerate(zip(grp_dist, axs.flatten())):
-                    im = ax.scatter(group_dist['mos'],
-                                    group_dist['cer_comp'],
-                                    label=group_dist['dist_name'].iloc[0],
-                                    marker=markers[idx],
-                                    cmap=colormap,
-                                    c=group_dist['qual'])
-
-
-                    fig.colorbar(im, ax=ax,label='Quality')
-                    ax.set_xlabel("$MOS$")
-                    ax.set_ylabel("$CER_{comp}$")
-                    ax.set_xlim(0, 100)
-                    ax.set_ylim(0, 100)
-                    ax.set_title(f'Dist. type: {group_dist["dist_name"].iloc[0]}')
-
-                plt.tight_layout()
-                plt.savefig(f"images/mos_cer_{name_target}_sub_{name_ocr}_img{name_img}.pdf")
-                # plt.show()
-                plt.clf()
-                plt.close()
-
-    print(f"plotted CER_comp against MOS for each distortion type, for single image (not mean)")
-
-
-def plot_cer_fitted_mos_sub():
-    """
-    Plot fitted CER against MOS for each distortion type, for single image (not mean)
-    Subplots
-    """
-
-    data = pd.read_csv(PATHS['results_dist']())
-    
-    markers = ['v', '2', 's', 'P', 'x', 'd', '.', 'p', '*']
-    colormap = 'copper_r'
-
-    grp_target = data.groupby('target')
-    for name_target, group_target in grp_target:
-    
-        grp_ocr = group_target.groupby('ocr_algo')
-        for name_ocr, group_ocr in grp_ocr:
-
-            grp_img = group_ocr.groupby('img_num')
-
-            # only for one image, comment to plot all
-            grp_img = islice(grp_img, 1)
-            for name_img, group_img in grp_img:
-
-                grp_dist = group_img.groupby('dist') 
-
-                fig, axs = plt.subplots(3, 3, figsize=(10, 10))
-
-                for idx, ((name_dist, group_dist), ax) in enumerate(zip(grp_dist, axs.flatten())):
-                    im = ax.scatter(group_dist['mos'],
-                                    group_dist['cer_comp_fitted'],
-                                    label=group_dist['dist_name'].iloc[0],
-                                    marker=markers[idx],
-                                    cmap=colormap,
-                                    c=group_dist['qual'])
-
-
-                    fig.colorbar(im, ax=ax,label='Quality')
-                    ax.set_xlabel("$MOS$")
-                    ax.set_ylabel("$CER_{comp} (fitted)$")
-                    ax.set_xlim(0, 100)
-                    ax.set_ylim(0, 100)
-                    ax.set_title(f'Dist. type: {group_dist["dist_name"].iloc[0]}')
-
-                plt.tight_layout()
-                plt.savefig(f"images/mos_cer_{name_target}_fitted_sub_{name_ocr}_img{name_img}.pdf")
-                # plt.show()
-                plt.clf()
-                plt.close()
-
-    print(f"plotted fitted CER_comp against MOS for each distortion type, for single image (not mean)")
-
 def plot_cer_mos_mean():
     """
     Plot non-fitted CER_comp over MOS for different distortion types, mean over all images
     Plot for every distortion type
     """
+
+    # triple font size to make it readable when 3x3 subplots in latex
+    plt.rcParams.update({
+        "font.size": 36
+        })
 
     data = pd.read_csv(PATHS['results_dist']())
     
@@ -198,13 +107,13 @@ def plot_cer_mos_mean():
                 plt.scatter(mean_dist['mos'],
                                 mean_dist[crit],
                                 label=dist_name,
-                                marker=markers[idx],
+                                marker="o",
                                 cmap=colormap,
                                 c=mean_dist['qual'],
                                 s=MARKER_SIZE)
 
-                plt.xlabel("$\overline{MOS}$")
-                plt.ylabel("$\overline{CER}_{comp}$")
+                plt.xlabel("$MOS$")
+                plt.ylabel("$CER_{comp}$")
                 plt.xlim(0, 100)
                 plt.ylim(0, 100)
                 plt.grid()
@@ -234,6 +143,10 @@ def plot_cer_mos_fitted_mean():
     Plot CER_comp against different targets fitted on all images (total), for different distortion types
     Plot for every distortion type
     """
+
+    plt.rcParams.update({
+        "font.size": 36
+        })
 
     data = pd.read_pickle(PATHS['results_dist'](ext='pkl'))
     
@@ -271,7 +184,7 @@ def plot_cer_mos_fitted_mean():
                 # plot mean cer/mos over images for each quality
                 plt.scatter(mean_dist[crit],
                                 mean_dist['cer_comp'],
-                                label="mean fitted",
+                                label="fitted mean",
                                 marker='x',
                                 cmap=colormap,
                                 c=mean_dist['qual'],
@@ -310,6 +223,10 @@ def plot_cer_mos_fitted_mean():
 
 def plot_codec_cer_size():
 
+    plt.rcParams.update({
+        "font.size": 12
+        })
+
     # load dataframe
     data = pd.read_csv(PATHS['results_codecs'])
 
@@ -322,6 +239,8 @@ def plot_codec_cer_size():
 
         for name_ocr, group_ocr in grp_ocr:
 
+            # fig = plt.figure(figsize=(FIGSIZE, FIGSIZE))
+
             data_true = group_ocr.loc[group_ocr.target == "gt"]
             data_pseudo = group_ocr.loc[group_ocr.target == "ref"]
 
@@ -329,22 +248,22 @@ def plot_codec_cer_size():
                         data_true.loc[(data_true.codec == "vtm")].groupby('q')["cer_comp"].mean(),
                         label='VTM true GT',
                         marker='s',
-                        color='blue')
+                        color='lightblue')
             plt.plot(data_true.loc[(data_true.codec == "hm")].groupby('q')["size"].mean()/divider,
                         data_true.loc[(data_true.codec == "hm")].groupby('q')["cer_comp"].mean(),
                         label='HM true GT',
-                        marker='^',
-                        color='cyan')
+                        marker='s',
+                        color='blue')
             plt.plot(data_pseudo.loc[(data_pseudo.codec == "vtm")].groupby('q')["size"].mean()/divider,
                         data_pseudo.loc[(data_pseudo.codec == "vtm")].groupby('q')["cer_comp"].mean(),
                         label='VTM pseudo GT',
                         marker='8',
-                        color='red')
+                        color='lightcoral')
             plt.plot(data_pseudo.loc[(data_pseudo.codec == "hm")].groupby('q')["size"].mean()/divider,
                         data_pseudo.loc[(data_pseudo.codec == "hm")].groupby('q')["cer_comp"].mean(),
                         label='HM pseudo GT',
-                        marker='v',
-                        color='orange')
+                        marker='8',
+                        color='red')
 
             qvalues = data_true.q.unique()
             xvalues = data_true.loc[(data_true.codec == "vtm")].groupby('q')["size"].mean()/divider
@@ -355,8 +274,8 @@ def plot_codec_cer_size():
 
             # plt.xlim(0, 0.4)
             plt.ylim(0, 100)
-            plt.xlabel("Mean size of images in Mbit")
-            plt.ylabel("$\overline{CER}_{comp}$")
+            plt.xlabel("Size in Mbit")
+            plt.ylabel("$CER_{comp}$")
             plt.grid()
             plt.legend()
             plt.tight_layout()
@@ -393,6 +312,8 @@ def plot_codec_comparison_psnr():
     for codec_config in codecs_configs:
         data_spec = data.loc[(data.ocr_algo == "ezocr") & (data.codec_config == codec_config)]
 
+        # fig = plt.figure(figsize=(FIGSIZE, FIGSIZE))
+
         plt.plot(data_spec.loc[(data_spec.codec == "vtm")].groupby('q')["size"].mean()/divider,
                  data_spec.loc[(data_spec.codec == "vtm")].groupby('q')["psnr"].mean(),
                  label='VTM PSNR',
@@ -410,7 +331,7 @@ def plot_codec_comparison_psnr():
             plt.annotate(f"QP={q}", (x, y), textcoords="offset points", xytext=(0, 10), ha='center')
 
         # plt.xlim(0, 0.4)
-        # plt.ylim(0, 0.35)
+        # plt.ylim(0, 0.36)
         plt.xlabel("Avg size of images in Mbit")
         plt.ylabel("Avg PSNR in dB")
         plt.grid()
@@ -469,7 +390,7 @@ def pipeline():
 
     # subplots for different distortions (mean over all images)
     plot_cer_mos_mean()
-    plot_cer_fitted_mos_mean()
+    plot_cer_mos_fitted_mean()
 
     # plot codec comparison
     plot_codec_cer_size()
@@ -484,6 +405,5 @@ def pipeline():
 if __name__ == '__main__':
 
     pass
-    # pipeline()
-    # plot_cer_mos_mean()
-    plot_cer_mos_fitted_mean()
+    pipeline()
+    # plot_cer_dist_quality()
