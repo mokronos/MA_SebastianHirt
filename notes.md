@@ -321,20 +321,20 @@ maybe bad introduction first
 
 - [ ] computer readability for certain codecs config/level
 
-- [ ] keine abkürzungen in gliederung
+- [x] keine abkürzungen in gliederung
 
 - [ ] Bjøntegaard Delta Rate LMS
     - need more images, data not strictly increasing
     - might need to invert cer values, to make it increase with increasing bitrate 
 
-- [ ] reflect on all the data we have now
+- [x] reflect on all the data we have now
     - plots
     - tables/correlations
-    - [ ] check what questions i can answer with this data and what i still need
+    - [x] check what questions i can answer with this data and what i still need
 
-- [ ] compare gt to ocr on reference images
+- [x] compare gt to ocr on reference images
 
-- [ ] compare ocr on reference images to ocr on compressed images
+- [x] compare ocr on reference images to ocr on compressed images
 
 - [ ] figure out the inner workings of tesseract
     - when it fails, why does it fail?
@@ -536,3 +536,9 @@ generally:
     - ![fitted function](./exp/fitting_issue.png)
     - ![fitted function](./exp/fitting_issue_const.png)
     
+- name consistency, cer in relation to ref or gt OR pseudo vs real gt
+- just define CER = CER_comp, and use CER in whole thesis?
+- maybe colorcode table
+- source for character error rate?
+- init for param d is 1 in paper but std(cer)/4 in original code
+- name r_p vs plcc, same spearman

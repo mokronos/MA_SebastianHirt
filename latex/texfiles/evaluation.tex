@@ -17,7 +17,7 @@ We do this for all the distortion types.
 
 \begin{figure}[h]
 \centering
-    \includegraphics[width=0.9\textwidth]{../../images/analyze/cer_dist_quality_gt_ezocr.pdf}
+    \includegraphics[width=\textwidth]{../../images/analyze/cer_dist_quality_gt_ezocr.pdf}
     \caption{Mean \gls{cer} in relation to the \gls{gt} for different quality levels with EasyOCR.}
 \label{fig:cer_dist_quality_gt_ezocr}
 \end{figure}
@@ -31,7 +31,7 @@ The remaining distortions have minimal impact on performance, which is expected 
 
 \begin{figure}[h]
 \centering
-    \includegraphics[width=0.9\textwidth]{../../images/analyze/cer_dist_quality_gt_tess.pdf}
+    \includegraphics[width=\textwidth]{../../images/analyze/cer_dist_quality_gt_tess.pdf}
     \caption{Mean \gls{cer} in relation to the \gls{gt} for different quality levels with Tesseract \gls{ocr}.}
 \label{fig:cer_dist_quality_gt_tesseract}
 \end{figure}
@@ -53,7 +53,7 @@ However, the most remarkable discovery is the significant drop in the \gls{cer} 
 This suggests that EasyOCR exhibits greater robustness to Gaussian noise compared to Tesseract \gls{ocr} .
 Overall, EasyOCR outperforms Tesseract \gls{ocr} , with a performance ceiling of approximately 83 \gls{cer} for EasyOCR, while Tesseract \gls{ocr} only achieves around 70 \gls{cer}.
 
-\section{Comparison against human judgment}
+\section{Comparison Against Human Judgment}
 \label{sec:comparison_against_human_judgment}
 
 In this section, we compare the performance of the \gls{ocr} algorithms with human judgment.
@@ -326,32 +326,45 @@ In \autoref{fig:mos_cer_ref_fitted_mean_tess} we can see the mean \gls{cer} (fit
 \toprule
           & {} & \multicolumn{4}{l}{CER\_comp} \\
           & ocr\_algo & \multicolumn{2}{l}{ezocr} & \multicolumn{2}{l}{tess} \\
-          & target &       \gls{gt} &   ref &    \gls{gt} &   ref \\
+          & target &       gt &   ref &    gt &   ref \\
 corr & dist\_name &          &       &       &       \\
 \midrule
-pearson & CC &     0.27 &  0.58 & -0.15 & -0.48 \\
-          & CQD &     0.26 &  0.78 & -0.32 &  0.26 \\
-          & CSC &    -0.06 &  0.73 &  0.08 &  0.13 \\
-          & GB &     0.23 &  0.81 & -0.04 &  0.66 \\
-          & GN &     0.32 &  0.83 &  0.87 &  0.88 \\
-          & HEVC-SCC &     0.00 &  0.91 &  0.24 &  0.76 \\
-          & JPEG &     0.74 &  0.89 &  0.56 &  0.83 \\
-          & JPEG2000 &     0.02 &  0.89 &  0.45 &  0.59 \\
-          & MB &     0.81 &  0.84 &  0.62 &  0.82 \\
-spearmanr & CC &     0.22 &  0.42 & -0.18 & -0.58 \\
-          & CQD &     0.23 &  0.79 & -0.44 &  0.27 \\
-          & CSC &    -0.07 &  0.71 & -0.10 &  0.25 \\
-          & GB &     0.46 &  0.94 &  0.08 &  0.61 \\
-          & GN &     0.34 &  0.80 &  0.81 &  0.88 \\
-          & HEVC-SCC &    -0.03 &  0.84 &  0.13 &  0.50 \\
-          & JPEG &     0.70 &  0.98 &  0.56 &  0.81 \\
-          & JPEG2000 &     0.09 &  0.95 &  0.35 &  0.63 \\
-          & MB &     0.90 &  0.92 &  0.78 &  0.87 \\
+pearson & CC &     0.01 &  0.37 & -0.19 & -0.48 \\
+          & CQD &     0.25 &  0.86 & -0.02 &  0.49 \\
+          & CSC &     0.27 &  0.78 &  0.03 &  0.53 \\
+          & GB &     0.57 &  0.80 &  0.39 &  0.69 \\
+          & GN &     0.50 &  0.81 &  0.84 &  0.84 \\
+          & HEVC-SCC &     0.57 &  0.92 &  0.41 &  0.68 \\
+          & JPEG &     0.84 &  0.91 &  0.49 &  0.77 \\
+          & JPEG2000 &     0.54 &  0.82 &  0.52 &  0.72 \\
+          & MB &     0.89 &  0.90 &  0.77 &  0.82 \\
+spearmanr & CC &     0.08 &  0.23 & -0.31 & -0.48 \\
+          & CQD &     0.24 &  0.83 & -0.06 &  0.47 \\
+          & CSC &     0.27 &  0.79 &  0.00 &  0.54 \\
+          & GB &     0.70 &  0.96 &  0.45 &  0.73 \\
+          & GN &     0.57 &  0.89 &  0.82 &  0.89 \\
+          & HEVC-SCC &     0.46 &  0.85 &  0.31 &  0.54 \\
+          & JPEG &     0.85 &  0.96 &  0.45 &  0.79 \\
+          & JPEG2000 &     0.51 &  0.87 &  0.49 &  0.70 \\
+          & MB &     0.93 &  0.94 &  0.80 &  0.80 \\
 \bottomrule
 \end{tabular}
 \caption{Correlation between CER\_comp and MOS for different distortion types}
 \label{tab:pearson_spear}
 \end{table}
+
+In \autoref{tab:pearson_spear} we can see the correlation between the \gls{cer}, in relation to the \gls{gt} and the reference, and the \gls{mos} for all distortions with EasyOCR and Tesseract \gls{ocr}.
+We can generally observe that the correlation is higher for the \gls{cer} in relation to the reference compared to the \gls{gt}.
+This might be due to the fact that the \gls{ocr} sometimes predicts text where there is no text or the \gls{gt} does not contain that text.
+Thus when the quality gets worse, it might happen, that those text elements do not get predicted at all, thus resulting in a better performance.
+The correlation is affected because the \gls{cer} first goes up and then down again, but the \gls{mos} is strictly decreasing.
+
+The \gls{plcc} is generally higher for EasyOCR than for Tesseract \gls{ocr}.
+This suggests that EasyOCR is more similarly to humans than Tesseract \gls{ocr} with regard to the impact on the \gls{cer} by the distortions.
+Additionally the lowest \gls{plcc} is seen for \gls{cc}, which further confirms our assumption that \gls{cc} is not really an impact for the \gls{ocr} and thus not correlated with the \gls{mos}.
+Similar observations, although more dominant for \gls{srcc}, can be made for \gls{csc} and \gls{cqd}.
+These two distortions also seem to have more impact on the \gls{mos} than on the \gls{ocr} algorithms, which makes sense.
+
 
 \begin{table}[h]
 \centering
@@ -359,34 +372,45 @@ spearmanr & CC &     0.22 &  0.42 & -0.18 & -0.58 \\
 \toprule
                  & {} & \multicolumn{4}{l}{CER\_comp\_fitted} \\
                  & ocr\_algo & \multicolumn{2}{l}{ezocr} & \multicolumn{2}{l}{tess} \\
-                 & target &              \gls{gt} &   ref &    \gls{gt} &   ref \\
+                 & target &              gt &   ref &    gt &   ref \\
 corr & dist\_name &                 &       &       &       \\
 \midrule
-pearson\_fitted & CC &            0.45 &  0.67 &  0.18 &  0.49 \\
-                 & CQD &            0.52 &  0.75 &  0.32 &  0.34 \\
-                 & CSC &            0.16 &  0.30 &  0.37 &  0.25 \\
-                 & GB &            0.40 &  0.81 &  0.21 &  0.31 \\
-                 & GN &            0.50 &  0.81 &  0.88 &  0.91 \\
-                 & HEVC-SCC &           -0.01 &  0.85 &  0.16 &  0.09 \\
-                 & JPEG &            0.72 &  0.92 &  0.81 &  0.86 \\
-                 & JPEG2000 &            0.02 &  0.90 &  0.66 &  0.51 \\
-                 & MB &            0.87 &  0.92 &  0.85 &  0.84 \\
-spearmanr\_fitted & CC &            0.42 &  0.41 &  0.18 &  0.52 \\
-                 & CQD &            0.38 &  0.79 &  0.06 &  0.33 \\
-                 & CSC &            0.09 &  0.31 &  0.20 &  0.48 \\
-                 & GB &            0.46 &  0.94 &  0.26 &  0.42 \\
-                 & GN &            0.34 &  0.80 &  0.81 &  0.88 \\
-                 & HEVC-SCC &           -0.03 &  0.84 &  0.25 &  0.19 \\
-                 & JPEG &            0.70 &  0.98 &  0.75 &  0.81 \\
-                 & JPEG2000 &            0.12 &  0.95 &  0.74 &  0.56 \\
-                 & MB &            0.90 &  0.92 &  0.90 &  0.87 \\
+pearson\_fitted & CC &            0.98 &  0.89 &  0.99 & -0.98 \\
+                 & CQD &           -0.91 &  0.92 &  0.99 &  0.99 \\
+                 & CSC &           -1.00 &  0.87 &  0.96 &  0.96 \\
+                 & GB &            0.99 &  0.98 &  1.00 &  1.00 \\
+                 & GN &            0.93 &  0.98 &  0.99 &  0.99 \\
+                 & HEVC-SCC &            0.83 &  1.00 &  0.90 &  0.86 \\
+                 & JPEG &            0.98 &  0.99 &  0.88 &  1.00 \\
+                 & JPEG2000 &            0.85 &  0.98 &  0.99 &  0.85 \\
+                 & MB &            1.00 &  1.00 &  1.00 &  0.99 \\
+spearmanr\_fitted & CC &            1.00 &  0.99 &  1.00 & -1.00 \\
+                 & CQD &           -0.83 &  1.00 &  1.00 &  1.00 \\
+                 & CSC &           -1.00 &  1.00 &  0.80 &  1.00 \\
+                 & GB &            1.00 &  1.00 &  1.00 &  1.00 \\
+                 & GN &            0.97 &  1.00 &  1.00 &  1.00 \\
+                 & HEVC-SCC &            0.96 &  1.00 &  0.93 &  1.00 \\
+                 & JPEG &            1.00 &  1.00 &  0.98 &  1.00 \\
+                 & JPEG2000 &            0.97 &  1.00 &  1.00 &  0.94 \\
+                 & MB &            1.00 &  1.00 &  1.00 &  1.00 \\
 \bottomrule
 \end{tabular}
     \caption{Correlation between $CER_{comp}$ (fitted) and MOS for different distortion types}
 \label{tab:pearson_spear_fitted}
 \end{table}
+
+In \autoref{tab:pearson_spear} we can see the correlation between the \gls{cer}, in relation to the \gls{gt} and the reference, and the now fitted \gls{mos} values for all distortions with EasyOCR and Tesseract \gls{ocr}.
+After fitting the \gls{mos} values, we can observe that the correlations increased across the whole table.
+This is to be expected, since most of the fitted models are monotonic functions, which makes a higher \gls{cer} always result in a higher \gls{mos} or vice versa, when going along the model's curve.
+The only exception is \gls{cc}, which shows a negative \gls{plcc} and \gls{srcc}.
+This is due to a strictly decreasing fitted model as can be seen in \autoref{fig:mos_cer_ref_fitted_mean_tess_CC}.
+
+In summary, we can say that the \gls{gn}, \gls{mb}, \gls{gb}, \gls{jpeg} and \gls{jpeg2000} distortions have a high correlation with the \gls{mos} and \gls{ocr} might be a useful alternative to human judgment.
+However, for \gls{cc}, \gls{csc} and \gls{cqd} the correlation with the \gls{mos} is low and \gls{ocr} might not be a good alternative to human judgment.
+So one always needs to determine if the distortion is impacting the \gls{ocr} algorithm similar to the human judgment.
+
     
-\section{Usage of recognized text as ground truth}
+\section{Usage of Recognized Text as Ground Truth}
 \label{sec:usage_of_recognized_text_as_ground_truth}
 
 Since most datasets do not contain textual ground truth information,
@@ -410,34 +434,73 @@ using recognized text from pristine images as ground truth instead.
 
 From \autoref{tab:mean_cer_cer_comp} we can see that EasyOCR performs better than Tesseract \gls{ocr} on the selected images.
 With a $CER_{comp}$ of 83.794 its difficult to recommend using EasyOCR as a ground truth source.
+Tesseract is worse with a $CER_{comp}$ of 75.0953, and thus cannot be recommended either.
+It might however be possible to improve the performance of the \gls{ocr} algorithms by using a pre-processing pipeline.
+This is however out of scope for this thesis and requires a decent knowledge of the type of data that will be used.
 
-\section{Codec comparison}
+\section{Codec Comparison}
 \label{sec:codec_comparison}
+
+This section focuses on the performance of the \gls{ocr} algorithms on images encoded with the \gls{hevc} and \gls{vvc}.
+For this we used the created dataset described in \autoref{sec:dataset_codec}.
+The goal is to determine if the \gls{ocr} algorithms can be used as a pseudo ground truth for comparison of different codecs.
+More specifically, if the difference between both pseudo \glspl{gt} is similar to the difference between both true \glspl{gt}, we might be able to use the pseudo \gls{gt} later to compare the performance of other, similar codecs.
+
+The following plots have the same structure.
+On the x-axis we have the size of the images in Mbits.
+The y-axis shows the $CER_{comp}$.
+We are plotting the means of the different \glspl{qp} for each codec for the pseudo and the true \gls{gt}.
+
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.9\textwidth]{../images/analyze/codec_cer_size_ezocr_default.pdf}
-    \caption{Comparison of $CER_{comp}$ and size for HM and VTM codec for ezocr}
+    \includegraphics[width=\textwidth]{../images/analyze/codec_cer_size_ezocr_default.pdf}
+    \caption{Comparison of $CER_{comp}$ and size for HM and VTM codec with default configuration for EasyOCR}
     \label{fig:codec_cer_size_ezocr_default}
 \end{figure}
 
+In \autoref{fig:codec_cer_size_ezocr_default} we can see the $CER_{comp}$ with regard to the pseudo and the true \gls{gt} against the size of the images for the HM and VTM codec with the default configuration for EasyOCR.
+We can observe that the VTM curves are generally further to top left, compared to the HM curves.
+This means that the \gls{ocr} algorithm performs better on the VTM encoded images and they are smaller in size.
+Additionally we can see that the trends of the true \gls{gt} curve pair (blue) are similar to the trends of the pseudo \gls{gt} curve pair (red).
+To quantify this, we can calculate the \gls{bdrate} between these curves.
+
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.9\textwidth]{../images/analyze/codec_cer_size_tess_default.pdf}
-    \caption{Comparison of $CER_{comp}$ and size for HM and VTM codec for tess}
+    \includegraphics[width=\textwidth]{../images/analyze/codec_cer_size_tess_default.pdf}
+    \caption{Comparison of $CER_{comp}$ and size for HM and VTM codec with default configuration for Tesseract \gls{ocr}}
     \label{fig:codec_cer_size_tess_default}
 \end{figure}
 
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.9\textwidth]{../images/analyze/codec_cer_size_ezocr_scc.pdf}
-    \caption{Comparison of $CER_{comp}$ and size for HM and VTM codec with SCC configuration for ezocr}
-    \label{fig:codec_cer_size_ezocr_scc}
-\end{figure}
+In \autoref{fig:codec_cer_size_tess_default} we can see the $CER_{comp}$ with regard to the pseudo and the true \gls{gt} against the size of the images for the HM and VTM codec with the default configuration for Tesseract.
+We can again observe that the VTM curves are generally further to top left, compared to the HM curves.
+One exception is the \gls{qp} 35, where the VTM codec has a slightly worse \gls{cer} than the HM codec.
+When comparing the two blue curves with the two red curves, it is difficult to see any other similarities.
+Especially since the slope of the blue VTM curve is changing after every data point.
+In this case we cannot calculate a \gls{bdrate} between the curves, since one of the curves is not monotonically increasing or decreasing.
+However, we can clearly see that the pseudo \gls{gt} might not be the best alternative to compare codecs.
+
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.9\textwidth]{../images/analyze/codec_cer_size_tess_scc.pdf}
-    \caption{Comparison of $CER_{comp}$ and size for HM and VTM codec with SCC configuration for tess}
+    \includegraphics[width=\textwidth]{../images/analyze/codec_cer_size_ezocr_scc.pdf}
+    \caption{Comparison of $CER_{comp}$ and size for HM and VTM codec with \gls{scc} configuration for EasyOCR}
+    \label{fig:codec_cer_size_ezocr_scc}
+\end{figure}
+
+In \autoref{fig:codec_cer_size_ezocr_scc} we can see the $CER_{comp}$ with regard to the pseudo and the true \gls{gt} against the size of the images for the HM and VTM codec with the \gls{scc} configuration for EasyOCR.
+The \gls{scc} configuration makes the HM codec perform very similarly to the VTM codec, with the exception of the \gls{qp} 50, where the VTM performs better again.
+When comparing the blue and red curves, we can see that the trends are very similar.
+
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth]{../images/analyze/codec_cer_size_tess_scc.pdf}
+    \caption{Comparison of $CER_{comp}$ and size for HM and VTM codec with \gls{scc} configuration for Tesseract \gls{ocr}}
     \label{fig:codec_cer_size_tess_scc}
 \end{figure}
+
+In \autoref{fig:codec_cer_size_tess_scc} we can see the $CER_{comp}$ with regard to the pseudo and the true \gls{gt} against the size of the images for the HM and VTM codec with the \gls{scc} configuration for Tesseract.
+The \gls{scc} configuration makes the HM codec perform very similarly to the VTM codec, with the exception of the \gls{qp} 50, where the VTM performs better, but only for the pseudo \gls{gt}.
+When comparing the blue and red curves, we can see that the trends are not similar.
+For the true \gls{gt}, the HM codec performs better than the VTM codec, while for the pseudo \gls{gt} the VTM codec performs better than the HM codec.

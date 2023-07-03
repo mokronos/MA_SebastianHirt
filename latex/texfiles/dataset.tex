@@ -132,6 +132,7 @@ In \autoref{fig:ref29} we can see that it is sometimes difficult to say which te
 Thus we decided against using one of the \gls{ocr} algorithms to predict the text and then correct it to create the ground truth, to not introduce bias towards one of the algorithms with regard to the positions of the text elements.
 We used the images, a ruler and our eyes to determine the correct order of the text elements.
 
+
 \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{../../data/raw/scid/ReferenceSCIs/SCI29.png}
@@ -161,6 +162,17 @@ These images (SCI4, SCI5, SCI6, SCI22 and SCI29) have their main focus on text, 
     \caption{\gls{cer} of a selection of distorted images compared to their reference image.}
     \label{fig:cer_vs_mos_456}
 \end{figure}
+
+\section{Codec encoding}
+\label{sec:dataset_codec}
+
+Additionally to the distortion types we also encoded the images with different codecs.
+First, we used the \gls{hevc} codec with the HM software.
+Second, we used the \gls{vvc} codec with the VTM software.
+We used the \glspl{qp} \[35, 40, 45, 50\] for the encoding, due to the \gls{cer} not changing much for lower \glspl{qp}.
+Furthermore, we encoded the images with the default and the \gls{scc} of the codecs to observe the difference.
+Note that we do not have any subjective scores for these images.
+Thus we were able to use more images, now including images with more objects and other things that might take the human focus away from text.
 
 - Select based on how hard to label
 - Select based on how much text/objects
