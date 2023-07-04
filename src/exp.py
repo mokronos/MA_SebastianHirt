@@ -87,6 +87,58 @@ def fitting():
     plt.show()
     plt.close()
 
+def fit_example():
+
+    subj = [30, 50, 80, 90]*10
+    obj = [20, 30, 60, 80]*10
+
+    subj += np.random.normal(-5, 5, len(subj))
+    obj += np.random.normal(-5, 5, len(obj))
+
+    beta0 = [np.max(subj), np.min(subj),
+             np.mean(obj), np.std(obj)/4]
+    MAXFEV = 0
+    
+    # fitting a curve using the data
+    params, _ = curve_fit(model, obj, subj, method='lm', p0=beta0,
+                            maxfev=MAXFEV, ftol=1.5e-08, xtol=1.5e-08)
+
+    t = np.arange(0, 100, 0.001)
+    curve = model(t, *params)
+    curve_init = model(t, *beta0)
+    subj_fit = model(np.array(obj), *params)
+    p_r = scipy.stats.pearsonr(subj, obj)[0]
+    p_s = scipy.stats.spearmanr(subj, obj)[0]
+    p_r_fit = scipy.stats.pearsonr(subj_fit, obj)[0]
+    p_s_fit = scipy.stats.spearmanr(subj_fit, obj)[0]
+
+    plt.plot(subj, obj, 'o', label='data')
+    plt.plot(subj_fit, obj, 'o', label='fitted')
+    plt.plot(curve_init, t, label='model_init')
+    plt.plot(curve, t, label='model')
+    plt.xlim(0, 100)
+    plt.ylim(0, 100)
+    plt.ylabel("objective value")
+    plt.xlabel("subjective value")
+    text = f"pearsonr: {p_r:.2f}\nspearmanr: {p_s:.2f}\npearsonr_fit: {p_r_fit:.2f}\nspearmanr_fit: {p_s_fit:.2f}"
+    props = dict(boxstyle='round', facecolor='white', alpha=0.5)
+
+    plt.text(0.02, 0.7, text, transform=plt.gca().transAxes,
+            verticalalignment='top', bbox=props)
+
+    # draw lines from data points to fitted points
+    for i in range(len(subj)):
+        plt.plot([subj[i], subj_fit[i]], [obj[i], obj[i]], 'k--', alpha=0.2)
+
+    plt.tight_layout()
+    plt.grid()
+    plt.legend()
+    # plt.savefig("exp/fit_example.pdf")
+    # plt.savefig("exp/fit_example.png")
+    plt.show()
+    plt.close()
+
+
 
 def corr():
 
@@ -109,5 +161,6 @@ def corr():
 
 if __name__ == "__main__":
     pass
-    corr()
-    fitting()
+    # corr()
+    # fitting()
+    fit_example()

@@ -6,6 +6,8 @@ import cv2
 from itertools import islice
 from mpl_toolkits.axes_grid1 import make_axes_locatable
 import numpy as np
+import scipy.stats
+from scipy.optimize import curve_fit
 
 plt.rcParams.update({
     "text.usetex": True,
@@ -376,6 +378,68 @@ def image_diff():
     print("calculated difference between reference and q=50 compressed image")
 
 
+def plot_fit_example():
+
+    plt.rcParams.update({
+        "font.size": 12
+        })
+
+
+    subj = [30, 50, 80, 90]*10
+    obj = [20, 30, 60, 80]*10
+
+    subj += np.random.normal(-5, 5, len(subj))
+    obj += np.random.normal(-5, 5, len(obj))
+
+    beta0 = [np.max(subj), np.min(subj),
+             np.mean(obj), np.std(obj)/4]
+    MAXFEV = 0
+    
+    # fitting a curve using the data
+    params, _ = curve_fit(helpers.model, obj, subj, method='lm', p0=beta0,
+                            maxfev=MAXFEV, ftol=1.5e-08, xtol=1.5e-08)
+
+    t = np.arange(0, 100, 0.001)
+    curve = helpers.model(t, *params)
+    curve_init = helpers.model(t, *beta0)
+    subj_fit = helpers.model(np.array(obj), *params)
+    p_r = scipy.stats.pearsonr(subj, obj)[0]
+    p_s = scipy.stats.spearmanr(subj, obj)[0]
+    p_r_fit = scipy.stats.pearsonr(subj_fit, obj)[0]
+    p_s_fit = scipy.stats.spearmanr(subj_fit, obj)[0]
+
+    plt.plot(subj, obj, 'o', label='data')
+    plt.plot(subj_fit, obj, 'o', label='fitted')
+    plt.plot(curve_init, t, label='model$_{init}$')
+    plt.plot(curve, t, label='model$_{fitted}$')
+    plt.xlim(0, 100)
+    plt.ylim(0, 100)
+    plt.ylabel("objective value")
+    plt.xlabel("subjective value")
+    tex_p_r = "$r_p=$"
+    tex_p_r_fit = "$r_p^{fit}=$"
+    tex_p_s = f"$r_s=$"
+    tex_p_s_fit = "$r_s^{fit}=$"
+    text = f"{tex_p_r}{p_r:.2f}\n{tex_p_r_fit}{p_r_fit:.2f}\n{tex_p_s}{p_s:.2f}\n{tex_p_s_fit}{p_s_fit:.2f}"
+    props = dict(boxstyle='round', facecolor='white', alpha=0.5, edgecolor='grey')
+
+    plt.text(0.02, 0.7, text, transform=plt.gca().transAxes,
+            verticalalignment='top', bbox=props)
+
+    # draw lines from data points to fitted points
+    for i in range(len(subj)):
+        plt.plot([subj[i], subj_fit[i]], [obj[i], obj[i]], 'k--', alpha=0.2)
+
+    plt.legend()
+    plt.tight_layout()
+    plt.grid()
+    plt.savefig("exp/fit_example.pdf")
+    plt.savefig("exp/fit_example.png")
+    # plt.show()
+    plt.close()
+
+    print("plotted fitting example")
+
 def pipeline():
     """
     Run all functions to plot everything in one go
@@ -401,9 +465,13 @@ def pipeline():
     # absolute difference of pixels in images
     # image_diff()
 
+    # example for fitting
+    plot_fit_example()
+
 
 if __name__ == '__main__':
 
     pass
-    pipeline()
+    # pipeline()
     # plot_cer_dist_quality()
+    plot_fit_example()

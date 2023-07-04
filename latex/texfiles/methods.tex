@@ -50,6 +50,9 @@ Therefore, we are transforming the CER by subtracting it from 1 and multiplying 
     \label{eq:cer2mos}
 \end{equation}
 
+This means that the $\text{CER}_{comp}$ can be in the range -$\infty$ to 100, where 100 means perfect recognition and the lower the worse the recognition.
+Although the $\text{CER}_{comp}$ is generally in the range 0 to 100, which matches the \gls{mos}.
+
 \subsection{Peak Signal-to-Noise Ratio}
 \label{subsec:psnr}
 
@@ -89,34 +92,6 @@ In this section, the codecs used in this thesis are described.
 \label{subsec:vvc}
 
 \gls{vvc} is a video codec.
-
-\section{Nonlinear Transformation}
-\label{sec:nonlinear}
-
-In this section, we describe the nonlinear curve fitting used to transform the \gls{mos} to better fit the \gls{cer}.
-This is mainly done because the subjective scores have been found to be not reliable \cite{nonlin_fit_original_2000}.
-The model we used was defined in \cite{nonlin_fit_original_2000}.
-The Authors suggest an extension to the model, which we leave out for simplicity.
-It is defined as follows:
-
-\begin{equation}
-    \text{MOS}_{trans} = \frac{a - b}{1 + \exp \left( \frac{-\text{MOS} + c}{d} \right)} + b
-    \label{eq:nonlinear}
-\end{equation}
-    
-The parameters are initialized as follows:
-\begin{equation}
-    \begin{aligned}
-        a &= \max{CER} \\
-        b &= \min{CER} \\
-        c &= \overline{MOS} \\
-        d &= 1
-    \end{aligned}
-    \label{eq:nonlinear_init}
-\end{equation}
-We fit the parameters \(a\), \(b\), \(c\), and \(d\) to the data of all the images.
-We then use the model and the \gls{cer} values the predict the transformed \gls{mos} values.
-A similar transformation was used in \cite{nonlin_fit_2011}\cite{nonlin_fit_appl_2017}.
 
 
 \section{Correlation}
@@ -158,3 +133,49 @@ If the \gls{srcc} is close to 1, the two vectors have a positive monotonic relat
 If the \gls{srcc} is close to -1, the two vectors have a negative monotonic relationship, which means that the rank of \(x\) increases, the rank of \(y\) decreases.
 If the \gls{srcc} is close to 0, the ranks of the two vectors have no correlation at all.
 These characteristics will help us, to determine if the \gls{cer} is a good alternative for the \gls{mos}, by checking how similar the ranks of the two metrics are.
+
+\section{Nonlinear Transformation}
+\label{sec:nonlinear}
+
+In this section, we describe the nonlinear curve fitting used to transform the \gls{mos} to better fit the \gls{cer}.
+This is mainly done because the subjective scores have been found to be not reliable \cite{nonlin_fit_original_2000}.
+The model we used was defined in \cite{nonlin_fit_original_2000}.
+The Authors suggest an extension to the model, which we leave out for simplicity.
+It is defined as follows:
+
+\begin{equation}
+    \text{MOS}_{trans} = \frac{a - b}{1 + \exp \left( \frac{-\text{MOS} + c}{d} \right)} + b
+    \label{eq:nonlinear}
+\end{equation}
+    
+The parameters are initialized as follows:
+\begin{equation}
+    \begin{aligned}
+        a &= \max{CER} \\
+        b &= \min{CER} \\
+        c &= \overline{MOS} \\
+        d &= 1
+    \end{aligned}
+    \label{eq:nonlinear_init}
+\end{equation}
+We fit the parameters \(a\), \(b\), \(c\), and \(d\) to the data of all the images with the help of the least squares method.
+We then use the model and the \gls{cer} values the predict the transformed \gls{mos} values.
+A similar transformation was used in \cite{nonlin_fit_2011}\cite{nonlin_fit_appl_2017}.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth]{../exp/fit_example.pdf}
+    \caption{Example of the nonlinear fit with subjective and objective values}
+    \label{fig:nonlinear_fit}
+\end{figure}
+
+In Figure \ref{fig:nonlinear_fit}, we can see an example of the nonlinear fit.
+First we have some random data from subjective and objective values, which might represent the \gls{mos} and \gls{cer} values of some images.
+We then use the model and the parameters and fit the model to the data.
+The fitted curve clearly fits the data better than the curve with the initial parameters.
+Additionally we can calculate the \gls{plcc} and \gls{srcc} of the two curves.
+We see that the \gls{plcc} and \gls{srcc} of the fitted curve are higher than the \gls{plcc} and \gls{srcc} of the curve with the initial parameters.
+With the \gls{plcc} it is not as obvious to see, but for the \gls{srcc} we can clearly see that the fitted curve is monotonic, while some of the initial datapoints are ranked first on the subjective value, but a higher rank on the objective value.
+This leads to a \gls{srcc} of 1 for the fitted data, but a slightly lower \gls{srcc} for the initial data.
+
+We can use this method later to transform the \gls{mos} to improve the correlation with the \gls{cer}.
