@@ -1,12 +1,25 @@
 \chapter{Conclusion}
 \label{chap:conclusion}
 
-Conclusion...
+In this thesis, we investigate the usefulness of \gls{ocr} as a metric for screen content image quality assessment.
+We are comparing the performance of two \gls{ocr} methods, EasyOCR and Tesseract, on the \gls{scid} dataset, see \autoref{sec:ocr_performance}.
+First, we can conclude that both \gls{ocr} methods perform worse on the images affected by \gls{mb}, \gls{jpeg} and \gls{gb}, with Tesseract \gls{ocr} performing really poor for \gls{gn} as well.
+Generally, EasyOCR performs better than Tesseract \gls{ocr}.
 
-\section{Summary of Key Findings}
-\label{sec:summary}
+Next, we compare the \gls{cer} from the \gls{ocr} methods to human judgment, see \autoref{sec:comparison_against_human_judgment}.
+We concluded that for distortion types \gls{gn}, \gls{mb}, \gls{gb}, \gls{jpeg} and \gls{jpeg2000} the correlation is high, while the rest of the distortion types do not affect \gls{ocr} much and are not correlated.
+When we reduce the nonlinearities of the \gls{mos}, we can observe an even higher correlation.
+Our recommendation is to determine if \gls{ocr} methods are affected by specific distortions or check which distortions are in the used dataset before using \gls{ocr} as a metric.
 
-Summary of key findings...
+Additionally, we can surmise that in general EasyOCR performs better than Tesseract \gls{ocr}, but both seem to be too inaccurate to be used as ground truth, see \autoref{sec:usage_of_recognized_text_as_ground_truth}.
+This seems to contradict the assumption of many document image quality assessment papers, that use \gls{ocr} as ground truth.
+
+Finally we compare the \gls{ocr} performance for several quality levels of the \gls{hevc} and \gls{vvc} codecs, see \autoref{sec:codec_comparison}.
+EasyOCR seems to be a better choice for the pseudo \gls{gt} than Tesseract \gls{ocr}, for the default and the screen content configurations of the \gls{hevc} and \gls{vvc}.
+
 
 \section{Future Work}
 \label{sec:future}
+
+- seperate text and pictoral content and use ocr for text and conventional metric for pictoral, combine
+- better, more expansive dataset, better ground truth for ocr

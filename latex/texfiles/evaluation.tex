@@ -23,10 +23,10 @@ We do this for all the distortion types.
 \end{figure}
 
 In \autoref{fig:cer_dist_quality_gt_ezocr}, we observe the mean \gls{cer} in relation to the ground truth (\gls{gt}) for different quality levels using EasyOCR.
-A noticeable trend is that motion blur has the most significant impact on EasyOCR's performance, exhibiting a nearly linear decrease from 80 to 20.
-Both JPEG and Gaussian blur display similar behavior until quality level 4, after which Gaussian blur experiences a steeper decline.
+A noticeable trend is that \gls{mb} has the most significant impact on EasyOCR's performance, exhibiting a nearly linear decrease from 80 to 20.
+Both \gls{jpeg} and \gls{gb} display similar behavior until quality level 4, after which \gls{gb} experiences a steeper decline.
 Notably, the blurring of images greatly affects the legibility of text, with letters becoming indistinct and merging together, resulting in the poorest performance for EasyOCR.
-Gaussian noise, JPEG2000, and HEVC-SCC exhibit comparable performance, all experiencing a decline at quality level 5.
+\gls{gn}, \gls{jpeg2000}, and \gls{hevcscc} exhibit comparable performance, all experiencing a decline at quality level 5.
 The remaining distortions have minimal impact on performance, which is expected since color distortions do not directly affect text shapes.
 
 \begin{figure}[h]
@@ -460,7 +460,7 @@ We are plotting the means of the different \glspl{qp} for each codec for the pse
 \end{figure}
 
 In \autoref{fig:codec_cer_size_ezocr_default} we can see the $CER_{comp}$ with regard to the pseudo and the true \gls{gt} against the size of the images for the HM and VTM codec with the default configuration for EasyOCR.
-We can observe that the VTM curves are generally further to top left, compared to the HM curves.
+We can observe that the VTM curves are generally further to the top left corner, compared to the HM curves.
 This means that the \gls{ocr} algorithm performs better on the VTM encoded images and they are smaller in size.
 Additionally we can see that the trends of the true \gls{gt} curve pair (blue) are similar to the trends of the pseudo \gls{gt} curve pair (red).
 To quantify this, we can calculate the \gls{bdrate} between these curves.
@@ -504,3 +504,8 @@ In \autoref{fig:codec_cer_size_tess_scc} we can see the $CER_{comp}$ with regard
 The \gls{scc} configuration makes the HM codec perform very similarly to the VTM codec, with the exception of the \gls{qp} 50, where the VTM performs better, but only for the pseudo \gls{gt}.
 When comparing the blue and red curves, we can see that the trends are not similar.
 For the true \gls{gt}, the HM codec performs better than the VTM codec, while for the pseudo \gls{gt} the VTM codec performs better than the HM codec.
+
+To summarize, we can see that the \gls{ocr} algorithms perform better on the VTM encoded images than on the HM encoded images.
+Additionally, the \gls{scc} configuration makes the HM codec perform very similarly to the VTM codec.
+For the default and the screen content codec configurations, EasyOCR seems to be a good pseudo \gls{gt}.
+In contrast, Tesseract \gls{ocr} is not suitable for creating a pseudo \gls{gt}.
