@@ -175,7 +175,10 @@ def pred_easy(img_paths):
 
 def tess_trans_df(pred):
 
+    # clean data (removes nans and empty strings)
+    # tesseract sometimes predicts huge regions where there is not text
     pred = pred[~pred['text'].isna()]
+    pred = pred[pred['text'].str.strip() != ""]
 
     df = pd.DataFrame()
     df['left'] = pred['left']
@@ -185,7 +188,70 @@ def tess_trans_df(pred):
     df['text'] = pred['text']
     df['conf'] = pred['conf']/100
 
+    # sort by bounding box position
+    df = sort_boxes(df)
+
     return df
+
+
+def check_overlap(edge1, edge2):
+    """
+    checks if two edges overlap edge:(top, bottom)
+    """
+
+    if (edge1[0] <= edge2[0] <= edge1[1] or edge1[0] <= edge2[1] <= edge1[1] or
+        edge2[0] <= edge1[0] <= edge2[1] or edge2[0] <= edge1[1] <= edge2[1]):
+        return True
+    else:
+        return False
+
+def sort_boxes(data):
+    """
+    sorts bounding boxes from top left to bottom right with a certain tolerance
+    for smaller boxes in similar height (to capture sentences)
+    """
+
+    data["height"] = data["bottom"] - data["top"]
+
+    TOL = 0.7
+    new_data = pd.DataFrame(columns=data.columns)
+
+    tolerance = None
+    while len(data) > 0:
+
+        if tolerance:
+
+            # get boxes with edge overlap
+            in_tolerance = data.loc[data["top"].apply(lambda x: check_overlap(tolerance, (x, x + data["height"].values[0])))]
+
+            if len(in_tolerance) > 0:
+                left = in_tolerance.loc[in_tolerance["left"] == in_tolerance["left"].min()]
+            
+            else:
+                # get top left most box in next iteration
+                tolerance = None
+                continue
+
+        else:
+            # get top most box
+            top = data.loc[data["top"] == data["top"].min()]
+            # get left most box
+            left = top.loc[top["left"] == top["left"].min()]
+
+        # add to new data
+        new_data = pd.concat([new_data, left])
+
+        # get tolerance
+        tolerance = (left["top"].values[0], int(left["top"].values[0] + left["height"].values[0] * TOL))
+
+        # remove from data
+        data = data.drop(left.index)
+
+    new_data.pop("height")
+    new_data.reset_index(inplace=True, drop=True)
+
+
+    return new_data
 
 def pred_tess(img_paths):
     """
@@ -243,7 +309,22 @@ def pred_data(img_paths, algo='ezocr'):
     return results
 
 def model(x, a, b, c, d):
-    return ((a-b)/(1+np.exp((-x+c)/d)))+b
+    """
+    model for non-linear fitting (non-weighted version)
+    from https://www.researchgate.net/publication/221458323_Video_Quality_Experts_Group_current_results_and_future_directions
+    with initial conditions given
+    """
+    return (a-b)/(1+np.exp(-((x-c)/np.abs(d)))) + b
+
+def model_alt(x, a, b, c, d, e):
+    """
+    model for non-linear fitting
+    used in more current reasearch, but can't find initial conditions
+    MDID: A multiply distorted image database for image quality assessment by Wen Sun, Fei Zhou, Qingmin Liao discusses figuring out initial conditions
+    but out of scope for this project
+    """
+    return a * ((1/2) - (1/(1 + np.exp(b * (x - c))))) + d * x + e
+
 
 def nonlinearfitting(objvals, subjvals, max_nfev=4000):
     """
@@ -251,6 +332,8 @@ def nonlinearfitting(objvals, subjvals, max_nfev=4000):
     https://github.com/lllllllllllll-llll/SROCC_PLCC_calculate/blob/master/nonlinearfitting.m
     probably should be done on one or two images to fit the curve
     then use those parameters to predict/transform the rest
+    adjusted model to fit this paper: https://arxiv.org/ftp/arxiv/papers/1406/1406.7799.pdf
+    current papers all suggest similar models and cite original report
     """
 
     # calculate SROCC before the non-linear mapping
@@ -265,12 +348,18 @@ def nonlinearfitting(objvals, subjvals, max_nfev=4000):
     # humans might be less sensitive to the difference between images
 
     # initialize the parameters used by the nonlinear fitting function
+    # initial conditions for 5 parameter model (experimental, just guessing)
+    # beta0 = [np.max(subjvals), np.min(subjvals),
+    #          np.mean(objvals), np.std(objvals)/4,
+    #          0]
+
+    # initial conditions for 4 parameter model
     beta0 = [np.max(subjvals), np.min(subjvals),
-             np.mean(objvals), np.std(objvals)/4]
+             np.mean(objvals), 1]
 
     # fitting a curve using the data
     betam, _ = curve_fit(model, objvals, subjvals, p0=beta0, method='lm',
-                         maxfev=max_nfev, ftol=1e-3, xtol=1e-3)
+                         maxfev=max_nfev, ftol=1.5e-5, xtol=1.5e-5)
 
     # given an objective value,
     # predict the corresponding MOS (ypre) using the fitted curve
@@ -336,6 +425,9 @@ def get_psnr(refpath, distpath):
     psnr = cv2.PSNR(ref, dist)
 
     return psnr
+
+def rmse(predictions, targets):
+    return np.sqrt(((predictions - targets) ** 2).mean())
 
 if __name__ == '__main__':
     pass

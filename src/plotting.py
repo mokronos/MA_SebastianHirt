@@ -106,16 +106,16 @@ def plot_cer_mos_mean():
                 dist_name = group_dist['dist_name'].iloc[0]
 
                 # plot mean cer/mos over images for each quality
-                plt.scatter(mean_dist['mos'],
-                                mean_dist[crit],
-                                label=dist_name,
-                                marker="o",
-                                cmap=colormap,
-                                c=mean_dist['qual'],
-                                s=MARKER_SIZE)
+                plt.scatter(mean_dist[crit],
+                            mean_dist['mos'],
+                            label=dist_name,
+                            marker="o",
+                            cmap=colormap,
+                            c=mean_dist['qual'],
+                            s=MARKER_SIZE)
 
-                plt.xlabel("$MOS$")
-                plt.ylabel("$CER_{comp}$")
+                plt.xlabel("$CER_{comp}$")
+                plt.ylabel("$MOS$")
                 plt.xlim(0, 100)
                 plt.ylim(0, 100)
                 plt.grid()
@@ -174,26 +174,27 @@ def plot_cer_mos_fitted_mean():
                 model_params = group_dist['model_params_comp_total'].iloc[0]
 
                 # plot point cloud
-                plt.scatter(group_dist["mos"],
-                            group_dist['cer_comp'],
+                plt.scatter(group_dist['cer_comp'],
+                            group_dist["mos"],
                             label='single datapoints',
                             marker='.',
                             cmap=colormap,
                             c=group_dist['qual'])
+
                 # plot fitted function
-                plt.plot(helpers.model(help, *model_params), help, color='black', linestyle='--', label='fitted model')
+                plt.plot(help, helpers.model(help, *model_params), color='black', linestyle='--', label='fitted model')
 
                 # plot mean cer/mos over images for each quality
-                plt.scatter(mean_dist[crit],
-                                mean_dist['cer_comp'],
-                                label="fitted mean",
-                                marker='x',
-                                cmap=colormap,
-                                c=mean_dist['qual'],
-                                s=MARKER_SIZE)
+                plt.scatter(mean_dist['cer_comp'],
+                            mean_dist[crit],
+                            label="fitted mean",
+                            marker='x',
+                            cmap=colormap,
+                            c=mean_dist['qual'],
+                            s=MARKER_SIZE)
 
-                plt.xlabel("$MOS$")
-                plt.ylabel("$CER_{comp}$")
+                plt.xlabel("$CER_{comp}$")
+                plt.ylabel("$MOS$")
                 plt.xlim(0, 100)
                 plt.ylim(0, 100)
                 plt.grid()
@@ -383,16 +384,22 @@ def plot_fit_example():
     plt.rcParams.update({
         "font.size": 12
         })
+    
+    # fix random seed for reproducibility
+    np.random.seed(7)
 
-
-    subj = [30, 50, 80, 90]*10
+    subj = [30, 50, 80, 80]*10
     obj = [20, 30, 60, 80]*10
 
     subj += np.random.normal(-5, 5, len(subj))
     obj += np.random.normal(-5, 5, len(obj))
 
+    # beta0 = [np.max(subj), np.min(subj),
+    #          np.mean(obj), np.std(obj)/4,
+    #          0]
+    # beta0 = [-100,1,1,0.5,50]
     beta0 = [np.max(subj), np.min(subj),
-             np.mean(obj), np.std(obj)/4]
+             np.mean(obj), 1]
     MAXFEV = 0
     
     # fitting a curve using the data
@@ -404,18 +411,18 @@ def plot_fit_example():
     curve_init = helpers.model(t, *beta0)
     subj_fit = helpers.model(np.array(obj), *params)
     p_r = scipy.stats.pearsonr(subj, obj)[0]
+    p_r_fit = scipy.stats.pearsonr(subj, subj_fit)[0]
     p_s = scipy.stats.spearmanr(subj, obj)[0]
-    p_r_fit = scipy.stats.pearsonr(subj_fit, obj)[0]
-    p_s_fit = scipy.stats.spearmanr(subj_fit, obj)[0]
+    p_s_fit = scipy.stats.spearmanr(subj_fit, subj)[0]
 
-    plt.plot(subj, obj, 'o', label='data')
-    plt.plot(subj_fit, obj, 'o', label='fitted')
-    plt.plot(curve_init, t, label='model$_{init}$')
-    plt.plot(curve, t, label='model$_{fitted}$')
+    plt.plot(obj, subj, 'o', label='obj/subj')
+    plt.plot(obj, subj_fit, 'o', label='obj/subj$_{p}$')
+    plt.plot(t, curve, label='model$_{fitted}$')
     plt.xlim(0, 100)
     plt.ylim(0, 100)
-    plt.ylabel("objective value")
-    plt.xlabel("subjective value")
+    plt.ylabel("subjective value")
+    plt.xlabel("objective value")
+    plt.plot(t, curve_init, label='model$_{init}$')
     tex_p_r = "$r_p=$"
     tex_p_r_fit = "$r_p^{fit}=$"
     tex_p_s = f"$r_s=$"
@@ -427,8 +434,8 @@ def plot_fit_example():
             verticalalignment='top', bbox=props)
 
     # draw lines from data points to fitted points
-    for i in range(len(subj)):
-        plt.plot([subj[i], subj_fit[i]], [obj[i], obj[i]], 'k--', alpha=0.2)
+    for x, y, y_fit in zip(obj, subj, subj_fit):
+        plt.plot([x, x], [y, y_fit], color='grey', linestyle='--')
 
     plt.legend()
     plt.tight_layout()

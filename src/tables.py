@@ -69,43 +69,51 @@ def create_summary():
 
     data = pd.read_pickle(PATHS["results_dist"](ext="pkl"))
 
-    data_grouped = data.groupby(["dist_name", "ocr_algo", "target"])
-    table = data_grouped[['pearson', 'spearmanr']]
+    # only interested in cer vs reference image
+    data = data.loc[data["target"] == "ref"]
+
+    data_grouped = data.groupby(["dist_name", "ocr_algo"])
+    table = data_grouped[['spearmanr', 'pearson_fitted', "rmse_fitted"]]
     table = table.mean().reset_index()
     table = pd.melt(table,
-                    id_vars=["dist_name", "ocr_algo", "target"],
-                    value_vars=['pearson', 'spearmanr'],
-                    var_name="corr",
+                    id_vars=["dist_name", "ocr_algo"],
+                    value_vars=['spearmanr', 'pearson_fitted', "rmse_fitted"],
+                    var_name="crit",
                     value_name="CER_comp")
 
-    table = table.pivot(index=["corr", "dist_name"], columns=["ocr_algo", "target"])
+
+    table = table.pivot(index=["crit", "dist_name"], columns=["ocr_algo"])
 
     table = table.round(2)
 
+    spear_overall_tess = data.loc[data['ocr_algo'] == 'tess']['spearmanr_overall'].mean().round(2)
+    spear_overall_ezocr = data.loc[data['ocr_algo'] == 'ezocr']['spearmanr_overall'].mean().round(2)
+    pearson_overall_tess = data.loc[data['ocr_algo'] == 'tess']['pearson_fitted_overall'].mean().round(2)
+    pearson_overall_ezocr = data.loc[data['ocr_algo'] == 'ezocr']['pearson_fitted_overall'].mean().round(2)
+    rmse_overall_tess = data.loc[data['ocr_algo'] == 'tess']['rmse_fitted_overall'].mean().round(2)
+    rmse_overall_ezocr = data.loc[data['ocr_algo'] == 'ezocr']['rmse_fitted_overall'].mean().round(2)
 
-    data_grouped = data.groupby(["dist_name", "ocr_algo", "target"])
-    table_fitted = data_grouped[['pearson_fitted', 'spearmanr_fitted']]
-    table_fitted = table_fitted.mean().reset_index()
-    table_fitted = pd.melt(table_fitted,
-                    id_vars=["dist_name", "ocr_algo", "target"],
-                    value_vars=['pearson_fitted', 'spearmanr_fitted'],
-                    var_name="corr",
-                    value_name="CER_comp_fitted")
+    # add overall values
+    table.loc[("spearmanr", "overall"), ("CER_comp", "tess")] = spear_overall_tess
+    table.loc[("spearmanr", "overall"), ("CER_comp", "ezocr")] = spear_overall_ezocr
+    table.loc[("pearson_fitted", "overall"), ("CER_comp", "tess")] = pearson_overall_tess
+    table.loc[("pearson_fitted", "overall"), ("CER_comp", "ezocr")] = pearson_overall_ezocr
+    table.loc[("rmse_fitted", "overall"), ("CER_comp", "tess")] = rmse_overall_tess
+    table.loc[("rmse_fitted", "overall"), ("CER_comp", "ezocr")] = rmse_overall_ezocr
 
-    table_fitted = table_fitted.pivot(index=["corr", "dist_name"], columns=["ocr_algo", "target"])
-
-    table_fitted = table_fitted.round(2)
+    table = table.sort_index(level=0, ascending=True)
 
     table.to_csv(PATHS["results_spearman_pearson"]("base", "csv"))
     table.to_markdown(PATHS["results_spearman_pearson"]("base", "md"))
     table.to_latex(PATHS["results_spearman_pearson"]("base", "tex"))
-    table_fitted.to_csv(PATHS["results_spearman_pearson"]("fitted", "csv"))
-    table_fitted.to_markdown(PATHS["results_spearman_pearson"]("fitted", "md"))
-    table_fitted.to_latex(PATHS["results_spearman_pearson"]("fitted", "tex"))
 
     print(table)
-    print(table_fitted)
-
+    print(f"spearmanr for tess overall: {spear_overall_tess}")
+    print(f"spearmanr for ezocr overall: {spear_overall_ezocr}")
+    print(f"pearson for tess overall: {pearson_overall_tess}")
+    print(f"pearson for ezocr overall: {pearson_overall_ezocr}")
+    print(f"rmse for tess overall: {rmse_overall_tess}")
+    print(f"rmse for ezocr overall: {rmse_overall_ezocr}")
 
 def cer_ref_gt():
     """

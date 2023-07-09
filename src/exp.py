@@ -5,9 +5,11 @@ import matplotlib.pyplot as plt
 import numpy as np
 import scipy.stats
 from scipy.optimize import curve_fit
+import cv2
+import matplotlib.patches as patches
 
-def model(x, a, b, c, d):
-    return ((a-b)/(1+np.exp((-x+c)/d)))+b
+def model(x, a, b, c, d, e):
+    return (a * (1/2 - (1/(1 + np.exp(b * (x - c))))) + d * x + e)
 
 def fitting():
 
@@ -33,7 +35,8 @@ def fitting():
     # fit
     # initialize the parameters used by the nonlinear fitting function
     beta0 = [np.max(mos), np.min(mos),
-             np.mean(crit_data), np.std(crit_data)/4]
+             np.mean(crit_data), np.std(crit_data)/4,
+             0]
 
     # fitting a curve using the data
     params, _ = curve_fit(model, crit_data, mos, p0=beta0, method='lm',
@@ -96,7 +99,8 @@ def fit_example():
     obj += np.random.normal(-5, 5, len(obj))
 
     beta0 = [np.max(subj), np.min(subj),
-             np.mean(obj), np.std(obj)/4]
+             np.mean(obj), np.std(obj)/4,
+             1]
     MAXFEV = 0
     
     # fitting a curve using the data
@@ -159,8 +163,118 @@ def corr():
     data = data.loc[data["dist"] == dist]
     print(data[crits])
 
+def tess_order():
+    """
+    check how to order tesseract results that the text is in lines
+    """
+
+    id = 5
+    algo = "ezocr"
+    algo = "tess"
+
+    save_paths_csv = helpers.create_paths(PATHS["pred_ref"],
+                                            [id],
+                                            algo=algo, ext="csv")
+
+    save_path = save_paths_csv[0]
+    print(save_path)
+
+    pred_csv = pd.read_csv(save_path)
+    print(pred_csv)
+
+    # clean data
+    pred_csv = pred_csv.loc[pred_csv["text"].str.strip() != ""]
+
+    pred_csv["width"] = pred_csv["right"] - pred_csv["left"]
+    pred_csv["height"] = pred_csv["bottom"] - pred_csv["top"]
+    pred_csv.reset_index(inplace=True, drop=True)
+
+    # sort
+    # get top most box, then get left most box
+    # then check if there is a box to the left in 70% of the height of the box
+
+    def check_overlap(edge1, edge2):
+
+        if (edge1[0] <= edge2[0] <= edge1[1] or edge1[0] <= edge2[1] <= edge1[1] or
+            edge2[0] <= edge1[0] <= edge2[1] or edge2[0] <= edge1[1] <= edge2[1]):
+            return True
+        else:
+            return False
+
+
+    def sort_boxes(data):
+
+        TOL = 0.7
+        new_data = pd.DataFrame(columns=data.columns)
+
+        tolerance = None
+        while len(data) > 0:
+
+            if tolerance:
+
+                # get boxes with edge overlap
+                in_tolerance = data.loc[data["top"].apply(lambda x: check_overlap(tolerance, (x, x + data["height"].values[0])))]
+
+                if len(in_tolerance) > 0:
+                    left = in_tolerance.loc[in_tolerance["left"] == in_tolerance["left"].min()]
+                
+                else:
+                    # get top left most box in next iteration
+                    tolerance = None
+                    continue
+
+            else:
+                # get top most box
+                top = data.loc[data["top"] == data["top"].min()]
+                # get left most box
+                left = top.loc[top["left"] == top["left"].min()]
+
+            # add to new data
+            new_data = pd.concat([new_data, left])
+
+            # get tolerance
+            tolerance = (left["top"].values[0], int(left["top"].values[0] + left["height"].values[0] * TOL))
+
+            # remove from data
+            data = data.drop(left.index)
+
+        new_data.reset_index(inplace=True, drop=True)
+
+        return new_data
+
+    new_data = sort_boxes(pred_csv)
+
+    # load image
+    img_path = PATHS["images_scid_ref"](num=id)
+
+    img = cv2.imread(img_path)
+    img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+
+    plt.imshow(img)
+
+    # draw text boxes
+    for i, row in new_data.iterrows():
+        x, y, w, h = row["left"], row["bottom"], row["right"]-row["left"], row["top"]-row["bottom"]
+        text = row["text"] + f" ({i})"
+        plt.gca().add_patch(patches.Rectangle((x, y), w, h, fill=False, color="green"))
+        plt.text(x, y+10, text, color="green")
+    plt.show()
+
+
+def model_vis():
+
+    beta0 = [-100, 1, 1, 0.5, 50]
+    t = np.linspace(0, 100, 1000)
+    y = helpers.model(t, *beta0)
+
+    plt.plot(t, y)
+    plt.show()
+    
+
 if __name__ == "__main__":
     pass
     # corr()
+    # tess_order()
     # fitting()
-    fit_example()
+    # fit_example()
+    model_vis()

@@ -104,6 +104,9 @@ https://paperswithcode.com/paper/maskocr-text-recognition-with-masked-encoder
 
 - Paper https://arxiv.org/pdf/2008.08561.pdf
     - link is dead, contacted all 3 authors, no response
+
+- CCT Dataset
+    - https://sites.google.com/site/minxiongkuo/uca
 ### Not applicable
 
 - https://sites.google.com/site/zhangxinf07/fg-iqa (FG-IQA)
@@ -319,9 +322,19 @@ maybe bad introduction first
 
 - [x] cer implementation!!
 
-- [ ] computer readability for certain codecs config/level
+- [x] computer readability for certain codecs config/level
 
 - [x] keine abkürzungen in gliederung
+
+- [x] write section for TER/CER and MOS
+    - need to flesh out and add sources
+    - add other common metrics (mentioned in the task as well)
+
+- subj_fitted vs. subj
+- [ ] check if tesseract performance correct, or if gt is "biased"
+    - fixed, but some words are floating behind sentence, because their "top" starts slightly below
+
+- [ ] add stds to means
 
 - [ ] Bjøntegaard Delta Rate LMS
     - need more images, data not strictly increasing
@@ -347,9 +360,6 @@ maybe bad introduction first
     - annoying to decompress
     - RAM leak
 
-- [ ] write section for TER/CER and MOS
-    - need to flesh out and add sources
-    - add other common metrics (mentioned in the task as well)
 
 ## Results
 
@@ -522,11 +532,17 @@ generally:
 
 ## Questions
 
-- bitdepth of images is 24/32 bit? but codec config says 8?
-- use HM/VTM or hevc/vvc? HM/VTM is the reference software, but hevc/vvc is the standard?
+- Multi letter variables straight, italic
+- use HM/VTM or hevc/vvc? HM/VTM is the reference software, but hevc/vvc is the standard? --> HM/VTM
 - difficult to always say "better performance of ocr on images with CC distortion", instead of "CC performs better"
 - made images square, but font still too small in subplots, higher font --> destroys aspect ratio/layout
 - fitting makes only sense when "transforming" the mos, as they are "wrong" because of human source (model(objvals) = mos, makes sense)
+    - https://www.researchgate.net/profile/Guangtao-Zhai/publication/341011181_Perceptual_image_quality_assessment_a_survey/links/61812d24a767a03c14e3d754/Perceptual-image-quality-assessment-a-survey.pdf
+    - review suggests differently, objective score gets converted
+    - model is different as well (in original paper as well)
+    - just fit model, then get correlation from model (doesn't matter which variable gets converted), its just to remove nonlinearity
+    - references https://vqeg.org/VQEGSharedFiles/Publications/Validation_Tests/FRTV_Phase2/FRTV_Phase2_Final_Report.pdf (only 3 parameters)
+    - what test plan to use from this https://www.vqeg.org/publications-and-software/
 - overflow warning is most likely coming from numpy not handeling large negative numbers well, but its fine, just gets approximated to 0
     - https://stackoverflow.com/questions/40726490/overflow-error-in-pythons-numpy-exp-function
 - optimize warning: covariance could not be estimated
@@ -535,10 +551,21 @@ generally:
     - fitted function is flat, so produced values are constant
     - ![fitted function](./exp/fitting_issue.png)
     - ![fitted function](./exp/fitting_issue_const.png)
-    
-- name consistency, cer in relation to ref or gt OR pseudo vs real gt
-- just define CER = CER_comp, and use CER in whole thesis?
-- maybe colorcode table
+- name consistency, cer in relation to ref or gt OR pseudo vs true gt, cer_ref/cer_gt
+- just define CER = CER_comp, and use CER in whole thesis?, comp >> c
+- maybe colorcode table, lines!
 - source for character error rate?
 - init for param d is 1 in paper but std(cer)/4 in original code
-- name r_p vs plcc, same spearman
+- name r_p vs plcc, same spearman, r_p 
+- add std to usage as gt table
+- add more metrics?
+    - Spearman rank correlation coefficient
+    - Pearson correlation coefficient
+    - wenn zeit:
+    - Kendall rank correlation coefficient
+    - RMSE
+    - MAE
+- maybe change plot axis to fit other research (y=mos, x=cer), if time
+- direction
+    - could focus more on single images, highlight why ocr performs good/bad
+- druck infos / abgabe / usb?, an uni, code bis presentation, auf git reicht 
