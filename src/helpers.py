@@ -316,7 +316,7 @@ def model(x, a, b, c, d):
     """
     return (a-b)/(1+np.exp(-((x-c)/np.abs(d)))) + b
 
-def model_alt(x, a, b, c, d, e):
+def model_alt_new(x, a, b, c, d, e):
     """
     model for non-linear fitting
     used in more current reasearch, but can't find initial conditions

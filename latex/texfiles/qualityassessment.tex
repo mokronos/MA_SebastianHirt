@@ -3,28 +3,26 @@
 
 In this section, we go over the metrics used in this thesis.
 
-\section{Character Error Rate}
-\label{subsec:cer}
+\section{Conventional Quality Assessment}
 
-The \gls{cer} describes how many substitutions, deletions, and insertions are necessary to transform a text prediction into the text label.
-It is defined as follows.
+Researchers used a convolutional neural network to assess the quality of documents \cite{ocr_cnn_docu_2014}.
+The documents were segmented into text and non-text regions.
+Then \gls{ocr} and the proposed \gls{cnn} were used to predict scores, which were analyzed for correlation.
+The \gls{cnn} achieved state of the art performance in assessing the quality of the documents.
+However, the authors noted that one assumption was, that the \gls{ocr} performance is directly correlated with the quality of the degraded document.
+Due to the similarity of text regions in documents and screen content, we might be able to verify or disprove this assumption in this thesis.
 
-\begin{equation}
-    \text{CER} = \frac{S + D + I}{N},
-    \label{eq:cer}
-\end{equation}
-with \(S\) being the number of substitutions, \(D\) the number of deletions, \(I\) the number of insertions, and \(N\) the total number of characters of the label.
-The \gls{cer} ranges from 0 to $\infty$, where 0 means perfect recognition and the higher the worse the recognition.
-Because the \gls{mos} is defined in the range 0 to 100 and 100 represents a high subjective quality, the two metrics are unintuitive to compare.
-Therefore, we are transforming the CER by subtracting it from 1 and multiplying it by 100 to get a \gls{mos}-like value, see \autoref{eq:cer2mos}.
+\section{Screen Content Specific Quality Assessment}
 
-\begin{equation}
-    \text{CER}_{comp} = (1 - \text{CER}) \cdot 100
-    \label{eq:cer2mos}
-\end{equation}
+In \cite{text_pict_weight_2017} the authors propose a objective metric that considers the text and pictorial content of an image separately.
+Afterwards, the two scores are weighted and combined.
 
-This means that the $\text{CER}_{comp}$ can be in the range -$\infty$ to 100, where 100 means perfect recognition and the lower the worse the recognition.
-Although the $\text{CER}_{comp}$ is generally in the range 0 to 100, which matches the \gls{mos}.
+The paper \cite{3_subj_weight_2015} uses a subjective score, that is split and considers text, pictorial and the entire image separately.
+The correlation between the three scores is then analyzed, weighted and used to combine them into a single score.
+
+- No reference vs full reference, we have full reference
+- most papers use ocr as a comparison, almost like ground truth, or predict when ocr is good
+
 
 \section{Peak Signal-to-Noise Ratio}
 \label{subsec:psnr}
@@ -51,85 +49,45 @@ Both are plotting some average metric over the average bitrate of some images.
     \label{eq:bdrate}
 \end{equation}
 
-\section{Correlation}
-\label{sec:correlation}
-
-In this section, we describe the correlation methods we use to compare the behavior of the \gls{mos} and the \gls{cer}.
-These can then be used to determine if the \gls{cer} is a good alternative for the \gls{mos}.
-We are using the sample form of the correlations, because we want to make a statement about a much larger population of images, not just our dataset.
-
-\subsection{Pearson Correlation}
-\label{subsec:pearson}
-
-The \gls{plcc} \cite{pears_spear_2016} describes the linear correlation between two variables, normalized to the range $[-1, 1]$.
-Given the $i$th image in our dataset, its subjective and objective scores are $s_i$ and $o_i$ respectively.
-The \gls{plcc} is then defined as follows.
-
-\begin{equation}
-    r_p = \frac{\sum_{i=1}^{N}{(o_i-\overline{o})(s_i-\overline{s})}}{\sqrt{\sum{(o_i-\overline{o})^2}\sum{(s_i-\overline{s})^2}}},
-    \label{eq:pearson}
-\end{equation}
-
-with $\overline{o}$ and $\overline{s}$ representing the mean values of $o_i$ and $s_i$ respectively.
-$N$ is the total number of images in the images used in the experiment.
-If the \gls{plcc} is close to 1, the two vectors have a positive linear relationship, which means that if $o_i$ increases, $s_i$ increases as well.
-If the \gls{plcc} is close to -1, the two vectors have a negative linear relationship, which means that if $o_i$ increases, $s_i$ decreases.
-If the \gls{plcc} is close to 0, the two vectors have no correlation at all.
-
-\subsection{Spearman Ranked Correlation}
-\label{subsec:spearman}
-
-The \gls{srcc} \cite{pears_spear_2016} describes the monotonic correlation between two variables, normalized to the range $[-1, 1]$.
-Compared to the \gls{plcc}, it mainly takes the order/rank of the values into account, not the exact values.
-The scores $o_i$ and $s_i$ are transformed into their ranks $o_{i,r}$ and $s_{i,r}$ respectively with values in the range $[1, N]$.
-If for example, the two first values are tied their rank is set to the mean, in this case $(1+2)/2 = 1.5$.
-With these values, the \gls{srcc} is defined as follows.
-
-\begin{equation}
-    r_s = \frac{\sum_{i=1}^{N}{(o_{i,r}-\overline{o_r})(s_{i,r}-\overline{s_r})}}{\sqrt{\sum{(o_{i,r}-\overline{o_r})^2}\sum{(s_{i,r}-\overline{s_r})^2}}},
-    \label{eq:spearman}
-\end{equation}
-
-with $\overline{o_r}$ and $\overline{s_r}$ representing the mean values of the $o_{i,r}$ and $s_{i,r}$ vectors respectively.
-If the \gls{srcc} is close to 1, the two vectors have a positive monotonic relationship, which means that the rank of $o_i$ increases, the rank of $s_i$ increases as well.
-If the \gls{srcc} is close to -1, the two vectors have a negative monotonic relationship, which means that the rank of $o_i$ increases, the rank of $s_i$ decreases.
-If the \gls{srcc} is close to 0, the ranks of the two vectors have no correlation at all.
-These characteristics will help us to determine if the \gls{cer} is a good alternative for the \gls{mos}, by checking how similar the ranks of the two metrics are.
-
 \section{Nonlinear Transformation}
 \label{sec:nonlinear}
 
-In this section, we describe the nonlinear curve fitting used to transform the \gls{mos} to remove nonlinearities.
-This is mainly done because the subjective scores have been found to have nonlinear quality rating compression at the extremes of the test range \cite{nonlin_fit_original_2000}.
-The model used for the fitting was defined in \cite{nonlin_fit_original_2000}, although we leave out the extension suggested in the paper.
-It can be defined as follows.
+To evaluate the suitability of \gls{cer} as a replacement for the \gls{mos} there are three aspects to consider \cite{nonlin_fit_original_2003}\cite{iqa_survey_2020}.
+Prediction accuracy, prediction monotonicity, and prediction consistency.
+Before calculating metrics to measure these aspects, the \gls{vqeg} recommends removing nonlinearities from the \gls{mos} \cite{nonlin_fit_original_2003}.
+The model used for the fitting can be found in \cite{nonlin_fit_model_init_2000}\cite{nonlin_fit_appl_2017} and is defined as follows.
 
 \begin{equation}
-    s_{i,p} = a * (\frac{1}{2} - \frac{1}{1 + \exp{b * (x - c)}}) + d * x + e
+    \text{MOS}_{\text{i,p}} = \frac{\beta_{1}-\beta_{2}}{1 + e^{-\left(\frac{\text{CER}_{\text{c,i}}-\beta_{3}}{|\beta_{4}|}\right)}} + \beta_{2},
     \label{eq:nonlinear}
 \end{equation}
 
-\begin{equation}
-    \textrm{MOS}_{i,p} = \frac{\beta_{1}-\beta_{2}}{1 + e^{-\left(\frac{\textrm{CER}_{c,i}-\beta_{3}}{|\beta_{4}|}\right)}} + \beta_{4}
-\end{equation}
+% \begin{equation}
+%     s_{i,p} = a * (\frac{1}{2} - \frac{1}{1 + \exp{b * (x - c)}}) + d * x + e
+%     \label{eq:nonlinear}
+% \end{equation}
 
-with $\text{MOS}_{p}$ representing the predicted \gls{mos} value, $\text{MOS}$ the original \gls{mos} value, and $a$, $b$, $c$, and $d$ the parameters of the model.
+with $\text{MOS}_{p}$ representing the predicted \gls{mos} value and $\beta_{1}$, $\beta_{2}$, $\beta_{3}$, and $\beta_{4}$ the parameters of the model.
+
+Although the model in \cite{nonlin_fit_original_2003} is more recent, we could not find initial parameters for it and decided to work with the older model.
+Additionally, there are other, more recent, publications \cite{ni_esim_2017, nonlin_fit_appl_2017, nonlin_fit_appl_2018, nonlin_fit_appl_2014, nonlin_fit_appl_2011, nonlin_fit_appl_2015, doc_quality_survey_2023, iqa_database_2023, nonlin_fit_appl_2016} that use the model proposed in \cite{nonlin_fit_new_model_2006}.
+In \cite{nonlin_fit_init_proof_2017} a solution to estimating the initial parameters was proposed, which was out of scope for this thesis.
 
 - random, empirical selection can lead to local optimal solutions
+
 The parameters are initialized as follows.
  
 \begin{equation}
     \begin{aligned}
-        a &= \max{CER} \\
-        b &= \min{CER} \\
-        c &= \overline{MOS} \\
-        d &= 1
+        \beta_{1} &= \max{CER} \\
+        \beta_{2} &= \min{CER} \\
+        \beta_{3} &= \overline{MOS} \\
+        \beta_{4} &= 1
     \end{aligned}
     \label{eq:nonlinear_init}
 \end{equation}
 The parameters are adjusted with the least squared method until the model fits the data of all the images.
-We then use the model and the \gls{cer} values the predict the transformed $\text{MOS}_{p}$ values.
-A similar fitting was used in \cite{nonlin_fit_2011}\cite{nonlin_fit_appl_2017}.
+The model and the \gls{cer} values are then used to calculate the predicted \gls{mos} values $\text{MOS}_{\text{p}}$.
 
 \begin{figure}[h]
     \centering
@@ -138,26 +96,63 @@ A similar fitting was used in \cite{nonlin_fit_2011}\cite{nonlin_fit_appl_2017}.
     \label{fig:nonlinear_fit}
 \end{figure}
 
-In Figure \ref{fig:nonlinear_fit}, we can see an example of the nonlinear fit.
-First we have some random data from subjective and objective values, which might represent the \gls{mos} and \gls{cer} values of some images.
-We then use the model and the parameters and fit the model to the data.
-The fitted curve clearly fits the data better than the curve with the initial parameters.
-Additionally we can calculate the \gls{plcc} and \gls{srcc} of the two curves.
-We see that the \gls{plcc} and \gls{srcc} of the fitted curve are higher than the \gls{plcc} and \gls{srcc} of the curve with the initial parameters.
-With the \gls{plcc} it is not as obvious to see, but for the \gls{srcc} we can clearly see that the fitted curve is monotonic, while some of the initial datapoints are ranked first on the subjective value, but a higher rank on the objective value.
-This leads to a \gls{srcc} of 1 for the fitted data, but a slightly lower \gls{srcc} for the initial data.
+In Figure \ref{fig:nonlinear_fit} an example of the nonlinear fit is depicted.
+The initial data consists of some randomly generated dummy \gls{mos} and $\text{CER}_{text{c}}$ values.
+The parameters are then adjusted to fit the model to the data.
+Finally, we can see that the fitted curve clearly fits the data better than the curve with the initial parameters.
+Now the $\text{MOS}_{\text{p}}$ values can be calculated by using the fitted model and the $\text{CER}_{\text{c}}$ values.
+With the $\text{MOS}_{\text{p}}$ the three following metrics \cite{iqa_survey_2021} can be calculated.
 
-We can use this method later to transform the \gls{mos} to improve the correlation with the \gls{cer}.
+\section{Pearson Correlation}
+\label{sec:pearson}
+
+The \gls{plcc} \cite{pears_spear_2016} describes the linear correlation between two variables, normalized to the range $[-1, 1]$.
+Given the $i$th image in our dataset, its \gls{mos} value is denoted as $\text{MOS}_{\text{i}}$ and its predicted \gls{mos} value as $\text{MOS}_{\text{p,i}}$ .
+The \gls{plcc} is then defined as follows.
+
+\begin{equation}
+    r_{\text{p}} = \frac{\sum_{\text{i}=1}^{N}{(\text{MOS}_{\text{i}}-\overline{\text{MOS}})(\text{MOS}_{\text{i,p}}-\overline{\text{MOS}_{\text{p}}})}}{\sqrt{\sum_{\text{i}=1}^{N}{(\text{MOS}_{\text{i}}-\overline{\text{MOS}})^2}\sum_{\text{i}=1}^{N}{(\text{MOS}_{\text{p,i}}-\overline{\text{MOS}_{\text{p}}})^2}}},
+    \label{eq:pearson}
+\end{equation}
+
+with $\overline{\text{MOS}}$ and $\overline{\text{MOS}_{\text{p}}}$ representing the mean values of the $\text{MOS}$ and $\text{MOS}_{\text{p}}$ vectors respectively and $N$ the total number of images in the dataset.
+$N$ is the total number of images in the images used in the experiment.
+If the $r_{\text{p}}$ is close to 1, the two vectors have a positive linear relationship, which means that if $\text{MOS}_{\text{i}}$ increases, $\text{MOS}_{\text{p,i}}$ increases as well.
+If the $r_{\text{p}}$ is close to -1, the two vectors have a negative linear relationship, which means that if $\text{MOS}_{\text{i}}$ increases, $\text{MOS}_{\text{p,i}}$ decreases.
+If the $r_{\text{p}}$ is close to 0, the two vectors have no correlation at all.
+We are using the sample form of the correlations, because we want to make a statement about a much larger population of images, not just our dataset.
+
+\section{Spearman Ranked Correlation}
+\label{sec:spearman}
+
+The \gls{srcc} \cite{pears_spear_2016} describes the monotonic correlation between two variables, normalized to the range $[-1, 1]$.
+Compared to the \gls{plcc}, it mainly takes the order/rank of the values into account, not the exact values.
+The scores $\text{CER}_{\text{c,i}}$ and $\text{MOS}_{\text{i}}$ are transformed into their ranks $\text{CER}_{\text{c,i,r}}$ and $\text{MOS}_{\text{i,r}}$ respectively with values in the range $[1, N]$.
+If for example, the first two values are tied, their rank is set to the mean, in this case $(1+2)/2 = 1.5$.
+With these values, the \gls{srcc} is defined as follows.
+
+\begin{equation}
+    r_{\text{s}} = \frac{\sum_{\text{i}=1}^{N}{(\text{MOS}_{\text{r,i}}-\overline{\text{MOS}_{\text{r}}})(\text{CER}_{\text{c,r,i}}-\overline{\text{CER}_{\text{c,r}}})}}{\sqrt{\sum_{\text{i}=1}^{N}{(\text{MOS}_{\text{r,i}}-\overline{\text{MOS}_{\text{r}}})^2}\sum_{\text{i}=1}^{N}{(\text{CER}_{\text{c,r,i}}-\overline{\text{CER}_{\text{c,r}}})^2}}},
+    \label{eq:spearman}
+\end{equation}
+
+with $\overline{\text{MOS}_{\text{r}}}$ and $\overline{\text{CER}_{\text{c,r}}}$ representing the mean values of the $\text{MOS}_{\text{r}}$ and $\text{CER}_{\text{c,r}}$ vectors respectively.
+If the $r_{\text{s}}$ is close to 1, the two vectors have a positive monotonic relationship, which means that the rank of $\text{CER}_{\text{c,i}}$ increases, while the rank of $\text{MOS}_{\text{i}}$ increases.
+If the $r_{\text{s}}$ is close to -1, the two vectors have a negative monotonic relationship, which means that the rank of $\text{CER}_{\text{c,i}}$ increases, while the rank of $\text{MOS}_{\text{i}}$ decreases.
+If the $r_{\text{s}}$ is close to 0, the ranks of the two vectors have no correlation at all.
+These characteristics will help us to determine if the $\text{CER}_{\text{c}}$ is a good alternative for the \gls{mos}, by checking how similar the ranks of the two metrics are.
+
 
 \section{Root Mean Squared Error}
 \label{sec:rmse}
 
 The \gls{rmse} is a metric that measures the average magnitude of the error between the predicted values and the actual values.
-It is defined as follows.
+In our case it is defined as follows.
 
 \begin{equation}
-    \textrm{RMSE} = \sqrt{\frac{1}{N}\sum_{i=1}^{N}{(o_i - s_i)^2}},
+    \text{RMSE} = \sqrt{\frac{1}{N}\sum_{i=1}^{N}{(\text{MOS}_{\text{p,i}} - \text{MOS}_{\text{i}})^2}}
     \label{eq:rmse}
 \end{equation}
 
-with $o_i$ and $s_i$ representing the predicted and actual values respectively.
+From these metrics, $r_{\text{p}}$ measures the prediction linearity and consistency, $r_{\text{s}}$ measures the prediction monotonicity and the \gls{rmse} measures the prediction accuracy.
+With these, we can now determine if the $\text{CER}_{\text{c}}$ is a good alternative for the \gls{mos}.

@@ -415,13 +415,13 @@ def plot_fit_example():
     p_s = scipy.stats.spearmanr(subj, obj)[0]
     p_s_fit = scipy.stats.spearmanr(subj_fit, subj)[0]
 
-    plt.plot(obj, subj, 'o', label='obj/subj')
-    plt.plot(obj, subj_fit, 'o', label='obj/subj$_{p}$')
+    plt.plot(obj, subj, 'o', label='MOS/CER$_c$')
+    plt.plot(obj, subj_fit, 'o', label='MOS$_p$/CER$_c$')
     plt.plot(t, curve, label='model$_{fitted}$')
     plt.xlim(0, 100)
     plt.ylim(0, 100)
-    plt.ylabel("subjective value")
-    plt.xlabel("objective value")
+    plt.ylabel("MOS")
+    plt.xlabel("CER$_c$")
     plt.plot(t, curve_init, label='model$_{init}$')
     tex_p_r = "$r_p=$"
     tex_p_r_fit = "$r_p^{fit}=$"
@@ -430,8 +430,8 @@ def plot_fit_example():
     text = f"{tex_p_r}{p_r:.2f}\n{tex_p_r_fit}{p_r_fit:.2f}\n{tex_p_s}{p_s:.2f}\n{tex_p_s_fit}{p_s_fit:.2f}"
     props = dict(boxstyle='round', facecolor='white', alpha=0.5, edgecolor='grey')
 
-    plt.text(0.02, 0.7, text, transform=plt.gca().transAxes,
-            verticalalignment='top', bbox=props)
+    # plt.text(0.02, 0.7, text, transform=plt.gca().transAxes,
+    #         verticalalignment='top', bbox=props)
 
     # draw lines from data points to fitted points
     for x, y, y_fit in zip(obj, subj, subj_fit):

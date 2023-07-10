@@ -35,6 +35,15 @@
     organization={IEEE},
     url={https://projet.liris.cnrs.fr/imagine/pub/proceedings/ICIP-2014/Papers/1569912503.pdf}
 }
+
+@article{doc_quality_survey_2023,
+  title={Document Image Quality Assessment: A Survey},
+  author={Alaei, Alireza and Bui, Vinh and Doermann, David and Pal, Umapada},
+  journal={ACM Computing Surveys},
+  year={2023},
+  publisher={ACM New York, NY},
+  url={https://dl.acm.org/doi/pdf/10.1145/3606692}
+}
 /* ################################################################ */
 /* Dataset */
 /* ################################################################ */
@@ -68,6 +77,23 @@
     url={https://www.researchgate.net/profile/Guangtao-Zhai/publication/341011181_Perceptual_image_quality_assessment_a_survey/links/61812d24a767a03c14e3d754/Perceptual-image-quality-assessment-a-survey.pdf}
 }
 
+@Article{iqa_database_2023,
+AUTHOR = {Ruikar, Jayesh and Chaudhury, Saurabh},
+TITLE = {NITS-IQA Database: A New Image Quality Assessment Database},
+JOURNAL = {Sensors},
+VOLUME = {23},
+YEAR = {2023},
+NUMBER = {4},
+ARTICLE-NUMBER = {2279},
+URL = {https://www.mdpi.com/1424-8220/23/4/2279},
+PubMedID = {36850877},
+ISSN = {1424-8220},
+ABSTRACT = {This paper describes a newly-created image database termed as the NITS-IQA database for image quality assessment (IQA). In spite of recently developed IQA databases, which contain a collection of a huge number of images and type of distortions, there is still a lack of new distortion and use of real natural images taken by the camera. The NITS-IQA database contains total 414 images, including 405 distorted images (nine types of distortion with five levels in each of the distortion type) and nine original images. In this paper, a detailed step by step description of the database development along with the procedure of the subjective test experiment is explained. The subjective test experiment is carried out in order to obtain the individual opinion score of the quality of the images presented before them. The mean opinion score (MOS) is obtained from the individual opinion score. In this paper, the Pearson, Spearman and Kendall rank correlation between a state-of-the-art IQA technique and the MOS are analyzed and presented.},
+DOI = {10.3390/s23042279},
+url = {https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9959275/}
+}
+
+
 /* ################################################################ */
 /* OCR */
 /* ################################################################ */
@@ -94,13 +120,13 @@
 }
 
 @misc{ocr_survey_2017,
-      title={A Survey on Optical Character Recognition System}, 
-      author={Noman Islam and Zeeshan Islam and Nazia Noor},
-      year={2017},
-      eprint={1710.05703},
-      archivePrefix={arXiv},
-      primaryClass={cs.CV},
-      url={https://arxiv.org/abs/1710.05703}
+    title={A Survey on Optical Character Recognition System}, 
+    author={Noman Islam and Zeeshan Islam and Nazia Noor},
+    year={2017},
+    eprint={1710.05703},
+    archivePrefix={arXiv},
+    primaryClass={cs.CV},
+    url={https://arxiv.org/abs/1710.05703}
 }
 
 /* Metrics */
@@ -145,21 +171,50 @@
 }
 
 @INPROCEEDINGS{mos_dmos_1993,
-  author={Thorpe, L.A. and Shelton, B.R.},
-  booktitle={Proceedings., IEEE Workshop on Speech Coding for Telecommunications,}, 
-  title={Subjective Test Methodology: MOS vs. DMOS in Evaluation of Speech Coding Algorithms}, 
-  year={1993},
-  volume={},
-  number={},
-  pages={73-74},
-  doi={10.1109/SCFT.1993.762345},
-  url={https://ieeexplore.ieee.org/document/762345}
+    author={Thorpe, L.A. and Shelton, B.R.},
+    booktitle={Proceedings., IEEE Workshop on Speech Coding for Telecommunications,}, 
+    title={Subjective Test Methodology: MOS vs. DMOS in Evaluation of Speech Coding Algorithms}, 
+    year={1993},
+    volume={},
+    number={},
+    pages={73-74},
+    doi={10.1109/SCFT.1993.762345},
+    url={https://ieeexplore.ieee.org/document/762345}
+}
+
+@article{cer_2022,
+    author = {Singkhornart, Thanadol and Surinta, Olarik},
+    year = {2022},
+    month = {06},
+    pages = {647-655},
+    title = {Multi-Language Video Subtitle Recognition with Convolutional Neural Network and Long Short-Term Memory Networks},
+    volume = {16},
+    journal = {ICIC Express Letters},
+    doi = {10.24507/icicel.16.06.647},
+    url = {http://www.icicel.org/ell/contents/2022/6/el-16-06-10.pdf}
+}
+
+@misc{iqa_survey_2021,
+    title={A survey on IQA}, 
+    author={Lanjiang Wang},
+    year={2022},
+    eprint={2109.00347},
+    archivePrefix={arXiv},
+    primaryClass={eess.IV},
+    url={https://arxiv.org/pdf/2109.00347.pdf}
 }
 
 /* Other
 /* ################################################################ */
 
-@inproceedings{nonlin_fit_original_2000,
+@inproceedings{nonlin_fit_original_2003,
+    author = {Video Quality Experts Group (VQEG)},
+    year = {2003},
+    title = {Final Report From the Video Quality Experts Group on the Validation of Objective Models of Video Quality Assessment},
+    url = {https://vqeg.org/VQEGSharedFiles/Publications/Validation_Tests/FRTV_Phase2/FRTV_Phase2_Final_Report.pdf}
+}
+
+@inproceedings{nonlin_fit_model_init_2000,
     author = {Rohaly, Ann and Corriveau, Philip and Libert, John and Webster, Arthur and Baroncini, Vittorio and Beerends, John and Blin, Jean-Louis and Contin, Laura and Hamada, Takahiro and Harrison, David and Hekstra, Andries and Lubin, Jeffrey and Nishida, Yukihiro and Nishihara, Ricardo and Pearson, John and Pessoa, Antonio and Pickford, Neil and Schertz, Alexander and Visca, Massimo and Winkler, Stefan},
     year = {2000},
     month = {05},
@@ -170,7 +225,19 @@
     url = {https://www.researchgate.net/publication/221458323_Video_Quality_Experts_Group_current_results_and_future_directions}
 }
 
-@ARTICLE{nonlin_fit_2011,
+@ARTICLE{nonlin_fit_new_model_2006,
+    author={Sheikh, H.R. and Sabir, M.F. and Bovik, A.C.},
+    journal={IEEE Transactions on Image Processing}, 
+    title={A Statistical Evaluation of Recent Full Reference Image Quality Assessment Algorithms}, 
+    year={2006},
+    volume={15},
+    number={11},
+    pages={3440-3451},
+    doi={10.1109/TIP.2006.881959},
+    url={https://live.ece.utexas.edu/publications/2006/hrs-transIP-06.pdf}
+}
+
+@ARTICLE{nonlin_fit_appl_2011,
     author={Zhang, Lin and Zhang, Lei and Mou, Xuanqin and Zhang, David},
     journal={IEEE Transactions on Image Processing}, 
     title={FSIM: A Feature Similarity Index for Image Quality Assessment}, 
@@ -191,4 +258,63 @@
     title = {Exploiting High-Level Semantics for No-Reference Image Quality Assessment of Realistic Blur Images},
     booktitle = {Proceedings of the 25th {ACM} international conference on Multimedia},
     url = {https://arxiv.org/pdf/1810.08169.pdf}
+}
+
+@ARTICLE{nonlin_fit_appl_2018,
+    author={Fang, Yuming and Yan, Jiebin and Liu, Jiaying and Wang, Shiqi and Li, Qiaohong and Guo, Zongming},
+    journal={IEEE Transactions on Image Processing}, 
+    title={Objective Quality Assessment of Screen Content Images by Uncertainty Weighting}, 
+    year={2017},
+    volume={26},
+    number={4},
+    pages={2016-2027},
+    doi={10.1109/TIP.2017.2669840},
+    url = {https://ieeexplore.ieee.org/document/7857067}
+}
+
+@misc{nonlin_fit_appl_2014,
+    title={Subjective and Objective Quality Assessment of Image: A Survey}, 
+    author={Pedram Mohammadi and Abbas Ebrahimi-Moghadam and Shahram Shirani},
+    year={2014},
+    eprint={1406.7799},
+    archivePrefix={arXiv},
+    primaryClass={cs.MM},
+    url={https://arxiv.org/ftp/arxiv/papers/1406/1406.7799.pdf}
+}
+
+
+@ARTICLE{nonlin_fit_appl_2015,
+  author={Pei, Soo-Chang and Chen, Li-Heng},
+  journal={IEEE Transactions on Image Processing}, 
+  title={Image Quality Assessment Using Human Visual DOG Model Fused With Random Forest}, 
+  year={2015},
+  volume={24},
+  number={11},
+  pages={3282-3292},
+  doi={10.1109/TIP.2015.2440172},
+  url={https://ieeexplore.ieee.org/abstract/document/7115917}
+}
+
+
+@article{nonlin_fit_appl_2016,
+  title={Full-reference image quality assessment with linear combination of genetically selected quality measures},
+  author={Oszust, Mariusz},
+  journal={PloS one},
+  volume={11},
+  number={6},
+  pages={e0158333},
+  year={2016},
+  publisher={Public Library of Science San Francisco, CA USA},
+  url={https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4920377/}
+}
+
+@article{nonlin_fit_init_proof_2017,
+  title={MDID: A multiply distorted image database for image quality assessment},
+  author={Sun, Wen and Zhou, Fei and Liao, Qingmin},
+  journal={Pattern Recognition},
+  volume={61},
+  pages={153--168},
+  year={2017},
+  publisher={Elsevier},
+  url={https://www.sciencedirect.com/science/article/abs/pii/S0031320316301911?via\%3Dihub}
 }

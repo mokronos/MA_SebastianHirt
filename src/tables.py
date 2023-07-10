@@ -94,12 +94,12 @@ def create_summary():
     rmse_overall_ezocr = data.loc[data['ocr_algo'] == 'ezocr']['rmse_fitted_overall'].mean().round(2)
 
     # add overall values
-    table.loc[("spearmanr", "overall"), ("CER_comp", "tess")] = spear_overall_tess
-    table.loc[("spearmanr", "overall"), ("CER_comp", "ezocr")] = spear_overall_ezocr
-    table.loc[("pearson_fitted", "overall"), ("CER_comp", "tess")] = pearson_overall_tess
-    table.loc[("pearson_fitted", "overall"), ("CER_comp", "ezocr")] = pearson_overall_ezocr
-    table.loc[("rmse_fitted", "overall"), ("CER_comp", "tess")] = rmse_overall_tess
-    table.loc[("rmse_fitted", "overall"), ("CER_comp", "ezocr")] = rmse_overall_ezocr
+    table.loc[("spearmanr", "Overall"), ("CER_comp", "tess")] = spear_overall_tess
+    table.loc[("spearmanr", "Overall"), ("CER_comp", "ezocr")] = spear_overall_ezocr
+    table.loc[("pearson_fitted", "Overall"), ("CER_comp", "tess")] = pearson_overall_tess
+    table.loc[("pearson_fitted", "Overall"), ("CER_comp", "ezocr")] = pearson_overall_ezocr
+    table.loc[("rmse_fitted", "Overall"), ("CER_comp", "tess")] = rmse_overall_tess
+    table.loc[("rmse_fitted", "Overall"), ("CER_comp", "ezocr")] = rmse_overall_ezocr
 
     table = table.sort_index(level=0, ascending=True)
 
