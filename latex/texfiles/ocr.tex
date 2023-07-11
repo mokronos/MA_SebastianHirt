@@ -1,0 +1,161 @@
+\chapter{Optical Character Recognition}
+\label{chap:ocr}
+
+In this chapter we go over some of the other work that has been done in the field.
+
+\cite{ocr_survey_2017}
+
+\section{Conventional Optical Character Recognition}
+
+\section{Deep Learning Optical Character Recognition}
+
+- is there natural language processing involved? might improve results, even if visual quality is low
+- connection threshold of boundingbox, difficult to set correctly, cant use dict if single letters, auto puts sentences together when high
+- qualtiy assesment for machines, not humans, useful too, blind person on zoom, computer needs to read
+
+We don't use other \gls{ocr} methods in this thesis.
+However, we mention them here for completeness.
+
+\section{EasyOCR}
+\label{subsec:easyocr}
+
+EasyOCR is a Python library for \gls{ocr} \cite{easyocr_2020}. It uses a deep learning model to detect text.
+
+\section{Tesseract}
+\label{subsec:tesseract}
+
+Tesseract is an \gls{ocr} engine \cite{tesseract_2007}. It is open-source and was developed by Google. It is written in C++ and has a Python wrapper.
+
+
+\section{Character Error Rate}
+\label{subsec:cer}
+
+The \gls{cer} \cite{cer_2022} describes how many substitutions, deletions, and insertions are necessary to transform a text prediction into the text label.
+It is defined as follows.
+
+\begin{equation}
+    \text{CER} = \frac{I + S + D}{N},
+    \label{eq:cer}
+\end{equation}
+
+with $I$ being the number of insertions, $S$ being the number of substitutions, $D$ being the number of deletions, and $N$ being the total number of characters in the text label.
+The \gls{cer} ranges from 0 to $\infty$, where 0 means perfect recognition and the higher the worse the recognition.
+
+- maybe introduce transformation later, to have mos already defined
+
+Because the \gls{mos} is defined in the range 0 to 100 and 100 represents a high subjective quality, the two metrics are unintuitive to compare.
+Therefore, we take the complement of the CER by subtracting it from 1.
+Additionally we scale it by multiplying by 100 to get a \gls{mos}-like value, see \autoref{eq:cer2mos}.
+
+\begin{equation}
+    \text{CER}_{c} = (1 - \text{CER}) \cdot 100
+    \label{eq:cer2mos}
+\end{equation}
+
+This means that the $\text{CER}_{c}$ can be in the range -$\infty$ to 100, where 100 means perfect recognition and the lower the worse the recognition.
+Although the $\text{CER}_{c}$ is generally in the range 0 to 100, which matches the \gls{mos}.
+
+
+% ## Text Recognition Algorithms
+
+% ### Tesseract
+
+% https://github.com/tesseract-ocr/tesseract
+
+% paper: https://ieeexplore.ieee.org/document/4376991
+% but author only author until 2018
+
+% settings: https://tesseract-ocr.github.io/tessdoc/ImproveQuality.html
+
+% ### Paddle OCR
+
+% https://github.com/PaddlePaddle/PaddleOCR
+% paper: https://arxiv.org/abs/2009.09941
+% python quickstart: https://github.com/PaddlePaddle/PaddleOCR/blob/release/2.6/doc/doc_en/quickstart_en.md
+% model summary: https://github.com/PaddlePaddle/PaddleOCR/blob/release/2.6/doc/doc_en/algorithm_overview_en.md
+% not sure yet how to use specific models
+
+% ### Ocropus
+
+% https://github.com/ocropus/ocropy
+% no paper
+% seems to be experimental, not as stable
+
+% ### Kraken OCR
+
+% https://github.com/mittagessen/kraken
+% paper: https://arxiv.org/ftp/arxiv/papers/1703/1703.09550.pdf
+
+% ### Microsoft OCR
+
+% https://learn.microsoft.com/en-us/azure/cognitive-services/computer-vision/quickstarts-sdk/client-library?tabs=visual-studio&pivots=programming-language-python
+
+% ### MMOCR
+
+% https://github.com/open-mmlab/mmocr
+
+% ### Vedastr
+% https://github.com/Media-Smart/vedastr
+% small? but simple library
+
+% ## Models
+
+% Maybe look for stuff here: https://huggingface.co/models?sort=downloads&search=ocr
+
+% ### Mask OCR
+% https://paperswithcode.com/paper/maskocr-text-recognition-with-masked-encoder
+
+
+% ## Fitting/Methods
+
+% - https://www.researchgate.net/profile/Guangtao-Zhai/publication/341011181_Perceptual_image_quality_assessment_a_survey/links/61812d24a767a03c14e3d754/Perceptual-image-quality-assessment-a-survey.pdf
+%     - Survey on perceptual image quality assessment
+%     - suggests different fitting model
+
+% - https://vqeg.org/VQEGSharedFiles/Publications/Validation_Tests/FRTV_Phase2/FRTV_Phase2_Final_Report.pdf
+%     - VQEG Final Report
+%     - suggests 3 parameter fitting model and dmos_p
+
+
+% ## Other Literature
+
+% - https://paddleocr.bj.bcebos.com/ebook/Dive_into_OCR.pdf
+%     - OCR book
+
+% - https://engineering.fb.com/2018/09/11/ai-research/rosetta-understanding-text-in-images-and-videos-with-machine-learning/
+%     - Facebook paper on text recognition
+%     - rosetta
+
+% - https://research.aimultiple.com/ocr-technology/
+%     - current state of OCR
+
+% - https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=156468
+%     - Historical Review of OCR Research and Development 
+%     - way too old, 1992
+
+% - https://projet.liris.cnrs.fr/imagine/pub/proceedings/ICPR-2012/media/files/0043.pdf
+%     - Method to estimate sharpness in images with natural and text images
+
+% - https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=9151144
+%     - Handwritten Optical Character Recognition (OCR): A Comprehensive Systematic Literature Review (SLR)
+%     - handwritten, but maybe still interesting, as there aren't many algorithms that are trained on screen content
+
+% - https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=9183326
+%     - Text extraction using OCR: A Systematic Review
+%     - might be a good overview
+
+% - http://39.96.165.147/Pub%20Files/2017/fym_tip17.pdf
+%     - Fusing of text and pictoral regions
+%     - uses similar fitting and metrics
+
+% - http://sim.jxufe.cn/JDMKL/pdf/Perceptual%20quality%20assessment%20of%20screen%20content%20images.pdf
+%     - Metric that considers 3 subjective scores and weight them
+
+% - https://scholarsmine.mst.edu/cgi/viewcontent.cgi?article=5864&context=ele_comeng_facwork
+%     - Predicting user perception, can be used to predict ocr performance
+
+% - https://arxiv.org/pdf/1807.04047.pdf
+%     - ocr as ground truth
+
+% - https://dl.acm.org/doi/pdf/10.1145/3606692
+%     - document image quality assesment survey
