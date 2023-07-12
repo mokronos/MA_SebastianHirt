@@ -101,17 +101,16 @@ def bjontegaard():
             print("*"*20)
 
             # append to table
-            summary_table = summary_table.append({"ocr_algo": ocr_algo,
-                                                    "codec_config": codec_config,
-                                                    "bd_rate_pseudo": bd_rate_pseudo,
-                                                    "bd_rate_true": bd_rate_true,
-                                                    "diff": diff},
-                                                    ignore_index=True)
+            tmp = [{"ocr_algo": ocr_algo, "codec_config": codec_config,
+                    "bd_rate_pseudo": bd_rate_pseudo, "bd_rate_true": bd_rate_true,
+                    "diff": diff}]
 
+            summary_table = pd.concat([summary_table, pd.DataFrame.from_records(tmp)], ignore_index=True)
 
+    print(summary_table)
     # save table as tex and csv
     summary_table.to_csv(PATHS["results_bjontegaard"](ext="csv"), index=False)
-    summary_table.to_latex(PATHS["results_bjontegaard"](ext="tex"), index=False)
+    summary_table.style.hide(axis="index").to_latex(PATHS["results_bjontegaard"](ext="tex"))
 
 def create_summary():
 
