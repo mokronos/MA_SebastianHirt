@@ -2,61 +2,116 @@ import bjontegaard as bd
 import pandas as pd
 from config import PATHS, CONFIG
 import scipy
+import matplotlib.pyplot as plt
 
 
-def get_bjontegaard():
+def bjontegaard():
 
     data = pd.read_csv(PATHS["results_codecs"])
+    print(data)
 
+    # divider does not matter
     divider = 1_000_000
     divider = 1
-    codec_config = "scc"
-    algo = "ezocr"
 
-    data[f"cer_comp_{algo}"] = (1 - data[f"cer_{algo}"]) * 100
-    # x = "psnr"
-    x = "cer_true"
+    # set anchor and test codec
+    codec_anchor = "hm"
+    codec_test = "vtm"
 
-    rate_anchor = data.loc[(data["codec"] == "hm") &
-                           (data["codec_config"] == codec_config) &
-                           (data["ocr_algo"] == "tess")].groupby("q")["size"].mean()/divider
-    dist_anchor = data.loc[(data["codec"] == "hm") &
-                           (data["codec_config"] == codec_config) &
-                           (data["ocr_algo"] == "tess")].groupby("q")[x].mean()
-    rate_test = data.loc[(data["codec"] == "vtm") &
-                           (data["codec_config"] == codec_config) &
-                           (data["ocr_algo"] == "tess")].groupby("q")["size"].mean()/divider
-    dist_test = data.loc[(data["codec"] == "vtm") &
-                           (data["codec_config"] == codec_config) &
-                           (data["ocr_algo"] == "tess")].groupby("q")[x].mean()
+    # set metric to be evaluated
+    crit = "cer_comp"
+
+    # loop over all combinations of:
+    codec_configs = ["default", "scc"]
+    ocr_algos = ["ezocr", "tess"]
+
+    summary_table = pd.DataFrame(columns=["ocr_algo", "codec_config", "bd_rate_pseudo", "bd_rate_true", "diff"])
+
+    for ocr_algo in ocr_algos:
+        for codec_config in codec_configs:
+                    
+            target = "ref"
+            rate_anchor_pseudo = data.loc[(data["codec"] == codec_anchor) &
+                                   (data["codec_config"] == codec_config) &
+                                   (data["ocr_algo"] == ocr_algo) &
+                                   (data["target"] == target)].groupby("q")["size"].mean()/divider
+            dist_anchor_pseudo = data.loc[(data["codec"] == codec_anchor) &
+                                    (data["codec_config"] == codec_config) &
+                                    (data["ocr_algo"] == ocr_algo) &
+                                    (data["target"] == target)].groupby("q")[crit].mean()
+            rate_test_pseudo = data.loc[(data["codec"] == codec_test) &
+                                    (data["codec_config"] == codec_config) &
+                                    (data["ocr_algo"] == ocr_algo) &
+                                    (data["target"] == target)].groupby("q")["size"].mean()/divider
+            dist_test_pseudo = data.loc[(data["codec"] == codec_test) &
+                                    (data["codec_config"] == codec_config) &
+                                    (data["ocr_algo"] == ocr_algo) &
+                                    (data["target"] == target)].groupby("q")[crit].mean()
+
+            target = "gt"
+            rate_anchor_true = data.loc[(data["codec"] == codec_anchor) &
+                                   (data["codec_config"] == codec_config) &
+                                   (data["ocr_algo"] == ocr_algo) &
+                                   (data["target"] == target)].groupby("q")["size"].mean()/divider
+            dist_anchor_true = data.loc[(data["codec"] == codec_anchor) &
+                                    (data["codec_config"] == codec_config) &
+                                    (data["ocr_algo"] == ocr_algo) &
+                                    (data["target"] == target)].groupby("q")[crit].mean()
+            rate_test_true = data.loc[(data["codec"] == codec_test) &
+                                    (data["codec_config"] == codec_config) &
+                                    (data["ocr_algo"] == ocr_algo) &
+                                    (data["target"] == target)].groupby("q")["size"].mean()/divider
+            dist_test_true = data.loc[(data["codec"] == codec_test) &
+                                    (data["codec_config"] == codec_config) &
+                                    (data["ocr_algo"] == ocr_algo) &
+                                    (data["target"] == target)].groupby("q")[crit].mean()
 
 
-    # dist_anchor[35] = 0.23
-    print(dist_anchor)
-    # dist_anchor = dist_anchor.sort_index(ascending=False)
-    # dist_test = dist_test.sort_index(ascending=False)
-    rate_anchor = [9487.76, 4593.60, 2486.44, 1358.24]
-    dist_anchor = [ 40.037,  38.615,  36.845,  34.851]
-    # dist_anchor = [ 40.037,  38.615,  36.845,  37.851]
-    rate_test = [9787.80, 4469.00, 2451.52, 1356.24]
-    dist_test = [ 40.121,  38.651,  36.970,  34.987]
+
+            # can't calculate as the points are not strictly increasing/decreasing
+            try:
+                bd_rate_pseudo = bd.bd_rate(rate_anchor_pseudo, dist_anchor_pseudo,
+                                            rate_test_pseudo, dist_test_pseudo,
+                                            method='akima')
+            except Exception as e:
+                bd_rate_pseudo = None
+                print(f"bd_rate_pseudo calculation failed for ocralgo: {ocr_algo}, codec: {codec_anchor}, config: {codec_config}, target: {target}")
+                print(e)
+
+            try:
+                bd_rate_true = bd.bd_rate(rate_anchor_true, dist_anchor_true,
+                                            rate_test_true, dist_test_true,
+                                            method='akima')
+            except Exception as e:
+                bd_rate_true = None
+                print(f"bd_rate_true calculation failed for ocralgo: {ocr_algo}, codec: {codec_anchor}, config: {codec_config}, target: {target}")
+                print(e)
 
 
-    print(f"rate_anchor: \n {rate_anchor}")
-    print(f"dist_anchor: \n {dist_anchor}")
-    print(f"rate_test: \n {rate_test}")
-    print(f"dist_test: \n {dist_test}")
+            print(f"config: {codec_config}, ocr_algo: {ocr_algo}")
+            print(f"bd_rate_pseudo: {bd_rate_pseudo}")
+            print(f"bd_rate_true: {bd_rate_true}")
+            if bd_rate_pseudo is not None and bd_rate_true is not None:
+                diff = bd_rate_pseudo - bd_rate_true
+                print(f"bd_rate_diff: {diff}")
+            else:
+                diff = None
+                print(f"bd_rate_diff: {diff}")
 
-    # can't calculate as the points are not strictly increasing/decreasing
+            print("*"*20)
 
-    bd_rate = bd.bd_rate(rate_anchor, dist_anchor, rate_test, dist_test, method="akima")
-    bd_psnr = bd.bd_psnr(rate_anchor, dist_anchor, rate_test, dist_test, method="akima")
+            # append to table
+            summary_table = summary_table.append({"ocr_algo": ocr_algo,
+                                                    "codec_config": codec_config,
+                                                    "bd_rate_pseudo": bd_rate_pseudo,
+                                                    "bd_rate_true": bd_rate_true,
+                                                    "diff": diff},
+                                                    ignore_index=True)
 
-    print(f"bd_rate: \n {bd_rate}")
-    print(f"bd_psnr: \n {bd_psnr}")
 
-    return bd_rate, bd_psnr
-
+    # save table as tex and csv
+    summary_table.to_csv(PATHS["results_bjontegaard"](ext="csv"), index=False)
+    summary_table.to_latex(PATHS["results_bjontegaard"](ext="tex"), index=False)
 
 def create_summary():
 
@@ -135,8 +190,8 @@ def cer_ref_gt():
 
 if __name__ == "__main__":
 
-    # get_bjontegaard()
+    bjontegaard()
 
-    create_summary()
+    # create_summary()
 
     # cer_ref_gt()

@@ -119,6 +119,11 @@ PATHS = {
             lambda suffix, ext:
                 f"results/summaries/results_dist_spear_pears_{suffix}.{ext}",
 
+        # Path to dataframe with codec comparison bjontegaard results
+        "results_bjontegaard":
+            lambda ext:
+                f"results/summaries/results_bjontegaard.{ext}",
+
         # Path to dataframe with codec comparison results
         "results_codecs":
             f"results/summaries/results_codecs.csv",
