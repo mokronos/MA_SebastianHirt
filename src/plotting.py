@@ -447,6 +447,40 @@ def plot_fit_example():
 
     print("plotted fitting example")
 
+def plot_bjontegaard_example():
+
+    rateA = [0.1, 0.2, 0.3, 0.4]
+    rateB = [0.08, 0.16, 0.24, 0.32]
+
+    distA = [20, 33, 40, 43]
+    distB = [25, 38, 45, 48]
+
+
+    plt.plot(rateB, distB, label="Codec B", marker='o')
+    plt.plot(rateA, distA, label="Codec A", marker='o')
+    plt.xlabel("Bitrate in Mbit/s")
+    plt.ylabel("CER$_c$")
+
+    plt.legend()
+    plt.grid()
+
+    color = "yellow"
+    # color the area between the two curves
+    plt.fill_between(rateA, distA, distB, color=color)
+    plt.fill_between(rateB, distA, distB, color=color)
+
+    # make areas above and below curves white
+    plt.fill_between([rateB[0], rateA[-1]], [distA[-1], distA[-1]], max(distB), color='white')
+    plt.fill_between([rateB[0], rateA[-1]], [distB[0], distB[0]], min(distA), color='white')
+
+    plt.savefig("exp/bjontegaard_example.pdf")
+    plt.savefig("exp/bjontegaard_example.png")
+
+    # plt.show()
+
+    print("plotted bjontegaard example")
+
+
 def pipeline():
     """
     Run all functions to plot everything in one go
@@ -474,6 +508,7 @@ def pipeline():
 
     # example for fitting
     plot_fit_example()
+    plot_bjontegaard_example()
 
 
 if __name__ == '__main__':
@@ -481,4 +516,6 @@ if __name__ == '__main__':
     pass
     # pipeline()
     # plot_cer_dist_quality()
-    plot_fit_example()
+    # plot_fit_example()
+    plot_bjontegaard_example()
+
