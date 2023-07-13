@@ -138,6 +138,14 @@ In \autoref{fig:ref29} we can see that it is sometimes difficult to say which te
 Thus we decided against using one of the \gls{ocr} algorithms to predict the text and then correct it to create the ground truth, to not introduce bias towards one of the algorithms with regard to the positions of the text elements.
 We used the images, a ruler and our eyes to determine the correct order of the text elements.
 
+- Select based on how hard to label
+- Select based on how much text/objects
+- very subjective
+- different metric with IoU and CER combined might be helpful
+
+- go through all the distortions and make hypothesis on how they affect the ocr, check for literature on this
+- check later in evaluation if true/false
+- mos vs dmos / single stimulus vs double stimulus
 
 \begin{figure}
     \centering
@@ -161,7 +169,8 @@ It shows the \gls{cer} and \gls{mos} of all 1800 distorted images compared to th
 
 In \autoref{fig:cer_vs_mos_456} the \gls{cer} is plotted against the \gls{mos}.
 We are only using a selection of images in this plot.
-These images (SCI4, SCI5, SCI6, SCI22 and SCI29) have their main focus on text, and have simple text structure.
+The images with the ID's $[1, 2, 3, 4, 5, 6, 7, 8, 11, 12, 15, 18, 20, 21, 24, 29]$ have their main focus on text, and have a relatively simple text structure.
+Thus those images are used in experiments that involve the \gls{mos}.
 \begin{figure}[h]
     \centering
     \includegraphics[width=\textwidth]{mosvster__456_22_29__1_4}
@@ -169,30 +178,11 @@ These images (SCI4, SCI5, SCI6, SCI22 and SCI29) have their main focus on text, 
     \label{fig:cer_vs_mos_456}
 \end{figure}
 
-\section{Codec encoding}
+\section{Codec Encoding}
 \label{sec:dataset_codec}
 
-Additionally to the distortion types we also encoded the images with different codecs.
-First, we used the \gls{hevc} codec with the HM software.
-Second, we used the \gls{vvc} codec with the VTM software.
-We used the \glspl{qp} \[35, 40, 45, 50\] for the encoding, due to the \gls{cer} not changing much for lower \glspl{qp}.
-Furthermore, we encoded the images with the default and the \gls{scc} of the codecs to observe the difference.
-Note that we do not have any subjective scores for these images.
-Thus we were able to use more images, now including images with more objects and other things that might take the human focus away from text.
-
-- Select based on how hard to label
-- Select based on how much text/objects
-- very subjective
-- different metric with IoU and CER combined might be helpful
-
-- go through all the distortions and make hypothesis on how they affect the ocr, check for literature on this
-- check later in evaluation if true/false
-
-- mos vs dmos / single stimulus vs double stimulus
-\section{Codecs}
-\label{sec:codecs}
-
-In this section, the codecs used in this thesis are described.
+In this section we first describe the extension of the dataset through encoding with the \gls{hevc} and \gls{vvc} codecs.
+Additionally we detail the method we then use to compare the codecs by using the $\text{CER}_{\text{c}}$ and the \gls{bdrate}.
 
 \subsection{High Efficiency Video Coding}
 \label{subsec:hevc}
@@ -203,3 +193,68 @@ In this section, the codecs used in this thesis are described.
 \label{subsec:vvc}
 
 \gls{vvc} is a video codec.
+
+Furthermore, we encoded the images with the default and the \gls{scc} of the codecs to observe the difference.
+The most important difference to the other distorted images is that there are no subjective scores available for these images.
+However, the positive aspect is, that we can use more images for the comparison of the codecs, as we do not need to look out for objects overshadowing the text in the subjective scores.
+The images used for the experiments with the codecs have the ID's $[1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 12, 13, 15, 16, 18, 19, 20, 21, 22, 23, 24, 25, 27, 29]$.
+For images encoded with these codecs the $\text{CER}_{\text{c}}$ can be calculated after predicting the text with the \gls{ocr} algorithms.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{../../exp/bjontegaard_example.pdf}
+    \caption{Example of the \gls{bdrate} calculation with dummy values. Adapted from \cite{bdrate_beyond_2022}}
+    \label{fig:bdrate_example}
+\end{figure}
+
+Those $\text{CER}_{\text{c}}$ values can be plotted against the bitrate of the encoded images, see \autoref{fig:bdrate_example} for an example.
+The different qualities can be denoted by $\text{i}$ and the different codecs by $\text{k}$.
+In our case the qualities describe the \glspl{qp} values $[35, 40, 45, 50]$ and the codecs are $[\text{HM}, \text{VTM}]$.
+- deviating from VVC common test conditions, due to lack of changes in the CER for lower QP values
+Thus the points can be denoted as $\left(R_{\text{k,i}}, M_{\text{k,i}}\right)$ with $R_{\text{k,i}}$ being the bitrate and $D_{\text{k,i}}$ being the metric, in our case the $\text{CER}_{\text{c}}$.
+Later, those points are averaged over all images to get the average bitrate and the average $\text{CER}_{\text{c}}$ for each codec.
+The following section describes the calculation of the \gls{bdrate}, which can quantify the difference between the two curves of the codecs.
+
+\subsection{Bjøntegaard Delta Rate}
+\label{subsec:bdrate}
+
+The \gls{bdrate} \cite{bdrate_original_2001}\cite{bdrate_beyond_2022} is defined as the average difference between two curves of the codecs to compare.
+The first curve is the reference curve and the second the test curve.
+The $R_{\text{k,i}}$ values are first converted to the log scale to not bias the results towards the higher bitrates with
+
+\begin{equation}
+    r_{\text{k,i}} = \log_{10}\left(R_{\text{k,i}}\right).
+    \label{eq:log_scale}
+\end{equation}
+
+Those values in combination with the $\text{CER}_{\text{c}}$ values are then used as anchor points for a interpolation with a third order polynomial.
+The resulting functions are denoted by $\hat{r}_{\text{k}}$, respectively.
+The interpolation results in two curves, one for each codec, that pass through all anchor points.
+
+Finally the \gls{bdrate} can be denoted as $\Delta R$ and is calculated by the integral of the difference between the two curves.
+First, we need to define the lower and upper bound of the integral as follows
+
+\begin{equation}
+    \begin{aligned}
+        M_{\text{low}} = \max\left(M_{\text{A},1}, M_{\text{B},1}\right) \\
+        M_{\text{high}} = \min\left(M_{\text{A},4}, M_{\text{B},4}\right).
+    \end{aligned}
+    \label{eq:bounds}
+\end{equation}
+
+The bounds are just the maximum of the lowest quality points and the minimum of the highest quality points and can be seen in \autoref{fig:bdrate_example}.
+
+\begin{equation}
+    \Delta R = 10^{\frac{1}{M_{\text{low}}-M_{\text{high}}} \int_{M_{\text{low}}}^{M_{\text{high}}} \hat{r}_{\text{B}}(M) - \hat{r}_{\text{A}}(M) \text{d}M} - 1.
+    \label{eq:bdrate}
+\end{equation}
+
+This value describes the average difference between the two curves in percent.
+This enables us to compare two codecs.
+Additionally we can calculate the same value, but with the $\text{CER}_{\text{c}}$ in relation to the ground truth instead of the reference.
+These two values can then be compared to see if using the \gls{ocr} algorithms as a reference is a good approximation of the difference between codecs.
+If the difference between the two values is small, then the approximation is good and we would not need a ground truth to evaluate new codecs.
+
+To summarize, the original dataset has a \gls{mos} for each image with various distortions.
+We are expanding the dataset by encoding the images with the \gls{hevc} and \gls{vvc} codecs.
+The $\Delta R$ can then be calculated to compare two codecs and evaluate if the \gls{ocr} algorithms can be used as a approximate \gls{gt} for the \gls{bdrate} calculation.

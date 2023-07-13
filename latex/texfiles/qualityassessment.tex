@@ -37,17 +37,6 @@ When it is applied to an image, the \gls{psnr} is defined as follows.
 
 with \(R\) being the maximum possible pixel value of the image and MSE being the \gls{mse} between the original and the reconstructed image.
 
-\section{Bjøntegaard Delta Rate}
-\label{subsec:bdrate}
-
-The \gls{bdrate} \cite{bdrate_original_2001}\cite{bdrate_beyond_2022} (can't find pdf of original paper) is defined by the difference between the integration of curves of the codecs to compare.
-The first curve is the reference curve and the second the test curve.
-Both are plotting some average metric over the average bitrate of some images.
-
-\begin{equation}
-    \text{BDRate} = https://arxiv.org/pdf/2202.12565.pdf
-    \label{eq:bdrate}
-\end{equation}
 
 \section{Nonlinear Transformation}
 \label{sec:nonlinear}
@@ -156,3 +145,4 @@ In our case it is defined as follows.
 
 From these metrics, $r_{\text{p}}$ measures the prediction linearity and consistency, $r_{\text{s}}$ measures the prediction monotonicity and the \gls{rmse} measures the prediction accuracy.
 With these, we can now determine if the $\text{CER}_{\text{c}}$ is a good alternative for the \gls{mos}.
+It is a better alternative the larger $r_s$ and $r_p$ values are, and the smaller the \gls{rmse} is.

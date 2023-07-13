@@ -505,7 +505,33 @@ The \gls{scc} configuration makes the HM codec perform very similarly to the VTM
 When comparing the blue and red curves, we can see that the trends are not similar.
 For the true \gls{gt}, the HM codec performs better than the VTM codec, while for the pseudo \gls{gt} the VTM codec performs better than the HM codec.
 
+\begin{table}
+    \centering
+    \begin{tabular}{|ll|rl|l|}
+        \hline
+        % algo, config, pseudo, true, diff
+        \gls{ocr} Algorithm & Codec Configuration & Pseudo GT & True GT & Difference \\
+        \hline
+        \hline
+        EasyOCR & Default & -59.281319 & -61.015663 & 1.734344 \\
+        EasyOCR & \gls{scc} & -7.414767 & -1.096224 & -6.318543 \\
+        \hline
+        Tesseract & Default & -56.454787 & - & - \\
+        Tesseract & \gls{scc} & -19.568615 & - & - \\
+        \hline
+    \end{tabular}
+    \caption{Comparison of $\Delta R$ in \% between the pseudo and the true \gls{gt} for the different \gls{ocr} algorithms and codec configurations}
+    \label{tab:bd_rate}
+\end{table}
+
+From \autoref{tab:bd_rate} we can see that the \gls{bdrate} way higher for the default configuration than for the \gls{scc} configuration for both the pseudo and the true \gls{gt}.
+This reflects the large average distance of the curves seen in \autoref{fig:codec_cer_size_ezocr_default} and \autoref{fig:codec_cer_size_tess_default}, compared to the almost non existent distance seen in \autoref{fig:codec_cer_size_ezocr_scc} and \autoref{fig:codec_cer_size_tess_scc}.
+For Tesseract \gls{ocr} we could not calculate the $\Delta R$ for the true \gls{gt}, since the curves are not monotonically increasing.
+The difference between the pseudo and the true \gls{gt} is low with $1.73\%$ for the default configuration, but relatively high with $-6.31\%$ for the \gls{scc} configuration.
+We can conclude that for images encoded with the default configurations of the HM and VTM codecs, EasyOCR can produce a good pseudo \gls{gt}.
+- why not Tesseract? might have a decent bdrate but the curves are not monotonically increasing
+
 To summarize, we can see that the \gls{ocr} algorithms perform better on the VTM encoded images than on the HM encoded images.
 Additionally, the \gls{scc} configuration makes the HM codec perform very similarly to the VTM codec.
-For the default and the screen content codec configurations, EasyOCR seems to be a good pseudo \gls{gt}.
+For the default configuration, EasyOCR seems to be a good pseudo \gls{gt}.
 In contrast, Tesseract \gls{ocr} is not suitable for creating a pseudo \gls{gt}.
