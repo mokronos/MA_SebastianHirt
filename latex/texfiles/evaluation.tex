@@ -320,41 +320,8 @@ In \autoref{fig:mos_cer_ref_fitted_mean_ezocr} we can see the mean \gls{cer} (fi
 
 In \autoref{fig:mos_cer_ref_fitted_mean_tess} we can see the mean \gls{cer} (fitted) against the mean \gls{mos} over selected images for all distortions with Tesseract \gls{ocr}.
 
-\begin{table}[h]
-\centering
-\begin{tabular}{llrrrr}
-\toprule
-          & {} & \multicolumn{4}{l}{CER\_comp} \\
-          & ocr\_algo & \multicolumn{2}{l}{ezocr} & \multicolumn{2}{l}{tess} \\
-          & target &       gt &   ref &    gt &   ref \\
-corr & dist\_name &          &       &       &       \\
-\midrule
-pearson & CC &     0.01 &  0.37 & -0.19 & -0.48 \\
-          & CQD &     0.25 &  0.86 & -0.02 &  0.49 \\
-          & CSC &     0.27 &  0.78 &  0.03 &  0.53 \\
-          & GB &     0.57 &  0.80 &  0.39 &  0.69 \\
-          & GN &     0.50 &  0.81 &  0.84 &  0.84 \\
-          & HEVC-SCC &     0.57 &  0.92 &  0.41 &  0.68 \\
-          & JPEG &     0.84 &  0.91 &  0.49 &  0.77 \\
-          & JPEG2000 &     0.54 &  0.82 &  0.52 &  0.72 \\
-          & MB &     0.89 &  0.90 &  0.77 &  0.82 \\
-spearmanr & CC &     0.08 &  0.23 & -0.31 & -0.48 \\
-          & CQD &     0.24 &  0.83 & -0.06 &  0.47 \\
-          & CSC &     0.27 &  0.79 &  0.00 &  0.54 \\
-          & GB &     0.70 &  0.96 &  0.45 &  0.73 \\
-          & GN &     0.57 &  0.89 &  0.82 &  0.89 \\
-          & HEVC-SCC &     0.46 &  0.85 &  0.31 &  0.54 \\
-          & JPEG &     0.85 &  0.96 &  0.45 &  0.79 \\
-          & JPEG2000 &     0.51 &  0.87 &  0.49 &  0.70 \\
-          & MB &     0.93 &  0.94 &  0.80 &  0.80 \\
-\bottomrule
-\end{tabular}
-\caption{Correlation between CER\_comp and MOS for different distortion types}
-\label{tab:pearson_spear}
-\end{table}
-
-In \autoref{tab:pearson_spear} we can see the correlation between the \gls{cer}, in relation to the \gls{gt} and the reference, and the \gls{mos} for all distortions with EasyOCR and Tesseract \gls{ocr}.
-We can generally observe that the correlation is higher for the \gls{cer} in relation to the reference compared to the \gls{gt}.
+To quantify the observations we calculate the \gls{plcc}, \gls{srcc} and \gls{rmse} as described in \autoref{chap:qualityassessment}.
+In \autoref{tab:fitted_metrics_ezocr} we can see metrics for all distortions for EasyOCR.
 This might be due to the fact that the \gls{ocr} sometimes predicts text where there is no text or the \gls{gt} does not contain that text.
 Thus when the quality gets worse, it might happen, that those text elements do not get predicted at all, thus resulting in a better performance.
 The correlation is affected because the \gls{cer} first goes up and then down again, but the \gls{mos} is strictly decreasing.
@@ -365,38 +332,50 @@ Additionally the lowest \gls{plcc} is seen for \gls{cc}, which further confirms 
 Similar observations, although more dominant for \gls{srcc}, can be made for \gls{csc} and \gls{cqd}.
 These two distortions also seem to have more impact on the \gls{mos} than on the \gls{ocr} algorithms, which makes sense.
 
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|l|rrr|}
+        \hline
+        Distortion Type & SRCC & PLCC & RMSE \\
+        \hline
+        CC & 0.29 & 0.40 & 6.76 \\
+        CQD & 0.28 & 0.36 & 11.45 \\
+        CSC & 0.47 & 0.54 & 7.65 \\
+        GB & 0.70 & 0.71 & 7.40 \\
+        GN & 0.56 & 0.54 & 11.09 \\
+        HEVC-SCC & 0.57 & 0.62 & 9.42 \\
+        JPEG & 0.65 & 0.66 & 10.65 \\
+        JPEG2000 & 0.59 & 0.61 & 12.41 \\
+        MB & 0.86 & 0.85 & 5.73 \\
+        \hline
+        Overall & 0.65 & 0.66 & 9.44 \\
+        \hline
+    \end{tabular}
+    \caption{Correlations and RMSE for different distortion types for EasyOCR}
+    \label{tab:fitted_metrics_ezocr}
+\end{table}
 
 \begin{table}[h]
-\centering
-\begin{tabular}{llrrrr}
-\toprule
-                 & {} & \multicolumn{4}{l}{CER\_comp\_fitted} \\
-                 & ocr\_algo & \multicolumn{2}{l}{ezocr} & \multicolumn{2}{l}{tess} \\
-                 & target &              gt &   ref &    gt &   ref \\
-corr & dist\_name &                 &       &       &       \\
-\midrule
-pearson\_fitted & CC &            0.98 &  0.89 &  0.99 & -0.98 \\
-                 & CQD &           -0.91 &  0.92 &  0.99 &  0.99 \\
-                 & CSC &           -1.00 &  0.87 &  0.96 &  0.96 \\
-                 & GB &            0.99 &  0.98 &  1.00 &  1.00 \\
-                 & GN &            0.93 &  0.98 &  0.99 &  0.99 \\
-                 & HEVC-SCC &            0.83 &  1.00 &  0.90 &  0.86 \\
-                 & JPEG &            0.98 &  0.99 &  0.88 &  1.00 \\
-                 & JPEG2000 &            0.85 &  0.98 &  0.99 &  0.85 \\
-                 & MB &            1.00 &  1.00 &  1.00 &  0.99 \\
-spearmanr\_fitted & CC &            1.00 &  0.99 &  1.00 & -1.00 \\
-                 & CQD &           -0.83 &  1.00 &  1.00 &  1.00 \\
-                 & CSC &           -1.00 &  1.00 &  0.80 &  1.00 \\
-                 & GB &            1.00 &  1.00 &  1.00 &  1.00 \\
-                 & GN &            0.97 &  1.00 &  1.00 &  1.00 \\
-                 & HEVC-SCC &            0.96 &  1.00 &  0.93 &  1.00 \\
-                 & JPEG &            1.00 &  1.00 &  0.98 &  1.00 \\
-                 & JPEG2000 &            0.97 &  1.00 &  1.00 &  0.94 \\
-                 & MB &            1.00 &  1.00 &  1.00 &  1.00 \\
-\bottomrule
-\end{tabular}
-    \caption{Correlation between $CER_{comp}$ (fitted) and MOS for different distortion types}
-\label{tab:pearson_spear_fitted}
+    \centering
+    \begin{tabular}{|l|rrr|}
+        \hline
+        Distortion Type & SRCC & PLCC & RMSE \\
+        \hline
+        CC & -0.21 & 0.29 & 7.06 \\
+        CQD & 0.33 & 0.42 & 11.16 \\
+        CSC & 0.46 & 0.44 & 8.15 \\
+        GB & 0.58 & 0.56 & 8.69 \\
+        GN & 0.77 & 0.79 & 8.03 \\
+        HEVC-SCC & 0.36 & 0.30 & 11.44 \\
+        JPEG & 0.49 & 0.55 & 11.82 \\
+        JPEG2000 & 0.46 & 0.50 & 13.56 \\
+        MB & 0.65 & 0.68 & 8.00 \\
+        \hline
+        Overall & 0.55 & 0.57 & 10.00 \\
+        \hline
+    \end{tabular}
+    \caption{Correlations and RMSE for different distortion types for Tesseract \gls{ocr}}
+    \label{tab:fitted_metrics_tess}
 \end{table}
 
 In \autoref{tab:pearson_spear} we can see the correlation between the \gls{cer}, in relation to the \gls{gt} and the reference, and the now fitted \gls{mos} values for all distortions with EasyOCR and Tesseract \gls{ocr}.
@@ -419,13 +398,13 @@ using recognized text from pristine images as ground truth instead.
 
 \begin{table}[h]
 \centering
-\begin{tabular}{|l|l|l|}
+\begin{tabular}{|c|c|c|}
     \hline
     \rule{0em}{1em} \textbf{OCR Algorithm} & $\mathbf{\overline{CER}}$ & $\mathbf{\overline{CER}_{comp}}$ \\
     \hline
-    EasyOCR & 0.16206 & 83.794 \\
+    EasyOCR & 0.16 & 83.79 \\
     \hline
-    Tesseract & 0.249047 & 75.0953 \\
+    Tesseract & 0.25 & 75.1 \\
     \hline
 \end{tabular}
 \caption{Mean $CER$ and $CER_{comp}$ for EasyOCR and Tesseract \gls{ocr} over selected images for reference images against \gls{gt}.}
@@ -505,19 +484,19 @@ The \gls{scc} configuration makes the HM codec perform very similarly to the VTM
 When comparing the blue and red curves, we can see that the trends are not similar.
 For the true \gls{gt}, the HM codec performs better than the VTM codec, while for the pseudo \gls{gt} the VTM codec performs better than the HM codec.
 
-\begin{table}
+\begin{table}[h]
     \centering
-    \begin{tabular}{|ll|rl|l|}
+    \begin{tabular}{|cc|cc|c|}
         \hline
         % algo, config, pseudo, true, diff
         \gls{ocr} Algorithm & Codec Configuration & Pseudo GT & True GT & Difference \\
         \hline
         \hline
-        EasyOCR & Default & -59.281319 & -61.015663 & 1.734344 \\
-        EasyOCR & \gls{scc} & -7.414767 & -1.096224 & -6.318543 \\
+        EasyOCR & Default & -59.28 & -61.02 & 1.73 \\
+        EasyOCR & \gls{scc} & -7.41 & -1.1 & -6.32 \\
         \hline
-        Tesseract & Default & -56.454787 & - & - \\
-        Tesseract & \gls{scc} & -19.568615 & - & - \\
+        Tesseract & Default & -56.45 & --- & --- \\
+        Tesseract & \gls{scc} & -19.57 & --- & --- \\
         \hline
     \end{tabular}
     \caption{Comparison of $\Delta R$ in \% between the pseudo and the true \gls{gt} for the different \gls{ocr} algorithms and codec configurations}

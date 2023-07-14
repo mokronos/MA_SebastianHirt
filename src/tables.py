@@ -74,7 +74,7 @@ def bjontegaard():
                                             rate_test_pseudo, dist_test_pseudo,
                                             method='akima')
             except Exception as e:
-                bd_rate_pseudo = None
+                bd_rate_pseudo = pd.NA
                 print(f"bd_rate_pseudo calculation failed for ocralgo: {ocr_algo}, codec: {codec_anchor}, config: {codec_config}, target: {target}")
                 print(e)
 
@@ -83,7 +83,7 @@ def bjontegaard():
                                             rate_test_true, dist_test_true,
                                             method='akima')
             except Exception as e:
-                bd_rate_true = None
+                bd_rate_true = pd.NA
                 print(f"bd_rate_true calculation failed for ocralgo: {ocr_algo}, codec: {codec_anchor}, config: {codec_config}, target: {target}")
                 print(e)
 
@@ -95,7 +95,7 @@ def bjontegaard():
                 diff = bd_rate_pseudo - bd_rate_true
                 print(f"bd_rate_diff: {diff}")
             else:
-                diff = None
+                diff = pd.NA
                 print(f"bd_rate_diff: {diff}")
 
             print("*"*20)
@@ -107,10 +107,22 @@ def bjontegaard():
 
             summary_table = pd.concat([summary_table, pd.DataFrame.from_records(tmp)], ignore_index=True)
 
+    # round to 2 decimals (NA blocks .round(2))
+    summary_table = summary_table.applymap(round_to_2)
     print(summary_table)
     # save table as tex and csv
     summary_table.to_csv(PATHS["results_bjontegaard"](ext="csv"), index=False)
-    summary_table.style.hide(axis="index").to_latex(PATHS["results_bjontegaard"](ext="tex"))
+    summary_table.style \
+            .format(precision=2) \
+            .hide(axis="index") \
+            .to_latex(PATHS["results_bjontegaard"](ext="tex"))
+
+def round_to_2(x):
+
+    if type(x) == float:
+        return round(x, 2)
+    else:
+        return x
 
 def create_summary():
 
@@ -169,6 +181,54 @@ def create_summary():
     print(f"rmse for tess overall: {rmse_overall_tess}")
     print(f"rmse for ezocr overall: {rmse_overall_ezocr}")
 
+def create_summary_alt():
+
+    # table with:
+    # indices:
+    # - spearman ranked, pearson
+    # - distortions, overall 
+    # values: (value used in comparison with MOS in correlation computation)
+    # - CER
+
+    data = pd.read_pickle(PATHS["results_dist"](ext="pkl"))
+
+    # only interested in cer vs reference image
+    data = data.loc[data["target"] == "ref"]
+
+    for ocr_algo in ["tess", "ezocr"]:
+
+        data_ocr = data.loc[data["ocr_algo"] == ocr_algo]
+
+        data_grouped = data_ocr.groupby(["dist_name"])
+        table = data_grouped[['spearmanr', 'pearson_fitted', "rmse_fitted"]]
+        table = table.mean().reset_index()
+
+        spear_overall = data_ocr['spearmanr_overall'].mean().round(2)
+        pearson_overall = data_ocr['pearson_fitted_overall'].mean().round(2)
+        rmse_overall = data_ocr['rmse_fitted_overall'].mean().round(2)
+
+        # add overall values, make dist_name overall
+        table.loc[len(table)] = ["Overall", spear_overall, pearson_overall, rmse_overall]
+
+        # rename columns to look nice without editing
+        table = table.rename(columns={"dist_name": "Distortion Type",
+                                      "spearmanr": "SRCC",
+                                      "pearson_fitted": "PLCC",
+                                      "rmse_fitted": "RMSE"})
+        table = table.round(2)
+
+        table.to_csv(PATHS["results_spearman_pearson"](f"alt_{ocr_algo}", "csv"), index=False)
+        table.to_markdown(PATHS["results_spearman_pearson"](f"alt_{ocr_algo}", "md"), index=False)
+        table.style \
+                .format(precision=2) \
+                .hide(axis="index") \
+                .to_latex(PATHS["results_spearman_pearson"](f"alt_{ocr_algo}", "tex"))
+
+        print(f"table for {ocr_algo}")
+        print(table)
+    
+    print("created tables with pearson, spearman and rmse")
+
 def cer_ref_gt():
     """
     Table with mean CER (CER_comp) for gt vs ref, for each ocr_algo
@@ -182,6 +242,7 @@ def cer_ref_gt():
 
     table = data_grouped[["cer", "cer_comp"]].mean()
     print(table)
+    table = table.round(2)
 
     table.to_csv(PATHS["results_ref_mean"]("csv"))
     table.to_markdown(PATHS["results_ref_mean"]("md"))
@@ -194,3 +255,4 @@ if __name__ == "__main__":
     # create_summary()
 
     # cer_ref_gt()
+    # create_summary_alt()
