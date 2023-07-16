@@ -171,6 +171,12 @@ In \autoref{fig:cer_vs_mos_456} the \gls{cer} is plotted against the \gls{mos}.
 We are only using a selection of images in this plot.
 The images with the ID's $[1, 2, 3, 4, 5, 6, 7, 8, 11, 12, 15, 18, 20, 21, 24, 29]$ have their main focus on text, and have a relatively simple text structure.
 Thus those images are used in experiments that involve the \gls{mos}.
+
+- even if images have only one line of text, cer might still be a good metric, as distortion affects that line the same as it affects the whole image.
+- so if mos is low because objects look bad, if cer is a good metric, it should be low as well, as the text is also affected by the distortion
+- but distortions generally dont affect text the same as objects
+- objective is more to check if cer is a good metric to simulate mos for readability of text
+- although it might be less consistent
 \begin{figure}[h]
     \centering
     \includegraphics[width=\textwidth]{mosvster__456_22_29__1_4}

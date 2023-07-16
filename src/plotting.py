@@ -55,7 +55,7 @@ def plot_cer_dist_quality():
                          marker='s')
 
             plt.xlabel("Distortion quality")
-            plt.ylabel("$CER_{comp}$")
+            plt.ylabel("CER$_{\mathrm{c}}$")
             plt.xticks(list(range(1, 6)))
             plt.ylim(0, 100)
             plt.grid()
@@ -114,8 +114,8 @@ def plot_cer_mos_mean():
                             c=mean_dist['qual'],
                             s=MARKER_SIZE)
 
-                plt.xlabel("$CER_{comp}$")
-                plt.ylabel("$MOS$")
+                plt.xlabel("CER$_{\mathrm{c}}$")
+                plt.ylabel("MOS")
                 plt.xlim(0, 100)
                 plt.ylim(0, 100)
                 plt.grid()
@@ -193,8 +193,8 @@ def plot_cer_mos_fitted_mean():
                             c=mean_dist['qual'],
                             s=MARKER_SIZE)
 
-                plt.xlabel("$CER_{comp}$")
-                plt.ylabel("$MOS$")
+                plt.xlabel("CER$_{\mathrm{c}}$")
+                plt.ylabel("MOS")
                 plt.xlim(0, 100)
                 plt.ylim(0, 100)
                 plt.grid()
@@ -278,7 +278,7 @@ def plot_codec_cer_size():
             # plt.xlim(0, 0.4)
             plt.ylim(0, 100)
             plt.xlabel("Size in Mbit")
-            plt.ylabel("$CER_{comp}$")
+            plt.ylabel("CER$_{\mathrm{c}}$")
             plt.grid()
             plt.legend()
             plt.tight_layout()
@@ -415,14 +415,14 @@ def plot_fit_example():
     p_s = scipy.stats.spearmanr(subj, obj)[0]
     p_s_fit = scipy.stats.spearmanr(subj_fit, subj)[0]
 
-    plt.plot(obj, subj, 'o', label='MOS/CER$_c$')
-    plt.plot(obj, subj_fit, 'o', label='MOS$_p$/CER$_c$')
-    plt.plot(t, curve, label='model$_{fitted}$')
+    plt.plot(obj, subj, 'o', label='MOS/CER$_{mathrm{c}}$')
+    plt.plot(obj, subj_fit, 'o', label='MOS$_{mathrm{p}}$/CER$_{mathrm{c}}$')
+    plt.plot(t, curve, label='Model$_{fitted}$')
     plt.xlim(0, 100)
     plt.ylim(0, 100)
     plt.ylabel("MOS")
     plt.xlabel("CER$_c$")
-    plt.plot(t, curve_init, label='model$_{init}$')
+    plt.plot(t, curve_init, label='Model$_{init}$')
     tex_p_r = "$r_p=$"
     tex_p_r_fit = "$r_p^{fit}=$"
     tex_p_s = f"$r_s=$"
@@ -459,7 +459,7 @@ def plot_bjontegaard_example():
     plt.plot(rateB, distB, label="Codec B", marker='o')
     plt.plot(rateA, distA, label="Codec A", marker='o')
     plt.xlabel("Bitrate in Mbit/s")
-    plt.ylabel("CER$_c$")
+    plt.ylabel("CER$_{\mathrm{c}}$")
 
     plt.legend()
     plt.grid()
@@ -514,8 +514,8 @@ def pipeline():
 if __name__ == '__main__':
 
     pass
-    # pipeline()
+    pipeline()
     # plot_cer_dist_quality()
     # plot_fit_example()
-    plot_bjontegaard_example()
+    # plot_bjontegaard_example()
 
