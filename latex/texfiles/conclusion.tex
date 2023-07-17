@@ -2,24 +2,28 @@
 \label{chap:conclusion}
 
 In this thesis, we investigate the usefulness of \gls{ocr} as a metric for screen content image quality assessment.
-We are comparing the performance of two \gls{ocr} methods, EasyOCR and Tesseract, on the \gls{scid} dataset, see \autoref{sec:ocr_performance}.
-First, we can conclude that both \gls{ocr} methods perform worse on the images affected by \gls{mb}, \gls{jpeg} and \gls{gb}, with Tesseract \gls{ocr} performing really poor for \gls{gn} as well.
+We are comparing the performance of two \gls{ocr} algorithms, EasyOCR and Tesseract \gls{ocr}, on the \gls{scid} dataset, see \autoref{sec:ocr_performance}.
+First, we can conclude that both \gls{ocr} methods perform worse on the images affected by \gls{mb} and \gls{gb}, with Tesseract \gls{ocr} performing really poor for \gls{gn} as well.
+However, both \gls{ocr} algorithms perform without impairment for \gls{cc}, \gls{cqd} and \gls{csc}.
 Generally, EasyOCR performs better than Tesseract \gls{ocr}.
 
-Next, we compare the \gls{cer} from the \gls{ocr} methods to human judgment, see \autoref{sec:comparison_against_human_judgment}.
-We concluded that for distortion types \gls{gn}, \gls{mb}, \gls{gb}, \gls{jpeg} and \gls{jpeg2000} the correlation is high, while the rest of the distortion types do not affect \gls{ocr} much and are not correlated.
-When we reduce the nonlinearities of the \gls{mos}, we can observe an even higher correlation.
+Next, we compare the \gls{cer} from the \gls{ocr} methods to human judgment, see \autoref{sec:comparison_with_human_judgment}.
+We conclude that EasyOCR is generally better suited as a replacement for human judgment than Tesseract \gls{ocr}.
+For blurred images, EasyOCR exhibits a high correlation with human judgment.
 Our recommendation is to determine if \gls{ocr} methods are affected by specific distortions or check which distortions are in the used dataset before using \gls{ocr} as a metric.
+Compared to other methods, both \gls{ocr} methods are subpar, especially considering that we selected specifically suited images from the dataset compared to other metrics. 
 
-Additionally, we can surmise that in general EasyOCR performs better than Tesseract \gls{ocr}, but both seem to be too inaccurate to be used as ground truth, see \autoref{sec:usage_of_recognized_text_as_ground_truth}.
+Additionally, we surmise that in general EasyOCR performs better than Tesseract \gls{ocr} on the reference images, but both seem to be too inaccurate to be used as ground truth, see \autoref{sec:usage_of_recognized_text_as_ground_truth}.
 This seems to contradict the assumption of many document image quality assessment papers, that use \gls{ocr} as ground truth.
 
 Finally we compare the \gls{ocr} performance for several quality levels of the \gls{hevc} and \gls{vvc} codecs, see \autoref{sec:codec_comparison}.
-EasyOCR seems to be a better choice for the pseudo \gls{gt} than Tesseract \gls{ocr}, for the default and the screen content configurations of the \gls{hevc} and \gls{vvc}.
+We found EasyOCR to be a decent choice for the pseudo \gls{gt}, especially for the default codec configuration.
 
 
 \section{Future Work}
 \label{sec:future}
 
-- seperate text and pictoral content and use ocr for text and conventional metric for pictoral, combine
-- better, more expansive dataset, better ground truth for ocr
+For future work, we recommend combining the \gls{cer} with maybe the \gls{iou} to get a more consistent metric, which can be used to more objectively compare different \gls{ocr} algorithms.
+Furthermore, the resulting regions that are not occupied by text elements could be evaluated by other more suitable metrics and then combined.
+Additionally, we recommend to try using preprocessing steps to improve the \gls{ocr} performance.
+This might be enough to use \gls{ocr} as a ground truth replacement.

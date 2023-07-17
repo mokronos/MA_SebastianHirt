@@ -1,17 +1,19 @@
 \chapter{Optical Character Recognition}
 \label{chap:ocr}
 
-In this chapter we go over some of the other work that has been done in the field.
+In this chapter we summarize what \gls{ocr} methods exist and which ones we use in this thesis.
+We also introduce the \gls{cer} metric, which we use to evaluate the \gls{ocr} methods.
 
-\cite{ocr_survey_2017}
 
 \section{Conventional Optical Character Recognition}
 
+\cite{ocr_survey_2017}
+
 \section{Deep Learning Optical Character Recognition}
 
-- is there natural language processing involved? might improve results, even if visual quality is low
-- connection threshold of boundingbox, difficult to set correctly, cant use dict if single letters, auto puts sentences together when high
-- qualtiy assesment for machines, not humans, useful too, blind person on zoom, computer needs to read
+% - is there natural language processing involved? might improve results, even if visual quality is low
+% - connection threshold of boundingbox, difficult to set correctly, cant use dict if single letters, auto puts sentences together when high
+% - qualtiy assesment for machines, not humans, useful too, blind person on zoom, computer needs to read
 
 We don't use other \gls{ocr} methods in this thesis.
 However, we mention them here for completeness.
@@ -41,7 +43,7 @@ It is defined as follows.
 with $I$ being the number of insertions, $S$ being the number of substitutions, $D$ being the number of deletions, and $N$ being the total number of characters in the text label.
 The \gls{cer} ranges from 0 to $\infty$, where 0 means perfect recognition and the higher the worse the recognition.
 
-- maybe introduce transformation later, to have mos already defined
+% - maybe introduce transformation later, to have mos already defined
 
 Because the \gls{mos} is defined in the range 0 to 100 and 100 represents a high subjective quality, the two metrics are unintuitive to compare.
 Therefore, we take the complement of the CER by subtracting it from 1.
@@ -52,8 +54,8 @@ Additionally we scale it by multiplying by 100 to get a \gls{mos}-like value, se
     \label{eq:cer2mos}
 \end{equation}
 
-This means that the $\text{CER}_{c}$ can be in the range -$\infty$ to 100, where 100 means perfect recognition and the lower the worse the recognition.
-Although the $\text{CER}_{c}$ is generally in the range 0 to 100, which matches the \gls{mos}.
+This means that the $\text{CER}_{\text{c}}$ can be in the range -$\infty$ to 100, where 100 means perfect recognition and the lower the worse the recognition.
+Although the $\text{CER}_{\text{c}}$ is generally in the range 0 to 100, which matches the \gls{mos}.
 
 
 % ## Text Recognition Algorithms

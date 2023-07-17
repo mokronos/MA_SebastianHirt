@@ -1,7 +1,8 @@
 \chapter{Quality Assessment}
 \label{chap:qualityassessment}
 
-In this section, we go over the metrics used in this thesis.
+In this chapter we first look into related work in field of quality assessment.
+Then we go over specific metrics used in our thesis to evaluate the performance of quality assessment algorithms.
 
 \section{Conventional Quality Assessment}
 
@@ -20,8 +21,8 @@ Afterwards, the two scores are weighted and combined.
 The paper \cite{3_subj_weight_2015} uses a subjective score, that is split and considers text, pictorial and the entire image separately.
 The correlation between the three scores is then analyzed, weighted and used to combine them into a single score.
 
-- No reference vs full reference, we have full reference
-- most papers use ocr as a comparison, almost like ground truth, or predict when ocr is good
+% - No reference vs full reference, we have full reference
+% - most papers use ocr as a comparison, almost like ground truth, or predict when ocr is good
 
 
 \section{Peak Signal-to-Noise Ratio}
@@ -41,8 +42,8 @@ with \(R\) being the maximum possible pixel value of the image and MSE being the
 \section{Nonlinear Transformation}
 \label{sec:nonlinear}
 
-To evaluate the suitability of \gls{cer} as a replacement for the \gls{mos} there are three aspects to consider \cite{nonlin_fit_original_2003}\cite{iqa_survey_2020}.
-Prediction accuracy, prediction monotonicity, and prediction consistency.
+To evaluate the suitability of the $\text{CER}_{\text{c}}$ as a replacement for the \gls{mos} there are three aspects to consider \cite{nonlin_fit_original_2003}\cite{iqa_survey_2020}.
+Prediction consistency, prediction monotonicity, and prediction accuracy.
 Before calculating metrics to measure these aspects, the \gls{vqeg} recommends removing nonlinearities from the \gls{mos} \cite{nonlin_fit_original_2003}.
 The model used for the fitting can be found in \cite{nonlin_fit_model_init_2000}\cite{nonlin_fit_appl_2017} and is defined as follows.
 
@@ -62,21 +63,21 @@ Although the model in \cite{nonlin_fit_original_2003} is more recent, we could n
 Additionally, there are other, more recent, publications \cite{ni_esim_2017, nonlin_fit_appl_2017, nonlin_fit_appl_2018, nonlin_fit_appl_2014, nonlin_fit_appl_2011, nonlin_fit_appl_2015, doc_quality_survey_2023, iqa_database_2023, nonlin_fit_appl_2016} that use the model proposed in \cite{nonlin_fit_new_model_2006}.
 In \cite{nonlin_fit_init_proof_2017} a solution to estimating the initial parameters was proposed, which was out of scope for this thesis.
 
-- random, empirical selection can lead to local optimal solutions
+% - random, empirical selection can lead to local optimal solutions
 
 The parameters are initialized as follows.
  
 \begin{equation}
     \begin{aligned}
-        \beta_{1} &= \max{CER} \\
-        \beta_{2} &= \min{CER} \\
-        \beta_{3} &= \overline{MOS} \\
+        \beta_{1} &= \max{\text{CER}_{\text{c}}} \\
+        \beta_{2} &= \min{\text{CER}_{\text{c}}} \\
+        \beta_{3} &= \overline{\text{MOS}} \\
         \beta_{4} &= 1
     \end{aligned}
     \label{eq:nonlinear_init}
 \end{equation}
 The parameters are adjusted with the least squared method until the model fits the data of all the images.
-The model and the \gls{cer} values are then used to calculate the predicted \gls{mos} values $\text{MOS}_{\text{p}}$.
+The model and the $\text{CER}_{\text{c}}$ values are then used to calculate the predicted \gls{mos} values $\text{MOS}_{\text{p}}$.
 
 \begin{figure}[h]
     \centering
@@ -86,7 +87,7 @@ The model and the \gls{cer} values are then used to calculate the predicted \gls
 \end{figure}
 
 In Figure \ref{fig:nonlinear_fit} an example of the nonlinear fit is depicted.
-The initial data consists of some randomly generated dummy \gls{mos} and $\text{CER}_{text{c}}$ values.
+The initial data consists of some randomly generated dummy \gls{mos} and $\text{CER}_{\text{c}}$ values.
 The parameters are then adjusted to fit the model to the data.
 Finally, we can see that the fitted curve clearly fits the data better than the curve with the initial parameters.
 Now the $\text{MOS}_{\text{p}}$ values can be calculated by using the fitted model and the $\text{CER}_{\text{c}}$ values.
