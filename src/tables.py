@@ -241,6 +241,10 @@ def cer_ref_gt():
     data_grouped = data.groupby("ocr_algo")
 
     table = data_grouped[["cer", "cer_comp"]].mean()
+
+    # add standard deviation
+    table["cer_std"] = data_grouped["cer"].std()
+    table["cer_comp_std"] = data_grouped["cer_comp"].std()
     print(table)
     table = table.round(2)
 
@@ -250,9 +254,9 @@ def cer_ref_gt():
 
 if __name__ == "__main__":
 
-    bjontegaard()
+    # bjontegaard()
 
     # create_summary()
 
-    # cer_ref_gt()
+    cer_ref_gt()
     # create_summary_alt()

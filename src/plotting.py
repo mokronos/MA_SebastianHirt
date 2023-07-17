@@ -118,6 +118,9 @@ def plot_cer_mos_mean():
                 plt.ylabel("MOS")
                 plt.xlim(0, 100)
                 plt.ylim(0, 100)
+                ticks = [0, 20, 40, 60, 80, 100]
+                plt.xticks(ticks)
+                plt.yticks(ticks)
                 plt.grid()
 
                 # make plot square and add colorbar
@@ -168,7 +171,7 @@ def plot_cer_mos_fitted_mean():
 
                 fig = plt.figure(figsize=(FIGSIZE, FIGSIZE))
 
-                mean_dist = group_dist.groupby('qual')[[crit, 'cer_comp']].mean().reset_index()
+                mean_dist = group_dist.groupby('qual')[['cer_comp',crit]].mean().reset_index()
                 dist_name = group_dist['dist_name'].iloc[0]
                 help = np.arange(0, 100, 0.1)
                 model_params = group_dist['model_params_comp_total'].iloc[0]
@@ -176,18 +179,19 @@ def plot_cer_mos_fitted_mean():
                 # plot point cloud
                 plt.scatter(group_dist['cer_comp'],
                             group_dist["mos"],
-                            label='single datapoints',
+                            label='Single datapoints',
                             marker='.',
                             cmap=colormap,
                             c=group_dist['qual'])
 
+
                 # plot fitted function
-                plt.plot(help, helpers.model(help, *model_params), color='black', linestyle='--', label='fitted model')
+                plt.plot(help, helpers.model(help, *model_params), color='black', linestyle='--', label='Fitted model')
 
                 # plot mean cer/mos over images for each quality
                 plt.scatter(mean_dist['cer_comp'],
                             mean_dist[crit],
-                            label="fitted mean",
+                            label="Fitted mean",
                             marker='x',
                             cmap=colormap,
                             c=mean_dist['qual'],
@@ -197,6 +201,9 @@ def plot_cer_mos_fitted_mean():
                 plt.ylabel("MOS")
                 plt.xlim(0, 100)
                 plt.ylim(0, 100)
+                ticks = [0, 20, 40, 60, 80, 100]
+                plt.xticks(ticks)
+                plt.yticks(ticks)
                 plt.grid()
                 plt.legend()
 
@@ -415,14 +422,14 @@ def plot_fit_example():
     p_s = scipy.stats.spearmanr(subj, obj)[0]
     p_s_fit = scipy.stats.spearmanr(subj_fit, subj)[0]
 
-    plt.plot(obj, subj, 'o', label='MOS/CER$_{mathrm{c}}$')
-    plt.plot(obj, subj_fit, 'o', label='MOS$_{mathrm{p}}$/CER$_{mathrm{c}}$')
-    plt.plot(t, curve, label='Model$_{fitted}$')
+    plt.plot(obj, subj, 'o', label='MOS/CER$_{\mathrm{c}}$')
+    plt.plot(obj, subj_fit, 'o', label='MOS$_{\mathrm{p}}$/CER$_{\mathrm{c}}$')
+    plt.plot(t, curve, label='Model$_{\mathrm{fitted}}$')
     plt.xlim(0, 100)
     plt.ylim(0, 100)
     plt.ylabel("MOS")
     plt.xlabel("CER$_c$")
-    plt.plot(t, curve_init, label='Model$_{init}$')
+    plt.plot(t, curve_init, label='Model$_{\mathrm{init}}$')
     tex_p_r = "$r_p=$"
     tex_p_r_fit = "$r_p^{fit}=$"
     tex_p_s = f"$r_s=$"
@@ -514,8 +521,9 @@ def pipeline():
 if __name__ == '__main__':
 
     pass
-    pipeline()
+    # pipeline()
     # plot_cer_dist_quality()
     # plot_fit_example()
     # plot_bjontegaard_example()
+    plot_cer_mos_fitted_mean()
 
