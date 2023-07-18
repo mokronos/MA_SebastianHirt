@@ -4,34 +4,57 @@
 In this chapter we summarize what \gls{ocr} methods exist and which ones we use in this thesis.
 We also introduce the \gls{cer} metric, which we use to evaluate the \gls{ocr} methods.
 
-
 \section{Conventional Optical Character Recognition}
 
-\cite{ocr_survey_2017}
+\Gls{ocr} \cite{ocr_survey_2017} generally involves the following steps to extract text from an image.
+First, images need to be acquired, which might be from a camera or a downloaded dataset, as in our case.
+Second, the images are preprocesses, which might include binarization, noise removal, and skew correction.
+This step tries to improve the quality of the image from the perspective of the \gls{ocr} method.
+Third, the image is segmented into individual characters, words or lines.
+Next, the segmented elements are categorized by Bayesian, nearest neighbor or neural network based classifiers.
+Finally, the recognized elements are postprocessed, which might include the use of multiple classifiers simultaneously and comparing of the results, incorporation of the context of the image or dictionary data to correct errors.
 
-\section{Deep Learning Optical Character Recognition}
+\section{Neural Network Based Optical Character Recognition}
 
-% - is there natural language processing involved? might improve results, even if visual quality is low
-% - connection threshold of boundingbox, difficult to set correctly, cant use dict if single letters, auto puts sentences together when high
-% - qualtiy assesment for machines, not humans, useful too, blind person on zoom, computer needs to read
+In recent years, classifiers based on neural network based methods \cite{ocr_survey_lstms_2013} became more popular.
+Especially \gls{lstm} networks are prominent.
+In general, neural network based methods perform better than conventional methods.
 
-We don't use other \gls{ocr} methods in this thesis.
-However, we mention them here for completeness.
+Some of the most popular examples include Calamari \cite{ocr_calamari_2018}, which is focused on recognizing text in historical documents.
+It uses the \gls{ctc} method to train a model composed of \gls{lstm} and \gls{cnn} layers.
+This leads to state of the art performance on historical document datasets.
+
+Another example is the Inception V3 network \cite{ocr_improved_deep_2018}, which implements a \gls{cnn} to recognize printed text in images with poor quality.
+The deep learning method shows significant improvements over traditional \gls{ocr} methods, especially for low quality images.
+
+The \gls{ocr} methods used in this thesis, EasyOCR and Tesseract, are described in the following sections.
 
 \section{EasyOCR}
 \label{subsec:easyocr}
 
-EasyOCR is a Python library for \gls{ocr} \cite{easyocr_2020}. It uses a deep learning model to detect text.
+EasyOCR is an open source Python library for \gls{ocr} \cite{easyocr_2020}. It uses a deep learning model to detect text.
 
 \section{Tesseract}
 \label{subsec:tesseract}
 
 Tesseract is an \gls{ocr} engine \cite{tesseract_2007}. It is open-source and was developed by Google. It is written in C++ and has a Python wrapper.
+It is described in \cite{ocr_survey_tess_2013}.
+% github description includes history
+
+Due to Tesseract being written in C++, the Python wrapper, \texttt{pytesseract} \cite{pytesseract_2022}, was used to easily incorporate it into Python code.
+For prediction, the default settings for Tesseract \gls{ocr} were used.
+
+EasyOCR and Tesseract \gls{ocr} are compared in \cite{ocr_tess_vs_easyocr_2022} in the task of recognizing text in images of license plates.
+The results show that EasyOCR generally performs better than Tesseract \gls{ocr}.
 
 
+% - is there natural language processing involved? might improve results, even if visual quality is low
+% - connection threshold of boundingbox, difficult to set correctly, cant use dict if single letters, auto puts sentences together when high
+% - qualtiy assesment for machines, not humans, useful too, blind person on zoom, computer needs to read
 \section{Character Error Rate}
 \label{subsec:cer}
 
+To evaluate the performance of the \gls{ocr} methods, we use the \gls{cer}.
 The \gls{cer} \cite{cer_2022} describes how many substitutions, deletions, and insertions are necessary to transform a text prediction into the text label.
 It is defined as follows.
 
