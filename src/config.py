@@ -35,7 +35,7 @@ CONFIG = {
 
         # ocr algorithms to use for experiments
         "ocr_algos": ["ezocr", "tess"],
-        # "ocr_algos": ["ezocr"],
+        # "ocr_algos": ["tess"],
 
         # target to use for experiments
         "targets": ["gt", "ref"],

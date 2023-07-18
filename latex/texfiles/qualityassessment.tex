@@ -21,8 +21,8 @@ Afterwards, the two scores are weighted and combined.
 The paper \cite{3_subj_weight_2015} uses a subjective score, that is split and considers text, pictorial and the entire image separately.
 The correlation between the three scores is then analyzed, weighted and used to combine them into a single score.
 
-% - No reference vs full reference, we have full reference
-% - most papers use ocr as a comparison, almost like ground truth, or predict when ocr is good
+--- No reference vs full reference, we have full reference
+--- most papers use ocr as a comparison, almost like ground truth, or predict when ocr is good
 
 
 \section{Peak Signal-to-Noise Ratio}
@@ -63,7 +63,7 @@ Although the model in \cite{nonlin_fit_original_2003} is more recent, we could n
 Additionally, there are other, more recent, publications \cite{ni_esim_2017, nonlin_fit_appl_2017, nonlin_fit_appl_2018, nonlin_fit_appl_2014, nonlin_fit_appl_2011, nonlin_fit_appl_2015, doc_quality_survey_2023, iqa_database_2023, nonlin_fit_appl_2016} that use the model proposed in \cite{nonlin_fit_new_model_2006}.
 In \cite{nonlin_fit_init_proof_2017} a solution to estimating the initial parameters was proposed, which was out of scope for this thesis.
 
-% - random, empirical selection can lead to local optimal solutions
+--- random, empirical selection can lead to local optimal solutions, which is inconsistent, and maybe a bad comparison basis
 
 The parameters are initialized as follows.
  
@@ -147,3 +147,6 @@ In our case it is defined as follows.
 From these metrics, $r_{\text{p}}$ measures the prediction linearity and consistency, $r_{\text{s}}$ measures the prediction monotonicity and the \gls{rmse} measures the prediction accuracy.
 With these, we can now determine if the $\text{CER}_{\text{c}}$ is a good alternative for the \gls{mos}.
 It is a better alternative the larger $r_s$ and $r_p$ values are, and the smaller the \gls{rmse} is.
+
+Now that we have defined the metrics to evaluate the predicted $\text{CER}_{\text{c}}$ values, the only thing missing is the dataset we use to evaluate the \gls{ocr} algorithms.
+Thus in the next chapter we go over what datasets exist and which one we select for our experiments.

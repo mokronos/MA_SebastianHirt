@@ -11,10 +11,11 @@ Next, we compare the \gls{cer} from the \gls{ocr} methods to human judgment, see
 We conclude that EasyOCR is generally better suited as a replacement for human judgment than Tesseract \gls{ocr}.
 For blurred images, EasyOCR exhibits a high correlation with human judgment.
 Our recommendation is to determine if \gls{ocr} methods are affected by specific distortions or check which distortions are in the used dataset before using \gls{ocr} as a metric.
-Compared to other methods, both \gls{ocr} methods are subpar, especially considering that we selected specifically suited images from the dataset compared to other metrics. 
+Compared to other methods, both \gls{ocr} methods are subpar, especially considering that we selected specifically suited images from the dataset compared to other metrics using the full dataset.
 
-Additionally, we surmise that in general EasyOCR performs better than Tesseract \gls{ocr} on the reference images, but both seem to be too inaccurate to be used as ground truth, see \autoref{sec:usage_of_recognized_text_as_ground_truth}.
-This seems to contradict the assumption of many document image quality assessment papers, that use \gls{ocr} as ground truth.
+Additionally, we surmise that in general EasyOCR performs better than Tesseract \gls{ocr} on the reference images, but both seem to be too inaccurate to be used as \gls{gt}, see \autoref{sec:usage_of_recognized_text_as_ground_truth}.
+
+--- This seems to contradict the assumption of many document image quality assessment papers, that use \gls{ocr} as \gls{gt}.
 
 Finally we compare the \gls{ocr} performance for several quality levels of the \gls{hevc} and \gls{vvc} codecs, see \autoref{sec:codec_comparison}.
 We found EasyOCR to be a decent choice for the pseudo \gls{gt}, especially for the default codec configuration.
@@ -26,4 +27,4 @@ We found EasyOCR to be a decent choice for the pseudo \gls{gt}, especially for t
 For future work, we recommend combining the \gls{cer} with maybe the \gls{iou} to get a more consistent metric, which can be used to more objectively compare different \gls{ocr} algorithms.
 Furthermore, the resulting regions that are not occupied by text elements could be evaluated by other more suitable metrics and then combined.
 Additionally, we recommend to try using preprocessing steps to improve the \gls{ocr} performance.
-This might be enough to use \gls{ocr} as a ground truth replacement.
+This might be enough to use \gls{ocr} as a \gls{gt} replacement.

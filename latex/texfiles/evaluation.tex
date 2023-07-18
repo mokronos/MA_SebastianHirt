@@ -4,7 +4,7 @@
 In this chapter, we discuss the results in the following four sections.
 First, we go over the performance of the \gls{ocr} algorithms for each distortion type.
 Then we compare the performance of the \gls{ocr} algorithms against human judgment.
-Third, we investigate the feasibility of using recognized text from pristine images as ground truth.
+Third, we investigate the feasibility of using recognized text from pristine images as \gls{gt}.
 Finally, we evaluate the performance of the \gls{ocr} algorithms on different quality levels of the HM and VTM codecs.
 
 
@@ -13,10 +13,10 @@ Finally, we evaluate the performance of the \gls{ocr} algorithms on different qu
 \section{Performance of Optical Character Recognition}
 \label{sec:ocr_performance}
 
-First, we assessed the impact of different distortion types on \gls{ocr} performance by comparing the mean $\text{CER}_{\text{c}}$ for various quality levels.
-We performed this analysis separately for EasyOCR and Tesseract \gls{ocr} to determine which performs better.
-For the comparison, we plotted the mean $\text{CER}_{c}$ with regards to the \gls{gt} on the y-axis against different quality levels on the x-axis.
-We did this for all nine distortion types.
+First, we assess the impact of different distortion types on \gls{ocr} performance by comparing the mean $\text{CER}_{\text{c}}$ for various quality levels.
+We perform this analysis separately for EasyOCR and Tesseract \gls{ocr} to determine which performs better.
+For the comparison, we plot the mean $\text{CER}_{c}$ with regards to the \gls{gt} on the y-axis against different quality levels on the x-axis.
+We do this for all nine distortion types separately.
 
 \begin{figure}[h!]
 \centering
@@ -30,7 +30,7 @@ We notice a trend that \gls{mb} has the most significant impact on EasyOCR's per
 For \gls{jpeg} and \gls{gb} EasyOCR displays similar behavior until quality level 4, after which it experiences a steeper decline for \gls{gb}.
 This may be due to the blurring of images greatly affecting the legibility of text, with letters becoming indistinct and merging together.
 For \gls{gn}, \gls{jpeg2000} and \gls{hevcscc} EasyOCR exhibits comparable performance, experiencing a slight decline at quality level 5.
-The remaining distortions have minimal impact on performance, which we expected since color distortions do not directly affect text shapes.
+The remaining distortions have minimal impact on performance, which we expect since color distortions do not directly affect text shapes.
 
 \begin{figure}[h!]
 \centering
@@ -47,7 +47,7 @@ Among the distortions analyzed, \gls{cc}, \gls{cqd}, and \gls{csc}, with \gls{cc
 This phenomenon can possibly be attributed to \gls{cc}'s ability to enhance the distinction between the text and the background, acting almost like an image preprocessing step for the \gls{ocr}.
 Interestingly, the $\text{CER}_{\text{c}}$ for \gls{hevcscc} slightly increases at quality level 4 and then decreases again at quality level 5.
 A plausible explanation for this behavior is that certain portions of the text are not well recognized at quality 4, and since these unrecognized parts are not included in the \gls{gt}, it leads to a higher $\text{CER}_{\text{c}}$.
-At level 5, more text elements, that are in the ground truth, are not recognized well and overshadow the earlier phenomenon.
+At level 5, more text elements, that are in the \gls{gt}, are not recognized well and overshadow the earlier phenomenon.
 Consequently, the $\text{CER}_{\text{c}}$ decreases.
 
 In summary, our results reveal that \gls{mb} and \gls{gb} have a substantial impact on the performance of both EasyOCR and Tesseract \gls{ocr} algorithms.
@@ -66,8 +66,8 @@ In this section, we compare the performance of the \gls{ocr} algorithms with hum
 We first plot the $\text{CER}_{\text{c}}$ on the x-axis against the \gls{mos} on the y-axis for each distortion type.
 Furthermore, we separate the plots, one for EasyOCR and one for Tesseract \gls{ocr}.
 For each metric, the mean is calculated over all images for each quality level and distortion type.
-Additionally, compared to the last section, we calculate the $\text{CER}_{\text{c}}$ in relation to the reference image instead of the ground truth.
-Since to arrive at the \gls{mos}, humans that rated the images compared the distorted images to the reference image, making it a fairer comparison.
+Additionally, compared to the last section, we calculate the $\text{CER}_{\text{c}}$ in relation to the reference image instead of the \gls{gt}.
+Since the \gls{mos} is created by humans comparing the distorted images to the reference images, it makes it a fairer comparison.
 
 % mos vs cer mean in relation to reference for easyocr
 \begin{figure}[h!]
@@ -131,7 +131,7 @@ Since to arrive at the \gls{mos}, humans that rated the images compared the dist
 
 In \autoref{fig:mos_cer_ref_mean_ezocr} we can see the mean $\text{CER}_{\text{c}}$ in relation to the reference image against the mean \gls{mos} over selected images for all distortions for EasyOCR.
 In general we notice that the performance ceiling for the $\text{CER}_{\text{c}}$ is now up to almost 100.
-This is due to the $\text{CER}_{\text{c}}$ being calculated in relation to the reference image, which is not necessarily the ground truth.
+This is due to the $\text{CER}_{\text{c}}$ being calculated in relation to the reference image, which is not necessarily the \gls{gt}.
 The distortions \gls{csc} and \gls{cc} are not impacting the performance of EasyOCR much, like we saw in the previous section.
 However, the corresponding \gls{mos} varies more than the $\text{CER}_{\text{c}}$, but not as much as for most other distortion types.
 For \gls{cc}, neither metric shows a clear trend.
@@ -210,9 +210,9 @@ Such large drop is not representative of the trend of the \gls{mos} and is there
 
 
 In general however we need to be careful, as we are only considering the mean values of the $\text{CER}_{\text{c}}$ and \gls{mos}.
-For a full analysis we need to consider the full distribution of the metrics.
+For a full analysis the full distribution of the metrics needs to be considered.
 In the next part we will consider similar figures, but instead of the mean values we can see the full point clouds.
-Additionally, we fitted a model to the data points and plotted the mean of the fitted values, as described in \autoref{sec:nonlinear}.
+Additionally, we fit a model to the data points to remove nonlinearities from the objective values \autoref{sec:nonlinear}.
 
 
 
@@ -273,13 +273,22 @@ Additionally, we fitted a model to the data points and plotted the mean of the f
         \caption{CQD}
         \label{fig:mos_cer_ref_fitted_mean_ezocr_CQD}
     \end{subfigure}
-    \caption{Single datapoints ($\text{CER}_{\text{c}}$ vs \gls{mos}), fitted model and mean over each quality ($\text{CER}_{\text{c}}$ vs resulting predicted $\text{MOS}_{\text{p}}$ values); all in relation to the reference for different distortion types with EasyOCR.}
+    \caption{Single Datapoints ($\text{CER}_{\text{c}}$ vs \gls{mos}) and fitted single datapoints ($\text{MOS}_{\text{p}}$ vs \gls{mos}), fitted model and mean over each quality ($\text{MOS}_{\text{p}}$ vs \gls{mos}); all in relation to the reference for different distortion types with EasyOCR.}
 \label{fig:mos_cer_ref_fitted_mean_ezocr}
 \end{figure}
 
-In \autoref{fig:mos_cer_ref_fitted_mean_ezocr} we can see the mean $\text{CER}_{\text{c}}$ (fitted) against the mean \gls{mos} over selected images for all distortions with EasyOCR.
-The models fit well to the data points and are monotonic.
-We did this to reduce nonlinearities in the objective values and to generally conform to the evaluation methods of other literature in the field.
+In \autoref{fig:mos_cer_ref_fitted_mean_ezocr} we can see the single $\text{CER}_{\text{c}}$ values plotted against the \gls{mos} over selected images for all distortions with EasyOCR.
+Additionally we can see the model fitted to datapoints.
+Secondly the resulting predicted \gls{mos} values $\text{MOS}_{\text{p}}$ and their mean over each quality are shown against the \gls{mos}.
+The x-axis now shows the modified $\text{CER}_{\text{c}}$ values as $\text{MOS}_{\text{p}}$.
+Firstly, we can observe that the models fit well to the data points and are monotonic.
+The resulting $\text{MOS}_{\text{p}}$ values are generally moved to the center compared to the original $\text{CER}_{\text{c}}$ values.
+This makes them have a more linear relationship to the \gls{mos} values.
+For \gls{cc}, \gls{csc} and \gls{cqd} we can see that when the original points are very compressed, it is difficult to fit a good model.
+Thus the resulting $\text{MOS}_{\text{p}}$ values seem to be almost constant, which is undesirable as they lose their some predictive value, because the \gls{mos} values are obviously not constant.
+As we mentioned before, this is expected due to the superior performance of EasyOCR on these distortions for all quality levels.
+
+% We did this to reduce nonlinearities in the objective values and to generally conform to the evaluation methods of other literature in the field.
 
 
 % mos vs cer (fitted) mean in relation to reference for Tesseract
@@ -338,12 +347,13 @@ We did this to reduce nonlinearities in the objective values and to generally co
         \caption{CQD}
         \label{fig:mos_cer_ref_fitted_mean_tess_CQD}
     \end{subfigure}
-    \caption{Single datapoints ($\text{CER}_{\text{c}}$ vs \gls{mos}), fitted model and mean over each quality ($\text{CER}_{\text{c}}$ vs resulting predicted $\text{MOS}_{\text{p}}$ values); all in relation to the reference for different distortion types with Tesseract \gls{ocr}.}
+    \caption{Single Datapoints ($\text{CER}_{\text{c}}$ vs \gls{mos}) and fitted single datapoints ($\text{MOS}_{\text{p}}$ vs \gls{mos}), fitted model and mean over each quality ($\text{MOS}_{\text{p}}$ vs \gls{mos}); all in relation to the reference for different distortion types with Tesseract \gls{ocr}.}
 \label{fig:mos_cer_ref_fitted_mean_tess}
 \end{figure}
 
-We did the same for Tesseract in \autoref{fig:mos_cer_ref_fitted_mean_tess}.
+We do the same for Tesseract in \autoref{fig:mos_cer_ref_fitted_mean_tess}.
 Compared to the fitting for EasyOCR, it is difficult to see any meaningful differences.
+One noticeable difference is, that curves for \gls{gn} and \gls{gb} now also produce relatively constant $\text{MOS}_{\text{p}}$ values.
 However to quantify and compare our results, we will look at correlations and the \gls{rmse} in the next part.
 
 \begin{table}[h!]
@@ -392,17 +402,17 @@ Nevertheless these findings suggest that EasyOCR is a good approximation for hum
         Distortion Type & SRCC & PLCC & RMSE \\
         \hline
         \hline
-        CC & -0.21 & 0.29 & 7.06 \\
-        CQD & 0.33 & 0.42 & 11.16 \\
-        CSC & 0.46 & 0.44 & 8.15 \\
-        GB & 0.58 & 0.56 & 8.69 \\
-        GN & 0.77 & 0.79 & 8.03 \\
-        HEVC-SCC & 0.36 & 0.30 & 11.44 \\
-        JPEG & 0.49 & 0.55 & 11.82 \\
-        JPEG2000 & 0.46 & 0.50 & 13.56 \\
-        MB & 0.65 & 0.68 & 8.00 \\
+        CC & -0.15 & 0.19 & 7.24 \\
+        CQD & 0.31 & 0.35 & 11.51 \\
+        CSC & 0.47 & 0.44 & 8.17 \\
+        GB & 0.53 & 0.46 & 9.30 \\
+        GN & 0.77 & 0.81 & 7.77 \\
+        HEVC-SCC & 0.30 & 0.40 & 11.02 \\
+        JPEG & 0.45 & 0.44 & 12.66 \\
+        JPEG2000 & 0.48 & 0.49 & 13.70 \\
+        MB & 0.64 & 0.69 & 7.90 \\
         \hline
-        Overall & 0.55 & 0.57 & 10.00 \\
+        Overall & 0.55 & 0.59 & 10.17 \\
         \hline
     \end{tabular}
     \caption{\gls{srcc} between $\text{CER}_{\text{c}}$ and \gls{mos}; \gls{plcc} and \gls{rmse} between $\text{MOS}_{\text{p}}$ and \gls{mos} for different distortion types and for all distortions together (overall) for Tesseract \gls{ocr}}
@@ -415,7 +425,7 @@ The three metrics are even worse than the performance on images with \gls{gb} fo
 In general, we notice that the ability of Tesseract \gls{ocr} to approximate human quality perception is worse than EasyOCR for almost all distortions.
 The only exception are images with \gls{gn}, where Tesseract \gls{ocr} shows a higher \gls{srcc} and \gls{plcc} and a lower \gls{rmse} than EasyOCR.
 However, we are uncertain, if this can be used as a recommendation, because of the unexpected large drop in performance of Tesseract \gls{ocr} for quality levels 4 and 5.
-The overall performance with \gls{srcc} of 0.55, \gls{plcc} of 0.57 and \gls{rmse} of 10.00 is not high enough to support a general recommendation for using Tesseract \gls{ocr} as a substitution of the \gls{mos} either.
+The overall performance with \gls{srcc} of 0.55, \gls{plcc} of 0.59 and \gls{rmse} of 10.17 is not high enough to support a general recommendation for using Tesseract \gls{ocr} as a substitution of the \gls{mos} either.
 
 To summarize, we can say that in general EasyOCR is a better approximation of human quality perception than Tesseract \gls{ocr}.
 Additionally, with a \gls{srcc} of 0.86 and a \gls{plcc} of 0.87, EasyOCR shows potential as a substitution of the \gls{mos} for images with \gls{mb}.
@@ -437,7 +447,7 @@ Thus the comparison is not entirely accurate.
 \section{Usage of Recognized Text as Ground Truth}
 \label{sec:usage_of_recognized_text_as_ground_truth}
 
-In this section we will evaluate the feasibility of using recognized text by the \gls{ocr} algorithms as ground truth.
+In this section we will evaluate the feasibility of using recognized text by the \gls{ocr} algorithms as \gls{gt}.
 To do so we used both EasyOCR and Tesseract \gls{ocr} to recognize the text in the reference images without distortions.
 We then compared the recognized text with the hand annotated \gls{gt} text.
 
@@ -450,19 +460,19 @@ We then compared the recognized text with the hand annotated \gls{gt} text.
     \hline
     \gls{ocr} algorithm & Mean & Std. Dev. \\
     \hline
-    EasyOCR & 83.79 & 10.26 \\
+    EasyOCR & 83.25 & 10.26 \\
     \hline
-    Tesseract & 75.1 & 15.05 \\
+    Tesseract & 79.08 & 12.00 \\
     \hline
 \end{tabular}
     \caption{Mean and standard deviation of $\text{CER}_{\text{c}}$ for EasyOCR and Tesseract \gls{ocr} over selected reference images against the \gls{gt}.}
 \label{tab:mean_cer_cer_comp}
 \end{table}
 
-From \autoref{tab:mean_cer_cer_comp} we can see that the mean $\text{CER}_{\text{c}}$ for EasyOCR is roughly 9 points higher compared to Tesseract \gls{ocr}.
-With a by around 5 points higher standard deviation, the performance of Tesseract \gls{ocr} is also more inconsistent.
-With a $\text{CER}_{\text{c}}$ of 83.79 its difficult to recommend using EasyOCR as a ground truth source, as almost $16\%$ of the text might be wrong.
-Tesseract is worse with a $\text{CER}_{\text{c}}$ of 75.1, and thus cannot be recommended either.
+From \autoref{tab:mean_cer_cer_comp} we can see that the mean $\text{CER}_{\text{c}}$ for EasyOCR is roughly 4 points higher compared to Tesseract \gls{ocr}.
+With a by around 2 points higher standard deviation, the performance of Tesseract \gls{ocr} is also more inconsistent.
+With a $\text{CER}_{\text{c}}$ of 83.79 its difficult to recommend using EasyOCR as a \gls{gt} source, as almost $16\%$ of the text might be wrong.
+Tesseract is worse with a $\text{CER}_{\text{c}}$ of 79.1, and thus cannot be recommended either.
 It might however be possible to improve the performance of the \gls{ocr} algorithms by using a pre-processing pipeline.
 This is however out of scope for this thesis and requires a good knowledge of the type of data that will be used.
 
@@ -476,7 +486,9 @@ This is however out of scope for this thesis and requires a good knowledge of th
 
 This section focuses on the performance of the \gls{ocr} algorithms on images encoded with the \gls{hevc} and \gls{vvc}.
 For this we modified the dataset as described in \autoref{sec:dataset_codec}.
-The goal is to determine if the \gls{ocr} algorithms can be used as a pseudo ground truth for comparison of different codecs.
+In this section we refer to the \gls{gt} in relation to the hand annotated \gls{gt} as the true \gls{gt}.
+The \gls{gt} in relation to the recognized text by the \gls{ocr} algorithms on the reference images is referred to as pseudo \gls{gt}.
+The goal is to determine if the \gls{ocr} algorithms can be used as a pseudo \gls{gt} for the comparison of different codecs.
 More specifically, if the difference between both pseudo \glspl{gt} is similar to the difference between both true \glspl{gt}, we might be able to use the pseudo \gls{gt} later to compare the performance of other, similar codecs.
 
 The following plots have the same structure.
@@ -488,16 +500,15 @@ We plot the mean of the different \glspl{qp} for each codec for the pseudo and t
 \begin{figure}[h!]
     \centering
     \includegraphics[width=\textwidth]{../images/analyze/codec_cer_size_ezocr_default.pdf}
-    \caption{Comparison of $CER_{comp}$ and size for HM and VTM codec with default configuration for EasyOCR}
     \caption{$\text{CER}_{\text{c}}$ vs bitrate for selected images encoded with the HM and VTM codec with the default configuration for EasyOCR}
     \label{fig:codec_cer_size_ezocr_default}
 \end{figure}
 
-In \autoref{fig:codec_cer_size_ezocr_default} we can see the $CER_{comp}$ with regard to the pseudo and the true \gls{gt} against the size of the images for the HM and VTM codec with the default configuration for EasyOCR.
+In \autoref{fig:codec_cer_size_ezocr_default} we can see the $\text{CER}_{\text{c}}$ with regard to the pseudo and the true \gls{gt} against the size of the images for the HM and VTM codec with the default configuration for EasyOCR.
 We can observe that the VTM curves are generally further to the top left corner, compared to the HM curves.
 This means that the \gls{ocr} algorithm performs better on the VTM encoded images and they are smaller in size.
 Additionally we can see that the trends of the true \gls{gt} curve pair (blue) are similar to the trends of the pseudo \gls{gt} curve pair (red).
-To quantify this, we can calculate the \gls{bdrate} between these curves.
+To quantify this we later calculate the \gls{bdrate} between these curves.
 
 \begin{figure}[h!]
     \centering
@@ -506,13 +517,12 @@ To quantify this, we can calculate the \gls{bdrate} between these curves.
     \label{fig:codec_cer_size_tess_default}
 \end{figure}
 
-In \autoref{fig:codec_cer_size_tess_default} we can see the $CER_{comp}$ with regard to the pseudo and the true \gls{gt} against the size of the images for the HM and VTM codec with the default configuration for Tesseract.
+In \autoref{fig:codec_cer_size_tess_default} we can see the $\text{CER}_{\text{c}}$ with regard to the pseudo and the true \gls{gt} against the size of the images for the HM and VTM codec with the default configuration for Tesseract.
 We can again observe that the VTM curves are generally further to top left, compared to the HM curves.
-One exception is the \gls{qp} 35, where the VTM codec has a slightly worse $\text{CER}_{\text{c}}$ than the HM codec.
-When comparing the two blue curves with the two red curves, it is difficult to see any other similarities.
-Especially since the slope of the blue VTM curve is changing after every data point.
-In this case we cannot calculate a \gls{bdrate} between the curves, since one of the curves is not monotonically increasing or decreasing.
-However, we can clearly see that the pseudo \gls{gt} might not be the best alternative to compare codecs.
+One exception is the \gls{qp} 35, where the VTM codec has a slightly lower $\text{CER}_{\text{c}}$ than the HM codec.
+When comparing the two blue curves with the two red curves, we can again see the similar trends.
+However, for the light blue curve the values for \gls{qp} 35 are very similar to the values for \gls{qp} 40.
+In this case we might not be able to calculate the \gls{bdrate} between the curves, since one of the curves is not monotonically increasing.
 
 
 \begin{figure}[h!]
@@ -522,7 +532,7 @@ However, we can clearly see that the pseudo \gls{gt} might not be the best alter
     \label{fig:codec_cer_size_ezocr_scc}
 \end{figure}
 
-In \autoref{fig:codec_cer_size_ezocr_scc} we can see the $CER_{comp}$ with regard to the pseudo and the true \gls{gt} against the size of the images for the HM and VTM codec with the \gls{scc} configuration for EasyOCR.
+In \autoref{fig:codec_cer_size_ezocr_scc} we can see the $\text{CER}_{\text{c}}$ with regard to the pseudo and the true \gls{gt} against the size of the images for the HM and VTM codec with the \gls{scc} configuration for EasyOCR.
 The \gls{scc} configuration makes the HM codec perform very similarly to the VTM codec, with the exception of the \gls{qp} 50, where the VTM performs better again.
 When comparing the blue and red curves, we can see that the trends are very similar.
 
@@ -534,7 +544,7 @@ When comparing the blue and red curves, we can see that the trends are very simi
     \label{fig:codec_cer_size_tess_scc}
 \end{figure}
 
-In \autoref{fig:codec_cer_size_tess_scc} we can see the $CER_{comp}$ with regard to the pseudo and the true \gls{gt} against the size of the images for the HM and VTM codec with the \gls{scc} configuration for Tesseract.
+In \autoref{fig:codec_cer_size_tess_scc} we can see the $\text{CER}_{\text{c}}$ with regard to the pseudo and the true \gls{gt} against the size of the images for the HM and VTM codec with the \gls{scc} configuration for Tesseract.
 The \gls{scc} configuration makes the HM codec perform very similarly to the VTM codec, with the exception of the \gls{qp} 50, where the VTM performs better, but only for the pseudo \gls{gt}.
 When comparing the blue and red curves, we can see that the trends are not similar.
 For the true \gls{gt}, the HM codec performs better than the VTM codec, while for the pseudo \gls{gt} the VTM codec performs better than the HM codec.
@@ -550,8 +560,8 @@ For the true \gls{gt}, the HM codec performs better than the VTM codec, while fo
         EasyOCR & Default & -59.28 & -61.02 & 1.73 \\
         EasyOCR & \gls{scc} & -7.41 & -1.1 & -6.32 \\
         \hline
-        Tesseract & Default & -56.45 & --- & --- \\
-        Tesseract & \gls{scc} & -19.57 & --- & --- \\
+        Tesseract & Default & -54.15 & --- & --- \\
+        Tesseract & \gls{scc} & -25.24 & --- & --- \\
         \hline
     \end{tabular}
     \caption{Comparison of $\Delta R$ in \% between the pseudo and the true \gls{gt} for the different \gls{ocr} algorithms and codec configurations}

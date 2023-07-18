@@ -1,10 +1,11 @@
 \chapter{Dataset}
-\label{ch:dataset}
+\label{chap:dataset}
 This chapter discusses the dataset used in our work. We use the \gls{scid} dataset \cite{ni_esim_2017}\footnote{The dataset can be downloaded here: https://eezkni.github.io/publications/ESIM.html.}.
 The important characteristics of the dataset are text content on screenshots, different distortion levels and \gls{mos} values for each image.
 
-% - authors name it mos, but it should be dmos, because double stimulus \cite{mos_dmos_1993}
-% - still use mos for rest of work
+--- authors name it mos, but it should be dmos, because double stimulus \cite{mos_dmos_1993}
+
+--- still use mos for rest of work
 
 We did not find any other dataset with the same characteristics.
 Other screen content datasets are mentioned in \cite{iqa_survey_2020}, but we either were not able to access them or they did not contain enough text based images.
@@ -120,33 +121,72 @@ Motion Blur & MB & Blurring of an image due to movement \\
 
 We can see, that the different distortion types have different effects on the text in the image.
 Distortions like the contrast change don't affect the text much.
-However, Gaussian noise or blur can make the text unreadable.
+However, Gaussian noise or blur can make the text unreadable for the human eye.
 
 \section{Labeling}
 \label{sec:dataset_labeling}
 
 The dataset doesn't have any text labels.
-Thus we labeled the dataset ourselves.
-We typed the text on each image into a text file, starting on the top left and ending on the bottom right.
+Thus we label the dataset ourselves.
+First, we type the text on each image into a text file, starting on the top left and ending on the bottom right.
 Our order of labeling was always dependent on the top left corner of a text element.
-Thus if two paragraphs were side by side we always labeled the first line of the left paragraph first, then the first line of the right paragraph, then the second line of the left paragraph and so on.
-This way we could ensure that we have a unifying representation of the text with regards to the two /gls{ocr} algorithms we used.
-The algorithms have different modes for combining text elements, and thus produce differently connected paragraphs, if using the paragraph option.
-To get a generalized result we use the option of raw text detection and text recognition to get the bounding boxes and the text.
+Thus if two paragraphs were side by side we always label the first line of the left paragraph first, then the first line of the right paragraph, then the second line of the left paragraph and so on.
+This way we could ensure that we have a unifying representation of the text with regards to the two \gls{ocr} algorithms we used.
+The algorithms have different modes for combining text elements, and thus produce differently connect paragraphs, if the paragraph mode is used.
+To get a generalized result we use the option of raw text detection and text recognition to get the bounding boxes and the text for each element.
 We then use the bounding boxes to get the text in the correct order.
 
+Both \gls{ocr} algorithms have a paragraph mode, which combines text elements into paragraphs and then orders these paragraphs from top to bottom.
+This seems reasonable, but we found that the algorithms sometimes consider different elements as part of the same paragraph.
+Thus the ordering in the \gls{gt} becomes difficult to not bias towards one of the algorithms.
+Another option is to predict the text and the corresponding bounding boxes and then order them for both algorithms.
+
+The \texttt{readtext} method of EasyOCR returns the text elements and their bounding boxes.
+They are ordered pretty well from top left to bottom right, but sometimes multiple words are merged together in one prediction.
+This is fine, because the final text is just a concatenation of all the text elements with spaces in between, so it does not make a difference.
+We tried to adjust the \texttt{width\_ths} property of the \texttt{readtext}, which controls when two text elements are merged together.
+However, we were not able to find a value that separates the words well for most images.
+With a value that is too low, single letters were not merged into words, and left bounding boxes for each letter.
+So in general we found it better to use the default parameters of the \texttt{readtext} method.
+
+With \texttt{pytesseract's} \texttt{image\_to\_data} method we can get the bounding boxes and the text elements with Tesseract \gls{ocr}.
+However the bounding boxes are ordered more by paragraphs than lines.
+Thus we decided to reorder the bounding boxes to better fit what EasyOCR returns and what our \gls{gt} order looks like.
+Tesseract \gls{ocr} offers multiple engine modes.
+Either legacy engine only, neural nets \gls{lstm} engine only or Legacy + \gls{lstm} engine.
+We decided to use the pure \gls{lstm} engine mode, as it was the default and the most recent engine.
+We used the Tesseract \gls{ocr} version 4.1.1.
+
+
+EasyOCR determines if two words are in the same line by the parameter \texttt{ycenter\_ths}.
+It denotes the maximum shift in the y direction between two words to be considered in the same line.
+While it uses the center of the bounding box, for Tesseract \gls{ocr} we used the top 50\% of the highest bounding box in the line as the tolerance for other words belonging to the line.
+The results are pretty similar.
+
+--- In ground truth margins of what is in the same line are way slimmer.
+
+--- The important thing is however that both algorithms have similar rules, so that they can be compared fairly.
+
+--- images for each default order, and modified order, and order of gt maybe
+
+
 In \autoref{fig:ref29} we can see that it is sometimes difficult to say which text element is higher than another, especially if the text elements have different font sizes.
-Thus we decided against using one of the \gls{ocr} algorithms to predict the text and then correct it to create the ground truth, to not introduce bias towards one of the algorithms with regard to the positions of the text elements.
+Thus we decided against using one of the \gls{ocr} algorithms to predict the text and then correct it to create the \gls{gt}, to not introduce bias towards one of the algorithms with regard to the positions of the text elements.
 We used the images, a ruler and our eyes to determine the correct order of the text elements.
 
-% - Select based on how hard to label
-% - Select based on how much text/objects
-% - very subjective
-% - different metric with IoU and CER combined might be helpful
+--- Select based on how hard to label
 
-% - go through all the distortions and make hypothesis on how they affect the ocr, check for literature on this
-% - check later in evaluation if true/false
-% - mos vs dmos / single stimulus vs double stimulus
+--- Select based on how much text/objects
+
+--- very subjective
+
+--- different metric with IoU and CER combined might be helpful
+
+--- go through all the distortions and make hypothesis on how they affect the ocr, check for literature on this
+
+--- check later in evaluation if true/false
+
+--- mos vs dmos / single stimulus vs double stimulus
 
 \begin{figure}
     \centering
@@ -164,7 +204,7 @@ It shows the \gls{cer} and \gls{mos} of all 1800 distorted images compared to th
 \begin{figure}[h]
     \centering
     \includegraphics[width=\textwidth]{mosvster_all}
-    \caption{\gls{cer} of all distorted images compared to their reference image plotted against the \gls{mos}.}
+    \caption{\gls{cer} of all distorted images compared to their reference image plotted against the \gls{mos}. Probably not in final version.}
     \label{fig:cer_vs_mos}
 \end{figure}
 
@@ -173,16 +213,19 @@ We are only using a selection of images in this plot.
 The images with the ID's $[1, 2, 3, 4, 5, 6, 7, 8, 11, 12, 15, 18, 20, 21, 24, 29]$ have their main focus on text, and have a relatively simple text structure.
 Thus those images are used in experiments that involve the \gls{mos}.
 
-% - even if images have only one line of text, cer might still be a good metric, as distortion affects that line the same as it affects the whole image.
-% - so if mos is low because objects look bad, if cer is a good metric, it should be low as well, as the text is also affected by the distortion
-% - but distortions generally dont affect text the same as objects
-% - objective is more to check if cer is a good metric to simulate mos for readability of text
-% - although it might be less consistent
+--- even if images have only one line of text, cer might still be a good metric, as distortion affects that line the same as it affects the whole image.
+
+--- so if mos is low because objects look bad, if cer is a good metric, it should be low as well, as the text is also affected by the distortion
+
+--- but distortions generally dont affect text the same as objects
+
+--- our objective is more to check if cer is a good metric to simulate mos for readability of text, although it might be less consistent
+
 
 \begin{figure}[h]
     \centering
     \includegraphics[width=\textwidth]{mosvster__456_22_29__1_4}
-    \caption{\gls{cer} of a selection of distorted images compared to their reference image.}
+    \caption{\gls{cer} of a selection of distorted images compared to their reference image. Probably not in final version}
     \label{fig:cer_vs_mos_456}
 \end{figure}
 
@@ -226,7 +269,9 @@ For images encoded with these codecs the $\text{CER}_{\text{c}}$ can be calculat
 Those $\text{CER}_{\text{c}}$ values can be plotted against the bitrate of the encoded images, see \autoref{fig:bdrate_example} for an example.
 The different qualities can be denoted by $\text{i}$ and the different codecs by $\text{k}$.
 In our case the qualities describe the \glspl{qp} values $[35, 40, 45, 50]$ and the codecs are $[\text{HM}, \text{VTM}]$.
-- deviating from VVC common test conditions, due to lack of changes in the CER for lower QP values
+
+--- deviating from VVC common test conditions, due to lack of changes in the CER for lower QP values
+
 Thus the points can be denoted as $\left(R_{\text{k,i}}, M_{\text{k,i}}\right)$ with $R_{\text{k,i}}$ being the bitrate and $D_{\text{k,i}}$ being the metric, in our case the $\text{CER}_{\text{c}}$.
 Later, those points are averaged over all images to get the average bitrate and the average $\text{CER}_{\text{c}}$ for each codec.
 The following section describes the calculation of the \gls{bdrate}, which can quantify the difference between the two curves of the codecs.
@@ -267,10 +312,11 @@ The bounds are just the maximum of the lowest quality points and the minimum of 
 
 This value describes the average difference between the two curves in percent.
 This enables us to compare two codecs.
-Additionally we can calculate the same value, but with the $\text{CER}_{\text{c}}$ in relation to the ground truth instead of the reference.
+Additionally we can calculate the same value, but with the $\text{CER}_{\text{c}}$ in relation to the \gls{gt} instead of the reference.
 These two values can then be compared to see if using the \gls{ocr} algorithms as a reference is a good approximation of the difference between codecs.
-If the difference between the two values is small, then the approximation is good and we would not need a ground truth to evaluate new codecs.
+If the difference between the two values is small, then the approximation is good and we would not need a \gls{gt} to evaluate new codecs.
 
 To summarize, the original dataset has a \gls{mos} for each image with various distortions.
 We are expanding the dataset by encoding the images with the \gls{hevc} and \gls{vvc} codecs.
 The $\Delta R$ can then be calculated to compare two codecs and evaluate if the \gls{ocr} algorithms can be used as a approximate \gls{gt} for the \gls{bdrate} calculation.
+Now that we have all the parts to describe the experiments, we can evaluate and discuss the results in the next chapter.

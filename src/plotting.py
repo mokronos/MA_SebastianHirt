@@ -171,33 +171,51 @@ def plot_cer_mos_fitted_mean():
 
                 fig = plt.figure(figsize=(FIGSIZE, FIGSIZE))
 
-                mean_dist = group_dist.groupby('qual')[['cer_comp',crit]].mean().reset_index()
+                mean_dist = group_dist.groupby('qual')[['mos',crit]].mean().reset_index()
                 dist_name = group_dist['dist_name'].iloc[0]
-                help = np.arange(0, 100, 0.1)
+                help = np.arange(0, 100, 0.001)
                 model_params = group_dist['model_params_comp_total'].iloc[0]
 
                 # plot point cloud
                 plt.scatter(group_dist['cer_comp'],
                             group_dist["mos"],
-                            label='Single datapoints',
+                            label='Datapoints',
                             marker='.',
                             cmap=colormap,
                             c=group_dist['qual'])
 
+                # plot point cloud for fitted values
+                plt.scatter(group_dist[crit],
+                            group_dist["mos"],
+                            label='Datapoints$_{\mathrm{fitted}}$',
+                            marker='+',
+                            cmap=colormap,
+                            c=group_dist['qual'])
+
+                # plot point cloud for fitted values (turned)
+                # plt.scatter(group_dist['cer_comp'],
+                #             group_dist[crit],
+                #             label='Single datapoints (fitted)(turned)',
+                #             marker='*',
+                #             cmap=colormap,
+                #             c=group_dist['qual'])
+
+                # plot diagonal line
+                # plt.plot(help, help, color='red', linestyle='-', label='Diagonal')
 
                 # plot fitted function
-                plt.plot(help, helpers.model(help, *model_params), color='black', linestyle='--', label='Fitted model')
+                plt.plot(help, helpers.model(help, *model_params), color='black', linestyle='--', label='Model$_{\mathrm{fitted}}$')
 
                 # plot mean cer/mos over images for each quality
-                plt.scatter(mean_dist['cer_comp'],
-                            mean_dist[crit],
-                            label="Fitted mean",
+                plt.scatter(mean_dist[crit],
+                            mean_dist['mos'],
+                            label="Mean$_{\mathrm{fitted}}$",
                             marker='x',
                             cmap=colormap,
                             c=mean_dist['qual'],
                             s=MARKER_SIZE)
 
-                plt.xlabel("CER$_{\mathrm{c}}$")
+                plt.xlabel("CER$_{\mathrm{c}}$/MOS$_{\mathrm{p}}$")
                 plt.ylabel("MOS")
                 plt.xlim(0, 100)
                 plt.ylim(0, 100)
@@ -205,7 +223,11 @@ def plot_cer_mos_fitted_mean():
                 plt.xticks(ticks)
                 plt.yticks(ticks)
                 plt.grid()
-                plt.legend()
+
+                # set color of legend markers to black
+                leg = plt.legend()
+                for lh in leg.legend_handles:
+                    lh.set_color('black')
 
                 # make plot square and add colorbar
                 ax = plt.gca()

@@ -569,3 +569,12 @@ generally:
 - direction
     - could focus more on single images, highlight why ocr performs good/bad
 - druck infos / abgabe / usb?, an uni, code bis presentation, auf git reicht 
+
+
+
+
+## TODO
+
+- use present
+- too many returns
+- switch dataset and quality assessment

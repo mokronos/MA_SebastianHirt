@@ -213,43 +213,39 @@ def sort_boxes(data):
 
     data["height"] = data["bottom"] - data["top"]
 
-    TOL = 0.7
+
+    TOL = 0.5
     new_data = pd.DataFrame(columns=data.columns)
 
     tolerance = None
     while len(data) > 0:
 
-        if tolerance:
+        # get top most box
+        top = data.loc[data["top"] == data["top"].min()]
+        # get left most box
+        line_start = top.loc[top["left"] == top["left"].min()]
 
-            # get boxes with edge overlap
-            in_tolerance = data.loc[data["top"].apply(lambda x: check_overlap(tolerance, (x, x + data["height"].values[0])))]
+        # get height tolerance
+        tolerance = (line_start["top"].values[0],
+                     int(line_start["top"].values[0] + line_start["height"].values[0] * TOL))
 
-            if len(in_tolerance) > 0:
-                left = in_tolerance.loc[in_tolerance["left"] == in_tolerance["left"].min()]
-            
-            else:
-                # get top left most box in next iteration
-                tolerance = None
-                continue
+        # get boxes with edge overlap
+        in_tolerance = data.loc[data["top"].apply(lambda x: check_overlap(tolerance, (x, x + data["height"].values[0])))]
 
-        else:
-            # get top most box
-            top = data.loc[data["top"] == data["top"].min()]
-            # get left most box
-            left = top.loc[top["left"] == top["left"].min()]
+        # in_tolerance = pd.concat([line_start, in_tolerance])
+        # sort lines by left
+        in_tolerance = in_tolerance.sort_values(by=["left"])
 
         # add to new data
-        new_data = pd.concat([new_data, left])
-
-        # get tolerance
-        tolerance = (left["top"].values[0], int(left["top"].values[0] + left["height"].values[0] * TOL))
+        new_data = pd.concat([new_data, in_tolerance])
 
         # remove from data
-        data = data.drop(left.index)
+        data = data.drop(in_tolerance.index)
+
+        new_data.reset_index(inplace=True, drop=True)
 
     new_data.pop("height")
     new_data.reset_index(inplace=True, drop=True)
-
 
     return new_data
 
@@ -271,7 +267,8 @@ def pred_tess(img_paths):
         log.info(f'Tesseract predicting text in {img_path}')
         # load image
         with Image.open(img_path) as img:
-            pred = pytesseract.image_to_data(img, output_type=pytesseract.Output.DATAFRAME)
+            # pred = pytesseract.image_to_data(img, output_type=pytesseract.Output.DATAFRAME)
+            pred = pytesseract.image_to_data(img, output_type=pytesseract.Output.DATAFRAME, config='--oem 1')
 
         # convert dataframe to standard format
         pred = tess_trans_df(pred)

@@ -163,13 +163,13 @@ def corr():
     data = data.loc[data["dist"] == dist]
     print(data[crits])
 
-def tess_order():
+def bbox_order():
     """
     check how to order tesseract results that the text is in lines
     """
 
-    id = 5
-    algo = "ezocr"
+    id = 8
+    # algo = "ezocr"
     algo = "tess"
 
     save_paths_csv = helpers.create_paths(PATHS["pred_ref"],
@@ -202,9 +202,9 @@ def tess_order():
             return False
 
 
-    def sort_boxes(data):
+    def sort_boxes_old(data):
 
-        TOL = 0.7
+        TOL = 0.5
         new_data = pd.DataFrame(columns=data.columns)
 
         tolerance = None
@@ -242,6 +242,41 @@ def tess_order():
 
         return new_data
 
+    def sort_boxes(data):
+
+        TOL = 0.5
+        new_data = pd.DataFrame(columns=data.columns)
+
+        tolerance = None
+        while len(data) > 0:
+
+            # get top most box
+            top = data.loc[data["top"] == data["top"].min()]
+            # get left most box
+            line_start = top.loc[top["left"] == top["left"].min()]
+
+            # get height tolerance
+            tolerance = (line_start["top"].values[0],
+                         int(line_start["top"].values[0] + line_start["height"].values[0] * TOL))
+
+            # get boxes with edge overlap
+            in_tolerance = data.loc[data["top"].apply(lambda x: check_overlap(tolerance, (x, x + data["height"].values[0])))]
+
+            # in_tolerance = pd.concat([line_start, in_tolerance])
+            # sort lines by left
+            in_tolerance = in_tolerance.sort_values(by=["left"])
+
+            # add to new data
+            new_data = pd.concat([new_data, in_tolerance])
+
+            # remove from data
+            data = data.drop(in_tolerance.index)
+
+            new_data.reset_index(inplace=True, drop=True)
+
+        return new_data
+
+    # new_data = pred_csv
     new_data = sort_boxes(pred_csv)
 
     # load image
@@ -274,7 +309,7 @@ def model_vis():
 if __name__ == "__main__":
     pass
     # corr()
-    # tess_order()
+    bbox_order()
     # fitting()
     # fit_example()
-    model_vis()
+    # model_vis()

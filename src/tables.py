@@ -10,9 +10,9 @@ def bjontegaard():
     data = pd.read_csv(PATHS["results_codecs"])
     print(data)
 
-    # divider does not matter
+    # divider does not matter, but easier to test/compare with figures
     divider = 1_000_000
-    divider = 1
+    # divider = 1
 
     # set anchor and test codec
     codec_anchor = "hm"
@@ -75,6 +75,7 @@ def bjontegaard():
                                             method='akima')
             except Exception as e:
                 bd_rate_pseudo = pd.NA
+                print(f"values: \n rate_anchor_pseudo: {rate_anchor_pseudo} \n dist_anchor_pseudo: {dist_anchor_pseudo} \n rate_test_pseudo: {rate_test_pseudo} \n dist_test_pseudo: {dist_test_pseudo}")
                 print(f"bd_rate_pseudo calculation failed for ocralgo: {ocr_algo}, codec: {codec_anchor}, config: {codec_config}, target: {target}")
                 print(e)
 
@@ -84,6 +85,7 @@ def bjontegaard():
                                             method='akima')
             except Exception as e:
                 bd_rate_true = pd.NA
+                print(f"values: \n rate_anchor_true: {rate_anchor_true} \n dist_anchor_true: {dist_anchor_true} \n rate_test_true: {rate_test_true} \n dist_test_true: {dist_test_true}")
                 print(f"bd_rate_true calculation failed for ocralgo: {ocr_algo}, codec: {codec_anchor}, config: {codec_config}, target: {target}")
                 print(e)
 
@@ -124,7 +126,7 @@ def round_to_2(x):
     else:
         return x
 
-def create_summary():
+def create_summary_old():
 
     # table with:
     # indices:
@@ -181,7 +183,7 @@ def create_summary():
     print(f"rmse for tess overall: {rmse_overall_tess}")
     print(f"rmse for ezocr overall: {rmse_overall_ezocr}")
 
-def create_summary_alt():
+def create_summary():
 
     # table with:
     # indices:
@@ -254,9 +256,8 @@ def cer_ref_gt():
 
 if __name__ == "__main__":
 
-    # bjontegaard()
+    bjontegaard()
 
     # create_summary()
 
-    cer_ref_gt()
-    # create_summary_alt()
+    # cer_ref_gt()
