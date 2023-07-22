@@ -114,8 +114,8 @@ def plot_cer_mos_mean():
                             c=mean_dist['qual'],
                             s=MARKER_SIZE)
 
-                plt.xlabel("CER$_{\mathrm{c}}$")
-                plt.ylabel("MOS")
+                plt.xlabel("$\overline{\mathrm{CER}}_{\mathrm{c}}$")
+                plt.ylabel("$\overline{\mathrm{MOS}}$")
                 plt.xlim(0, 100)
                 plt.ylim(0, 100)
                 ticks = [0, 20, 40, 60, 80, 100]
@@ -131,7 +131,8 @@ def plot_cer_mos_mean():
                 plt.colorbar(cax=cax, label='Quality')
 
                 savepath_pdf=PATHS['analyze'](f'mos_cer_{name_target}_mean_{name_ocr}_{dist_name}.pdf')
-                plt.savefig(savepath_pdf, bbox_inches='tight', pad_inches=0)
+                # pad_inches to leave overline there
+                plt.savefig(savepath_pdf, bbox_inches='tight', pad_inches=0.1)
                 # savepath_png=PATHS['analyze'](f'mos_cer_{name_target}_mean_{name_ocr}_{dist_name}.png')
                 # plt.savefig(savepath_png, bbox_inches='tight', pad_inches=0)
 
@@ -179,7 +180,7 @@ def plot_cer_mos_fitted_mean():
                 # plot point cloud
                 plt.scatter(group_dist['cer_comp'],
                             group_dist["mos"],
-                            label='Datapoints',
+                            label='Data',
                             marker='.',
                             cmap=colormap,
                             c=group_dist['qual'])
@@ -187,8 +188,8 @@ def plot_cer_mos_fitted_mean():
                 # plot point cloud for fitted values
                 plt.scatter(group_dist[crit],
                             group_dist["mos"],
-                            label='Datapoints$_{\mathrm{fitted}}$',
-                            marker='+',
+                            label='Data$_{\mathrm{fit}}$',
+                            marker='s',
                             cmap=colormap,
                             c=group_dist['qual'])
 
@@ -204,12 +205,16 @@ def plot_cer_mos_fitted_mean():
                 # plt.plot(help, help, color='red', linestyle='-', label='Diagonal')
 
                 # plot fitted function
-                plt.plot(help, helpers.model(help, *model_params), color='black', linestyle='--', label='Model$_{\mathrm{fitted}}$')
+                plt.plot(help,
+                         helpers.model(help, *model_params),
+                         color='black',
+                         linestyle='--',
+                         label='Model$_{\mathrm{fit}}$')
 
                 # plot mean cer/mos over images for each quality
                 plt.scatter(mean_dist[crit],
                             mean_dist['mos'],
-                            label="Mean$_{\mathrm{fitted}}$",
+                            label="Mean$_{\mathrm{fit}}$",
                             marker='x',
                             cmap=colormap,
                             c=mean_dist['qual'],
@@ -225,9 +230,10 @@ def plot_cer_mos_fitted_mean():
                 plt.grid()
 
                 # set color of legend markers to black
-                leg = plt.legend()
+                leg = plt.legend(loc='upper left', borderpad=0.2, handletextpad=0.2, labelspacing=0.2)
                 for lh in leg.legend_handles:
                     lh.set_color('black')
+                    lh.set_alpha(1)
 
                 # make plot square and add colorbar
                 ax = plt.gca()
@@ -277,25 +283,25 @@ def plot_codec_cer_size():
             data_pseudo = group_ocr.loc[group_ocr.target == "ref"]
 
             plt.plot(data_true.loc[(data_true.codec == "vtm")].groupby('q')["size"].mean()/divider,
-                        data_true.loc[(data_true.codec == "vtm")].groupby('q')["cer_comp"].mean(),
-                        label='VTM true GT',
-                        marker='s',
-                        color='lightblue')
+                     data_true.loc[(data_true.codec == "vtm")].groupby('q')["cer_comp"].mean(),
+                     label='VTM true GT',
+                     marker='s',
+                     color='lightblue')
             plt.plot(data_true.loc[(data_true.codec == "hm")].groupby('q')["size"].mean()/divider,
-                        data_true.loc[(data_true.codec == "hm")].groupby('q')["cer_comp"].mean(),
-                        label='HM true GT',
-                        marker='s',
-                        color='blue')
+                     data_true.loc[(data_true.codec == "hm")].groupby('q')["cer_comp"].mean(),
+                     label='HM true GT',
+                     marker='s',
+                     color='blue')
             plt.plot(data_pseudo.loc[(data_pseudo.codec == "vtm")].groupby('q')["size"].mean()/divider,
-                        data_pseudo.loc[(data_pseudo.codec == "vtm")].groupby('q')["cer_comp"].mean(),
-                        label='VTM pseudo GT',
-                        marker='8',
-                        color='lightcoral')
+                     data_pseudo.loc[(data_pseudo.codec == "vtm")].groupby('q')["cer_comp"].mean(),
+                     label='VTM pseudo GT',
+                     marker='8',
+                     color='lightcoral')
             plt.plot(data_pseudo.loc[(data_pseudo.codec == "hm")].groupby('q')["size"].mean()/divider,
-                        data_pseudo.loc[(data_pseudo.codec == "hm")].groupby('q')["cer_comp"].mean(),
-                        label='HM pseudo GT',
-                        marker='8',
-                        color='red')
+                     data_pseudo.loc[(data_pseudo.codec == "hm")].groupby('q')["cer_comp"].mean(),
+                     label='HM pseudo GT',
+                     marker='8',
+                     color='red')
 
             qvalues = data_true.q.unique()
             xvalues = data_true.loc[(data_true.codec == "vtm")].groupby('q')["size"].mean()/divider
@@ -307,7 +313,7 @@ def plot_codec_cer_size():
             # plt.xlim(0, 0.4)
             plt.ylim(0, 100)
             plt.xlabel("Size in Mbit")
-            plt.ylabel("CER$_{\mathrm{c}}$")
+            plt.ylabel("$\overline{\mathrm{CER}}_{\mathrm{c}}$")
             plt.grid()
             plt.legend()
             plt.tight_layout()
@@ -413,7 +419,7 @@ def plot_fit_example():
     plt.rcParams.update({
         "font.size": 12
         })
-    
+
     # fix random seed for reproducibility
     np.random.seed(7)
 
@@ -424,16 +430,16 @@ def plot_fit_example():
     obj += np.random.normal(-5, 5, len(obj))
 
     # beta0 = [np.max(subj), np.min(subj),
-    #          np.mean(obj), np.std(obj)/4,
-    #          0]
+               #          np.mean(obj), np.std(obj)/4,
+               #          0]
     # beta0 = [-100,1,1,0.5,50]
     beta0 = [np.max(subj), np.min(subj),
              np.mean(obj), 1]
     MAXFEV = 0
-    
+
     # fitting a curve using the data
     params, _ = curve_fit(helpers.model, obj, subj, method='lm', p0=beta0,
-                            maxfev=MAXFEV, ftol=1.5e-08, xtol=1.5e-08)
+                          maxfev=MAXFEV, ftol=1.5e-08, xtol=1.5e-08)
 
     t = np.arange(0, 100, 0.001)
     curve = helpers.model(t, *params)
@@ -444,14 +450,14 @@ def plot_fit_example():
     p_s = scipy.stats.spearmanr(subj, obj)[0]
     p_s_fit = scipy.stats.spearmanr(subj_fit, subj)[0]
 
-    plt.plot(obj, subj, 'o', label='MOS/CER$_{\mathrm{c}}$')
-    plt.plot(obj, subj_fit, 'o', label='MOS$_{\mathrm{p}}$/CER$_{\mathrm{c}}$')
-    plt.plot(t, curve, label='Model$_{\mathrm{fitted}}$')
+    plt.plot(subj_fit, subj, 's', label='Data$_{\mathrm{fit}}$')
+    plt.plot(obj, subj, '.', label='Data')
+    plt.plot(t, curve_init, label='Model$_{\mathrm{ini}}$', color='green', linestyle='--')
+    plt.plot(t, curve, label='Model$_{\mathrm{fit}}$', color='black', linestyle='--')
     plt.xlim(0, 100)
     plt.ylim(0, 100)
     plt.ylabel("MOS")
-    plt.xlabel("CER$_c$")
-    plt.plot(t, curve_init, label='Model$_{\mathrm{init}}$')
+    plt.xlabel("CER$_{\mathrm{c}}$/MOS$_{\mathrm{p}}$")
     tex_p_r = "$r_p=$"
     tex_p_r_fit = "$r_p^{fit}=$"
     tex_p_s = f"$r_s=$"
@@ -460,11 +466,15 @@ def plot_fit_example():
     props = dict(boxstyle='round', facecolor='white', alpha=0.5, edgecolor='grey')
 
     # plt.text(0.02, 0.7, text, transform=plt.gca().transAxes,
-    #         verticalalignment='top', bbox=props)
+               #         verticalalignment='top', bbox=props)
 
     # draw lines from data points to fitted points
     for x, y, y_fit in zip(obj, subj, subj_fit):
-        plt.plot([x, x], [y, y_fit], color='grey', linestyle='--')
+        plt.plot([x, y_fit], [y, y], color='grey', linestyle='--', linewidth=0.5)
+        
+
+    ax = plt.gca()
+    ax.set_aspect('equal', adjustable='box')
 
     plt.legend()
     plt.tight_layout()
@@ -544,8 +554,10 @@ if __name__ == '__main__':
 
     pass
     # pipeline()
-    # plot_cer_dist_quality()
     # plot_fit_example()
+    plot_codec_cer_size()
     # plot_bjontegaard_example()
-    plot_cer_mos_fitted_mean()
+    # plot_cer_dist_quality()
+    # plot_cer_mos_mean()
+    # plot_cer_mos_fitted_mean()
 
