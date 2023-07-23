@@ -1,31 +1,22 @@
 \chapter{Introduction}
 \label{chap:Introduction}
 
-\section{Motivation}
 
 In today’s digital age, screen content plays a vital role in our daily lives.
 From office work to entertainment, we are constantly interacting with images and videos on screens.
 Many of these images contain text, graphics and user interface elements that are not found in natural images.
 As such, the quality of screen content is of utmost importance for the viewer.
 One key aspect of screen content quality is the readability of text.
-However, conventional objective image quality assessment algorithms do not directly consider text readability.
-This is where text recognition algorithms come into play.
+However, conventional objective \gls{iqa} algorithms do not directly consider text readability.
+This is where \gls{ocr} algorithms come into play.
 
-In this thesis, we will explore the application of text recognition algorithms for the assessment of screen content image quality.
-By researching state-of-the-art text recognition and detection methods, generating a labeled dataset, and investigating the correlation between text recognition rates and human judgement, we aim to provide a valuable addition to conventional quality metrics.
-
-Through a structured implementation and detailed documentation of the framework and experiments, this thesis will provide valuable insights into the potential of text recognition algorithms for screen content quality assessment.
+In this thesis, we will explore the application of \gls{ocr} algorithms for the assessment of screen content image quality.
+We research state-of-the-art \gls{ocr} methods, generate a labeled dataset and investigate the correlation between the performance of \gls{ocr} and human judgment on images with different types of distortion.
+Through a structured implementation and detailed documentation of the framework and experiments, we provide valuable insights into the potential of \gls{ocr} algorithms for screen content \gls{iqa}.
 In this thesis, I use the pronouns \textit{we} and \textit{our} to refer to myself and the larger scientific community.
 
-\section{Research Objectives}
-
---- Figure out if text recognition algorithms can be used to assess the quality of screen content images.
-
-\section{Thesis Outline}
-
---- do this last
-
-First we will give an overview of the current state of the art in text recognition and detection in \autoref{chap:related_work}.
-Then we will describe the methodology used in this thesis in \autoref{chap:methods}.
-Afterwards, we will present the results of our experiments in \autoref{chap:evaluation}.
-Finally, we will summarize and conclude our findings in \autoref{chap:conclusion}.
+First, we provide an overview of the current state of \gls{iqa} in \autoref{chap:qualityassessment}.
+Second, we present an overview of the current state of the art of \gls{ocr} in \autoref{chap:ocr}.
+Third, we describe the dataset used in this thesis in \autoref{chap:dataset}.
+Afterwards, we evaluate the results of our experiments in \autoref{chap:evaluation}.
+Finally, we summarize and conclude our findings in \autoref{chap:conclusion}.

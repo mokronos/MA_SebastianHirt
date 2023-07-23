@@ -81,6 +81,7 @@ numbers=noenddot        % no dot after chapter heading prefixes
     \tableofcontents
     \input{texfiles/kurzfassung}
     \input{texfiles/abstract}
+    \glsresetall % reset all acronyms due to usage in abstract
 
     % glossary, makes them auto alphabetically sorted
     \printglossary[type=\acronymtype]
@@ -88,8 +89,8 @@ numbers=noenddot        % no dot after chapter heading prefixes
 
     \mainmatter
     \input{texfiles/introduction}
-    \input{texfiles/ocr}
     \input{texfiles/qualityassessment}
+    \input{texfiles/ocr}
     \input{texfiles/dataset}
     \input{texfiles/evaluation}
     \input{texfiles/conclusion}
