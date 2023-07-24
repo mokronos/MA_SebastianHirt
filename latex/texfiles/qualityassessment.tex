@@ -6,11 +6,13 @@ We then review the specific metrics used in our thesis to evaluate the performan
 
 \section{Conventional Quality Assessment}
 
-\Gls{iqa} is a field of research that aims to quantify the quality of distorted images \cite{iqa_survey_2020}.
-Quality always refers to the perceived quality of an image by the human visual system.
-The only exception is the usage of images for machine learning or other tasks that do not involve human perception.
-In this case the quality might be defined by the performance of the machine learning algorithm.
-This can be important when deciding which compression to use for datasets that are used for training in machine learning or which distortions are impacting \gls{ocr} algorithms the most.
+\Gls{iqa} is a research field dedicated to quantifying the quality of distorted images \cite{iqa_survey_2020}.
+The term "quality" always refers to the quality of an image as perceived by the human visual system.
+However, there is an exception when images are used for machine learning or other tasks that do not involve human perception.
+In this cases, image quality may be defined by the performance of the machine learning algorithm.
+This aspect becomes crucial when determining the appropriate compression techniques for datasets used in machine learning or identifying the types of distortions that have the most significant impact on \gls{ocr} algorithms.
+Consider, for instance, an application where an \gls{ocr} algorithm is utilized to recognize text in a presentation, and the recognized text is then read aloud by a text-to-speech system for a blind person.
+In this scenario, the image quality is defined by the performance of the \gls{ocr} algorithm rather than human perception.
 
 Generally, we can divide \gls{iqa} algorithms into three categories: \gls{fr}, \gls{rr} and \gls{nr}.
 The goal of \gls{fr} algorithms is to predict the quality of a distorted image by comparing it to the reference image.
@@ -126,7 +128,7 @@ The parameters are initialized as
     \begin{aligned}
         \beta_{1} &= \max{\mathbf{CER}_{\text{c}}} \\
         \beta_{2} &= \min{\mathbf{CER}_{\text{c}}} \\
-        \beta_{3} &= \overline{\mathbf{MOS}} \\
+        \beta_{3} &= \overline{\text{MOS}} \\
         \beta_{4} &= 1.
     \end{aligned}
     \label{eq:nonlinear_init}
@@ -156,11 +158,11 @@ The \gls{plcc} \cite{pears_spear_2016} describes the linear correlation between 
 It is defined as
 
 \begin{equation}
-    \text{PLCC} = \frac{\sum_{i=1}^{N}{(\text{MOS}_{i}-\overline{\mathbf{MOS}})(\text{MOS}_{\text{p},i}-\overline{\mathbf{MOS}_{\text{p}}})}}{\sqrt{\sum_{i=1}^{N}{(\text{MOS}_{i}-\overline{\mathbf{MOS}})^2}\sum_{i=1}^{N}{(\text{MOS}_{\text{p},i}-\overline{\mathbf{MOS}_{\text{p}}})^2}}},
+    \text{PLCC} = \frac{\sum_{i=1}^{N}{(\text{MOS}_{i}-\overline{\text{MOS}})(\text{MOS}_{\text{p},i}-\overline{\text{MOS}}_{\text{p}})}}{\sqrt{\sum_{i=1}^{N}{(\text{MOS}_{i}-\overline{\text{MOS}})^2}\sum_{i=1}^{N}{(\text{MOS}_{\text{p},i}-\overline{\text{MOS}}_{\text{p}})^2}}},
     \label{eq:pearson}
 \end{equation}
 
-with $\overline{\mathbf{MOS}}$ and $\overline{\mathbf{MOS}_{\text{p}}}$ representing the mean values of the $\mathbf{MOS}$ and $\mathbf{MOS}_{\text{p}}$ vectors respectively and $N$ the total number of images in the dataset.
+with $\overline{\text{MOS}}$ and $\overline{\text{MOS}}_{\text{p}}$ representing the mean values of the $\mathbf{MOS}$ and $\mathbf{MOS}_{\text{p}}$ vectors respectively and $N$ the total number of images in the dataset.
 $N$ is the total number of images in the images used in the experiment.
 If the \gls{plcc} is close to 1, the two vectors have a positive linear relationship, which means that if $\text{MOS}_{i}$ increases, $\text{MOS}_{\text{p},i}$ increases as well.
 If the \gls{plcc} is close to -1, the two vectors have a negative linear relationship, which means that if $\text{MOS}_{i}$ increases, $\text{MOS}_{\text{p},i}$ decreases.
@@ -171,17 +173,17 @@ If the \gls{plcc} is close to 0, the two vectors have no correlation at all.
 \label{subsec:spearman}
 
 The \gls{srcc} \cite{pears_spear_2016} describes the monotonic correlation between two variables, normalized to the range $[-1, 1]$.
-Compared to the \gls{plcc}, it mainly takes the order/rank of the values into account, not the exact values.
+Compared to the \gls{plcc}, it mainly takes the rank, or order, of the values into account, not the exact values.
 The scores $\text{CER}_{\text{c},i}$ and $\text{MOS}_{i}$ are transformed into their ranks $\text{CER}_{\text{c,r},i}$ and $\text{MOS}_{\text{r},i}$ respectively, with values in the range $[1, N]$.
 If for example, the first two values are tied, their rank is set to the mean, in this case $(1+2)/2 = 1.5$.
 With these values, the \gls{srcc} is defined as
 
 \begin{equation}
-    \text{SRCC} = \frac{\sum_{i=1}^{N}{(\text{MOS}_{\text{r},i}-\overline{\mathbf{MOS}_{\text{r}}})(\text{CER}_{\text{c,r},i}-\overline{\mathbf{CER}_{\text{c,r}}})}}{\sqrt{\sum_{i=1}^{N}{(\text{MOS}_{\text{r},i}-\overline{\mathbf{MOS}_{\text{r}}})^2}\sum_{i=1}^{N}{(\text{CER}_{\text{c,r},i}-\overline{\mathbf{CER}_{\text{c,r}}})^2}}},
+    \text{SRCC} = \frac{\sum_{i=1}^{N}{(\text{MOS}_{\text{r},i}-\overline{\text{MOS}}_{\text{r}})(\text{CER}_{\text{c,r},i}-\overline{\text{CER}}_{\text{c,r}})}}{\sqrt{\sum_{i=1}^{N}{(\text{MOS}_{\text{r},i}-\overline{\text{MOS}}_{\text{r}})^2}\sum_{i=1}^{N}{(\text{CER}_{\text{c,r},i}-\overline{\text{CER}}_{\text{c,r}})^2}}},
     \label{eq:spearman}
 \end{equation}
 
-with $\overline{\mathbf{MOS}_{\text{r}}}$ and $\overline{\mathbf{CER}_{\text{c,r}}}$ representing the mean values of the $\mathbf{MOS}_{\text{r}}$ and $\mathbf{CER}_{\text{c,r}}$ vectors respectively.
+with $\overline{\text{MOS}}_{\text{r}}$ and $\overline{\text{CER}}_{\text{c,r}}$ representing the mean values of the $\mathbf{MOS}_{\text{r}}$ and $\mathbf{CER}_{\text{c,r}}$ vectors respectively.
 If the \gls{srcc} is close to 1, the two vectors have a positive monotonic relationship, which means that the rank of $\text{CER}_{\text{c},i}$ increases, while the rank of $\text{MOS}_{i}$ increases.
 If the \gls{srcc} is close to -1, the two vectors have a negative monotonic relationship, which means that the rank of $\text{CER}_{\text{c},i}$ increases, while the rank of $\text{MOS}_{i}$ decreases.
 If the \gls{srcc} is close to 0, the ranks of the two vectors have no correlation at all.
@@ -202,6 +204,51 @@ In our case it is defined as
 From these metrics, \gls{plcc} measures the prediction linearity and consistency, \gls{srcc} measures the prediction monotonicity and the \gls{rmse} measures the prediction accuracy.
 With these, we can now determine if the $\text{CER}_{\text{c}}$ is a good predictor for the \gls{mos}.
 It is a better predictor the larger \gls{plcc} and \gls{srcc} values are, and the smaller the \gls{rmse} is.
+
+
+\section{Bjøntegaard Delta Rate}
+\label{subsec:bdrate}
+
+The \gls{bdrate} \cite{bdrate_original_2001}\cite{bdrate_beyond_2022} is defined as the average difference between two rate-distortion curves of two codecs to compare.
+The first curve is the reference curve and the second the test curve.
+Those curves are defined by a set of points $(R_{\text{k,i}}, M_{\text{k,i}})$, where $R_{\text{k,i}}$ is the bitrate and $M_{\text{k,i}}$ is the metric of the image compressed by the codec $k$, with $k /in \{A,B\}$, with \gls{qp} $i$, with $i \in \{35,40,45,50\}$.
+The $R_{\text{k,i}}$ values are first converted to the logarithmic scale to not bias the results towards the higher bitrates with
+
+\begin{equation}
+    r_{\text{k,i}} = \log_{10}\left(R_{\text{k,i}}\right).
+    \label{eq:log_scale}
+\end{equation}
+
+Those values in combination with the corresponding $M_{\text{k,i}}$ values are then used as anchor points for an interpolation with a third order polynomial.
+The resulting functions are denoted by $\hat{r}_{\text{k}}$, respectively.
+The interpolation results in two curves, one for each codec, that pass through all anchor points.
+
+Finally, the \gls{bdrate} can be denoted as $\Delta R$ and is calculated by the integral of the difference between the two curves as
+
+\begin{equation}
+    \Delta R = 10^{\frac{1}{M_{\text{low}}-M_{\text{high}}} \int_{M_{\text{low}}}^{M_{\text{high}}} \hat{r}_{\text{B}}(M) - \hat{r}_{\text{A}}(M) \text{d}M} - 1.
+    \label{eq:bdrate}
+\end{equation}
+
+The lower and upper bound of the integral are given by
+
+\begin{equation}
+    \begin{aligned}
+        M_{\text{low}} = \max\left(M_{\text{A},50}, M_{\text{B},50}\right) \\
+        M_{\text{high}} = \min\left(M_{\text{A},35}, M_{\text{B},35}\right).
+    \end{aligned}
+    \label{eq:bounds}
+\end{equation}
+
+The bounds are the maximum of the lowest quality points and the minimum of the highest quality points and can be seen in \autoref{fig:bdrate_example}.
+
+
+$\Delta R$ describes the average difference between the two curves in percent.
+This enables us to compare the rate-distortion curves of two codecs.
+In our case, we can calculate the $\text{CER}_{\text{c}}$ for each codec, once in relation to the \gls{gt} and once in relation to the \gls{ocr} prediction on the reference image.
+These two values can then be compared to evaluate, if using the \gls{ocr} algorithms as a reference is a good estimation of the difference between codecs.
+If the difference between the two values is small, then the estimation is good and we might be able to use the \gls{ocr} algorithms as a reference for future codec comparisons.
+We go into more detail about the codecs we use for our comparisons in \autoref{sec:dataset_codec}.
 
 In this chapter we have defined the metrics to evaluate the predicted $\text{CER}_{\text{c}}$ values.
 However, to calculate the $\text{CER}_{\text{c}}$ values, we need \gls{ocr} algorithms to extract text from the images.

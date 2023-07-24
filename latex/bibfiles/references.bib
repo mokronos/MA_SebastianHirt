@@ -64,7 +64,6 @@ url = {https://www.researchgate.net/publication/285429613_Screen_image_quality_a
     volume = {26},
     issn = {1057-7149, 1941-0042},
     shorttitle = {{ESIM}},
-    url = {http://ieeexplore.ieee.org/document/7954714/},
     doi = {10.1109/TIP.2017.2718185},
     abstract = {In this paper, an accurate full-reference image quality assessment (IQA) model developed for assessing screen content images (SCIs), called the edge similarity (ESIM), is proposed. It is inspired by the fact that the human visual system (HVS) is highly sensitive to edges that are often encountered in SCIs; therefore, essential edge features are extracted and exploited for conducting IQA for the SCIs. The key novelty of the proposed ESIM lies in the extraction and use of three salient edge features—i.e., edge contrast, edge width, and edge direction. The ﬁrst two attributes are simultaneously generated from the input SCI based on a parametric edge model, while the last one is derived directly from the input SCI. The extraction of these three features will be performed for the reference SCI and the distorted SCI, individually. The degree of similarity measured for each above-mentioned edge attribute is then computed independently, followed by combining them together using our proposed edge-width pooling strategy to generate the ﬁnal ESIM score. To conduct the performance evaluation of our proposed ESIM model, a new and the largest SCI database (denoted as SCID) is established in our work and made to the public for download. Our database contains 1800 distorted SCIs that are generated from 40 reference SCIs. For each SCI, nine distortion types are investigated, and ﬁve degradation levels are produced for each distortion type. Extensive simulation results have clearly shown that the proposed ESIM model is more consistent with the perception of the HVS on the evaluation of distorted SCIs than the multiple state-of-the-art IQA methods.},
     language = {en},
@@ -75,6 +74,7 @@ url = {https://www.researchgate.net/publication/285429613_Screen_image_quality_a
     month = oct,
     year = {2017},
     pages = {4818--4831},
+    url = {http://ieeexplore.ieee.org/document/7954714/}
 }
 
 @article{iqa_survey_2020,
@@ -136,7 +136,7 @@ url = {https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9959275/}
 /* OCR */
 /* ################################################################ */
 
-@INPROCEEDINGS{tesseract_2007,
+@INPROCEEDINGS{tesseract_legacy_2007,
     author={Smith, R.},
     booktitle={Ninth International Conference on Document Analysis and Recognition (ICDAR 2007)}, 
     title={An Overview of the Tesseract OCR Engine}, 
@@ -157,14 +157,60 @@ url = {https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9959275/}
     howpublished = {\url{https://github.com/madmaze/pytesseract}}
 }
 
+@misc{tesseract_github_2023,
+    title = {Tesseract OCR},
+    author = {Weil, Stefan and Smith, Ray and Zdenko, Podobny},
+    year = {2023},
+    publisher = {GitHub},
+    journal = {GitHub repository},
+    howpublished = {\url{https://github.com/tesseract-ocr/tesseract}}
+}
 
-@misc{easyocr_2020,
+@misc{tesseract_architecture_2016,
+    title = {Tesseract Blends Old and New OCR Technology},
+    author = {Smith, Ray},
+    year = {2016},
+    publisher = {Google, Inc.},
+    journal = {Document Analysis Systems},
+    howpublished = {\url{https://tesseract-ocr.github.io/docs/das_tutorial2016/2ArchitectureAndDataStructures.pdf}}
+}
+
+@misc{easyocr_gitub_2020,
     title = {Easyocr},
     author = {Jaided},
-    year = {2020},
+    year = {2023},
     publisher = {GitHub},
     journal = {GitHub repository},
     howpublished = {\url{https://github.com/JaidedAI/EasyOCR}}
+}
+
+
+@inproceedings{craft_2019,
+  title={Character region awareness for text detection},
+  author={Baek, Youngmin and Lee, Bado and Han, Dongyoon and Yun, Sangdoo and Lee, Hwalsuk},
+  booktitle={Proceedings of the IEEE/CVF conference on computer vision and pattern recognition},
+  pages={9365--9374},
+  year={2019},
+  url={https://arxiv.org/pdf/1904.01941.pdf}
+}
+
+
+
+@article{crnn_2015,
+  author       = {Baoguang Shi and
+                  Xiang Bai and
+                  Cong Yao},
+  title        = {An End-to-End Trainable Neural Network for Image-based Sequence Recognition
+                  and Its Application to Scene Text Recognition},
+  journal      = {CoRR},
+  volume       = {abs/1507.05717},
+  year         = {2015},
+  url          = {http://arxiv.org/abs/1507.05717},
+  eprinttype    = {arXiv},
+  eprint       = {1507.05717},
+  timestamp    = {Mon, 13 Aug 2018 16:48:09 +0200},
+  biburl       = {https://dblp.org/rec/journals/corr/ShiBY15.bib},
+  bibsource    = {dblp computer science bibliography, https://dblp.org}
 }
 
 @misc{ocr_survey_2017,
@@ -175,18 +221,6 @@ url = {https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9959275/}
     archivePrefix={arXiv},
     primaryClass={cs.CV},
     url={https://arxiv.org/abs/1710.05703}
-}
-
-@article{ocr_survey_tess_2013,
-  title={Optical character recognition},
-  author={Mithe, Ravina and Indalkar, Supriya and Divekar, Nilam},
-  journal={International journal of recent technology and engineering (IJRTE)},
-  volume={2},
-  number={1},
-  pages={72--75},
-  year={2013},
-  publisher={Citeseer},
-  url = {https://citeseerx.ist.psu.edu/document?repid=rep1&type=pdf&doi=6a4b4f04d5ce3c3592832eb40c23cc8fc5a9131e}
 }
 
 @article{ocr_survey_lstms_2013,

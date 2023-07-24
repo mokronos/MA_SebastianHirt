@@ -577,11 +577,9 @@ generally:
 
 - use present
 - too many returns
-- abstract/kurzfassung als letztes
 - name pseudo and true gt (prediction on reference image vs labeled text), fine difference (in same plot) is only necessary in codec chapter, feels weird before
 - then call cer_pseudo and cer_true
 - diff image for default vs scc config, text readable for scc
-- find model architecture for OCR
 - psnr explanation
 - Außerdem kurze Anmerkung, weil du das öfters schreibst: Das Ziel ist es nicht MOS durch CER ersetzen zu können. MOS ist und bleibt immer das beste, was man machen kann für menschliche Wahrnehmung. Wir versuchen zu schauen, ob es korreliert, bzw. ob man mittels CER das MOS annähern/schätzen kann. Und dass man das CER wahrscheinlich nicht als alleiniges Qualitätsmaß nehmen kann (außer vielleicht für Video Coding für Maschinen (VCM)) solltest du auch von Anfang an klar stellen. In Zukunft kann man dann (wie du auch im Schluss schon geschrieben hast, das CER mit in ein kombiniertes Qualitätsmaß aufnehmen oder eben für VCM auch alleine nutzen.
 
@@ -590,5 +588,6 @@ generally:
 - ocr on pristine images as gt gar nicht? stimme zu dass es nix mit iqa zu tun hat, ist eigentlich nur drin wegen Aufgabenstellung: Since most datasets do not contain textual ground truth information, in a further step, Mr Hirt will investigate the feasibility of using recognized text from pristine images as ground truth instead. 
 - if values are constant in two places they lose most but not all of their predictive value, right?
 - if not used as an approximation or replacement, dont we still want the highest correlation possible for any other combined or additional quality metric. Feels like a point i can bring up after, but it seems clear that that of course might be a possibility
-- find model architecture for OCR
 - formulas for psnr, ssim? not using them
+- cannot find model architecture for Tesseract OCR
+- more details on legacy Tesseract stuff?

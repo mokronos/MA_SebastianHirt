@@ -43,6 +43,8 @@ This sudden decline is particularly surprising when compared to other types of d
 Among the distortions analyzed, \gls{cc}, \gls{cqd}, and \gls{csc} do not impact the performance.
 The results for \gls{cc} even demonstrate a slightly higher $\overline{\text{CER}}_{\text{c}}$ at quality level 5 compared to previous levels.
 This phenomenon can possibly be attributed to \gls{cc}'s ability to enhance the distinction between the text and the background, acting almost like an image preprocessing step for the \gls{ocr}.
+Additionally, as we saw in \autoref{fig:cc_levels}, \gls{cc} does not follow a clear trend with decreasing quality level.
+Thus, it is difficult to interpret a trend for \gls{cc}.
 
 In summary, our results reveal that \gls{mb} and \gls{gb} have a substantial impact on the performance of both EasyOCR and Tesseract \gls{ocr} algorithms.
 Additionally, both \gls{ocr} algorithms demonstrate superior performance across images with \gls{cc}, \gls{cqd}, and \gls{csc}.
@@ -128,7 +130,7 @@ In general we notice that the performance ceiling for the $\overline{\text{CER}}
 This is due to the $\overline{\text{CER}}_{\text{c}}$ being calculated in relation to the prediction on the reference images, which is not necessarily the \gls{gt}.
 The distortions \gls{csc} and \gls{cc} are not impacting the performance of EasyOCR much, like we saw in the previous section.
 However, the corresponding $\overline{\text{MOS}}$ values are impacted.
-For \gls{cc}, neither metric shows a clear trend.
+For \gls{cc}, we can see that the $\overline{\text{MOS}}$ does not show a clear trend with the quality level, because the \gls{cc} does not either, like we mentioned in \autoref{sec:dataset_distortion_types}.
 We are uncertain why the $overline{\text{MOS}}$ for CC is not strictly decreasing with the quality level.
 Contrast levels do not clearly reach from good to bad, so it might be that humans found specific contrast levels more appealing than others.
 For all other distortions the graph shows a clear trend, where both $\overline{\text{CER}}_{\text{c}}$ and $\overline{\text{MOS}}$ decline with decreasing quality.

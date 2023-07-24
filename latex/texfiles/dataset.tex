@@ -1,66 +1,84 @@
 \chapter{Dataset}
 \label{chap:dataset}
-This chapter discusses the dataset used in our work. We use the \gls{scid} dataset \cite{ni_esim_2017}\footnote{The dataset can be downloaded here: https://eezkni.github.io/publications/ESIM.html.}.
-The important characteristics of the dataset are text content on screenshots, different distortion levels and \gls{mos} values for each image.
-
---- authors name it mos, but it should be dmos, because double stimulus \cite{mos_dmos_1993}
-
---- still use mos for rest of work
-
-We did not find any other dataset with the same characteristics.
-Other screen content datasets are mentioned in \cite{iqa_survey_2020}, but we either were not able to access them or they did not contain enough text based images.
-
-\section{Overview}
-\label{sec:dataset_overview}
+In this chapter, we present the dataset used in our work.
+We use the \gls{scid} dataset \cite{ni_esim_2017}\footnote{The dataset can be downloaded here: https://eezkni.github.io/publications/ESIM.html.} as the base for our experiments.
+The \gls{scid} dataset is suitable for our work, since the images contain text content on screenshots, different distortion levels and \gls{mos} values for each image.
+Among the available screen content datasets mentioned in the literature \cite{iqa_survey_2020}, we find that other options are either inaccessible or fail to fulfill all the necessary criteria we require for our research.
 An overview of the 40 reference images of the dataset can be seen in \autoref{fig:dataset_overview}.
+Additionally, the dataset contains 1800 distorted images, which we discuss in the next section in detail.
 
-\begin{figure}[h]
+\begin{figure}[h!]
     \centering
     \includegraphics[width=\textwidth]{reference_images}
     \caption{Overview of the dataset.}
     \label{fig:dataset_overview}
 \end{figure}
 
-Additionally, the dataset contains 1800 distorted images.
-They are distorted with 9 different distortion types, each with 5 different distortion levels.
 
 \section{Distortion types}
 \label{sec:dataset_distortion_types}
 
-In this section we will discuss the different distortion types used in the dataset.
-The nine different distortion types can be seen in \autoref{fig:distortion_types}, applied to the image in \autoref{fig:img29}.
 
-\begin{table}[h]
+The 1800 distorted images are generated from the 40 reference images.
+They are distorted with 9 different distortion types, each with 5 different distortion quality levels.
+In \autoref{tab:distortion_types}, we list the distortion types with a short description.
+
+
+\begin{table}[h!]
 \centering
 \caption{Distortion types used in the dataset.}
 \begin{tabular}{|p{6cm}|l|p{6cm}|}
 \hline
 \textbf{Distortion Type} & \textbf{Abbreviation} & \textbf{Description} \\
 \hline
-Contrast Change & CC & Changes in the contrast of an image \\
-\hline
-Color Quantization with Dithering & CQD & Reduction of colors in an image using dithering \\
-\hline
-Color Saturation Change & CSC & Changes in the color saturation of an image \\
+Gaussian Noise & GN & Addition of noise to an image using a Gaussian distribution \\
 \hline
 Gaussian Blur & GB & Blurring of an image using a Gaussian function \\
 \hline
-Gaussian Noise & GN & Addition of noise to an image using a Gaussian distribution \\
+Motion Blur & MB & Blurring of an image due to movement \\
 \hline
-High Efficiency Video Coding-Screen Content Coding & HEVC-SCC & Video compression standard for screen content \\
+Contrast Change & CC & Changes in the contrast of an image \\
 \hline
 Joint Photographic Experts Group & JPEG & Image compression standard \\
 \hline
 Joint Photographic Experts Group 2000 & JPEG2000 & Image compression standard \\
 \hline
-Motion Blur & MB & Blurring of an image due to movement \\
+Color Saturation Change & CSC & Changes in the color saturation of an image \\
+\hline
+High Efficiency Video Coding-Screen Content Coding & HEVC-SCC & Video compression standard for screen content \\
+\hline
+Color Quantization with Dithering & CQD & Reduction of colors in an image using dithering \\
 \hline
 \end{tabular}
 \label{tab:distortion_types}
 \end{table}
 
 
-\begin{figure}[h]
+The images distorted by \gls{gn} have noise added with zero mean and standard deviations of $0.001$, $0.005$, $0.01$, $0.05$ and $0.1$ for each quality level respectively.
+The images distorted by \gls{gb} are blurred with a Gaussian kernel.
+The size of the kernel is $5\times5$ with standard deviations of $0.58$, $0.76$, $0.96$, $1.2$ and $2.1$ for each quality level respectively.
+Images distorted by \gls{mb} are blurred with a motion kernel, which simulates motion blur.
+The 'theta' parameter, which controls the degree of angle in a counter-clockwise direction, is set to zero and the 'len' parameter, which determines the length of the movement of the simulated camera, is set to $2$, $3.4$, $4$, $5.5$ and $6.4$ respectively.
+The \gls{cc} distortion scales certain pixel values in the reference image to new values to change the contrast.
+The scaling is applied for the ranges $[0,1] \rightarrow [0.3,0.5]$, $[0,1] \rightarrow [0.1,0.7]$, $[0.1,0.8] \rightarrow [0.1,0.9]$, $[0.2,0.8] \rightarrow [0.1,0.8]$ and $[0.2,0.7] \rightarrow [0,1]$ respectively.
+So for the first quality level, all pixel values (from 0 to 1) are scaled to values between 0.3 and 0.5 of the maximum pixel intensity.
+For the \gls{jpeg} compression, the images are compressed by the image compression algorithm with quality factors $75$, $35$, $18$, $8$ and $5$ respectively.
+The \gls{jpeg2000} compression is applied with compression ratios of $0.08$, $0.045$, $0.02$, $0.015$ and $0.01$ respectively.
+The \gls{csc} distortion keeps the luminance component of the images constant, but scales the chrominance components by the factors $0.96$, $0.72$, $0.58$, $0.42$ and $0.1$ respectively.
+The \gls{hevcscc} distortion is applied by using the \gls{hevc} codec with the screen content configuration on the images with \glspl{qp} set to $16$, $36$, $40$, $42$ and $48$ respectively.
+The \gls{cqd} distortion is applied by reducing the number of colors available in the image to $30$, $28$, $25$, $10$ and $5$ respectively.
+More detailed descriptions of the implementation of the distortions can be found in the supporting file included with the dataset.
+
+The different distortion types, at their most severe quality level, can be seen in \autoref{fig:distortion_types}, applied to the image in \autoref{fig:img29}.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=\textwidth]{../../data/raw/scid/ReferenceSCIs/SCI29.png}
+    \caption{Reference image SCI29}
+    \label{fig:img29}
+\end{figure}
+
+\begin{figure}[h!]
     \centering
     \begin{subfigure}[b]{0.3\textwidth}
         \includegraphics[width=\textwidth]{../../data/raw/scid/DistortedSCIs/SCI29_1_5.png}
@@ -119,9 +137,40 @@ Motion Blur & MB & Blurring of an image due to movement \\
     \label{fig:distortion_types}
 \end{figure}
 
-We can see, that the different distortion types have different effects on the text in the image.
-Distortions like the contrast change don't affect the text much.
-However, Gaussian noise or blur can make the text unreadable for the human eye.
+The impact of different distortion types on text within an image is evident.
+Among the various distortions, alterations in contrast or color have minimal effect on text legibility for human readers.
+Conversely, distortions such as \gls{gn}, \gls{gb} and \gls{mb} can render the text completely unreadable to the human eye.
+We might expect that the distortions that affect the text the most, will also affect the \gls{ocr} the most.
+It is to note, that all distortions are monotonically decreasing with the quality level from 1 to 5.
+The only exception is \gls{cc}.
+As illustrated in \autoref{fig:cc_levels}, \gls{cc} does not display a clear pattern of variation from low contrast to high contrast, or any similar trend.
+This is important for when we analyze the trends of the \gls{mos} over the different quality levels.
+
+\begin{figure}[h!]
+    \centering
+    \begin{subfigure}[b]{0.18\textwidth}
+        \includegraphics[width=\textwidth]{../../data/raw/scid/DistortedSCIs/SCI01_4_1.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.18\textwidth}
+        \includegraphics[width=\textwidth]{../../data/raw/scid/DistortedSCIs/SCI01_4_2.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.18\textwidth}
+        \includegraphics[width=\textwidth]{../../data/raw/scid/DistortedSCIs/SCI01_4_3.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.18\textwidth}
+        \includegraphics[width=\textwidth]{../../data/raw/scid/DistortedSCIs/SCI01_4_4.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.18\textwidth}
+        \includegraphics[width=\textwidth]{../../data/raw/scid/DistortedSCIs/SCI01_4_5.png}
+    \end{subfigure}
+    \caption{Distorted image 1 with different levels of \gls{cc}, quality levels from left to right: 1, 2, 3, 4, 5.}
+    \label{fig:cc_levels}
+\end{figure}
+        
 
 \section{Labeling}
 \label{sec:dataset_labeling}
@@ -201,7 +250,7 @@ We used the images, a ruler and our eyes to determine the correct order of the t
 In \autoref{fig:cer_vs_mos} the cer is plotted against the MOS.
 It shows the \gls{cer} and \gls{mos} of all 1800 distorted images compared to their reference image.
 
-\begin{figure}[h]
+\begin{figure}[h!]
     \centering
     \includegraphics[width=\textwidth]{mosvster_all}
     \caption{\gls{cer} of all distorted images compared to their reference image plotted against the \gls{mos}. Probably not in final version.}
@@ -222,7 +271,7 @@ Thus those images are used in experiments that involve the \gls{mos}.
 --- our objective is more to check if cer is a good metric to simulate mos for readability of text, although it might be less consistent
 
 
-\begin{figure}[h]
+\begin{figure}[h!]
     \centering
     \includegraphics[width=\textwidth]{mosvster__456_22_29__1_4}
     \caption{\gls{cer} of a selection of distorted images compared to their reference image. Probably not in final version}
@@ -234,6 +283,10 @@ Thus those images are used in experiments that involve the \gls{mos}.
 
 In this section we first describe the extension of the dataset through encoding with the \gls{hevc} and \gls{vvc} codecs.
 Additionally we detail the method we then use to compare the codecs by using the $\text{CER}_{\text{c}}$ and the \gls{bdrate}.
+
+--- authors name it mos, but it should be dmos, because double stimulus \cite{mos_dmos_1993}
+
+--- still use mos for rest of work
 
 \subsection{High Efficiency Video Coding}
 \label{subsec:hevc}
@@ -276,45 +329,6 @@ Thus the points can be denoted as $\left(R_{\text{k,i}}, M_{\text{k,i}}\right)$ 
 Later, those points are averaged over all images to get the average bitrate and the average $\text{CER}_{\text{c}}$ for each codec.
 The following section describes the calculation of the \gls{bdrate}, which can quantify the difference between the two curves of the codecs.
 
-\subsection{Bjøntegaard Delta Rate}
-\label{subsec:bdrate}
-
-The \gls{bdrate} \cite{bdrate_original_2001}\cite{bdrate_beyond_2022} is defined as the average difference between two curves of the codecs to compare.
-The first curve is the reference curve and the second the test curve.
-The $R_{\text{k,i}}$ values are first converted to the log scale to not bias the results towards the higher bitrates with
-
-\begin{equation}
-    r_{\text{k,i}} = \log_{10}\left(R_{\text{k,i}}\right).
-    \label{eq:log_scale}
-\end{equation}
-
-Those values in combination with the $\text{CER}_{\text{c}}$ values are then used as anchor points for a interpolation with a third order polynomial.
-The resulting functions are denoted by $\hat{r}_{\text{k}}$, respectively.
-The interpolation results in two curves, one for each codec, that pass through all anchor points.
-
-Finally the \gls{bdrate} can be denoted as $\Delta R$ and is calculated by the integral of the difference between the two curves.
-First, we need to define the lower and upper bound of the integral as follows
-
-\begin{equation}
-    \begin{aligned}
-        M_{\text{low}} = \max\left(M_{\text{A},1}, M_{\text{B},1}\right) \\
-        M_{\text{high}} = \min\left(M_{\text{A},4}, M_{\text{B},4}\right).
-    \end{aligned}
-    \label{eq:bounds}
-\end{equation}
-
-The bounds are just the maximum of the lowest quality points and the minimum of the highest quality points and can be seen in \autoref{fig:bdrate_example}.
-
-\begin{equation}
-    \Delta R = 10^{\frac{1}{M_{\text{low}}-M_{\text{high}}} \int_{M_{\text{low}}}^{M_{\text{high}}} \hat{r}_{\text{B}}(M) - \hat{r}_{\text{A}}(M) \text{d}M} - 1.
-    \label{eq:bdrate}
-\end{equation}
-
-This value describes the average difference between the two curves in percent.
-This enables us to compare two codecs.
-Additionally we can calculate the same value, but with the $\text{CER}_{\text{c}}$ in relation to the \gls{gt} instead of the reference.
-These two values can then be compared to see if using the \gls{ocr} algorithms as a reference is a good approximation of the difference between codecs.
-If the difference between the two values is small, then the approximation is good and we would not need a \gls{gt} to evaluate new codecs.
 
 To summarize, the original dataset has a \gls{mos} for each image with various distortions.
 We are expanding the dataset by encoding the images with the \gls{hevc} and \gls{vvc} codecs.
