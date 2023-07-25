@@ -37,7 +37,7 @@ with \(R\) being the maximum possible pixel value of the image and MSE being the
 Another common metric is the \gls{ssim} \cite{SSIM_2004}, which combines the luminance, the contrast and the structural differences between two images into one metric.
 Compared to the \gls{psnr}, the \gls{ssim} is more closely correlated with human perception of image quality \cite{frmetric_comp_2012}.
 
---- maybe FSIM
+% --- maybe FSIM
 
 
 \section{Screen Content Specific Quality Assessment}
@@ -67,7 +67,7 @@ The correlation between the three scores is then analyzed, weighted and used to 
 \section{Evaluation Procedure of Quality Assessment Algorithms}
 \label{sec:evalprocedure}
 
-To evaluate the suitability of an objective \gls{iqa} method, in our case the $\text{CER}_{\text{c}}$, see \autoref{subsec:cer}, and its correlation to the human subjective score, in this thesis the \gls{mos}, see \autoref{chap:dataset}, there are three aspects to consider \cite{nonlin_fit_original_2003}\cite{iqa_survey_2020}.
+To evaluate the suitability of an objective \gls{iqa} metric, in our case the \gls{cer}, more specifically the $\text{CER}_{\text{c}}$, see \autoref{subsec:cer}, and its correlation to the human subjective score, in this thesis the \gls{mos}, see \autoref{chap:dataset}, there are three aspects to consider \cite{nonlin_fit_original_2003}\cite{iqa_survey_2020}.
 Prediction consistency, prediction monotonicity, and prediction accuracy.
 
 \subsection{Nonlinear Transformation}
@@ -211,7 +211,7 @@ It is a better predictor the larger \gls{plcc} and \gls{srcc} values are, and th
 
 The \gls{bdrate} \cite{bdrate_original_2001}\cite{bdrate_beyond_2022} is defined as the average difference between two rate-distortion curves of two codecs to compare.
 The first curve is the reference curve and the second the test curve.
-Those curves are defined by a set of points $(R_{\text{k,i}}, M_{\text{k,i}})$, where $R_{\text{k,i}}$ is the bitrate and $M_{\text{k,i}}$ is the metric of the image compressed by the codec $k$, with $k /in \{A,B\}$, with \gls{qp} $i$, with $i \in \{35,40,45,50\}$.
+Those curves are defined by a set of points $(R_{\text{k,i}}, M_{\text{k,i}})$, where $R_{\text{k,i}}$ is the bitrate and $M_{\text{k,i}}$ is the metric of the image compressed by a codec $k$, with $k /in \{A,B\}$, with \gls{qp} $i$, with $i \in \{35,40,45,50\}$.
 The $R_{\text{k,i}}$ values are first converted to the logarithmic scale to not bias the results towards the higher bitrates with
 
 \begin{equation}
@@ -222,6 +222,13 @@ The $R_{\text{k,i}}$ values are first converted to the logarithmic scale to not 
 Those values in combination with the corresponding $M_{\text{k,i}}$ values are then used as anchor points for an interpolation with a third order polynomial.
 The resulting functions are denoted by $\hat{r}_{\text{k}}$, respectively.
 The interpolation results in two curves, one for each codec, that pass through all anchor points.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{../../exp/bjontegaard_example.pdf}
+    \caption{Example of the \gls{bdrate} calculation with dummy values. Adapted from \cite{bdrate_beyond_2022}}
+    \label{fig:bdrate_example}
+\end{figure}
 
 Finally, the \gls{bdrate} can be denoted as $\Delta R$ and is calculated by the integral of the difference between the two curves as
 
@@ -245,8 +252,10 @@ The bounds are the maximum of the lowest quality points and the minimum of the h
 
 $\Delta R$ describes the average difference between the two curves in percent.
 This enables us to compare the rate-distortion curves of two codecs.
-In our case, we can calculate the $\text{CER}_{\text{c}}$ for each codec, once in relation to the \gls{gt} and once in relation to the \gls{ocr} prediction on the reference image.
-These two values can then be compared to evaluate, if using the \gls{ocr} algorithms as a reference is a good estimation of the difference between codecs.
+In our case, we can calculate the $\text{CER}_{\text{c}}$ for each codec in two ways:
+once with respect to the hand annotated text label, as explained in \autoref{sec:dataset_labeling}, and once in relation to the \gls{ocr} prediction on the reference image without distortion.
+Throughout this thesis, we refer to the hand annotated text label as the true \gls{gt} and the prediction of the \gls{ocr} methods on the reference image as the pseudo \gls{gt}.
+The two $\Delta R$ values can then be compared to evaluate, if using the \gls{ocr} algorithms as a reference is a good estimation of the difference between codecs.
 If the difference between the two values is small, then the estimation is good and we might be able to use the \gls{ocr} algorithms as a reference for future codec comparisons.
 We go into more detail about the codecs we use for our comparisons in \autoref{sec:dataset_codec}.
 

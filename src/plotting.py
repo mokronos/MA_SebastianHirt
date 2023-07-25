@@ -1,13 +1,15 @@
 import pandas as pd
 import matplotlib.pyplot as plt
+import matplotlib.patches as patches
 import helpers
 from config import CONFIG, PATHS
 import cv2
-from itertools import islice
 from mpl_toolkits.axes_grid1 import make_axes_locatable
 import numpy as np
 import scipy.stats
 from scipy.optimize import curve_fit
+import pytesseract
+from PIL import Image
 
 plt.rcParams.update({
     "text.usetex": True,
@@ -519,6 +521,98 @@ def plot_bjontegaard_example():
 
     print("plotted bjontegaard example")
 
+def bbox_order(id=1, algo="ezocr", sort=True):
+    """
+    check how to order tesseract results that the text is in lines
+    """
+
+    save_paths_csv = helpers.create_paths(PATHS["pred_ref"],
+                                            [id],
+                                            algo=algo, ext="csv")
+
+    save_path = save_paths_csv[0]
+    print(save_path)
+
+    pred_csv = pd.read_csv(save_path)
+    print(pred_csv)
+
+    # load image
+    img_path = PATHS["images_scid_ref"](num=id)
+
+    img = cv2.imread(img_path)
+    img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+
+    # clean data
+    pred_csv = pred_csv.loc[~pred_csv["text"].isna()]
+    pred_csv = pred_csv.loc[pred_csv["text"].str.strip() != ""]
+
+    if sort:
+        new_data = helpers.sort_boxes(pred_csv)
+    else:
+        if algo == "ezocr":
+            new_data = pred_csv
+        else:
+            # predict with tesseract
+            with Image.open(img_path) as image:
+                pred = pytesseract.image_to_data(image, output_type=pytesseract.Output.DATAFRAME, config="--oem 1")
+                pred = pred.loc[~pred["text"].isna()]
+                pred = pred.loc[pred["text"].str.strip() != ""]
+                pred['right'] = pred['left'] + pred['width']
+                pred['bottom'] = pred['top'] + pred['height']
+                new_data = pred
+                new_data.reset_index(inplace=True, drop=True)
+
+
+    plt.imshow(img)
+
+    # draw text boxes
+    for i, row in new_data.iterrows():
+        x, y, w, h = row["left"], row["bottom"], row["right"]-row["left"], row["top"]-row["bottom"]
+        text = f"({i})"
+        plt.gca().add_patch(patches.Rectangle((x, y), w, h, fill=False, color="green", linewidth=0.5))
+        # put text under bounding box
+        plt.text(x, y+12, text, color="green", fontsize=4, weight="bold")
+
+    plt.axis('off')
+    plt.savefig(f"images/bbox_order_{algo}{'_sorted' if sort else ''}.pdf", dpi=300, bbox_inches='tight', pad_inches=0)
+    plt.close()
+    plt.clf()
+
+def overview():
+
+    plt.rcParams.update({
+        "font.size": 24
+        })
+
+    data = pd.read_csv(PATHS['results_dist']())
+    ids = CONFIG["scid_img_ids"]
+
+    # filter data
+    data = data.loc[data["img_num"].isin(ids)]
+
+    grp_target = data.groupby('target')
+    for name_target, group_target in grp_target:
+    
+        grp_ocr = group_target.groupby('ocr_algo')
+        for name_ocr, group_ocr in grp_ocr:
+
+
+            # plot cer against mos for all selected ids
+            plt.plot(group_ocr["cer_comp"], group_ocr["mos"], marker='.', linestyle='None')
+            plt.xlabel("CER$_{\mathrm{c}}$")
+            plt.ylabel("MOS")
+            plt.grid()
+            plt.xlim(0, 100)
+            plt.ylim(0, 100)
+            ticks = [0, 20, 40, 60, 80, 100]
+            plt.xticks(ticks)
+            plt.yticks(ticks)
+            ax = plt.gca()
+            ax.set_aspect('equal', adjustable='box')
+            plt.savefig(f"images/cer_mos_overview_{name_target}_{name_ocr}.pdf", bbox_inches='tight', pad_inches=0)
+            plt.close()
+            plt.clf()
+
 
 def pipeline():
     """
@@ -549,15 +643,25 @@ def pipeline():
     plot_fit_example()
     plot_bjontegaard_example()
 
+    # bbox order examples
+    bbox_order(id=1, algo="tess", sort=True)
+    bbox_order(id=1, algo="tess", sort=False)
+    bbox_order(id=1, algo="ezocr", sort=False)
+
 
 if __name__ == '__main__':
 
     pass
     # pipeline()
     # plot_fit_example()
-    plot_codec_cer_size()
+    # plot_codec_cer_size()
     # plot_bjontegaard_example()
     # plot_cer_dist_quality()
     # plot_cer_mos_mean()
     # plot_cer_mos_fitted_mean()
+    # bbox_order(id=1, algo="tess", sort=True)
+    # bbox_order(id=1, algo="tess", sort=False)
+    # bbox_order(id=1, algo="ezocr", sort=False)
+    overview()
+
 

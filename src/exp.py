@@ -201,47 +201,6 @@ def bbox_order():
         else:
             return False
 
-
-    def sort_boxes_old(data):
-
-        TOL = 0.5
-        new_data = pd.DataFrame(columns=data.columns)
-
-        tolerance = None
-        while len(data) > 0:
-
-            if tolerance:
-
-                # get boxes with edge overlap
-                in_tolerance = data.loc[data["top"].apply(lambda x: check_overlap(tolerance, (x, x + data["height"].values[0])))]
-
-                if len(in_tolerance) > 0:
-                    left = in_tolerance.loc[in_tolerance["left"] == in_tolerance["left"].min()]
-                
-                else:
-                    # get top left most box in next iteration
-                    tolerance = None
-                    continue
-
-            else:
-                # get top most box
-                top = data.loc[data["top"] == data["top"].min()]
-                # get left most box
-                left = top.loc[top["left"] == top["left"].min()]
-
-            # add to new data
-            new_data = pd.concat([new_data, left])
-
-            # get tolerance
-            tolerance = (left["top"].values[0], int(left["top"].values[0] + left["height"].values[0] * TOL))
-
-            # remove from data
-            data = data.drop(left.index)
-
-        new_data.reset_index(inplace=True, drop=True)
-
-        return new_data
-
     def sort_boxes(data):
 
         TOL = 0.5
