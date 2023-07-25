@@ -1,6 +1,6 @@
 # Steps for VTM encoding
 
-1. Download and compile VTM from https://vcgit.hhi.fraunhofer.de/jvet/VVCSoftware_VTM/-/tree/VTM-20.0?ref_type=tags
+1. Download and compile VTM from https://vcgit.hhi.fraunhofer.de/jvet/VVCSoftware_VTM/-/tree/VTM-17.2?ref_type=tags
 2. create_raw_rgbp.sh: convert input images to RAW RGB format (other formats would also be possible, e.g. YUV444 or YUV420, but different coding configs would be needed for those)
 3. create_raw_sequence_cfgs.sh: create configuration files for each input.
 4. encodeCLassSCCFormatRGB_CTC.sh: Encode image
