@@ -256,6 +256,7 @@ Additionally, there are some points with zero $\text{CER}_{\text{c}}$ for Tesser
 This implies that EasyOCR performs better in general and that Tesseract \gls{ocr} struggles with some distortions and fails to predict anything.
 We notice similar behavior when comparing the pseudo \glspl{gt} for both \gls{ocr} algorithms, although the $\text{CER}_{\text{c}}$ values are generally higher.
 This can be attributed to the fact that the predictions contains no additional errors due to positioning of the text elements and are generally closer to the pseudo \gls{gt} compared to the true \gls{gt}.
+Lastly, it is worth noting that there are minimal occurrences of high \gls{mos} values paired with low $\text{CER}_{\text{c}}$ values, which is evident in the top left sections of all figures.
 
 
 \section{Extension of the Dataset with Images Distorted by Compression Methods}
@@ -270,15 +271,22 @@ The \gls{hevc} \cite{hevc_2012} is one of the newest video codecs.
 It is the successor of the H.264/MPEG-4 AVC codec.
 The main improvements were the leveraging of parallel processing architecture in modern devices and addressing higher resolutions.
 The codec uses the conventional approach of dividing the image into blocks for encoding and leveraging sequential frames to only encode the difference instead of the whole frame.
-However it also employs a number of new techniques to provide around 50\% bit rate savings for equivalent quality.
+However, it also employs a number of new techniques to provide around 50\% bit rate savings for equivalent quality.
+For this thesis, we use version 16.21+SCM-8.8 of the HM reference software \cite{hevc_github_2020} to encode the images with the \gls{hevc} codec.
+The default and \gls{scc} configurations used for encoding are applied according to the common test conditions \cite{hevc_ctc_2015}.
+
+-- more detail
 
 \subsection{Versatile Video Coding}
 \label{subsec:vvc}
 
-The \gls{vvc} \cite{vvc_2021} is the successor of the \gls{hevc} and the most recent video codec.
-It has another 50\% bit rate savings compared to the \gls{hevc} for equivalent quality.
+The \gls{vvc} \cite{vvc_2021} is the successor of the \gls{hevc} and one of the most recent video codecs.
+It aims to reach another 50\% bit rate savings compared to the \gls{hevc} for equivalent quality.
 Additionally, the versatility of the codec enables it to be used for a wider range of applications, including $360^{\circ}$ immersive video, high dynamic range, adaptive streaming with resolution changes and many more.
+For this thesis, we use version 17.2 of the VTM reference software \cite{vvc_github_2022} to encode the images with the \gls{vvc} codec.
+The default and \gls{scc} configurations used for encoding applied according to the common test conditions \cite{vvc_ctc_2021}.
 
+-- more detail
 
 It is to note, that we use these codecs on images instead of videos, which means that we are not leveraging the full potential of the videos codecs.
 Furthermore, we encoded the images with the default and the \gls{scc} configuration of the codecs to observe the difference.
@@ -288,8 +296,8 @@ For the experiments related to the codecs we select the images with,
 \begin{equation}
     i \in {1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 12, 13, 15, 16, 18, 19, 20, 21, 22, 23, 24, 25, 27, 29}.
 \end{equation}
-For both codecs, we encode these images with \glspl{qp} $\in {35, 40, 45, 50}$.
-% --- deviating from VVC common test conditions, due to lack of changes in the CER for lower QP values
+The common test condition \glspl{qp} $\in {22, 27, 32, 37}$ result in no significant changes in the $\text{CER}_{\text{c}}$.
+Therefore, following the approach of previous researchers in \cite{ultra_low_bitrate_2022}, we encode these images with \glspl{qp} $\in {35, 40, 45, 50}$ for both codecs.
 We subsequently employ the \gls{ocr} algorithms to predict text in these images, enabling us to compute the $\text{CER}_{\text{c}}$.
 Afterwards, we visualize rate-distortion curves and calculate the \gls{bdrate}, as described in \autoref{subsec:bdrate}.
 To summarize, the original dataset has a \gls{mos} for each image with various distortions.

@@ -14,7 +14,7 @@ For blurred images, EasyOCR exhibits a high correlation with human judgment.
 Our recommendation is to determine if \gls{ocr} methods are affected by specific distortions or check which distortions appear in the used data before adding \gls{ocr} as a metric.
 Compared to other methods, both \gls{ocr} methods are subpar, especially considering that we selected specifically suited images from the dataset compared to other metrics using the full dataset.
 However, our method only uses the text regions of the images, which are missing a lot of information about distortion impacts on the graphical or natural parts of the image.
-Thus, we recommend combining \gls{ocr} with other metrics to get a more complete picture of the image quality.
+Thus, we recommend combining \gls{ocr} with other metrics, like the \gls{psnr} or the \gls{ssim}, to get a more complete picture of the image quality.
 
 Additionally, we surmise that in general EasyOCR performs better than Tesseract \gls{ocr} on the reference images, but both seem to be too inaccurate to be used as \gls{gt}, see \autoref{sec:usage_of_recognized_text_as_ground_truth}.
 Finally we compare the \gls{ocr} performance for several quality levels of the \gls{hevc} and \gls{vvc} codecs.
