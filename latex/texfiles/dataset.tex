@@ -15,7 +15,7 @@ These scores are then converted to a \gls{mos} value for each image between 0 an
 
 
 
-\begin{figure}[h!]
+\begin{figure}
     \centering
     \includegraphics[width=\textwidth]{reference_images}
     \caption{The 40 references images of the dataset.}
@@ -32,7 +32,7 @@ They are distorted with 9 different distortion types, each with 5 different dist
 In \autoref{tab:distortion_types}, we list the distortion types with a short description.
 
 
-\begin{table}[h!]
+\begin{table}
 \centering
 \caption{Overview of the distortion types used in the dataset.}
 \begin{tabular}{|p{6cm}|c|p{6cm}|}
@@ -81,14 +81,14 @@ The \gls{cqd} distortion is applied by reducing the number of colors available i
 More detailed descriptions of the implementation of the distortions can be found in the supporting file included with the dataset.
 The different distortion types, at their most severe quality level, can be seen in \autoref{fig:distortion_types}, applied to the image in \autoref{fig:img29}.
 
-\begin{figure}[h!]
+\begin{figure}
     \centering
     \includegraphics[width=0.7\textwidth]{../../data/raw/scid/ReferenceSCIs/SCI29.png}
     \caption{Reference image SCI29}
     \label{fig:img29}
 \end{figure}
 
-\begin{figure}[h!]
+\begin{figure}
     \centering
     \begin{subfigure}[b]{0.42\textwidth}
         \includegraphics[width=\textwidth]{../../data/raw/scid/DistortedSCIs/SCI29_1_5.png}
@@ -156,7 +156,7 @@ The only exception is \gls{cc}.
 As illustrated in \autoref{fig:cc_levels}, \gls{cc} does not display a clear pattern of variation from low contrast to high contrast, or any similar trend.
 Understanding this behavior is important for the analysis of the trends of the \gls{mos} over the different quality levels.
 
-\begin{figure}[h!]
+\begin{figure}
     \centering
     \begin{subfigure}[b]{0.18\textwidth}
         \includegraphics[width=\textwidth]{../../data/raw/scid/DistortedSCIs/SCI01_4_1.png}
@@ -218,7 +218,7 @@ This selection process is subjective, so it might be more reasonable to use all 
 Additionally, even if an image only has one small text element, the $\text{CER}_{\text{c}}$ might still be a good estimation of the \gls{mos}, if the distortion affects the text in the same way as the rest of the image.
 This however, is not the case for certain distortions, like \gls{hevc} or other compression algorithms.
 
-\begin{figure}[h!]
+\begin{figure}
     \begin{subfigure}[b]{0.45\textwidth}
         \centering
         \includegraphics[width=\textwidth]{../../images/cer_mos_overview_gt_tess.pdf}
@@ -306,6 +306,41 @@ One such tools is the palette mode, which uses a reduced number of colors to enc
 This tool exists in the \gls{hevc} as well, but it is improved in the \gls{vvc}.
 Another tool is the intra-picture block copy, which leverages the fact that \glspl{sci} often contains repeated patterns, for instance in the form of UI elements or large uniformly colored regions.
 In the \gls{hevc} screen content extension, this tool is able to copy blocks from the same frame from further away, while in the \gls{vvc} the complexity is reduced by restricting the copying to neighboring blocks.
+\begin{figure}
+    \centering
+    \begin{subfigure}[b]{0.45\textwidth}
+        \includegraphics[width=\linewidth]{../images/codec_hm_default_diff_50_SCI4.png}
+        \caption{Default configuration}
+        \label{fig:codec_hm_default_diff_50_SCI4}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.45\textwidth}
+        \includegraphics[width=\linewidth]{../images/codec_hm_scc_diff_50_SCI4.png}
+        \caption{\gls{scc} configuration}
+        \label{fig:codec_hm_scc_diff_50_SCI4}
+    \end{subfigure}
+    \caption{Absolute pixel differences between the reference image and the \gls{hevc} encoded images with the default and \gls{scc} configurations for Image 4.}
+    \label{fig:codec_hm_diff_50_SCI4}
+\end{figure}
+The improvements from the screen content tools for \gls{hevc} are evident when observing \autoref{fig:codec_hm_diff_50_SCI4}.
+Notably, the absolute pixel differences, representing the coding error, are reduced for the \gls{scc} configuration compared to the default configuration, particularly in the text regions.
+\begin{figure}
+    \centering
+    \begin{subfigure}[b]{0.45\textwidth}
+        \includegraphics[width=\linewidth]{../images/codec_vtm_default_diff_50_SCI4.png}
+        \caption{Default configuration}
+        \label{fig:codec_vtm_default_diff_50_SCI4}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.45\textwidth}
+        \includegraphics[width=\linewidth]{../images/codec_vtm_scc_diff_50_SCI4.png}
+        \caption{\gls{scc} configuration}
+        \label{fig:codec_vtm_scc_diff_50_SCI4}
+    \end{subfigure}
+    \caption{Absolute pixel differences between the reference image and the \gls{vvc} encoded images with the default and \gls{scc} configurations for Image 4.}
+    \label{fig:codec_vtm_diff_50_SCI4}
+\end{figure}
+A similar, albeit more subtle difference is observable for \gls{vvc} in \autoref{fig:codec_vtm_diff_50_SCI4}.
 For this thesis, we use version 17.2 of the VTM reference software \cite{vvc_software_2022} to encode the images with the \gls{vvc} codec.
 The default and \gls{scc} \cite{config_vvc_both_2020} configurations used for encoding are applied according to the common test conditions for color space RGB 444.
 
@@ -322,6 +357,8 @@ The common test condition \glspl{qp} $\in \{22, 27, 32, 37\}$ result in no signi
 Therefore, following the approach of previous researchers in \cite{ultra_low_bitrate_2022}, we encode these images with \glspl{qp} $\in \{35, 40, 45, 50\}$ for both codecs.
 We subsequently employ the \gls{ocr} algorithms to predict text in these images, enabling us to compute the $\text{CER}_{\text{c}}$.
 Afterwards, we visualize rate-distortion curves and calculate the \gls{bdrate}, as described in \autoref{subsec:bdrate}.
-To summarize, the original dataset has a \gls{mos} for each image with various distortions.
-We are expanding the dataset by encoding the images with the \gls{hevc} and \gls{vvc} codecs.
-Now that we have all the parts to describe the experiments, we evaluate and discuss the results in the next chapter.
+
+In summary, the original dataset contains a \gls{mos} for each image with various distortions.
+To evaluate the performance of the \gls{ocr} algorithms, we create text labels for each of the images.
+Further, expand the dataset by encoding the images with the \gls{hevc} and \gls{vvc} codecs.
+With all the necessary components describe the experiments now in place, we proceed to evaluate and discuss the results in the subsequent chapter.

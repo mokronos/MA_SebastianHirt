@@ -401,18 +401,31 @@ def image_diff():
     """
     # calculate difference between reference and q=50 compressed image
     # load images
-    ids = CONFIG['codecs_img_ids_combined']
+    id = 4
 
-    ref_paths = helpers.create_paths(PATHS["images_scid_ref"], ids)
-    codec_paths = helpers.create_paths(PATHS["images_hm_scc"], ids, [50])
+    ref_path = PATHS["images_scid_ref"](id)
+    codec_vtm_default = PATHS["images_codec"](id, q=50, codec_config='default', codec='vtm')
+    codec_hm_default = PATHS["images_codec"](id, q=50, codec_config='default', codec='hm')
+    codec_vtm_scc = PATHS["images_codec"](id, q=50, codec_config='scc', codec='vtm')
+    codec_hm_scc = PATHS["images_codec"](id, q=50, codec_config='scc', codec='hm')
 
-    for ref, codec, id in zip(ref_paths, codec_paths, ids):
 
-        ref_img = cv2.imread(ref, cv2.IMREAD_GRAYSCALE)
-        codec_img = cv2.imread(codec, cv2.IMREAD_GRAYSCALE)
 
-        diff = cv2.absdiff(ref_img, codec_img)
-        cv2.imwrite(f"images/diff_{id}_q50.png", diff)
+    ref_img = cv2.imread(ref_path, cv2.IMREAD_GRAYSCALE)
+    codec_vtm_default_img = cv2.imread(codec_vtm_default, cv2.IMREAD_GRAYSCALE)
+    codec_hm_default_img = cv2.imread(codec_hm_default, cv2.IMREAD_GRAYSCALE)
+    codec_vtm_scc_img = cv2.imread(codec_vtm_scc, cv2.IMREAD_GRAYSCALE)
+    codec_hm_scc_img = cv2.imread(codec_hm_scc, cv2.IMREAD_GRAYSCALE)
+
+    codec_vtm_default_diff = cv2.absdiff(ref_img, codec_vtm_default_img)
+    codec_hm_default_diff = cv2.absdiff(ref_img, codec_hm_default_img)
+    codec_vtm_scc_diff = cv2.absdiff(ref_img, codec_vtm_scc_img)
+    codec_hm_scc_diff = cv2.absdiff(ref_img, codec_hm_scc_img)
+
+    cv2.imwrite(f"images/codec_vtm_default_diff_50_SCI{id}.png", codec_vtm_default_diff)
+    cv2.imwrite(f"images/codec_hm_default_diff_50_SCI{id}.png", codec_hm_default_diff)
+    cv2.imwrite(f"images/codec_vtm_scc_diff_50_SCI{id}.png", codec_vtm_scc_diff)
+    cv2.imwrite(f"images/codec_hm_scc_diff_50_SCI{id}.png", codec_hm_scc_diff)
 
     print("calculated difference between reference and q=50 compressed image")
 
@@ -662,7 +675,7 @@ def pipeline():
     # plot_codec_comparison_psnr()
 
     # absolute difference of pixels in images
-    # image_diff()
+    image_diff()
 
     # example for fitting
     plot_fit_example()
@@ -691,7 +704,8 @@ if __name__ == '__main__':
     # bbox_order(id=1, algo="tess", sort=True)
     # bbox_order(id=1, algo="tess", sort=False)
     # bbox_order(id=1, algo="ezocr", sort=False)
-    dataset_overview()
+    # dataset_overview()
+    image_diff()
 
 
 

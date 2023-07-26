@@ -2,14 +2,14 @@
 \selectlanguage{ngerman}
 
 In der heutigen digital vernetzten Welt spielen Bildschirminhalte in verschiedenen Anwendungen wie Videokonferenzen, Remote-Desktop-Zugriff und Videostreaming eine wichtige Rolle, so dass die Bildqualität ein entscheidender Aspekt für die Verbesserung der Benutzerfreundlichkeit ist.
-Herkömmliche Methoden zur Bewertung der Bildqualität, wie der Signal-Rausch-Abstand und der strukturelle Ähnlichkeitsindex, sind jedoch für Bildschirminhalte mit Text unzureichend.
-In dieser Arbeit wird die Anwendung von optischen Zeichenerkennungsalgorithmen zur Bewertung der Bildqualität von Bildschirminhalten untersucht.
-Zunächst untersuchen wir den Stand der Technik von optischen Zeichenerkennungsmethoden und vergleichen die Leistung von Tesseract OCR und EasyOCR anhand des SCID-Datensatzes. 
+Herkömmliche Methoden zur Bewertung der Bildqualität, wie die \gls{psnr} und der \gls{ssim}, sind jedoch für Bildschirminhalte mit Text unzureichend.
+In dieser Arbeit wird die Anwendung von \gls{ocr} Algorithmen zur Bewertung der Bildqualität von Bildschirminhalten untersucht.
+Zunächst untersuchen wir den Stand der Technik von \gls{ocr} Methoden und vergleichen die Leistung von Tesseract \gls{ocr} und EasyOCR anhand des SCID-Datensatzes. 
 Da der Datensatz keine Textbeschriftungen enthält, annotieren wir den Datensatz, um die Effektivität der optischen Zeichenerkennungsmethoden zu bewerten.
-Außerdem untersuchen wir die Korrelation zwischen der Leistung der optischen Zeichenerkennungsmethoden und dem menschlichen Urteilsvermögen bei Bildern mit verschiedenen Arten von Verzerrungen, indem wir die Zeichenfehlerrate mit dem im Datensatz enthaltenen subjektiven mittleren Meinungswert vergleichen.
-Darüber hinaus erweitern wir den SCID-Datensatz um Bilder, die mit hocheffizienter Videocodierung und vielseitiger Videocodierung verzerrt sind.
-Diese Erweiterung ermöglicht es uns zu untersuchen, ob optische Zeichenerkennungsalgorithmen als zuverlässige Basiswahrheit für den Vergleich verschiedener Codecs dienen kann, indem wir die Bjøntegaard-Deltaraten zwischen verschiedenen Ratenverzerrungskurven berechnen.
-Unsere Ergebnisse deuten darauf hin, dass die optische Zeichenerkennung ein vielversprechendes Werkzeug für die Bewertung der Bildqualität von Bildschirminhalten bei bestimmten Arten von Verzerrungen ist, insbesondere wenn sie durch andere Metriken ergänzt wird.
+Außerdem untersuchen wir die Korrelation zwischen der Leistung der \gls{ocr} Algorithmen und dem menschlichen Urteilsvermögen an Bildern mit verschiedenen Arten von Verzerrungen, indem wir die \gls{cer} mit der in dem Datensatz enthaltenen subjektiven \glspl{mos} vergleichen.
+Darüber hinaus erweitern wir den SCID-Datensatz mit Bildern, die mit \gls{hevc} und \gls{vvc} Codecs verzerrt sind.
+Diese Erweiterung ermöglicht es uns zu untersuchen, ob \gls{ocr} Algorithmen als zuverlässige Basiswahrheit für den Vergleich verschiedener Codecs dienen kann, indem wir die Bjøntegaard-Deltaraten zwischen verschiedenen Raten-Verzerrungs Kurven berechnen.
+Unsere Ergebnisse deuten darauf hin, dass die \gls{ocr} Algorithmen vielversprechende Werkzeuge für die Bewertung der Bildqualität von Bildschirminhalten bei bestimmten Arten von Verzerrungen sind, insbesondere wenn sie durch andere Metriken, die graphische Bildinhalte bewerten, ergänzt werden.
 Zusätzlich legen unsere Ergebnisse nahe, dass sich EasyOCR als Grundwahrheit für den Vergleich von Codecs eignet.
 
 \selectlanguage{english}

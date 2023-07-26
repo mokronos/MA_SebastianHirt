@@ -575,11 +575,13 @@ generally:
 
 ## TODO
 
-- intro more detail, sources
+- where research fits in
+- graphics for easyocr and tesseract process
 - tesseract architecture, language, finetuning/training
-- diff image for default vs scc config, text readable for scc
+- intro more detail, sources
 - short caption for images
 - maybe graphic for segmention
+<!-- - diff image for default vs scc config, text readable for scc -->
 <!-- - pad neural net based ocr, more explanation of papers -->
 <!-- - iqa more for ssim and mention fsim at least -->
 <!-- - iqa for natural not as good for scc, source! -->

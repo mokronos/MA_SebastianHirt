@@ -1,8 +1,9 @@
 \chapter{Quality Assessment}
 \label{chap:qualityassessment}
 
-In this chapter, we begin by examining related work in the field of \gls{iqa}.
-We then review the specific metrics used in our thesis to evaluate the performance of \gls{iqa} algorithms.
+In this chapter, we begin by examining related work in the field of \gls{iqa} for natural images.
+Afterwards, we describe the differences to \glspl{sci} and discuss some metrics better suited to evaluate the quality of \glspl{sci}.
+Finally, we review the specific procedure used in our thesis to evaluate the performance of \gls{iqa} algorithms.
 
 \section{Conventional Quality Assessment}
 
@@ -10,30 +11,27 @@ We then review the specific metrics used in our thesis to evaluate the performan
 The term "quality" always refers to the quality of an image as perceived by the human visual system.
 However, there is an exception when images are used for machine learning or other tasks that do not involve human perception.
 In this case, image quality may be defined by the performance of the machine learning algorithm.
-This aspect becomes crucial when determining the appropriate compression techniques for datasets used in machine learning or identifying the types of distortions that have the most significant impact on \gls{ocr} algorithms.
+This aspect might become important when determining the appropriate compression techniques for datasets used in machine learning or identifying the types of distortions that have the most significant impact on \gls{ocr} algorithms.
 Consider, for instance, an application where an \gls{ocr} algorithm is utilized to recognize text in a presentation, and the recognized text is then read aloud by a text-to-speech system for a blind person.
 In this scenario, the image quality is defined by the performance of the \gls{ocr} algorithm rather than human perception.
 
-Generally, we can divide \gls{iqa} algorithms into three categories: \gls{fr}, \gls{rr} and \gls{nr}.
-The goal of \gls{fr} algorithms is to predict the quality of a distorted image by comparing it to the reference image.
+Generally, we can divide \gls{iqa} algorithms into three categories \cite{iqa_survey_2020}: \gls{fr}, \gls{rr} and \gls{nr}.
+The goal of \gls{fr} algorithms is to predict the quality of a distorted image by comparing it to the same image without distortion, called the reference image.
 \Gls{rr} algorithms predict the quality of the distorted image by comparing a reduced number of features of the distorted image to the reference image.
-\Gls{nr} algorithms only use the distorted image to predict its quality.
+\Gls{nr} algorithms only use the distorted image to predict its quality directly.
 In this thesis, we focus on \gls{fr} algorithms, as we have access to the original images.
-Another distinction can be made between the type of images that are used for the evaluation.
-We can differentiate between natural images and \gls{sci}.
-Natural images can be pictures of landscapes, people or objects and are captured by image sensors while \glspl{sci} are directly recorded in a digital format.
+Another distinction can be made between the type of images that are assessed.
+We can differentiate between natural images and \glspl{sci}.
+Natural images can be pictures of landscapes, people or objects and are captured by image sensors while \glspl{sci} are images of screen content, containing text, graphics or UI elements and are directly recorded in a digital format.
 
 For natural images, one common metric is the \gls{psnr} \cite{PSNRvsSSIM_2010}.
 It describes the ratio of the maximum possible power of a signal and the power of corrupting noise that affects it.
 When it is applied to an image, the \gls{psnr} is defined as
-
 \begin{equation}
     \text{PSNR} = 10 \cdot \log_{10} \left( \frac{R^2}{\text{MSE}} \right),
     \label{eq:psnr}
 \end{equation}
-
-with \(R\) being the maximum possible pixel value of the image and MSE being the \gls{mse} between the original and the reconstructed image.
-
+with \(R\) denoting the maximum possible pixel value of the image and the MSE describing the \gls{mse} between the distorted and the reference image.
 Another common metric is the \gls{ssim} \cite{SSIM_2004}, which takes salient features of the images into account.
 It combines the luminance, the contrast and the structural differences between two images into one metric.
 Compared to the \gls{psnr}, the \gls{ssim} is more closely correlated with human perception of the image quality \cite{frmetric_comp_2012}.
@@ -42,27 +40,27 @@ This provides better coverage of the human visual system compared to the single 
 However, the \gls{ssim} and MS-\gls{ssim} are surpassed in all criteria by the \gls{fsim} \cite{fsim_2011}.
 The \gls{fsim} is based on two features, namely the phase congruency and the gradient magnitude.
 Phase congruency is used to identify the importance of local structures in the image, while the gradient magnitude is used to measure the local contrast and in general the local rate of change of pixel values.
-These two features are then combined into a single metric.
+These two features are then combined into a single metric to assess the quality of the image.
 
 
 
 \section{Screen Content Specific Quality Assessment}
 
-\Glspl{sci} are images that contain text, graphics and user interface elements.
+\Glspl{sci} are images directly recorded in a digital format, containing text, graphics and user interface elements.
 A neighboring field is document image quality assessment, which assesses the quality of scanned documents and is thus mainly concerned with text \cite{3_subj_weight_2015}.
 \Glspl{sci} often contain a combination of document and natural image content.
-Therefore, because they differ statistically from natural and document images.
+Therefore, they differ statistically from natural and document images.
 They often contain large areas of uniform color, sharp contrasts and geometric structures.
 Conventional \gls{iqa} algorithms designed for natural images do not perform well in terms of correlation with the human perception of the image quality \cite{ni_scid_2017}.
-Thus, different metrics are required to evaluate their quality.
+Thus, different metrics are required to evaluate their the quality of \glspl{sci}.
 To address this issue, some research has been conducted.
 
 In \cite{ocr_cnn_docu_2014}, researchers use a convolutional neural network to assess the quality of documents.
 This enables the automatic assessment of document quality to filter out low-quality documents, on which \gls{ocr} algorithms would perform poorly or select high quality frames from a video recording of a document.
 The documents are segmented into text and non-text regions.
-Then \gls{ocr} and the proposed \gls{cnn} are used to predict scores, which are analyzed for correlation.
+Then, the proposed \gls{cnn} is used to predict quality scores for the content patches and averaged over the whole image.
+Finally, the resulting scores are analyzed for correlation with \gls{ocr} performance.
 The \gls{cnn} achieves state of the art performance in assessing the quality of the documents.
-However, the authors note that they assume, that the \gls{ocr} performance is directly correlated with the quality of the degraded document.
 In \cite{text_pict_weight_2017}, the authors propose an objective \gls{iqa} metric for \glspl{sci} that considers the text and pictorial content of an image separately.
 For the pictorial regions, the luminance and structural features are extracted.
 On the other hand, for the regions containing text, the authors use the gradient information to predict the visual quality.
