@@ -4,7 +4,7 @@
 In this chapter, we evaluate the results of our experiments in the following three sections.
 First, we analyze the performance of the \gls{ocr} algorithms for each distortion type.
 Then, we compare the performance of the \gls{ocr} algorithms against human judgment.
-Finally, we investigate the feasibility of using recognized text \gls{gt} to compare the performance of video codecs.
+Finally, we investigate the feasibility of using the recognized text as a pseudo \gls{gt} to compare the performance of video codecs.
 
 \section{Performance of Optical Character Recognition}
 \label{sec:ocr_performance}
@@ -13,26 +13,26 @@ First, we assess the impact of different distortion types on \gls{ocr} performan
 In this section, the $\text{CER}_{\text{c}}$ is calculated in relation to the true \gls{gt} for each image.
 We perform this analysis separately for EasyOCR and Tesseract \gls{ocr} compare their performance.
 Additionally, we conduct this analysis separately for all nine distortion types.
-For the comparison, we plot the $\overline{\text{CER}}_{c}$ with in relation to the \gls{gt} on the y-axis against different quality levels on the x-axis.
+For the comparison, we plot the $\overline{\text{CER}}_{c}$ in relation to the true \gls{gt} on the y-axis against different quality levels on the x-axis.
 
 \begin{figure}[h!]
 \centering
     \includegraphics[width=\textwidth]{../../images/analyze/cer_dist_quality_gt_ezocr.pdf}
-    \caption{$\overline{\text{CER}}_{\text{c}}$ in relation to the \gls{gt} for different quality levels with EasyOCR.}
+    \caption{$\overline{\text{CER}}_{\text{c}}$ in relation to the true \gls{gt} for different quality levels with EasyOCR.}
 \label{fig:cer_dist_quality_gt_ezocr}
 \end{figure}
 
-In \autoref{fig:cer_dist_quality_gt_ezocr}, we observe the $\overline{\text{CER}}_{\text{c}}$ in relation to the \gls{gt} for different quality levels using EasyOCR.
+In \autoref{fig:cer_dist_quality_gt_ezocr}, we observe the $\overline{\text{CER}}_{\text{c}}$ in relation to the true \gls{gt} for different quality levels using EasyOCR.
 We notice a trend that \gls{mb} has the most significant impact on EasyOCR's performance, exhibiting a nearly linear decrease from 80 to 20.
 For \gls{jpeg} and \gls{gb} EasyOCR displays similar behavior until quality level 4, after which it experiences a steeper decline for \gls{gb}.
 This may be due to the blurring of images greatly affecting the legibility of text, with letters becoming indistinct and merging together.
-For \gls{gn}, \gls{jpeg2000} and \gls{hevcscc} EasyOCR exhibits similar performance, experiencing a slight decline at quality level 5.
+For \gls{gn}, \gls{jpeg}2000 and \gls{hevc}-\gls{scc} EasyOCR exhibits similar performance, experiencing a slight decline at quality level 5.
 The remaining distortions have minimal impact on performance, which we expect since color distortions do not directly affect text shapes.
 
 \begin{figure}[h!]
 \centering
     \includegraphics[width=\textwidth]{../../images/analyze/cer_dist_quality_gt_tess.pdf}
-    \caption{$\overline{\text{CER}}_{\text{c}}$ in relation to the \gls{gt} for different quality levels with Tesseract \gls{ocr}.}
+    \caption{$\overline{\text{CER}}_{\text{c}}$ in relation to the true \gls{gt} for different quality levels with Tesseract \gls{ocr}.}
 \label{fig:cer_dist_quality_gt_tesseract}
 \end{figure}
 
@@ -62,7 +62,7 @@ In this section, we compare the performance of the \gls{ocr} algorithms with hum
 We first plot the $\overline{\text{CER}}_{\text{c}}$ on the x-axis against the \gls{mos} on the y-axis for each distortion type.
 Furthermore, we separate the plots, one for EasyOCR and one for Tesseract \gls{ocr}.
 For each metric, the mean is calculated over all images for each quality level and distortion type.
-Additionally, compared to the last section, we calculate the $\text{CER}_{\text{c}}$ in relation to the text predictions on the reference image instead of the \gls{gt}.
+Additionally, compared to the last section, we calculate the $\text{CER}_{\text{c}}$ in relation to the pseudo \gls{gt}, so the text predictions on the reference image, instead of the true \gls{gt}.
 Since the \gls{mos} is created by humans comparing the distorted images to the reference images, it makes it a fairer comparison.
 
 % mos vs cer mean in relation to reference for easyocr
@@ -127,7 +127,7 @@ Since the \gls{mos} is created by humans comparing the distorted images to the r
 
 In \autoref{fig:mos_cer_ref_mean_ezocr}, we can see the $\overline{\text{CER}}_{\text{c}}$ in relation to the text predictions on the reference images against the $\overline{\text{MOS}}$ over the selected images, see \autoref{sec:dataset_analysis}, for all distortions for EasyOCR.
 In general we notice that the performance ceiling for the $\overline{\text{CER}}_{\text{c}}$ is now up to almost 100.
-This is due to the $\overline{\text{CER}}_{\text{c}}$ being calculated in relation to the prediction on the reference images, which is not necessarily the \gls{gt}.
+This is due to the $\overline{\text{CER}}_{\text{c}}$ being calculated in relation to the pseudo \gls{gt}, which is not necessarily the true \gls{gt}.
 The distortions \gls{csc} and \gls{cc} are not impacting the performance of EasyOCR much, like we saw in the previous section.
 However, the corresponding $\overline{\text{MOS}}$ values are impacted.
 For \gls{cc}, we can see that the $\overline{\text{MOS}}$ does not show a clear trend with the quality level, because the \gls{cc} does not either, like we mentioned in \autoref{sec:dataset_distortion_types}.
@@ -443,9 +443,9 @@ Thus, the comparison is not entirely accurate.
 \section{Usage of Recognized Text as Ground Truth}
 \label{sec:usage_of_recognized_text_as_ground_truth}
 
-In this section, we will evaluate the feasibility of using recognized text by the \gls{ocr} algorithms as \gls{gt}.
+In this section, we will evaluate the feasibility of using recognized text by the \gls{ocr} algorithms as true \gls{gt}.
 To do so, we use both EasyOCR and Tesseract \gls{ocr} to recognize the text in the reference images without distortions.
-We then compared the recognized text with the hand annotated \gls{gt} text.
+We then compared the recognized text, the pseudo \gls{gt}, with the hand annotated true \gls{gt} text.
 
 \begin{table}[h!]
 \centering
@@ -461,23 +461,23 @@ We then compared the recognized text with the hand annotated \gls{gt} text.
     Tesseract & 79.08 & 12.00 \\
     \hline
 \end{tabular}
-    \caption{Mean and standard deviation of $\text{CER}_{\text{c}}$ for EasyOCR and Tesseract \gls{ocr} over selected reference images against the \gls{gt}.}
+    \caption{Mean and standard deviation of $\text{CER}_{\text{c}}$ for the predictions of EasyOCR and Tesseract \gls{ocr} over selected reference images compared to the true \gls{gt}.}
 \label{tab:mean_cer_cer_comp}
 \end{table}
 
 From \autoref{tab:mean_cer_cer_comp}, we can see that the $\overline{\text{CER}}_{\text{c}}$ for EasyOCR is roughly 4 points higher compared to Tesseract \gls{ocr}.
 With a roughly 2 points higher standard deviation, the performance of Tesseract \gls{ocr} is also more inconsistent.
-With a $\overline{\text{CER}}_{\text{c}}$ of 83.79 its difficult to recommend using EasyOCR as a \gls{gt} source, as almost $16\%$ of the text might be wrong.
+With a $\overline{\text{CER}}_{\text{c}}$ of 83.79 its difficult to recommend using EasyOCR as a true \gls{gt} source, as almost $16\%$ of the text might be wrong.
 Tesseract is worse with a $\overline{\text{CER}}_{\text{c}}$ of 79.1, and thus cannot be recommended either.
 It might however be possible to improve the performance of the \gls{ocr} algorithms by using a pre-processing pipeline.
 However, this is out of scope for this thesis and requires good knowledge of the type of data that will be used.
 
 
 
-Although the performance of the \gls{ocr} algorithms is not good enough to be used as a \gls{gt} source, we can still use it to compare the performance of different codecs.
+Although the performance of the \gls{ocr} algorithms is not good enough to be used as a true \gls{gt} source, we can still use it to compare the performance of different codecs.
 Thus, we now focus on the performance of the \gls{ocr} algorithms on images encoded with the \gls{hevc} and \gls{vvc}.
-For this, we modified the dataset as described in \autoref{sec:dataset_codec}.
-In this section, we refer to the \gls{gt} in relation to the hand annotated \gls{gt} as the true \gls{gt}.
+For this, we modified the dataset for the codec comparison as described in \autoref{sec:dataset_codec}.
+To be clear, in this section, we refer to the \gls{gt} in relation to the hand annotated \gls{gt} as the true \gls{gt}.
 The \gls{gt} in relation to the recognized text by the \gls{ocr} algorithms on the reference images is referred to as pseudo \gls{gt}.
 The goal is to determine if the \gls{ocr} algorithms can be used as a pseudo \gls{gt} for the comparison of different codecs.
 More specifically, if the difference between both pseudo \glspl{gt} is similar to the difference between both true \glspl{gt}, we might be able to use the pseudo \gls{gt} later to compare the performance of other, similar codecs.

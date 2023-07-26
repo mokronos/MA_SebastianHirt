@@ -1,6 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
+from matplotlib import gridspec
 import helpers
 from config import CONFIG, PATHS
 import cv2
@@ -574,11 +575,11 @@ def bbox_order(id=1, algo="ezocr", sort=True):
         plt.text(x, y+12, text, color="green", fontsize=4, weight="bold")
 
     plt.axis('off')
-    plt.savefig(f"images/bbox_order_{algo}{'_sorted' if sort else ''}.pdf", dpi=300, bbox_inches='tight', pad_inches=0)
+    plt.savefig(f"images/bbox_order_{algo}{'_sorted' if sort else ''}.pdf", dpi=150, bbox_inches='tight', pad_inches=0)
     plt.close()
     plt.clf()
 
-def overview():
+def dataset_analysis():
 
     plt.rcParams.update({
         "font.size": 24
@@ -613,6 +614,30 @@ def overview():
             plt.close()
             plt.clf()
 
+def dataset_overview():
+
+    ids = list(range(1, 41))
+    ref_paths = helpers.create_paths(PATHS["images_scid_ref"], ids)
+
+    save_path = "./images/"
+
+    fig = plt.figure(figsize=(5, 7))
+    gs = gridspec.GridSpec(8, 5, wspace=0.02, hspace=0.)
+
+    for idx, g in enumerate(gs):
+        if len(ref_paths) == 0:
+            break
+        ax = plt.subplot(g)
+        ax.imshow(plt.imread(ref_paths.pop(0)))
+        ax.axis('off')
+        ax.set_title(f'SCI {idx+1}', fontsize=6, y=0.88)
+
+
+    plt.savefig(save_path + "reference_images.pdf", dpi=300, bbox_inches='tight', pad_inches=0)
+    # plt.savefig(save_path + "reference_images.png", dpi=300)
+    # # 35MB laggy
+    # plt.savefig(save_path + "reference_images_HD.pdf", dpi=3000)
+    # plt.savefig(save_path + "reference_images_HD.png", dpi=3000)
 
 def pipeline():
     """
@@ -648,6 +673,10 @@ def pipeline():
     bbox_order(id=1, algo="tess", sort=False)
     bbox_order(id=1, algo="ezocr", sort=False)
 
+    # dataset
+    dataset_analysis()
+    dataset_overview()
+
 
 if __name__ == '__main__':
 
@@ -662,6 +691,7 @@ if __name__ == '__main__':
     # bbox_order(id=1, algo="tess", sort=True)
     # bbox_order(id=1, algo="tess", sort=False)
     # bbox_order(id=1, algo="ezocr", sort=False)
-    overview()
+    dataset_overview()
+
 
 

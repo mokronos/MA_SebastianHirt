@@ -11,7 +11,7 @@
     pages={2016--2027},
     year={2017},
     publisher={IEEE},
-    url = {http://39.96.165.147/Pub\%20Files/2017/fym_tip17.pdf}
+    url = {https://ieeexplore.ieee.org/document/7857067}
 }
 
 @article{3_subj_weight_2015,
@@ -55,6 +55,19 @@ volume = {2015},
 doi = {10.1109/ISCAS.2015.7168586},
 url = {https://www.researchgate.net/publication/285429613_Screen_image_quality_assessment_incorporating_structural_degradation_measurement}
 }
+
+@article{iqa_sci_gabor_2018,
+  title={A Gabor feature-based quality assessment model for the screen content images},
+  author={Ni, Zhangkai and Zeng, Huanqiang and Ma, Lin and Hou, Junhui and Chen, Jing and Ma, Kai-Kuang},
+  journal={IEEE Transactions on Image Processing},
+  volume={27},
+  number={9},
+  pages={4516--4528},
+  year={2018},
+  publisher={IEEE},
+  url={https://forestlinma.com/welcome_files/zkni_TIP_2018.pdf}
+}
+
 /* ################################################################ */
 /* Dataset */
 /* ################################################################ */
@@ -75,6 +88,19 @@ url = {https://www.researchgate.net/publication/285429613_Screen_image_quality_a
     year = {2017},
     pages = {4818--4831},
     url = {http://ieeexplore.ieee.org/document/7954714/}
+}
+
+
+@INPROCEEDINGS{ni_scid_2017,
+  author={Ni, Zhangkai and Ma, Lin and Zeng, Huanqiang and Fu, Ying and Xing, Lu and Ma, Kai-Kuang},
+  booktitle={2017 International Symposium on Intelligent Signal Processing and Communication Systems (ISPACS)}, 
+  title={SCID: A database for screen content images quality assessment}, 
+  year={2017},
+  volume={},
+  number={},
+  pages={774-779},
+  doi={10.1109/ISPACS.2017.8266580},
+  url={https://eezkni.github.io/publications/conference/SCID/SCID\_ZKNI\_ISPACS17.pdf}
 }
 
 @article{iqa_survey_2020,
@@ -107,7 +133,6 @@ url = {https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9959275/}
 /* ################################################################ */
 /* Codecs */
 /* ################################################################ */
-
 @article{hevc_2012,
   title={Overview of the high efficiency video coding (HEVC) standard},
   author={Sullivan, Gary J and Ohm, Jens-Rainer and Han, Woo-Jin and Wiegand, Thomas},
@@ -118,6 +143,18 @@ url = {https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9959275/}
   year={2012},
   publisher={IEEE},
   url = {https://ieeexplore.ieee.org/iel5/76/4358651/06316136.pdf}
+}
+
+@article{hevc_scc_2015,
+  title={Overview of the emerging HEVC screen content coding extension},
+  author={Xu, Jizheng and Joshi, Rajan and Cohen, Robert A},
+  journal={IEEE Transactions on Circuits and Systems for Video Technology},
+  volume={26},
+  number={1},
+  pages={50--62},
+  year={2015},
+  publisher={IEEE},
+  url={https://merl.com/publications/docs/TR2015-126.pdf}
 }
 
 @article{vvc_2021,
@@ -132,36 +169,48 @@ url = {https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9959275/}
   url = {https://ieeexplore.ieee.org/iel7/76/4358651/09503377.pdf}
 }
 
-@misc{vvc_github_2022,
-    title = {VTM reference software for VVC},
-    author = {VCEG, MPEG},
-    year = {2022},
-    version = {17.2},
-    publisher = {Frauenhofer},
-    howpublished = {\url{https://vcgit.hhi.fraunhofer.de/jvet/VVCSoftware\_VTM/-/tree/VTM-17.2}}
+@Electronic{vvc_software_2022,
+  author       = {{Joint Video Experts Team (JVET)}},
+  title        = {{VVC} test model Reference Software ({VTM})},
+  howpublished = {\url{https://vcgit.hhi.fraunhofer.de/jvet/VVCSoftware_VTM}},
+  note        = {[accessed 2023-02-20]},
 }
 
-@misc{hevc_github_2020,
-    title = {HM reference software for HEVC},
-    author = {VCEG, MPEG},
-    year = {2020},
-    version = {16.21+SCM-8.8},
-    publisher = {Frauenhofer},
-    howpublished = {\url{https://vcgit.hhi.fraunhofer.de/jvet/HM/-/tree/HM-16.21+SCM-8.8}}
+@Electronic{hevc_software_2020,
+  author       = {{Joint Collaborative Team on Video Coding}},
+  title        = {{HEVC} test model Reference Software ({HM})},
+  note         = {[accessed 2023-02-20]},
+  howpublished = {https://hevc.hhi.fraunhofer.de/},
 }
 
-@article{hevc_ctc_2015,
-    title={Common Test Conditions for Screen Content Coding},
-    author={Yu, H. and Cohen, R. and Rapaka, K. and Xu, J.},
-    publisher={MPEG},
-    url = {http://phenix.it-sudparis.eu/jct/doc_end_user/current_document.php?id=10221}
+# VVC SCC + Standard (RGB444)
+@TechReport{config_vvc_both_2020,
+  author      = {Y. Chao and Y. Sun and J. Xu and X. Xu},
+  title       = {{JVET} common test conditions and software reference configurations for non-4:2:0 colour formats},
+  date        = {2020},
+  institution = {Joint Video Exploration Team (JVET) of ITU-T SG 16 WP 3 and ISO/IEC JTC 1/SC 29/WG 11},
+  type        = {{AHG Report, JVET-R2013}},
 }
-
-@article{vvc_ctc_2021,
-    title={VTM common test conditions and software reference configurations for non-4:2:0 colour formats},
-    author={Chao, Y.-H. and Sun, Y.-C. and Xu, J. and Xu, X.},
-    publisher={JVET},
-    url={https://jvet-experts.org/doc_end_user/current_document.php?id=10546}
+# HEVC Standard -> weiß gerade nicht sicher ob dass passt. Weil wir ja RGB4:4:4 Daten nehmen und nicht YUV4:2:0
+@TechReport{config_hevc_2013,
+  author       = {Bossen, F.},
+  title        = {JCTVC-L1100: Common test conditions and software reference configurations},
+  institution  = {Joint Collaborative Team on Video Coding (JCT-VC) of ITU-T SG16 WP3 and ISO/IEC JTC1/SC29/WG11},
+  address      = {Geneva, Switzerland},
+  month        = {Jan.},
+  organization = {ITU-T VCEG and ISO/IEC MPEG (JCT-VC)},
+  timestamp    = {2016.04.14},
+  year         = {2013},
+}
+# HEVC SCC
+@TechReport{config_hevc_scc_2015,
+  author       = {Bossen, F.},
+  title        = {JCTVC-U1015-r2: Common test conditions for screen content coding},
+  institution  = {Joint Collaborative Team on Video Coding (JCT-VC) of ITU-T SG16 WP3 and ISO/IEC JTC1/SC29/WG11},
+  address      = {Warsaw, Poland},
+  month        = {June},
+  organization = {ITU-T VCEG and ISO/IEC MPEG (JCT-VC)},
+  year         = {2015},
 }
 
 @ARTICLE{ultra_low_bitrate_2022,
@@ -198,7 +247,8 @@ url = {https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9959275/}
     year = {2022},
     publisher = {GitHub},
     journal = {GitHub repository},
-    howpublished = {\url{https://github.com/madmaze/pytesseract}}
+    howpublished = {\url{https://github.com/madmaze/pytesseract}},
+    note = {[accessed 2023-01-20]},
 }
 
 @misc{tesseract_github_2023,
@@ -207,7 +257,8 @@ url = {https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9959275/}
     year = {2023},
     publisher = {GitHub},
     journal = {GitHub repository},
-    howpublished = {\url{https://github.com/tesseract-ocr/tesseract}}
+    howpublished = {\url{https://github.com/tesseract-ocr/tesseract}},
+    note = {[accessed 2023-01-20]},
 }
 
 @misc{tesseract_architecture_2016,
@@ -216,7 +267,8 @@ url = {https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9959275/}
     year = {2016},
     publisher = {Google, Inc.},
     journal = {Document Analysis Systems},
-    howpublished = {\url{https://tesseract-ocr.github.io/docs/das_tutorial2016/2ArchitectureAndDataStructures.pdf}}
+    howpublished = {\url{https://tesseract-ocr.github.io/docs/das_tutorial2016/2ArchitectureAndDataStructures.pdf}},
+    note = {[accessed 2023-07-20]},
 }
 
 @misc{easyocr_gitub_2020,
@@ -225,7 +277,8 @@ url = {https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9959275/}
     year = {2023},
     publisher = {GitHub},
     journal = {GitHub repository},
-    howpublished = {\url{https://github.com/JaidedAI/EasyOCR}}
+    howpublished = {\url{https://github.com/JaidedAI/EasyOCR}},
+    note = {[accessed 2023-01-20]},
 }
 
 
@@ -265,6 +318,27 @@ url = {https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9959275/}
     archivePrefix={arXiv},
     primaryClass={cs.CV},
     url={https://arxiv.org/abs/1710.05703}
+}
+
+@article{ocr_appl_survey_2014,
+  title={An overview and applications of optical character recognition},
+  author={Asif, AMAM and Hannan, Shaikh Abdul and Perwej, Yusuf and Vithalrao, Mane Arjun},
+  journal={Int. J. Adv. Res. Sci. Eng},
+  volume={3},
+  number={7},
+  pages={261--274},
+  year={2014}
+}
+
+@article{ocr_appl_survey_2016,
+  title={A detailed analysis of optical character recognition technology},
+  author={Hamad, Karez and Mehmet, Kaya},
+  journal={International Journal of Applied Mathematics Electronics and Computers},
+  number={Special Issue-1},
+  pages={244--249},
+  year={2016},
+  publisher={Selcuk University},
+  url={https://dergipark.org.tr/en/download/article-file/236939}
 }
 
 @article{ocr_survey_lstms_2013,
@@ -328,6 +402,29 @@ url = {https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9959275/}
   year={2004},
   publisher={IEEE},
   url={https://ece.uwaterloo.ca/~z70wang/publications/ssim.pdf}
+}
+
+@inproceedings{ms_ssim_2003,
+  title={Multiscale structural similarity for image quality assessment},
+  author={Wang, Zhou and Simoncelli, Eero P and Bovik, Alan C},
+  booktitle={The Thrity-Seventh Asilomar Conference on Signals, Systems \& Computers, 2003},
+  volume={2},
+  pages={1398--1402},
+  year={2003},
+  organization={Ieee},
+  url={https://utw10503.utweb.utexas.edu/publications/2003/zw_asil2003_msssim.pdf}
+}
+
+@ARTICLE{fsim_2011,
+  author={Zhang, Lin and Zhang, Lei and Mou, Xuanqin and Zhang, David},
+  journal={IEEE Transactions on Image Processing}, 
+  title={FSIM: A Feature Similarity Index for Image Quality Assessment}, 
+  year={2011},
+  volume={20},
+  number={8},
+  pages={2378-2386},
+  doi={10.1109/TIP.2011.2109730},
+  url={https://ieeexplore.ieee.org/document/5705575}
 }
 
 @article{frmetric_comp_2012,
@@ -435,17 +532,6 @@ url = {https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9959275/}
     url={https://live.ece.utexas.edu/publications/2006/hrs-transIP-06.pdf}
 }
 
-@ARTICLE{nonlin_fit_appl_2011,
-    author={Zhang, Lin and Zhang, Lei and Mou, Xuanqin and Zhang, David},
-    journal={IEEE Transactions on Image Processing}, 
-    title={FSIM: A Feature Similarity Index for Image Quality Assessment}, 
-    year={2011},
-    volume={20},
-    number={8},
-    pages={2378-2386},
-    doi={10.1109/TIP.2011.2109730},
-    url={https://ieeexplore.ieee.org/document/5705575}
-}
 
 @inproceedings{nonlin_fit_appl_2017,
     doi = {10.1145/3123266.3123322},
@@ -530,4 +616,3 @@ pages="105--116",
 isbn="978-3-540-35972-2",
 url={https://www.osti.gov/servlets/purl/7256021}
 }
-

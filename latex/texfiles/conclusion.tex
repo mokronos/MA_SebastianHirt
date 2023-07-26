@@ -16,7 +16,7 @@ Compared to other methods, both \gls{ocr} methods are subpar, especially conside
 However, our method only uses the text regions of the images, which are missing a lot of information about distortion impacts on the graphical or natural parts of the image.
 Thus, we recommend combining \gls{ocr} with other metrics, like the \gls{psnr} or the \gls{ssim}, to get a more complete picture of the image quality.
 
-Additionally, we surmise that in general EasyOCR performs better than Tesseract \gls{ocr} on the reference images, but both seem to be too inaccurate to be used as \gls{gt}, see \autoref{sec:usage_of_recognized_text_as_ground_truth}.
+Additionally, we surmise that in general EasyOCR performs better than Tesseract \gls{ocr} on the reference images, but both seem to be too inaccurate to be used as true \gls{gt}, see \autoref{sec:usage_of_recognized_text_as_ground_truth}.
 Finally we compare the \gls{ocr} performance for several quality levels of the \gls{hevc} and \gls{vvc} codecs.
 We found EasyOCR to be a decent choice for the pseudo \gls{gt}, especially for the default codec configuration.
 
@@ -25,6 +25,6 @@ We found EasyOCR to be a decent choice for the pseudo \gls{gt}, especially for t
 For future work, we recommend combining the \gls{cer} with maybe the \gls{iou} between hand labeled text regions and the prediction bounding boxes.
 This might take a lot of labeling work, but leads to a more consistent metric as the order of the text elements is not important anymore
 Thus, it can be used to more objectively compare different \gls{ocr} algorithms.
-Furthermore, the resulting regions that are not occupied by text elements could be evaluated by other more suitable metrics and then combined.
+Furthermore, the resulting regions that are not occupied by text elements could be evaluated by other more suitable metrics for pictorial regions, and then combined into one single metric.
 Additionally, we recommend to try using preprocessing steps to improve the \gls{ocr} performance.
-This might be enough to use \gls{ocr} as a \gls{gt} replacement.
+This might be enough to use \gls{ocr} as good estimation of the true \gls{gt}.

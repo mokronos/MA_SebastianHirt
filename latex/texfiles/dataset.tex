@@ -18,7 +18,7 @@ These scores are then converted to a \gls{mos} value for each image between 0 an
 \begin{figure}[h!]
     \centering
     \includegraphics[width=\textwidth]{reference_images}
-    \caption{Overview of the dataset.}
+    \caption{The 40 references images of the dataset.}
     \label{fig:dataset_overview}
 \end{figure}
 
@@ -67,81 +67,83 @@ The images distorted by \gls{gn} have noise added with zero mean and standard de
 The images distorted by \gls{gb} are blurred with a Gaussian kernel.
 The size of the kernel is $5\times5$ with standard deviations of $0.58$, $0.76$, $0.96$, $1.2$ and $2.1$ for each quality level respectively.
 Images distorted by \gls{mb} are blurred with a motion kernel, which simulates motion blur.
-The 'theta' parameter, which controls the degree of angle in a counter-clockwise direction, is set to zero and the 'len' parameter, which determines the length of the movement of the simulated camera, is set to $2$, $3.4$, $4$, $5.5$ and $6.4$ respectively.
+The parameter, which controls the degree of angle in a counter-clockwise direction, is set to zero and the parameter, which determines the length of the movement of the simulated camera, is set to $2$, $3.4$, $4$, $5.5$ and $6.4$ respectively.
 The \gls{cc} distortion scales certain pixel values in the reference image to new values to change the contrast.
 The scaling is applied for the ranges $[0,1] \rightarrow [0.3,0.5]$, $[0,1] \rightarrow [0.1,0.7]$, $[0.1,0.8] \rightarrow [0.1,0.9]$, $[0.2,0.8] \rightarrow [0.1,0.8]$ and $[0.2,0.7] \rightarrow [0,1]$ respectively.
 So for the first quality level, all pixel values (from 0 to 1) are scaled to values between 0.3 and 0.5 of the maximum pixel intensity.
 For the \gls{jpeg} compression, the images are compressed by the image compression algorithm with quality factors $75$, $35$, $18$, $8$ and $5$ respectively.
-The \gls{jpeg2000} compression is applied with compression ratios of $0.08$, $0.045$, $0.02$, $0.015$ and $0.01$ respectively.
+The \gls{jpeg}2000 compression is applied with compression ratios of $0.08$, $0.045$, $0.02$, $0.015$ and $0.01$ respectively.
 The \gls{csc} distortion keeps the luminance component of the images constant, but scales the chrominance components by the factors $0.96$, $0.72$, $0.58$, $0.42$ and $0.1$ respectively.
-The \gls{hevcscc} distortion is applied by using the \gls{hevc} codec with the screen content configuration on the images with \glspl{qp} set to $16$, $36$, $40$, $42$ and $48$ respectively.
+The \gls{hevc}-\gls{scc} distortion is applied by using the \gls{hevc} codec with the screen content standard configuration on the images with the \glspl{qp} set to $16$, $36$, $40$, $42$ and $48$ respectively.
+We are unsure which exact software version was used for the \gls{hevc}-\gls{scc} encoding.
+% "all intra main setting"
 The \gls{cqd} distortion is applied by reducing the number of colors available in the image to $30$, $28$, $25$, $10$ and $5$ respectively.
 More detailed descriptions of the implementation of the distortions can be found in the supporting file included with the dataset.
 The different distortion types, at their most severe quality level, can be seen in \autoref{fig:distortion_types}, applied to the image in \autoref{fig:img29}.
 
 \begin{figure}[h!]
     \centering
-    \includegraphics[width=\textwidth]{../../data/raw/scid/ReferenceSCIs/SCI29.png}
+    \includegraphics[width=0.7\textwidth]{../../data/raw/scid/ReferenceSCIs/SCI29.png}
     \caption{Reference image SCI29}
     \label{fig:img29}
 \end{figure}
 
 \begin{figure}[h!]
     \centering
-    \begin{subfigure}[b]{0.3\textwidth}
+    \begin{subfigure}[b]{0.42\textwidth}
         \includegraphics[width=\textwidth]{../../data/raw/scid/DistortedSCIs/SCI29_1_5.png}
         \caption{Gaussian Noise}
         \label{fig:distortion_type_1}
     \end{subfigure}
     \hfill
-    \begin{subfigure}[b]{0.3\textwidth}
+    \begin{subfigure}[b]{0.42\textwidth}
         \includegraphics[width=\textwidth]{../../data/raw/scid/DistortedSCIs/SCI29_2_5.png}
         \caption{Gaussian Blur}
         \label{fig:distortion_type_2}
     \end{subfigure}
-    \hfill
-    \begin{subfigure}[b]{0.3\textwidth}
+    \newline
+    \begin{subfigure}[b]{0.42\textwidth}
         \includegraphics[width=\textwidth]{../../data/raw/scid/DistortedSCIs/SCI29_3_5.png}
         \caption{Motion Blur}
         \label{fig:distortion_type_3}
     \end{subfigure}
-    \newline
-    \begin{subfigure}[b]{0.3\textwidth}
+    \hfill
+    \begin{subfigure}[b]{0.42\textwidth}
         \includegraphics[width=\textwidth]{../../data/raw/scid/DistortedSCIs/SCI29_4_5.png}
         \caption{Contrast Change}
         \label{fig:distortion_type_4}
     \end{subfigure}
-    \hfill
-    \begin{subfigure}[b]{0.3\textwidth}
+    \newline
+    \begin{subfigure}[b]{0.42\textwidth}
         \includegraphics[width=\textwidth]{../../data/raw/scid/DistortedSCIs/SCI29_5_5.png}
         \caption{JPEG Compression}
         \label{fig:distortion_type_5}
     \end{subfigure}
     \hfill
-    \begin{subfigure}[b]{0.3\textwidth}
+    \begin{subfigure}[b]{0.42\textwidth}
         \includegraphics[width=\textwidth]{../../data/raw/scid/DistortedSCIs/SCI29_6_5.png}
         \caption{JPEG2000 Compression}
         \label{fig:distortion_type_6}
     \end{subfigure}
     \newline
-    \begin{subfigure}[b]{0.3\textwidth}
+    \begin{subfigure}[b]{0.42\textwidth}
         \includegraphics[width=\textwidth]{../../data/raw/scid/DistortedSCIs/SCI29_7_5.png}
         \caption{Color Saturation Change}
         \label{fig:distortion_type_7}
     \end{subfigure}
     \hfill
-    \begin{subfigure}[b]{0.3\textwidth}
+    \begin{subfigure}[b]{0.42\textwidth}
         \includegraphics[width=\textwidth]{../../data/raw/scid/DistortedSCIs/SCI29_8_5.png}
         \caption{HEVC Screen Content Coding}
         \label{fig:distortion_type_8}
     \end{subfigure}
-    \hfill
-    \begin{subfigure}[b]{0.3\textwidth}
+    \newline
+    \begin{subfigure}[b]{0.42\textwidth}
         \includegraphics[width=\textwidth]{../../data/raw/scid/DistortedSCIs/SCI29_9_5.png}
-        \caption{Color Quantization with dithering}
+        \caption{Color Quantization with Dithering}
         \label{fig:distortion_type_9}
     \end{subfigure}
-    \caption{Distorted image 29 with 9 different distortion types and distortion level 5.}
+    \caption{SCI 29 distorted by 9 different distortion types at the most severe level.}
     \label{fig:distortion_types}
 \end{figure}
 
@@ -149,7 +151,7 @@ The impact of different distortion types on text within an image is evident.
 Among the various distortions, alterations in contrast or color have minimal effect on text legibility for human readers.
 Conversely, distortions such as \gls{gn}, \gls{gb} and \gls{mb} can render the text completely unreadable to the human eye.
 We might expect that the distortions that affect the text the most, will also affect the \gls{ocr} the most.
-It is to note, that all distortions are monotonically decreasing with the quality level from 1 to 5.
+It is to note, that all distortions are monotonically decreasing in their severity with the quality level from 1 to 5.
 The only exception is \gls{cc}.
 As illustrated in \autoref{fig:cc_levels}, \gls{cc} does not display a clear pattern of variation from low contrast to high contrast, or any similar trend.
 Understanding this behavior is important for the analysis of the trends of the \gls{mos} over the different quality levels.
@@ -189,7 +191,7 @@ Then, we identify if this word is part of a line.
 If it is, we record the text of the entire line.
 Afterwards, we move to the next line or word and repeat the process until all text elements are recorded.
 Finally, we combine all the recorded text elements into the full \gls{gt} by separating them with spaces.
-In this process we ignore paragraphs, and only consider the height of the lines.
+In this process, we ignore paragraphs and only consider the height of the lines.
 This \gls{gt} aligns with the prediction order of the \gls{ocr} algorithms, as discussed in \autoref{subsec:tesseract}.
 To avoid introducing bias towards any specific \gls{ocr} algorithm regarding the order of text elements, we made the decision not to utilize one of the algorithms for predicting the text and then correcting it to create the \gls{gt}.
 
@@ -202,7 +204,7 @@ To avoid introducing bias towards any specific \gls{ocr} algorithm regarding the
 
 
 Before we continue with our main experiments, we give a short analysis of the dataset.
-First, we select a subset of image for our experiments.
+First, we select a subset of images for our experiments.
 Some of the images contain no text at all or only numbers.
 Others contain some text, but have a large focus on graphical objects besides the text.
 This makes them less suitable for a comparison between the $\text{CER}_{\text{c}}$, which evaluates text, with the \gls{mos}, which evaluates the whole image.
@@ -262,7 +264,9 @@ Lastly, it is worth noting that there are minimal occurrences of high \gls{mos} 
 \section{Extension of the Dataset with Images Distorted by Compression Methods}
 \label{sec:dataset_codec}
 
-In this section, we first describe the extension of the dataset by encoding the reference image with the \gls{hevc} and \gls{vvc} codecs.
+In this section, we first introduce the two video codecs, the \gls{hevc} and the \gls{vvc}.
+We further, explain what what how the two codecs are adjusted for \glspl{sci} by using screen content extensions.
+Finally, we use these codecs for the extension of the dataset by encoding the reference images.
 
 \subsection{High Efficiency Video Coding}
 \label{subsec:hevc}
@@ -270,23 +274,41 @@ In this section, we first describe the extension of the dataset by encoding the 
 The \gls{hevc} \cite{hevc_2012} is one of the newest video codecs.
 It is the successor of the H.264/MPEG-4 AVC codec.
 The main improvements were the leveraging of parallel processing architecture in modern devices and addressing higher resolutions.
-The codec uses the conventional approach of dividing the image into blocks for encoding and leveraging sequential frames to only encode the difference instead of the whole frame.
-However, it also employs a number of new techniques to provide around 50\% bit rate savings for equivalent quality.
-For this thesis, we use version 16.21+SCM-8.8 of the HM reference software \cite{hevc_github_2020} to encode the images with the \gls{hevc} codec.
-The default and \gls{scc} configurations used for encoding are applied according to the common test conditions \cite{hevc_ctc_2015}.
-
--- more detail
+The codec uses the conventional approach of dividing the image into block shaped regions.
+The information about the block size is added to the bit stream sent to the decoder.
+The first image of a video sequence uses intraframe prediction, which uses information from neighboring blocks to predict the information in the current block.
+For further frames, interframe prediction is used, which leverages the difference from the previous frame to encode the current frame.
+This improves coding efficiency, since the difference between frames is usually cheaper to encode than a whole new frame.
+However, in our case we only encode single images, so the codecs only use the intraframe prediction.
+After predicting the current block, the residual, which represents the difference between the prediction and the original block, is transformed by a linear spatial transform to generate the transform coefficients.
+Those are scaled, quantized and entropy coded to further reduce the bit rate.
+The intraframe prediction, the transform coefficients and all other required information is then sent to the decoder.
+The decoder uses that information to predict the current block as well.
+Afterwards, the transform coefficients can be reconstructed and used to approximate the residual of the block.
+The residual is then added to the prediction to reconstruct the original block.
+Further, it also employs a number of other new techniques over its predecessors to provide around 50\% bit rate savings for equivalent quality.
+To conform to the special characteristics of \glspl{sci}, a screen content extension was developed for the \gls{hevc} \cite{hevc_scc_2015}.
+We will expand on this in the following subsection after we introduce the \gls{vvc}, as they share some similarities.
+For this thesis, we use version 16.21+SCM-8.8 of the HM reference software \cite{hevc_software_2020} to encode the images with the \gls{hevc} codec.
+The default \cite{config_hevc_2013} and \gls{scc} \cite{config_hevc_scc_2015} configurations used for encoding are applied according to the common test conditions for color space RGB 444.
 
 \subsection{Versatile Video Coding}
 \label{subsec:vvc}
 
 The \gls{vvc} \cite{vvc_2021} is the successor of the \gls{hevc} and one of the most recent video codecs.
+Compared to the \gls{hevc}, it introduces combined inter-/intraframe prediction, luma mapping with chroma scaling and additional loop filters.
+Additionally, while most implementations of the \gls{hevc} are only able to use square block sizes, the \gls{vvc} supports rectangular block sizes as well, which enables more efficient coverage of certain regions of interest.
 It aims to reach another 50\% bit rate savings compared to the \gls{hevc} for equivalent quality.
 Additionally, the versatility of the codec enables it to be used for a wider range of applications, including $360^{\circ}$ immersive video, high dynamic range, adaptive streaming with resolution changes and many more.
-For this thesis, we use version 17.2 of the VTM reference software \cite{vvc_github_2022} to encode the images with the \gls{vvc} codec.
-The default and \gls{scc} configurations used for encoding applied according to the common test conditions \cite{vvc_ctc_2021}.
 
--- more detail
+For \glspl{sci} there are some additional tools to improve the performance for the different characteristics of the images.
+One such tools is the palette mode, which uses a reduced number of colors to encode blocks of images, because \glspl{sci} generally contain a limited amount of colors in local regions.
+This tool exists in the \gls{hevc} as well, but it is improved in the \gls{vvc}.
+Another tool is the intra-picture block copy, which leverages the fact that \glspl{sci} often contains repeated patterns, for instance in the form of UI elements or large uniformly colored regions.
+In the \gls{hevc} screen content extension, this tool is able to copy blocks from the same frame from further away, while in the \gls{vvc} the complexity is reduced by restricting the copying to neighboring blocks.
+For this thesis, we use version 17.2 of the VTM reference software \cite{vvc_software_2022} to encode the images with the \gls{vvc} codec.
+The default and \gls{scc} \cite{config_vvc_both_2020} configurations used for encoding are applied according to the common test conditions for color space RGB 444.
+
 
 It is to note, that we use these codecs on images instead of videos, which means that we are not leveraging the full potential of the videos codecs.
 Furthermore, we encoded the images with the default and the \gls{scc} configuration of the codecs to observe the difference.
@@ -294,10 +316,10 @@ The most important difference to the other distorted images is that there are no
 However, we can use more images for the comparison of the codecs, as we do not need to select based on too much focus on graphical objects over the text elements.
 For the experiments related to the codecs we select the images with,
 \begin{equation}
-    i \in {1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 12, 13, 15, 16, 18, 19, 20, 21, 22, 23, 24, 25, 27, 29}.
+    i \in \{1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 12, 13, 15, 16, 18, 19, 20, 21, 22, 23, 24, 25, 27, 29\}.
 \end{equation}
-The common test condition \glspl{qp} $\in {22, 27, 32, 37}$ result in no significant changes in the $\text{CER}_{\text{c}}$.
-Therefore, following the approach of previous researchers in \cite{ultra_low_bitrate_2022}, we encode these images with \glspl{qp} $\in {35, 40, 45, 50}$ for both codecs.
+The common test condition \glspl{qp} $\in \{22, 27, 32, 37\}$ result in no significant changes in the $\text{CER}_{\text{c}}$.
+Therefore, following the approach of previous researchers in \cite{ultra_low_bitrate_2022}, we encode these images with \glspl{qp} $\in \{35, 40, 45, 50\}$ for both codecs.
 We subsequently employ the \gls{ocr} algorithms to predict text in these images, enabling us to compute the $\text{CER}_{\text{c}}$.
 Afterwards, we visualize rate-distortion curves and calculate the \gls{bdrate}, as described in \autoref{subsec:bdrate}.
 To summarize, the original dataset has a \gls{mos} for each image with various distortions.

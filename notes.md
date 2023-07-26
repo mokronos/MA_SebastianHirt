@@ -575,10 +575,16 @@ generally:
 
 ## TODO
 
-- introduced pseudo/true gt in iqa, need to fix relation stuff
+- intro more detail, sources
+- tesseract architecture, language, finetuning/training
 - diff image for default vs scc config, text readable for scc
-- tesseract architecture
-- psnr explanation
-- Außerdem kurze Anmerkung, weil du das öfters schreibst: Das Ziel ist es nicht MOS durch CER ersetzen zu können. MOS ist und bleibt immer das beste, was man machen kann für menschliche Wahrnehmung. Wir versuchen zu schauen, ob es korreliert, bzw. ob man mittels CER das MOS annähern/schätzen kann. Und dass man das CER wahrscheinlich nicht als alleiniges Qualitätsmaß nehmen kann (außer vielleicht für Video Coding für Maschinen (VCM)) solltest du auch von Anfang an klar stellen. In Zukunft kann man dann (wie du auch im Schluss schon geschrieben hast, das CER mit in ein kombiniertes Qualitätsmaß aufnehmen oder eben für VCM auch alleine nutzen.
+- short caption for images
+- maybe graphic for segmention
+<!-- - pad neural net based ocr, more explanation of papers -->
+<!-- - iqa more for ssim and mention fsim at least -->
+<!-- - iqa for natural not as good for scc, source! -->
+<!-- - iqa scc more metrics that consider seperatly text and objects, mention some that dont -->
+<!-- - conventional ocr, more examples/history sources -->
+<!-- - more detail on hevc/vvc, scc config tools -->
 
 ## Questions

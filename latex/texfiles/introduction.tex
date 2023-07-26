@@ -16,8 +16,13 @@ Additionally, we investigate the feasibility of using the quality of \gls{ocr} a
 Through a structured implementation and detailed documentation of the framework and experiments, we provide valuable insights into the potential of \gls{ocr} algorithms for screen content \gls{iqa}.
 In this thesis, I use the pronouns \textit{we} and \textit{our} to refer to myself and the larger scientific community.
 
-First, we provide an overview of the current state of \gls{iqa} in \autoref{chap:qualityassessment}.
-Second, we present an overview of the current state of the art of \gls{ocr} in \autoref{chap:ocr}.
-Third, we describe the dataset used in this thesis in \autoref{chap:dataset}.
-Afterwards, we evaluate the results of our experiments in \autoref{chap:evaluation}.
+This thesis is structured as follows.
+First, we describe which conventional \gls{iqa} methods exist for natural images and which methods are used to assess screen content images in \autoref{chap:qualityassessment}.
+Further, we detail the evaluation procedure we apply to compare the performance of \gls{iqa} methods.
+In \autoref{chap:ocr}, we initially describe conventional \gls{ocr} methods and then focus on the state-of-the-art \gls{ocr} methods.
+Additionally, we introduce the two \gls{ocr} methods, Tesseract \gls{ocr} \cite{tesseract_legacy_2007} and EasyOCR \cite{easyocr_gitub_2020}, which we use in our experiments.
+In \autoref{chap:dataset}, we detail the different types of distortion in the SCID dataset \cite{ni_esim_2017} used in this thesis and describe the labeling procedure we employ to generate text labels for the dataset.
+Further, the extension of the dataset by incorporating images distorted with \gls{hevc} \cite{hevc_2012} and \gls{vvc} \cite{vvc_2021} is explained.
+In \autoref{chap:evaluation} we compare the performance of Tesseract \gls{ocr} and EasyOCR for the different types of distortion, and investigate the correlation between the performance of \gls{ocr} and human judgment.
+Afterwards, we investigate the feasibility of using the predictions of the \gls{ocr} algorithms to compare codecs.
 Finally, we summarize and conclude our findings in \autoref{chap:conclusion}.

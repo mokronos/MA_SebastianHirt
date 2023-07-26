@@ -1,8 +1,12 @@
 \chapter{Abstract}
 
-Screen content images are common in today's digital interconnected world.
-They are used in many different applications, such as video conferencing, remote desktop applications, and video streaming.
-Thus, the quality of these images is important for the user experience.
-In this thesis, the application of \gls{ocr} algorithms for the assessment of screen content image quality is explored.
-We research state-of-the-art \gls{ocr} methods, generate a labeled dataset and investigate the correlation between the performance of \gls{ocr} and human judgment on images with different types of distortion.
-The results indicate that \gls{ocr} could be a valuable tool in screen content image quality assessment for certain types of distortions, particularly when used in combination with other metrics.
+In today's digitally interconnected world, screen content images play a significant role in various applications such as video conferencing, remote desktop access, and video streaming, making image quality a crucial aspect for enhancing user experience.
+However, conventional image quality assessment methods like peak signal-to-noise ratio and structural similarity index are inadequate for screen content images containing text.
+This thesis explores the application of \gls{ocr} algorithms for evaluating screen content image quality.
+Initially, we research state-of-the-art \gls{ocr} methods, comparing the performance of Tesseract \gls{ocr} and EasyOCR using the SCID dataset. 
+As the dataset lacks text labels, we annotate the dataset to evaluate the effectiveness of the \gls{ocr} methods.
+Additionally, we investigate the correlation between the performance of \gls{ocr} and human judgment on images with different types of distortion by comparing the character error rate with the subjective mean opinion score included in the dataset.
+Furthermore, we expand the SCID dataset by incorporating images distorted with high-efficiency video coding and versatile video coding.
+This extension enables us to explore whether \gls{ocr} can serve as a reliable ground truth for comparing different codecs, using the Bjøntegaard Delta Rates between different rate-distortion curves.
+Our findings suggest that \gls{ocr} holds promise as a valuable tool for screen content image quality assessment for certain types of distortion, particularly when complemented with other metrics.
+Additionally our results indicate that EasyOCR emerges as a suitable choice as a ground truth for codec comparison.
