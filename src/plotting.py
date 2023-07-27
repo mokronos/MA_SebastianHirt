@@ -422,6 +422,23 @@ def image_diff():
     codec_vtm_scc_diff = cv2.absdiff(ref_img, codec_vtm_scc_img)
     codec_hm_scc_diff = cv2.absdiff(ref_img, codec_hm_scc_img)
 
+    print(min(codec_vtm_default_diff.flatten()), max(codec_vtm_default_diff.flatten()))
+    print(min(codec_hm_default_diff.flatten()), max(codec_hm_default_diff.flatten()))
+    print(min(codec_vtm_scc_diff.flatten()), max(codec_vtm_scc_diff.flatten()))
+    print(min(codec_hm_scc_diff.flatten()), max(codec_hm_scc_diff.flatten()))
+
+    # normalize
+    codec_vtm_default_diff = codec_vtm_default_diff / max(codec_vtm_default_diff.flatten()) * 255
+    codec_hm_default_diff = codec_hm_default_diff / max(codec_hm_default_diff.flatten()) * 255
+    codec_vtm_scc_diff = codec_vtm_scc_diff / max(codec_vtm_scc_diff.flatten()) * 255
+    codec_hm_scc_diff = codec_hm_scc_diff / max(codec_hm_scc_diff.flatten()) * 255
+
+    print(min(codec_vtm_default_diff.flatten()), max(codec_vtm_default_diff.flatten()))
+    print(min(codec_hm_default_diff.flatten()), max(codec_hm_default_diff.flatten()))
+    print(min(codec_vtm_scc_diff.flatten()), max(codec_vtm_scc_diff.flatten()))
+    print(min(codec_hm_scc_diff.flatten()), max(codec_hm_scc_diff.flatten()))
+
+
     cv2.imwrite(f"images/codec_vtm_default_diff_50_SCI{id}.png", codec_vtm_default_diff)
     cv2.imwrite(f"images/codec_hm_default_diff_50_SCI{id}.png", codec_hm_default_diff)
     cv2.imwrite(f"images/codec_vtm_scc_diff_50_SCI{id}.png", codec_vtm_scc_diff)
@@ -696,7 +713,7 @@ if __name__ == '__main__':
     pass
     # pipeline()
     # plot_fit_example()
-    plot_codec_cer_size()
+    # plot_codec_cer_size()
     # plot_bjontegaard_example()
     # plot_cer_dist_quality()
     # plot_cer_mos_mean()
@@ -705,7 +722,7 @@ if __name__ == '__main__':
     # bbox_order(id=1, algo="tess", sort=False)
     # bbox_order(id=1, algo="ezocr", sort=False)
     # dataset_overview()
-    # image_diff()
+    image_diff()
 
 
 
