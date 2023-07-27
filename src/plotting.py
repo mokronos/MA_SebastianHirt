@@ -315,7 +315,7 @@ def plot_codec_cer_size():
 
             # plt.xlim(0, 0.4)
             plt.ylim(0, 100)
-            plt.xlabel("Size in Mbit")
+            plt.xlabel("Bitrate in Mbit/s")
             plt.ylabel("$\overline{\mathrm{CER}}_{\mathrm{c}}$")
             plt.grid()
             plt.legend()
@@ -696,7 +696,7 @@ if __name__ == '__main__':
     pass
     # pipeline()
     # plot_fit_example()
-    # plot_codec_cer_size()
+    plot_codec_cer_size()
     # plot_bjontegaard_example()
     # plot_cer_dist_quality()
     # plot_cer_mos_mean()
@@ -705,7 +705,7 @@ if __name__ == '__main__':
     # bbox_order(id=1, algo="tess", sort=False)
     # bbox_order(id=1, algo="ezocr", sort=False)
     # dataset_overview()
-    image_diff()
+    # image_diff()
 
 
 

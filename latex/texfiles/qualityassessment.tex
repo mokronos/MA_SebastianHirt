@@ -58,23 +58,23 @@ To address this issue, some research has been conducted.
 In \cite{ocr_cnn_docu_2014}, researchers use a convolutional neural network to assess the quality of documents.
 This enables the automatic assessment of document quality to filter out low-quality documents, on which \gls{ocr} algorithms would perform poorly or select high quality frames from a video recording of a document.
 The documents are segmented into text and non-text regions.
-Then, the proposed \gls{cnn} is used to predict quality scores for the content patches and averaged over the whole image.
+Then, the proposed \gls{cnn} is applied to each of the text content patches to predict quality scores, which are averaged over the whole image.
 Finally, the resulting scores are analyzed for correlation with \gls{ocr} performance.
-The \gls{cnn} achieves state of the art performance in assessing the quality of the documents.
+The \gls{cnn} achieves state-of-the-art performance in assessing the quality of the documents.
 In \cite{text_pict_weight_2017}, the authors propose an objective \gls{iqa} metric for \glspl{sci} that considers the text and pictorial content of an image separately.
 For the pictorial regions, the luminance and structural features are extracted.
 On the other hand, for the regions containing text, the authors use the gradient information to predict the visual quality.
 Afterwards, the two scores are weighted and combined.
 The proposed method is called SFUW and shows superior performance compared to other screen content \gls{iqa} metrics.
-Yang et al. \cite{3_subj_weight_2015} investigates a subjective score, that considers text, pictorial and the entire image separately.
-The authors find that the textual regions contribute more to the overall subjective quality of an image than the pictorial regions.
-Additionally, an objective \gls{iqa} method is proposed that uses the weighting of the subjective scores to combine different objective metrics into one.
+Yang et al. \cite{3_subj_weight_2015} investigate a subjective quality score, that considers text regions, pictorial regions and the entire image separately.
+The authors find that the textual regions contribute more to the overall subjective quality of an image compared to the pictorial regions.
+Additionally, an objective \gls{iqa} method is proposed that uses the weighting of the subjective scores to combine objective metrics that consider the different regions into one.
 Further, in \cite{ni_esim_2017}, a new screen content \gls{iqa} metric called \gls{esim} is proposed.
 Compared to the other screen content metrics, \gls{esim} does not consider different regions of the image separately.
 Instead, it calculates the edge contrast, the edge width and the edge direction of the whole image.
 Those three features are then compared between the distorted and the reference image.
 The resulting similarities are then combined into a single score by a pooling strategy, that computes the weighted average of the three metrics with the maximum edge width of the two images as its weighting factor.
-Despite the missing separation of the image into different regions, \gls{esim} achieves state of the art performance on the dataset used in our thesis compared to other metrics.
+Despite the missing separation of the image into different regions, \gls{esim} achieves state-of-the-art performance on the dataset used in our thesis compared to other metrics.
 Similarly, in \cite{iqa_sci_gabor_2018}, the authors propose a metric that uses the Gabor filter to extract features from the image, named \gls{gfm}.
 The motivation to use the Gabor filter is that it yields edge information, which is highly consistent with the human visual system.
 The method compares the similarities of the two chrominance components of the distorted and the reference image.
@@ -83,6 +83,7 @@ Finally, the two generated similarity maps are combined by the proposed Gabor-fe
 This is done similarly to the pooling strategy of \gls{esim}.
 Due to the similarity of the Gabor filter to parts of the receptive field of the human visual system, the authors used the maximum values of the two Gabor feature maps to weight the final quality metric.
 The \gls{gfm} not only achieves superior performance compared to other screen content and natural image \gls{iqa} metrics, but is also less computationally complex, especially compared to the \gls{esim}.
+Compared to these metrics, the \gls{ocr} methods only consider the text regions to assess the quality of the images.
 
 
 
@@ -90,7 +91,7 @@ The \gls{gfm} not only achieves superior performance compared to other screen co
 \label{sec:evalprocedure}
 
 To evaluate the suitability of an objective \gls{iqa} metric, in our case the \gls{cer}, more specifically the $\text{CER}_{\text{c}}$, see \autoref{subsec:cer}, and its correlation to the human subjective score, in this thesis the \gls{mos}, see \autoref{chap:dataset}, there are three aspects to consider \cite{nonlin_fit_original_2003}\cite{iqa_survey_2020}, namely prediction consistency, prediction monotonicity, and prediction accuracy, which we describe in this section.
-Since \gls{vqeg} recommends removing nonlinearities from the \gls{mos} before calculating these metrics \cite{nonlin_fit_original_2003}, we describe this procedure in the next subsection.
+Since the \gls{vqeg} recommends removing nonlinearities from the data before calculating these metrics \cite{nonlin_fit_original_2003}, we describe this procedure in the next subsection.
 In the following, in place of a generic quality metric, we use the $\text{CER}_{\text{c}}$ as used in the remaining parts of this thesis.
 
 \subsection{Nonlinear Transformation}
@@ -123,32 +124,19 @@ The corresponding vectors are defined as
         \text{MOS}_{\text{p},N}
     \end{pmatrix},
 \end{equation}
-
 with $N$ being the number of images in the dataset.
-This number varies, depending on the experiments, as we are selecting a subset of the dataset for each experiment.
+This number varies, depending on the experiment, as we are selecting a subset of the dataset for each experiment.
 We describe this selection in \autoref{chap:dataset} and declare which subset we use in each experiment.
 Then, the model can be defined as
-
 \begin{equation}
     \mathbf{MOS}_{\text{p}} = \frac{\beta_{1}-\beta_{2}}{1 + \text{e}^{-\left(\frac{\mathbf{CER}_{\text{c}}-\beta_{3}}{|\beta_{4}|}\right)}} + \beta_{2},
     \label{eq:nonlinear}
 \end{equation}
-
-% \begin{equation}
-%     s_{i,p} = a * (\frac{1}{2} - \frac{1}{1 + \exp{b * (x - c)}}) + d * x + e
-%     \label{eq:nonlinear}
-% \end{equation}
-
 with $\beta_{1}$, $\beta_{2}$, $\beta_{3}$, and $\beta_{4}$ denoting the parameters of the model.
-
 Although the model in \cite{nonlin_fit_original_2003} is more recent, we could not find initial parameters for it and decided to work with the older model.
-Additionally, there are other, more recent, publications \cite{ni_esim_2017, nonlin_fit_appl_2017, nonlin_fit_appl_2018, nonlin_fit_appl_2014, fsim_2011, nonlin_fit_appl_2015, doc_quality_survey_2023, iqa_database_2023, nonlin_fit_appl_2016} that use the model proposed in \cite{nonlin_fit_new_model_2006}.
+Additionally, there are other, more recent, publications \cite{ni_esim_2017, nonlin_fit_appl_2017, nonlin_fit_appl_2018, nonlin_fit_appl_2014, fsim_2011, nonlin_fit_appl_2015, doc_quality_survey_2023, iqa_database_2023, nonlin_fit_appl_2016} that use the model proposed in \cite{nonlin_fit_new_model_2006}, which does not specify initial conditions either.
 In \cite{nonlin_fit_init_proof_2017}, a solution to estimating the initial parameters is proposed, which is out of scope for this thesis.
-
-% --- random, empirical selection can lead to local optimal solutions, which is inconsistent, and maybe a bad comparison basis
-
 The parameters are initialized as
- 
 \begin{equation}
     \begin{aligned}
         \beta_{1} &= \max{\mathbf{CER}_{\text{c}}} \\
@@ -158,8 +146,8 @@ The parameters are initialized as
     \end{aligned}
     \label{eq:nonlinear_init}
 \end{equation}
-The parameters are adjusted with the least squared method until the model fits the data of all the images.
-The model and the $\text{CER}_{\text{c}}$ values are then used to calculate the predicted \gls{mos} values $\text{MOS}_{\text{p}}$.
+The parameters are adjusted with the least squared method \cite{least_squares_1978} until the model fits the data of all the images.
+The model and the $\text{CER}_{\text{c}}$ values are then used to calculate the predicted $\text{MOS}_{\text{p}}$ values.
 
 \begin{figure}[h]
     \centering
@@ -168,12 +156,12 @@ The model and the $\text{CER}_{\text{c}}$ values are then used to calculate the 
     \label{fig:nonlinear_fit}
 \end{figure}
 
-In Figure \ref{fig:nonlinear_fit} an example of the nonlinear fitting is depicted.
-The initial data consists of some randomly generated dummy \gls{mos} and $\text{CER}_{\text{c}}$ values.
+In Figure \ref{fig:nonlinear_fit}, an example of the nonlinear fitting is depicted.
+The initial data consists of some randomly generated \gls{mos} and $\text{CER}_{\text{c}}$ values.
 We can see, that the model with the initial parameters does not fit the data.
 The parameters are then adjusted by the least squares method \cite{least_squares_1978} to fit the model to the data.
-Finally, we can see that the fitted curve clearly fits the data better than the curve with the initial parameters.
-Now the $\text{MOS}_{\text{p}}$ values can be calculated by using the fitted model and the $\text{CER}_{\text{c}}$ values.
+Finally, we can observe that the fitted curve clearly fits the data better than the curve with the initial parameters.
+Now, the $\text{MOS}_{\text{p}}$ values can be calculated by using the fitted model and the $\text{CER}_{\text{c}}$ values.
 With the $\text{MOS}_{\text{p}}$ the following three metrics \cite{iqa_survey_2021} can be calculated.
 
 \subsection{Pearson Correlation}
@@ -188,22 +176,20 @@ It is defined as
     \label{eq:pearson}
 \end{equation}
 
-with $\overline{\text{MOS}}$ and $\overline{\text{MOS}}_{\text{p}}$ representing the mean values of the $\mathbf{MOS}$ and $\mathbf{MOS}_{\text{p}}$ vectors respectively and $N$ the total number of images in the dataset.
-$N$ is the total number of images in the images used in the experiment.
+with $\overline{\text{MOS}}$ and $\overline{\text{MOS}}_{\text{p}}$ representing the mean values of the $\mathbf{MOS}$ and $\mathbf{MOS}_{\text{p}}$ vectors respectively and $N$ representing the total number of images in the dataset.
 If the \gls{plcc} is close to 1, the two vectors have a positive linear relationship, which means that if $\text{MOS}_{i}$ increases, $\text{MOS}_{\text{p},i}$ increases as well.
 If the \gls{plcc} is close to -1, the two vectors have a negative linear relationship, which means that if $\text{MOS}_{i}$ increases, $\text{MOS}_{\text{p},i}$ decreases.
-If the \gls{plcc} is close to 0, the two vectors have no correlation at all.
-% We are using the sample form of the correlations, because we want to make a statement about a much larger population of images, not just our dataset.
+If the \gls{plcc} is close to 0, the two vectors have no correlation.
 
 \subsection{Spearman Ranked Correlation}
 \label{subsec:spearman}
 
 The \gls{srcc} \cite{pears_spear_2016} describes the monotonic correlation between two variables, normalized to the range $[-1, 1]$.
 Thus it is used to measure the prediction monotonicity of the method.
-Compared to the \gls{plcc}, it mainly takes the rank, or order, of the values into account, not the exact values.
+Compared to the \gls{plcc}, it takes the rank, or order, of the values into account, not the exact values.
 The scores $\text{CER}_{\text{c},i}$ and $\text{MOS}_{i}$ are transformed into their ranks $\text{CER}_{\text{c,r},i}$ and $\text{MOS}_{\text{r},i}$ respectively, with values in the range $[1, N]$.
 If for example, the first two values are tied, their rank is set to the mean, in this case $(1+2)/2 = 1.5$.
-Note, that the fitting procedure does not matter for the \gls{srcc}, because the ranks between the $\text{CER}_{\text{c}}$ and $\text{MOS}$ values stay the same, because the fitted models are monotonic.
+Note, that the fitting procedure does not matter for the \gls{srcc}, because the ranks between the $\text{CER}_{\text{c}}$ and $\text{MOS}$ values stay the same compared to the $\text{MOS}_{\text{p}}$ and $\text{MOS}$ values, because the fitted models are monotonic.
 With these values, the \gls{srcc} is defined as
 
 \begin{equation}
@@ -212,10 +198,10 @@ With these values, the \gls{srcc} is defined as
 \end{equation}
 
 with $\overline{\text{MOS}}_{\text{r}}$ and $\overline{\text{CER}}_{\text{c,r}}$ representing the mean values of the $\mathbf{MOS}_{\text{r}}$ and $\mathbf{CER}_{\text{c,r}}$ vectors respectively.
-If the \gls{srcc} is close to 1, the two vectors have a positive monotonic relationship, which means that the rank of $\text{CER}_{\text{c},i}$ increases, while the rank of $\text{MOS}_{i}$ increases.
-If the \gls{srcc} is close to -1, the two vectors have a negative monotonic relationship, which means that the rank of $\text{CER}_{\text{c},i}$ increases, while the rank of $\text{MOS}_{i}$ decreases.
-If the \gls{srcc} is close to 0, the ranks of the two vectors have no correlation at all.
-These characteristics will help us to determine if the $\text{CER}_{\text{c}}$ is a good predictor for the \gls{mos}, by checking how similar the ranks of the two metrics are.
+If the \gls{srcc} is close to 1, the two vectors have a positive monotonic relationship, which means that the rank of the $\text{CER}_{\text{c},i}$ increases, while the rank of the $\text{MOS}_{i}$ increases.
+If the \gls{srcc} is close to -1, the two vectors have a negative monotonic relationship, which means that the rank of the $\text{CER}_{\text{c},i}$ increases, while the rank of the $\text{MOS}_{i}$ decreases.
+If the \gls{srcc} is close to 0, the ranks of the two vectors have no correlation.
+These characteristics help us to determine if the $\text{CER}_{\text{c}}$ is a good predictor for the \gls{mos}, by investigating how similar the ranks of the two metrics are.
 
 
 \subsection{Root Mean Squared Error}
@@ -232,42 +218,36 @@ In our case it is defined as
 
 To summarize, \gls{plcc} measures the prediction linearity and consistency, \gls{srcc} measures the prediction monotonicity and the \gls{rmse} measures the prediction accuracy.
 With these, we can now determine if the $\text{CER}_{\text{c}}$ is a good predictor for the \gls{mos}.
-It is a better predictor the larger the \gls{plcc} and \gls{srcc} values are, and the smaller the \gls{rmse} is.
+It is a better predictor the larger the \gls{plcc} and \gls{srcc} values are and the smaller the \gls{rmse} is.
 
 
 \section{Bjøntegaard Delta Rate}
 \label{subsec:bdrate}
 
-The \gls{bdrate} \cite{bdrate_original_2001}\cite{bdrate_beyond_2022} is defined as the average difference between two rate-distortion curves of two codecs to compare.
+The \gls{bdrate} \cite{bdrate_original_2001}\cite{bdrate_beyond_2022} is defined as the average difference between two rate-distortion curves of two codecs.
 The first curve is the reference curve and the second the test curve.
-Those curves are defined by a set of points $(R_{\text{k,i}}, M_{\text{k,i}})$, where $R_{\text{k,i}}$ is the bitrate and $M_{\text{k,i}}$ is the metric of the image compressed by a codec $k$, with $k \in \{A,B\}$, with \gls{qp} $i$, with $i \in \{35,40,45,50\}$.
+Those curves are defined by a set of points $(R_{\text{k,i}}, M_{\text{k,i}})$, where $R_{\text{k,i}}$ is the bitrate and $M_{\text{k,i}}$ is the metric, in our case the $\text{CER}_{\text{c}}$, of the image compressed by a codec $k$, with $k \in \{A,B\}$, with \gls{qp} $i$, with $i \in \{35,40,45,50\}$.
 The $R_{k,i}$ values are first converted to the logarithmic scale to not bias the results towards the higher bitrates with
-
 \begin{equation}
     r_{k,i} = \log_{10}\left(R_{k,i}\right).
     \label{eq:log_scale}
 \end{equation}
-
 Those values in combination with the corresponding $M_{k,i}$ values are then used as anchor points for an interpolation with a third order polynomial.
+For our work, we use the Akima interpolation suggested in \cite{bdrate_beyond_2022}, which seems to show more accurate interpolation curves for a variety of metrics.
 The resulting functions are denoted by $\hat{r}_{k}$, respectively.
 The interpolation results in two curves, one for each codec, that pass through all anchor points.
-
 \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{../../exp/bjontegaard_example.pdf}
     \caption{Example of the \gls{bdrate} calculation with dummy values. Adapted from \cite{bdrate_beyond_2022}}
     \label{fig:bdrate_example}
 \end{figure}
-
 Finally, the \gls{bdrate} can be denoted as $\Delta R$ and is calculated by the integral of the difference between the two curves as
-
 \begin{equation}
     \Delta R = 10^{\frac{1}{M_{\text{low}}-M_{\text{high}}} \int_{M_{\text{low}}}^{M_{\text{high}}} \hat{r}_{\text{B}}(M) - \hat{r}_{\text{A}}(M) \text{d}M} - 1.
     \label{eq:bdrate}
 \end{equation}
-
 The lower and upper bound of the integral are given by
-
 \begin{equation}
     \begin{aligned}
         M_{\text{low}} = \max\left(M_{\text{A},50}, M_{\text{B},50}\right) \\
@@ -275,19 +255,20 @@ The lower and upper bound of the integral are given by
     \end{aligned}
     \label{eq:bounds}
 \end{equation}
-
 The bounds are the maximum of the lowest quality points and the minimum of the highest quality points and can be seen in \autoref{fig:bdrate_example}.
 
 
 $\Delta R$ describes the average difference between the two curves in percent.
 This enables us to compare the rate-distortion curves of two codecs.
+The $\text{CER}_{\text{c}}$ is a metric that describes the difference between two texts and is explored in more detail in \autoref{subsec:cer}.
 In our case, we can calculate the $\text{CER}_{\text{c}}$ for each codec in two ways:
-once with respect to the hand annotated text label, as explained in \autoref{sec:dataset_labeling}, and once in relation to the \gls{ocr} prediction on the reference image without distortion.
+once with respect to the hand annotated text label, which we explain in \autoref{sec:dataset_labeling}, and once in relation to the prediction of the \gls{ocr} algorithms on the reference image without distortion.
 Throughout this thesis, we refer to the hand annotated text label as the true \gls{gt} and the prediction of the \gls{ocr} methods on the reference image as the pseudo \gls{gt}.
-The two $\Delta R$ values can then be compared to evaluate, if using the \gls{ocr} algorithms as a reference is a good estimation of the difference between codecs.
+Thus, we can calculate the $\Delta R$ value for two codecs with respect to the true \gls{gt} and the pseudo \gls{gt}.
+These values can then be compared to evaluate, if using the \gls{ocr} algorithms as a pseudo \gls{gt} is a good estimation of the difference between codecs.
 If the difference between the two values is small, then the estimation is good and we might be able to use the \gls{ocr} algorithms as a reference for future codec comparisons.
-We go into more detail about the codecs we use for our comparisons in \autoref{sec:dataset_codec}.
+We go into more detail about the specific codecs we use for our comparisons in \autoref{sec:dataset_codec}.
 
-In this chapter we have defined the metrics to evaluate the predicted $\text{CER}_{\text{c}}$ values.
+In this chapter, we have outlined the evaluation procedure for the $\text{CER}_{\text{c}}$ values predicted by the \gls{ocr} algorithms.
 However, to calculate the $\text{CER}_{\text{c}}$ values, we need \gls{ocr} algorithms to extract text from the images.
 Thus, in the following chapter we introduce the \gls{ocr} algorithms that we use in our experiments.

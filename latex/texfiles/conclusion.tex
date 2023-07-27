@@ -1,30 +1,27 @@
 \chapter{Conclusion}
 \label{chap:conclusion}
 
-In this thesis, we investigate the usefulness of \gls{ocr} as a metric for screen content image quality assessment.
-We are comparing the performance of two \gls{ocr} algorithms, EasyOCR and Tesseract \gls{ocr}, on the \gls{scid} dataset, see \autoref{sec:ocr_performance}.
-First, we can conclude that both \gls{ocr} methods perform worse on the images affected by \gls{mb} and \gls{gb}, with Tesseract \gls{ocr} performing really poor for \gls{gn} as well.
+In this thesis, we investigate the potential of using \gls{ocr} methods for screen content \gls{iqa}.
+We compare the performance of two \gls{ocr} algorithms, EasyOCR and Tesseract \gls{ocr}, on the \gls{scid} dataset, see \autoref{sec:ocr_performance}.
+First, we conclude, that both \gls{ocr} methods perform worse on the images affected by \gls{mb} and \gls{gb}, with Tesseract \gls{ocr} performing really poor for \gls{gn} as well.
 However, both \gls{ocr} algorithms perform without impairment for \gls{cc}, \gls{cqd} and \gls{csc}.
 Generally, the results show that both \gls{ocr} methods perform differently for different distortions, but EasyOCR performs better than Tesseract \gls{ocr}.
 
 
-Next, we compare the \gls{cer} from the \gls{ocr} methods to human judgment, see \autoref{sec:comparison_with_human_judgment}.
-We conclude that EasyOCR is generally better suited as a estimation of human judgment than Tesseract \gls{ocr}.
+Subsequently, we compare the $\text{CER}_{\text{c}}$ produced by the \gls{ocr} methods to human judgment, see \autoref{sec:comparison_with_human_judgment}.
+We conclude that EasyOCR is generally better suited as a estimation of human judgment compared to Tesseract \gls{ocr}.
 For blurred images, EasyOCR exhibits a high correlation with human judgment.
 Our recommendation is to determine if \gls{ocr} methods are affected by specific distortions or check which distortions appear in the used data before adding \gls{ocr} as a metric.
-Compared to other methods, both \gls{ocr} methods are subpar, especially considering that we selected specifically suited images from the dataset compared to other metrics using the full dataset.
+Compared to other \gls{iqa} methods, both \gls{ocr} algorithms are subpar, especially considering that we selected specifically suited images from the dataset compared to other methods being evaluated on the full dataset.
 However, our method only uses the text regions of the images, which are missing a lot of information about distortion impacts on the graphical or natural parts of the image.
-Thus, we recommend combining \gls{ocr} with other metrics, like the \gls{psnr} or the \gls{ssim}, to get a more complete picture of the image quality.
+Thus, we recommend combining \gls{ocr} with other metrics, like the \gls{ssim} or the \gls{fsim}, to get a more complete picture of the image quality.
 
 Additionally, we surmise that in general EasyOCR performs better than Tesseract \gls{ocr} on the reference images, but both seem to be too inaccurate to be used as true \gls{gt}, see \autoref{sec:usage_of_recognized_text_as_ground_truth}.
-Finally we compare the \gls{ocr} performance for several quality levels of the \gls{hevc} and \gls{vvc} codecs.
+Finally, we investigate the performance of the \gls{ocr} methods for several \glspl{qp} of the \gls{hevc} and \gls{vvc} codecs and calculate the \glspl{bdrate} between them to compare the true \gls{gt} with the pseudo \gls{gt}.
 We found EasyOCR to be a decent choice for the pseudo \gls{gt}, especially for the default codec configuration.
 
-% --- This seems to contradict the assumption of many document image quality assessment papers, that use \gls{ocr} as \gls{gt}.
-
-For future work, we recommend combining the \gls{cer} with maybe the \gls{iou} between hand labeled text regions and the prediction bounding boxes.
-This might take a lot of labeling work, but leads to a more consistent metric as the order of the text elements is not important anymore
-Thus, it can be used to more objectively compare different \gls{ocr} algorithms.
-Furthermore, the resulting regions that are not occupied by text elements could be evaluated by other more suitable metrics for pictorial regions, and then combined into one single metric.
-Additionally, we recommend to try using preprocessing steps to improve the \gls{ocr} performance.
-This might be enough to use \gls{ocr} as good estimation of the true \gls{gt}.
+For future research, we recommend combining the \gls{cer} with a metric such as the \gls{iou} between hand labeled text regions and the prediction bounding boxes.
+While this may involve significant amount of labeling work, it might lead to a more consistent metric as the order of the text elements becomes less relevant.
+Thus, it can be used to compare different \gls{ocr} algorithms more objectively.
+Moreover, the resulting regions that are not occupied by text elements could be evaluated by other more suitable metrics for pictorial regions, and then combined with the \gls{cer} into one unified metric.
+Additionally, using preprocessing steps to alter the performance of the \gls{ocr} methods and improve the correlation with the \gls{mos} might be an interesting research direction.

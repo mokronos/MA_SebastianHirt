@@ -2,20 +2,20 @@
 \label{chap:ocr}
 
 In this chapter, we summarize existing \gls{ocr} methods and describe the two methods we use in this thesis, EasyOCR and Tesseract \gls{ocr}, in detail.
-We also introduce the \gls{cer} metric, which we use to evaluate the \gls{ocr} methods.
+We also introduce the \gls{cer} metric, which is used to evaluate the performance of the \gls{ocr} methods.
 
 \section{Conventional Optical Character Recognition}
 
 \Gls{ocr} \cite{ocr_survey_2017} generally involves the following steps to extract text from an image.
-First, the images are preprocessed, which might include binarization, noise removal, and skew correction.
+First, the image is preprocessed, which might include binarization, noise removal, and skew correction.
 This step tries to improve the quality of the image from the perspective of the \gls{ocr} method.
 Second, the image is segmented into individual characters, words or lines.
 Next, the segmented elements are categorized by Bayesian, nearest neighbor or neural network based classifiers.
 Finally, the recognized elements are postprocessed, which might include the use of multiple classifiers simultaneously and comparison of the results, incorporation of the context of the image or dictionary data to correct errors.
-Over the years, many different methods have been proposed to classify the characters based on different features \cite{ocr_appl_survey_2014, ocr_appl_survey_2016}.
+Over the years, many different methods have been proposed to classify the characters based on different features \cite{ocr_appl_survey_2014}\cite{ocr_appl_survey_2016}.
 The main goal was to find features, that are distinctive enough for all the relevant characters to achieve a high classification performance.
 These features might include bars, loops or hooks.
-Applications of \gls{ocr} systems include handwriting recognition, receipt imaging, check processing in the banking industry and improvement of CAPTCHA systems, by regenerating the CAPTCHA until it cannot be recognized by \gls{ocr}.
+Applications of \gls{ocr} systems include handwriting recognition, receipt imaging, check processing in the banking industry and improvement of CAPTCHA systems, by regenerating the CAPTCHA until it cannot be recognized by the \gls{ocr} method.
 
 
 \section{Neural Network Based Optical Character Recognition}
@@ -25,13 +25,13 @@ Especially \gls{lstm} networks are prominent, because of their leverage of the c
 In general, neural network based methods perform better than conventional methods.
 One of the most popular examples is Calamari \cite{ocr_calamari_2018}, which is focused on recognizing text in historical documents.
 It uses the \gls{ctc} method to train a model composed of \gls{lstm} and \gls{cnn} layers.
-Additionally, it includes the ability of use multiple models simultaneously and use them to vote on the correct prediction.
+Additionally, it includes the capability to employ multiple models simultaneously and use them to vote on the correct prediction.
 To make the voting meaningful, the models can be trained with different training datasets, have different model architectures or use different base models for finetuning.
-This enables a more robust final prediction and state of the art performance on historical document datasets.
+This enables a more robust final prediction and state-of-the-art performance on historical document datasets.
 Another example is the Inception V3 network \cite{ocr_improved_deep_2018}, which implements a \gls{cnn} to recognize printed text in images with poor quality.
 The authors leveraged fine tuning on a pre-trained base model to reduce the training time and improve the performance.
 The deep learning method shows significant improvements over traditional \gls{ocr} methods, especially for low quality images.
-The \gls{ocr} methods used in this thesis, EasyOCR and Tesseract, are detailed in the following sections.
+The \gls{ocr} methods used in this thesis, EasyOCR and Tesseract \gls{ocr}, are detailed in the following sections.
 
 \section{EasyOCR}
 \label{subsec:easyocr}
@@ -46,13 +46,15 @@ The \gls{ocr} methods used in this thesis, EasyOCR and Tesseract, are detailed i
 EasyOCR is an open source Python library for \gls{ocr} \cite{easyocr_gitub_2020}.
 It leverages the CRAFT algorithm \cite{craft_2019} for text detection, utilizing a fully convolutional network structure to predict word or character boxes within an image.
 For text recognition, EasyOCR adopts the None-VGG-BiLSTM-CTC architecture \cite{crnn_2015}.
-
-For the recognition task, the model consists of convolutional layers to extract relevant features from the input image.
+The model consists of \gls{cnn} layers to extract relevant features from the input image.
 These features are then transformed into sequences, as illustrated in \autoref{fig:easyocr_features}.
 Then, a deep bidirectional \gls{lstm} network is used to predict a character per frame of the feature sequence.
 This process generates output that may resemble something like \texttt{--ss-t-a-tt--e-}.
 The benefit of using the \gls{lstm} lies in its ability to incorporate contextual information from earlier frames of the sequence to enhance the recognition accuracy.
-Finally, the transcription layer uses \gls{ctc} to combine the per-frame predictions into a single text prediction, for instance, generating the word \texttt{state}.
+Finally, the transcription layer uses \gls{ctc} to combine the per-frame predictions into a single text prediction.
+For the example above, it does so by first removing the duplicate characters directly following each other, resulting in \texttt{--s-t-a-t--e-}.
+Then, it removes the blank characters, resulting in \texttt{state}.
+The blank characters are essential to allow duplicate characters to be recognized correctly, by having a blank character between them.
 Optionally, this text prediction can be compared to a lexicon, which allows for additional validation and refinement.
 This comparison ensures that the recognized text aligns with known words or patterns, enhancing the accuracy and reliability of the OCR results.
 Throughout this thesis, we rely on version v1.6.2 of EasyOCR.
@@ -64,7 +66,7 @@ By default, the predictions are ordered from top to bottom and left to right.
 The approach of ordering text in lines of text can be effective when dealing with images that contain a single text column.
 However, when images have multiple text columns, enabling the paragraph mode can be more beneficial.
 In this mode, the model predicts the first column's text first and then proceeds to predict the second column, rather than switching between lines of both columns.
-By using paragraph mode, the model can better capture the structure and context of the text, leading to more accurate and coherent predictions for images with multiple text columns.
+Thus, by using paragraph mode, the model can better capture the structure and context of the text, leading to more accurate and coherent predictions for images with multiple text columns.
 
 
 \section{Tesseract}
@@ -76,19 +78,16 @@ Tesseract \gls{ocr} employs adaptive thresholding to binarize the input image, e
 Following this step, the software performs page layout analysis to identify text regions within the image.
 These regions are then processed by the \gls{lstm} line recognizer to generate text predictions.
 Finally, the text prediction undergo correction measures to improve the accuracy of the result.
-
-To our knowledge, the literature on Tesseract \gls{ocr} focuses on older versions of the software, predating the introduction of \gls{lstm} models with version 4.0.0.
-Consequently, detailed information about the \gls{lstm} line recognizer is not available.
+To the best of our knowledge, the literature on Tesseract \gls{ocr} focuses on older versions of the software, predating the introduction of \gls{lstm} models with version 4.0.0.
+Consequently, detailed information about the \gls{lstm} line recognizer or any other replacement is not readily available.
 For our experiments in this thesis, we rely on version 4.1.1 of Tesseract \gls{ocr}.
 Tesseract \gls{ocr} offers multiple engine modes, namely the legacy engine only, the neural nets \gls{lstm} engine only or the Legacy + the \gls{lstm} engine.
 We use the pure \gls{lstm} engine mode, as it is the default and the most recent engine mode.
 Due to Tesseract \gls{ocr} being implemented in C++, we utilize the Python wrapper, \texttt{pytesseract} \cite{pytesseract_2022}, to conveniently incorporate it into our Python code.
+
 To ensure a fair comparison, we do not preprocess the images for either \gls{ocr} method, as we are unsure of the specific preprocessing steps employed by each method itself and wish to avoid any potential bias.
 For text prediction, we use the default settings for EasyOCR and Tesseract \gls{ocr}.
 Comparative research between EasyOCR and Tesseract \gls{ocr}, specifically in the task of recognizing text in license plate images \cite{ocr_tess_vs_easyocr_2022}, indicates that EasyOCR generally outperforms Tesseract \gls{ocr}.
-
-% --- connection threshold of boundingbox, difficult to set correctly, cant use dict if single letters, auto puts sentences together when high
-
 Tesseract \gls{ocr}, like EasyOCR, predicts a list of the text element bounding boxes, the confidence of the prediction and the text itself.
 It has a mode to predict paragraphs as well, however we found that it orders the predictions differently than EasyOCR.
 Thus, we use both methods to predict the raw bounding boxes with their text and sort them ourselves.
@@ -101,13 +100,14 @@ EasyOCR already orders the predictions from left to right and top to bottom, as 
     \caption{Unsorted EasyOCR predictions with order information}
     \label{fig:order_easyocr_pred}
 \end{figure}
-Tesseract \gls{ocr}, in contrast, interprets the left menu of the website as a paragraph and predicts those text elements first, as illustrated in \autoref{fig:order_tess_pred}.
+Tesseract \gls{ocr}, in contrast, interprets the left menu of the website as a paragraph, even without the paragraph mode, and predicts those text elements first, as illustrated in \autoref{fig:order_tess_pred}.
 \begin{figure}[h!]
     \centering
     \includegraphics[width=\textwidth]{../images/bbox_order_tess.pdf}
     \caption{Unsorted Tesseract \gls{ocr} predictions with order information}
     \label{fig:order_tess_pred}
 \end{figure}
+Note that the numbers for EasyOCR are lower, because it often predicts multiple words together.
 To bring the predictions in line with those of EasyOCR, we apply the following procedure to the predictions of Tesseract \gls{ocr}.
 First, we find the top most bounding box in the image and save the $y$ coordinates of the top half of that bounding box.
 Second, we identify all bounding boxes that overlap with those saved coordinates to gather all the text elements that are in the same line.
@@ -120,9 +120,10 @@ By following this procedure, the resulting order of predictions from Tesseract \
     \caption{Sorted Tesseract \gls{ocr} predictions with order information}
     \label{fig:order_tess_pred_sorted}
 \end{figure}
-The major difference lies in the fact that Tesseract \gls{ocr} tends to predict single words, whereas EasyOCR predicts more multiple words together.
+The major difference lies in the fact that Tesseract \gls{ocr} tends to predict single words, whereas EasyOCR often predicts multiple words together.
 However, this distinction does not matter in our case since the predictions are combined into a single text prediction, by separating them with spaces, resulting in the same final text prediction.
-This aims to ensure that we have a unified order of the predictions for both methods to not disadvantage one over the other because of the order their predictions when we compare the predictions to the \gls{gt}, which we introduce in \autoref{sec:dataset_labeling}.
+The intention behind this procedure is to ensure a unified order of the predictions for both methods.
+By doing so, we aim to prevent any disadvantage that could arise due to the order of their predictions, when comparing them to the true \gls{gt}, which we introduce in \autoref{sec:dataset_labeling}.
 
 % However, this method is not perfect, as it is difficult to set the threshold for the $y$ coordinates correctly.
 % One might include bounding boxes that do not belong to the same line.
@@ -134,27 +135,23 @@ This aims to ensure that we have a unified order of the predictions for both met
 To evaluate the performance of \gls{ocr} methods, we use the \gls{cer}.
 The \gls{cer} \cite{cer_2022} describes how many substitutions, deletions, and insertions are necessary to transform a text prediction into the correct text label.
 It is defined as
-
 \begin{equation}
     \text{CER} = \frac{I + S + D}{N},
     \label{eq:cer}
 \end{equation}
-
 with $I$ being the number of insertions, $S$ being the number of substitutions, $D$ being the number of deletions, and $N$ being the total number of characters in the text label.
 The \gls{cer} ranges from 0 to $\infty$, where 0 means perfect recognition and the higher the worse the recognition.
 As an example, if the text label is \texttt{hello} and the prediction is \texttt{halo}, then the \gls{cer} is $2/5 = 0.2$, due to one deletion (\texttt{l}) and one substitution (\texttt{a $\rightarrow$ e}).
 
-In our analysis, we will be comparing the \gls{cer} to the subjective \gls{mos}.
+In our analysis, we compare the \gls{cer} to the subjective \gls{mos}.
 The details of the subjective \gls{mos} will be discussed in the following chapter.
 Because the \gls{mos} is defined in the range 0 to 100 and 100 represents a high subjective quality, the two metrics are unintuitive to compare.
 Therefore, we take the complement of the CER by subtracting it from 1.
 Additionally we scale it by multiplying by 100 to get a \gls{mos}-like value, according to
-
 \begin{equation}
     \text{CER}_{\text{c}} = (1 - \text{CER}) \cdot 100.
     \label{eq:cer2mos}
 \end{equation}
-
 This means that the $\text{CER}_{\text{c}}$ can be in the range -$\infty$ to 100, where 100 means perfect recognition and the lower the worse the recognition.
 However, in practice, the $\text{CER}_{\text{c}}$ typically falls within the range of 0 to 100, which aligns with the scale of the \gls{mos}.
 This can be illustrated by a few examples.
@@ -167,4 +164,4 @@ However, this case is highly unlikely, because the \gls{ocr} methods incorporate
 Therefore, the word predictions are either empty, making the whole prediction shorter than the text label, or they have a high likelihood of being correct.
 
 In order to apply the \gls{ocr} methods discussed in this chapter, a suitable dataset comprising images containing text is essential.
-Thus, in the following chapter, we provide an overview of the available datasets and present the dataset employed in this thesis in detail.
+Thus, in the following chapter, we provide an overview of the dataset employed in this thesis.
