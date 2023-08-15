@@ -1,6 +1,7 @@
 # Literature
 
-***
+Check the bibfile or the thesis itself for all the papers I've used.
+These are mainly notes for myself.
 
 ## ESIM: Edge Similarity for Screen Content Image Quality Assessment
 

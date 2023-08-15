@@ -48,6 +48,9 @@ def setup(ids="scid_img_ids"):
     return filtered_data
 
 def add_cer(data):
+    """
+    Add column with CER
+    """
 
     def cer(row):
         pred = helpers.load_line_text(PATHS["pred_dist"](row["img_num"],
@@ -78,6 +81,10 @@ def add_cer(data):
 
 
 def add_cer_comp(data):
+    """
+    Add column with CER_comp
+    """
+
     data["cer_comp"] = (1 - data["cer"]) * 100
 
     print(f"added CER_comp")
@@ -86,6 +93,9 @@ def add_cer_comp(data):
 
 
 def add_fitted(data):
+    """
+    Add column with fitted CER (for each image separately)
+    """
 
     # fit data once with cer and once with cer_comp
     def fit_data(group):
@@ -107,7 +117,11 @@ def add_fitted(data):
 
 
 def add_fitted_total(data):
+    """
+    Add column with fitted CER (for all images together)
+    """
 
+    # this one is for all distortions seperatly
     def fit_data(group):
         group["mos_fitted_total"], model_params = helpers.nonlinearfitting(group["cer"], group["mos"])
         group["model_params_total"] = [model_params] * len(group)
@@ -117,10 +131,12 @@ def add_fitted_total(data):
         # print(f"calculated fitted total values for group {group.name}, comp")
         return group
 
-    # add cer fitted for every all images together
+    # add cer fitted for all images together
     data = data.groupby(["dist", "ocr_algo", "target"], group_keys=True).apply(fit_data)
     data.reset_index(drop=True, inplace=True)
 
+    # this one is for all distortions together (overall row in result tables)
+    # it is still a whole column, but with the same value for every row, easier to save than extra file
     def fit_data_overall(group):
         group["mos_fitted_total_overall"], model_params = helpers.nonlinearfitting(group["cer"], group["mos"])
         group["model_params_total_overall"] = [model_params] * len(group)
@@ -140,7 +156,11 @@ def add_fitted_total(data):
 
 
 def add_pearson(data):
+    """
+    Add column with pearson correlation
+    """
 
+    # this one is for all distortions seperatly
     def pearson(group):
         p = scipy.stats.pearsonr(group[f"mos"], group[f"cer_comp"])
         group[f"pearson"] = p[0]
@@ -156,6 +176,8 @@ def add_pearson(data):
         # print(f"calculated pearson correlation for group {group.name}, fitted")
         return group
 
+    # this one is for all distortions together (overall row in result tables)
+    # it is still a whole column, but with the same value for every row, easier to save than extra file
     def pearson_overall(group):
         p = scipy.stats.pearsonr(group[f"mos"], group[f"cer_comp"])
         group[f"pearson_overall"] = p[0]
@@ -184,6 +206,7 @@ def add_pearson(data):
 
 def add_spearman_ranked(data):
 
+    # this one is for all distortions seperatly
     def spearman_ranked(group):
         p = scipy.stats.spearmanr(group[f"mos"], group[f"cer_comp"])
         group[f"spearmanr"] = p[0]
@@ -193,6 +216,8 @@ def add_spearman_ranked(data):
         # print(f"calculated spearman ranked correlation for group {group.name}, fitted")
         return group
 
+    # this one is for all distortions together (overall row in result tables)
+    # it is still a whole column, but with the same value for every row, easier to save than extra file
     def spearman_ranked_overall(group):
         p = scipy.stats.spearmanr(group[f"mos"], group[f"cer_comp"])
         group[f"spearmanr_overall"] = p[0]
@@ -216,11 +241,14 @@ def add_spearman_ranked(data):
 
 def add_rmse(data):
 
+    # this one is for all distortions seperatly
     def rmse(group):
         group[f"rmse"] = helpers.rmse(group[f"cer_comp"], group[f"mos"])
         group[f"rmse_fitted"] = helpers.rmse(group[f"mos_comp_fitted_total"], group[f"mos"])
         return group
 
+    # this one is for all distortions together (overall row in result tables)
+    # it is still a whole column, but with the same value for every row, easier to save than extra file
     def rmse_overall(group):
         group[f"rmse_overall"] = helpers.rmse(group[f"cer_comp"], group[f"mos"])
         group[f"rmse_fitted_overall"] = helpers.rmse(group[f"mos_comp_fitted_total"], group[f"mos"])
@@ -254,4 +282,5 @@ if __name__ == "__main__":
     print(data)
 
     data.to_csv(PATHS["results_dist"]())
+    # saved to pkl here because csv cant handle the lists in the model_params columns
     data.to_pickle(PATHS["results_dist"](ext="pkl"))

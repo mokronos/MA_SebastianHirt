@@ -10,6 +10,9 @@ log.basicConfig(level=log.DEBUG, format="%(asctime)s \n %(message)s")
 
 
 def setup(ids="scid_img_ids"):
+    """
+    Create dataframe with all the combinations of ids, ocr_algos
+    """
 
     # get configuaration of images, ocr algos
     img_id = CONFIG[ids]
@@ -28,6 +31,9 @@ def setup(ids="scid_img_ids"):
     return data
 
 def add_cer(data):
+    """
+    Add column with CER
+    """
 
     def cer(row):
         pred = helpers.load_line_text(PATHS["pred_ref"](row["img_num"],
@@ -47,11 +53,16 @@ def add_cer(data):
 
 
 def add_cer_comp(data):
+    """
+    Add column with CER_comp
+    """
+
     data["cer_comp"] = (1 - data["cer"]) * 100
 
     print(f"added CER_comp")
     
     return data
+
 
 if __name__ == "__main__":
 

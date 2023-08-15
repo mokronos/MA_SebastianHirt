@@ -66,8 +66,8 @@ def plot_cer_dist_quality():
             plt.tight_layout()
             savepath_pdf=PATHS['analyze'](f'cer_dist_quality_{name_target}_{name_ocr}.pdf')
             plt.savefig(savepath_pdf)
-            # savepath_png=PATHS['analyze'](f'cer_dist_quality_{name_target}_{name_ocr}.png')
-            # plt.savefig(savepath_png)
+            savepath_png=PATHS['analyze'](f'cer_dist_quality_{name_target}_{name_ocr}.png')
+            plt.savefig(savepath_png)
             plt.title(f"Comparison of CER with target {name_target} for different distortion types with {name_ocr} OCR")
             # plt.show()
             plt.clf()
@@ -136,8 +136,8 @@ def plot_cer_mos_mean():
                 savepath_pdf=PATHS['analyze'](f'mos_cer_{name_target}_mean_{name_ocr}_{dist_name}.pdf')
                 # pad_inches to leave overline there
                 plt.savefig(savepath_pdf, bbox_inches='tight', pad_inches=0.1)
-                # savepath_png=PATHS['analyze'](f'mos_cer_{name_target}_mean_{name_ocr}_{dist_name}.png')
-                # plt.savefig(savepath_png, bbox_inches='tight', pad_inches=0)
+                savepath_png=PATHS['analyze'](f'mos_cer_{name_target}_mean_{name_ocr}_{dist_name}.png')
+                plt.savefig(savepath_png, bbox_inches='tight', pad_inches=0.1)
 
                 plt.title(f"Comparison of CER with target {name_target} for {dist_name} with {name_ocr} OCR")
                 # plt.show()
@@ -247,8 +247,8 @@ def plot_cer_mos_fitted_mean():
 
                 savepath_pdf=PATHS['analyze'](f'mos_cer_{name_target}_fitted_mean_{name_ocr}_{dist_name}.pdf')
                 plt.savefig(savepath_pdf, bbox_inches='tight', pad_inches=0)
-                # savepath_png=PATHS['analyze'](f'mos_cer_{name_target}_fitted_mean_{name_ocr}_{dist_name}.png')
-                # plt.savefig(savepath_png, bbox_inches='tight', pad_inches=0)
+                savepath_png=PATHS['analyze'](f'mos_cer_{name_target}_fitted_mean_{name_ocr}_{dist_name}.png')
+                plt.savefig(savepath_png, bbox_inches='tight', pad_inches=0)
 
                 plt.title(f"Comparison of CER with target {name_target} for {dist_name} with {name_ocr} OCR (fitted)")
                 # plt.show()
@@ -263,6 +263,9 @@ def plot_cer_mos_fitted_mean():
 ############################################################################################################
 
 def plot_codec_cer_size():
+    """
+    Plot CER_comp against size for different codecs (rate-distortion curve)
+    """
 
     plt.rcParams.update({
         "font.size": 12
@@ -322,8 +325,8 @@ def plot_codec_cer_size():
             plt.tight_layout()
             savepath_pdf=PATHS['analyze'](f'codec_cer_size_{name_ocr}_{name_codec_config}.pdf')
             plt.savefig(savepath_pdf)
-            # savepath_png=PATHS['analyze'](f'codec_cer_size_{name_ocr}_{name_codec_config}.png')
-            # plt.savefig(savepath_png)
+            savepath_png=PATHS['analyze'](f'codec_cer_size_{name_ocr}_{name_codec_config}.png')
+            plt.savefig(savepath_png)
             plt.title(f"Comparison of codecs for {name_ocr} with {name_codec_config} codec config")
             # plt.show()
             plt.clf()
@@ -448,6 +451,9 @@ def image_diff():
 
 
 def plot_fit_example():
+    """
+    Plot example of fitting
+    """
 
     plt.rcParams.update({
         "font.size": 12
@@ -456,9 +462,11 @@ def plot_fit_example():
     # fix random seed for reproducibility
     np.random.seed(7)
 
+    # dummy data
     subj = [30, 50, 80, 80]*10
     obj = [20, 30, 60, 80]*10
 
+    # add noise
     subj += np.random.normal(-5, 5, len(subj))
     obj += np.random.normal(-5, 5, len(obj))
 
@@ -466,6 +474,8 @@ def plot_fit_example():
                #          np.mean(obj), np.std(obj)/4,
                #          0]
     # beta0 = [-100,1,1,0.5,50]
+
+    # initial parameters
     beta0 = [np.max(subj), np.min(subj),
              np.mean(obj), 1]
     MAXFEV = 0
@@ -478,6 +488,8 @@ def plot_fit_example():
     curve = helpers.model(t, *params)
     curve_init = helpers.model(t, *beta0)
     subj_fit = helpers.model(np.array(obj), *params)
+
+    # calculate correlations
     p_r = scipy.stats.pearsonr(subj, obj)[0]
     p_r_fit = scipy.stats.pearsonr(subj, subj_fit)[0]
     p_s = scipy.stats.spearmanr(subj, obj)[0]
@@ -512,15 +524,19 @@ def plot_fit_example():
     plt.legend()
     plt.tight_layout()
     plt.grid()
-    plt.savefig("exp/fit_example.pdf")
-    plt.savefig("exp/fit_example.png")
+    plt.savefig("images/fit_example.pdf")
+    plt.savefig("images/fit_example.png")
     # plt.show()
     plt.close()
 
     print("plotted fitting example")
 
 def plot_bjontegaard_example():
+    """
+    Plot Bjontegaard delta rate calculation example
+    """
 
+    # dummy data
     rateA = [0.1, 0.2, 0.3, 0.4]
     rateB = [0.08, 0.16, 0.24, 0.32]
 
@@ -545,8 +561,8 @@ def plot_bjontegaard_example():
     plt.fill_between([rateB[0], rateA[-1]], [distA[-1], distA[-1]], max(distB), color='white')
     plt.fill_between([rateB[0], rateA[-1]], [distB[0], distB[0]], min(distA), color='white')
 
-    plt.savefig("exp/bjontegaard_example.pdf")
-    plt.savefig("exp/bjontegaard_example.png")
+    plt.savefig("images/bjontegaard_example.pdf")
+    plt.savefig("images/bjontegaard_example.png")
 
     # plt.show()
 
@@ -586,8 +602,11 @@ def bbox_order(id=1, algo="ezocr", sort=True):
             # predict with tesseract
             with Image.open(img_path) as image:
                 pred = pytesseract.image_to_data(image, output_type=pytesseract.Output.DATAFRAME, config="--oem 1")
+
+                # clean data
                 pred = pred.loc[~pred["text"].isna()]
                 pred = pred.loc[pred["text"].str.strip() != ""]
+
                 pred['right'] = pred['left'] + pred['width']
                 pred['bottom'] = pred['top'] + pred['height']
                 new_data = pred
@@ -606,10 +625,14 @@ def bbox_order(id=1, algo="ezocr", sort=True):
 
     plt.axis('off')
     plt.savefig(f"images/bbox_order_{algo}{'_sorted' if sort else ''}.pdf", dpi=150, bbox_inches='tight', pad_inches=0)
+    plt.savefig(f"images/bbox_order_{algo}{'_sorted' if sort else ''}.png", dpi=150, bbox_inches='tight', pad_inches=0)
     plt.close()
     plt.clf()
 
 def dataset_analysis():
+    """
+    CER_c vs MOS for all images in experiment
+    """
 
     plt.rcParams.update({
         "font.size": 24
@@ -640,11 +663,15 @@ def dataset_analysis():
             plt.yticks(ticks)
             ax = plt.gca()
             ax.set_aspect('equal', adjustable='box')
-            plt.savefig(f"images/cer_mos_overview_{name_target}_{name_ocr}.pdf", bbox_inches='tight', pad_inches=0)
+            plt.savefig(f"images/analyze/cer_mos_overview_{name_target}_{name_ocr}.pdf", bbox_inches='tight', pad_inches=0)
+            plt.savefig(f"images/analyze/cer_mos_overview_{name_target}_{name_ocr}.png", bbox_inches='tight', pad_inches=0)
             plt.close()
             plt.clf()
 
 def dataset_overview():
+    """
+    Plot all images in one figure
+    """
 
     ids = list(range(1, 41))
     ref_paths = helpers.create_paths(PATHS["images_scid_ref"], ids)
@@ -664,7 +691,7 @@ def dataset_overview():
 
 
     plt.savefig(save_path + "reference_images.pdf", dpi=300, bbox_inches='tight', pad_inches=0)
-    # plt.savefig(save_path + "reference_images.png", dpi=300)
+    plt.savefig(save_path + "reference_images.png", dpi=300, bbox_inches='tight', pad_inches=0)
     # # 35MB laggy
     # plt.savefig(save_path + "reference_images_HD.pdf", dpi=3000)
     # plt.savefig(save_path + "reference_images_HD.png", dpi=3000)
@@ -681,7 +708,7 @@ def pipeline():
     # plot_cer_mos_sub()
     # plot_cer_fitted_mos_sub()
 
-    # subplots for different distortions (mean over all images)
+    # plots for different distortions (mean over all images)
     plot_cer_mos_mean()
     plot_cer_mos_fitted_mean()
 
@@ -711,7 +738,7 @@ def pipeline():
 if __name__ == '__main__':
 
     pass
-    # pipeline()
+    pipeline()
     # plot_fit_example()
     # plot_codec_cer_size()
     # plot_bjontegaard_example()
@@ -722,7 +749,5 @@ if __name__ == '__main__':
     # bbox_order(id=1, algo="tess", sort=False)
     # bbox_order(id=1, algo="ezocr", sort=False)
     # dataset_overview()
-    image_diff()
-
-
-
+    # image_diff()
+    # dataset_analysis()

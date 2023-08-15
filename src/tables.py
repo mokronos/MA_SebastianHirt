@@ -6,6 +6,9 @@ import matplotlib.pyplot as plt
 
 
 def bjontegaard():
+    """
+    Calculate Bjontegaard delta rate and generate table
+    """
 
     data = pd.read_csv(PATHS["results_codecs"])
     print(data)
@@ -120,6 +123,9 @@ def bjontegaard():
             .to_latex(PATHS["results_bjontegaard"](ext="tex"))
 
 def round_to_2(x):
+    """
+    Round to 2 decimals
+    """
 
     if type(x) == float:
         return round(x, 2)
@@ -258,6 +264,6 @@ if __name__ == "__main__":
 
     bjontegaard()
 
-    # create_summary()
+    create_summary()
 
-    # cer_ref_gt()
+    cer_ref_gt()

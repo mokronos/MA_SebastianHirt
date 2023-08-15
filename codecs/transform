@@ -184,8 +184,8 @@ names=("$@")
 
 ext=".bmp"
 
-# conf="scc"
-conf="default"
+conf="scc"
+# conf="default"
 
 # define directories
 raw_dir="images/"$conf"/raw"
@@ -203,8 +203,8 @@ result_dir="images/"$conf"/results"
 # qs=($(seq 35 5 50))
 qs=($(seq 22 5 37))
 
-# for codec in "vtm" "hm"; do
-for codec in "hm"; do
+for codec in "vtm" "hm"; do
+# for codec in "hm"; do
     for q in "${qs[@]}"; do
         for filename in "${names[@]}"; do
             pipeline "$filename" "$q" "$codec" $"conf"

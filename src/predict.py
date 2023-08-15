@@ -7,6 +7,10 @@ log.disable(level=log.DEBUG)
 
 
 def pred_dist():
+    """
+    Predict on the distorted images
+    """
+
     ocr_algos = CONFIG["ocr_algos"]
 
     # get paths
@@ -78,6 +82,9 @@ def pred_ref(ids="scid_img_ids"):
 
 
 def pred_codec(codec="vtm", config="scc", ids="codecs_img_ids"):
+    """
+    Predict on the codec images
+    """
 
     ocr_algos = CONFIG["ocr_algos"]
     # ocr_algos = ["ezocr"]
@@ -125,9 +132,9 @@ def pred_codec(codec="vtm", config="scc", ids="codecs_img_ids"):
 
 if __name__ == "__main__":
     ids = "codecs_img_ids_combined"
-    # pred_dist()
+    pred_dist()
     pred_ref(ids=ids)
-    # pred_codec(codec="vtm", config="scc", ids=ids)
-    # pred_codec(codec="hm", config="scc", ids=ids)
-    # pred_codec(codec="vtm", config="default", ids=ids)
-    # pred_codec(codec="hm", config="default", ids=ids)
+    pred_codec(codec="vtm", config="scc", ids=ids)
+    pred_codec(codec="hm", config="scc", ids=ids)
+    pred_codec(codec="vtm", config="default", ids=ids)
+    pred_codec(codec="hm", config="default", ids=ids)

@@ -23,6 +23,9 @@ def setup(ids="codecs_img_ids"):
     return data
 
 def add_cer(data):
+    """
+    Add column with CER
+    """
 
     def cer(row):
         pred = helpers.load_line_text(
@@ -56,6 +59,10 @@ def add_cer(data):
 
 
 def add_cer_comp(data):
+    """
+    Add column with CER_comp
+    """
+
     data["cer_comp"] = (1 - data["cer"]) * 100
 
     print(f"added CER_comp")
@@ -64,6 +71,10 @@ def add_cer_comp(data):
 
 
 def add_size(data):
+
+    """
+    Add column with size of distorted images
+    """
 
     data["size"] = data.apply(
             lambda row:
@@ -79,6 +90,9 @@ def add_size(data):
     return data
 
 def add_psnr(data):
+    """
+    Add column with PSNR
+    """
 
     data["psnr"] = data.apply(
             lambda row:
