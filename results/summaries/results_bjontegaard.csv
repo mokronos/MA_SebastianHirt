@@ -1,0 +1,5 @@
+ocr_algo,codec_config,bd_rate_pseudo,bd_rate_true,diff
+ezocr,default,-59.28,-61.02,1.73
+ezocr,scc,-7.41,-1.1,-6.32
+tess,default,-54.15,,
+tess,scc,-25.24,,

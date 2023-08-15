@@ -1,0 +1,55 @@
+left,top,right,bottom,text,conf
+72,12,200,44,CATHAY,1.0
+341,33,387,49,HOME,1.0
+409,33,499,49,SHOW TIMES,0.56
+521,33,577,49,MOVIES,0.83
+596,31,694,49,PROMOTIONS,1.0
+717,33,811,49,EXPERIENCES,0.9
+833,33,899,49,CINEMAS,1.0
+919,31,977,49,EVENTS,1.0
+983,33,1025,49,GIFTS,1.0
+1045,29,1167,49,CHECK BOOKING,0.7
+75,43,135,55,CINEPLEXES,0.7
+27,97,111,113,Select Movie,1.0
+449,97,545,113,Select Cinema,0.89
+763,99,835,115,Select Day,1.0
+945,99,1023,115,Select Time,0.97
+1121,97,1207,115,BOOK NOW,0.97
+589,151,1003,193,*London Has Fallen NC16,0.87
+629,221,673,237,DoLDY,0.3
+593,237,667,251,D ! G | T A,0.41
+981,229,1069,245,SHOWTIMES,1.0
+1107,229,1203,245,VIEW TRAILER,1.0
+593,299,631,315,CAST,1.0
+593,319,791,338,Gerard Butler; Morgan Freeman,0.72
+591,367,665,385,DIRECTOR,1.0
+593,389,673,407,Babak Najafi,0.93
+593,439,663,455,SYNOPSIS,1.0
+593,458,1219,478,"The sequel to the worldwide smash hit ""Olympus Has Fallen"" begins in London: where the British Prime",0.84
+593,479,1019,495,Minister has passed awav under mysterious circumstances His funera ,0.41
+1045,479,1179,495,mustattend eventfor,0.85
+593,498,1195,515,leadlers of the western world. But what starts outasthe most protected event onearthturns into ?,0.6
+593,517,1199,533,deadly plot to killthe world s most powerful leaders  devastate every known landmark inthe British,0.57
+593,537,717,553,capital  and unleash -,0.42
+725,535,1219,554,terrifying vision of the future. Only three people have any hope of stopping it: the,0.69
+593,555,1213,571,President of the United States his formidable secret service head {Gerard Butler). and an English MI-6,0.38
+592,574,787,592,agentwhorightlv trusts noone:,0.84
+593,625,691,637,Cnemorsr,0.02
+699,625,737,637,Ce,0.14
+750,626,796,634,FOVc C,0.01
+799,625,833,639,%rzen,0.17
+841,625,919,637,Koiron,0.0
+927,625,1027,639,{Cl?e333}*Cl,0.01
+1067,625,1193,637,82.0 7ruie ?e-or Tror ;,0.0
+593,643,641,655,~ndo lec,0.17
+653,643,695,657,:ri;nol,0.06
+703,643,837,657,(ereCCI? thcrol:c ersro,0.01
+845,643,923,657,~c?rurcrgred,0.08
+935,645,963,657,cjir  =,0.06
+989,645,1049,657,En Turicor:,0.02
+1053,643,1135,659,Tre regzmeln,0.16
+1160,641,1203,659,bcckin,0.23
+601,663,707,675,{b:  mllrefect-ror =,0.01
+717,663,841,675,JeGt:j/e fovfie %eGe  on,0.0
+845,663,883,675,0C:,0.06
+888,664,934,672,Fetenine=,0.0

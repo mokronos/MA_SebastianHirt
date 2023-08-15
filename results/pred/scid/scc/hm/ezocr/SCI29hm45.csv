@@ -1,0 +1,96 @@
+left,top,right,bottom,text,conf
+266,12,378,40,Abstract,0.86
+865,21,1079,39,small black and brown dog play with,0.88
+1087,21,1205,39,red ball in the grass,0.82
+997,73,1061,87,dog play with,0.66
+1073,73,1115,85,ed ballin,1.0
+62,73,608,102,In this paper; we propose multimodal convolutional neu-,0.98
+1054,88,1076,96,2n55,0.28
+34,104,163,128,ral networks,0.76
+174,104,308,130,rn-CNNs) for,0.49
+305,98,605,134,matching image and sentence:,0.84
+995,117,1117,129,small black and brown dog,0.62
+1013,131,1055,143,play wich,0.48
+1063,131,1097,143,red bal,0.62
+36,129,600,158,Our m-CNN provides an end-to-end framework with convo,0.89
+34,159,608,189,"lutional architectures t0 exploit image representation, word",0.79
+1124,180,1168,188,black and,0.4
+983,187,1023,199,red ball,0.79
+33,186,564,218,"composition, and the matching relations between the",0.59
+1121,193,1173,205,brown dog,0.5
+34,216,142,242,modalities:,0.74
+148,216,608,246,More specifically; it consists of one image CNN,0.73
+33,242,606,275,encoding the image content and one matching CNN mod-,0.84
+936,262,960,270,Erass,0.51
+90,275,556,305,the joint representation of image and sentence:,0.62
+566,276,608,300,The,1.0
+32,299,609,336,matching CNN composes different semantic fragments from,0.89
+656,310,718,338,Figure,1.0
+751,304,1229,340,Multimodal   matching  relations  between image and,0.7
+34,331,609,361,words and learns the inter-modal relations between image,0.63
+657,343,741,359,sentence.,0.98
+752,337,1020,364,"The words and phrases, such",0.75
+1025,345,1047,359,as,0.56
+1060,340,1130,364,grass,1.0
+1185,339,1227,359,red,1.0
+34,359,608,391,"and the composed fragments at different levels;,  thus ful-",0.54
+654,361,725,389,"ball"",",0.98
+763,365,797,385,and,1.0
+836,362,982,389,small black,0.97
+990,363,1112,390,and brown,1.0
+1120,366,1164,390,dog,1.0
+1170,366,1226,390,play,1.0
+33,384,561,420,ly exploit the matching relations between image and,0.66
+565,397,605,413,sen-,0.97
+657,393,711,411,with,0.99
+747,391,789,411,red,1.0
+796,389,1100,417,"ball"", correspond to the image",0.87
+1105,391,1229,411,areas of their,0.86
+34,417,609,448,tence: Experimental results demonstrate that the proposed,0.57
+656,412,848,443,grounding   meanings_,0.67
+883,417,921,437,The,1.0
+931,419,1009,437,sentence,0.9
+1030,414,1176,441,small black,0.96
+1184,416,1228,440,and,1.0
+39,455,69,471,m-,0.97
+64,446,608,474,CNNs can effectively capture the information necessary,0.8
+657,445,725,465,brown,1.0
+734,442,842,470,dog play,1.0
+849,445,905,465,with,0.96
+941,445,983,465,red,1.0
+991,445,1045,465,ball,1.0
+1057,445,1087,465,in,1.0
+1094,443,1216,470,the grass,1.0
+32,472,375,505,for image and sentence matching:,0.69
+386,474,564,502,More  specifically;,0.71
+571,483,607,499,our,0.97
+653,468,1030,497,expresses the meaning of the whole image,0.64
+33,505,130,533,proposed,0.84
+136,504,356,532,-CNNs significantly,0.99
+361,501,606,534,outperform the state-of-,0.67
+34,532,608,562,the-art approaches for bidirectional image and sentence re-,0.87
+656,522,720,546,whole,1.0
+729,525,815,545,sentence,1.0
+836,522,982,549,small black,0.97
+990,523,1228,551,and brown dog play,0.7
+34,560,494,586,trieval on the Flickr8K and Flickr3OK datasets,0.82
+657,555,711,575,with,1.0
+747,555,789,575,red,1.0
+799,555,853,575,ball,1.0
+863,555,893,575,in,1.0
+900,552,1022,580,the grass,1.0
+1042,552,1152,580,expressing,1.0
+1157,555,1227,575,a com-,0.78
+656,576,1006,609,plete meaning; associates with the,0.9
+1012,578,1151,610,whole image.,0.59
+1166,580,1228,604,These,1.0
+655,604,1230,636,matching relations should be all taken into consideration for,0.96
+656,636,890,662,an accurate multimodal,0.95
+890,631,1229,667,matching between image and sen-,0.99
+36,646,226,676,1. Introduction,0.99
+655,669,713,689,tence_,0.97
+722,665,1228,694,"Recently, much research work focuses on modeling",0.77
+64,691,609,720,Associating image with natural language sentence plays,0.94
+654,690,1228,720,the image and sentence matching relation at the specific lev-,0.57
+569,190,609,215,IwO,0.31
+36,270,91,306,eling,1.0

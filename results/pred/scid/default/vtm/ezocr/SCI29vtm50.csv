@@ -1,0 +1,94 @@
+left,top,right,bottom,text,conf
+266,12,378,40,Abstract,1.0
+865,23,1079,39,small black and brwn dog play wlth,0.52
+1087,23,1205,39,red boll intne grass,0.38
+1017,73,1061,87,play with,0.87
+1085,73,1107,85,balle,0.52
+64,73,608,102,In this paper; we propose multimodal convolutional neu-,0.65
+1054,88,1076,96,ua55,0.09
+33,97,605,134,ral networks (m-CNNs) for matching image and sentence:,0.61
+995,116,1119,131,{Mallblack and brown dog,0.15
+1013,131,1055,143,pla; writh,0.39
+1063,131,1099,143,red ball,0.58
+36,129,606,158,Our m-CNN provides an end-to-end framework with COnvo -,0.68
+34,158,610,189,"lutional architectures to exploit image representation, word",0.75
+1123,179,1171,191,blackand,0.62
+33,186,608,218,"composition, and the matching relations between the two",0.67
+1122,194,1170,202,DiOwn CoE,0.11
+33,216,141,242,modalities,0.94
+148,216,608,247,More specifically; it consists Of one image CNN,0.81
+33,242,608,275,encoding the image content and one matching CNN mod-,0.72
+90,274,556,304,the joint representation of image and sentence.,0.77
+566,276,608,300,The,0.79
+32,298,609,334,matching CNN composes different semantic fragments from,0.81
+655,309,718,339,Figure,1.0
+751,306,1228,338,Multimodal   matching   relations   between image and,0.63
+34,331,609,361,words and Iearns the inter-modal relations between image,0.94
+657,343,741,359,sentence.,0.75
+752,336,1048,364,The words and phrases; such as,0.76
+1060,340,1130,364,grass,0.98
+1185,339,1227,359,red,1.0
+34,359,608,391,"and the composed fragments at different levels, thus ful-",0.59
+653,361,725,389,"ball"",",0.75
+763,365,797,385,and,1.0
+835,362,904,389,'small,0.73
+912,364,982,388,black,1.0
+990,363,1112,390,and brown,1.0
+1170,366,1228,390,play,1.0
+33,384,561,420,ly exploit the matching relations between image and,0.74
+565,397,607,413,sen-,0.92
+657,393,711,411,wich,0.64
+747,391,789,411,red,1.0
+796,389,1230,418,"ball"". correspond t0 the image areas of their",0.48
+34,417,609,448,tence. Experimental results demonstrate that the proposed,0.78
+656,412,854,443,grounding   meanings.,0.62
+883,417,921,437,The,1.0
+933,421,1011,437,sentence,1.0
+1030,416,1096,440,small,1.0
+1105,414,1178,441,black,1.0
+1184,416,1228,440,and,1.0
+36,446,608,474,M-CNNs can effectively capture the information necessury,0.66
+655,445,725,465,brown,1.0
+734,444,778,470,dog,1.0
+784,444,842,468,play,1.0
+851,445,905,465,wich,0.5
+941,445,983,465,red,1.0
+991,445,1045,465,ball,0.95
+1057,445,1085,465,in,1.0
+1095,445,1137,465,the,1.0
+1146,446,1216,470,grass,1.0
+32,472,375,505,for image and sentence matching:,0.56
+386,474,564,502,More specifically;,0.67
+571,483,609,499,Oulr,0.35
+654,466,1031,498,expresses the meaning of the whole image.,0.68
+33,505,130,533,proposed,1.0
+136,504,228,528,m-CNNs,1.0
+231,501,608,533,significantly outperform the state-of-,0.93
+34,530,606,563,the-art approaches for bidirectional image and sentence re-,0.79
+656,522,720,546,whole,1.0
+729,525,815,545,sentence,0.99
+835,522,904,549,'small,0.77
+912,522,1228,551,black and brown dog play,0.94
+34,560,492,587,trieval on the FlickrSK and Flickr3OK datasets,0.61
+657,555,711,575,wich,0.57
+747,555,789,575,red,1.0
+799,555,853,575,ball,1.0
+863,555,893,575,in,1.0
+901,555,943,575,the,0.64
+952,556,1022,580,grass,1.0
+1041,549,1150,580,expressing,0.84
+1157,555,1227,575,a com -,0.6
+656,576,1006,609,"plete meaning, associates  with the",0.69
+1012,579,1151,610,whole image.,0.8
+1166,580,1228,604,These,1.0
+653,602,1231,639,matching relations should be all taken into consideration for,0.86
+656,636,890,662,an accurate multimodal,0.77
+890,631,1229,667,matching between image and sen-,0.97
+36,646,228,676,1. Introduction,0.97
+655,669,711,689,tence,0.95
+722,662,1229,694,"Recently, much research work focuses 0n modeling",0.84
+64,691,609,720,Associating image with natural language sentence plays,0.91
+654,690,1228,720,the image and sentence matching relation at the specific lev-,0.6
+997,71,1020,88,dog [,0.17
+36,271,91,306,eling,1.0
+1120,361,1166,392,dog,1.0

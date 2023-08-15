@@ -1,0 +1,55 @@
+left,top,right,bottom,text,conf
+72,12,200,44,CATHAY,1.0
+339,31,387,49,HOME,0.95
+405,29,499,49,SHOWTIMES,0.99
+521,33,577,49,MOVIES,0.87
+598,32,696,48,PROMOTIONS,0.99
+716,31,810,49,EXPERIENCES,0.84
+833,33,899,49,CINEMAS,0.99
+919,31,975,49,EVENTS,0.98
+983,33,1025,49,GIFTS,0.93
+1047,31,1167,49,CHECK BOOKING,0.73
+75,43,135,55,CINI PLEXES,0.89
+27,97,111,113,Select Movie,1.0
+449,97,543,113,Select Cinema,0.74
+763,97,835,113,Select Day,1.0
+945,97,1023,113,Seletl Time,0.95
+1121,97,1207,115,BOOK NOW,0.99
+591,151,1003,193,*London Has Fallen NC16,0.52
+629,223,671,237,DOLBY,0.73
+605,235,629,251,Ta,0.54
+981,229,1069,245,SHOWTIMES,0.99
+1106,229,1202,245,VIEWTRAILER,0.97
+593,299,631,315,CAST,1.0
+593,319,791,338,Gerard Butler: Morgan Freeman,0.71
+593,369,665,385,DIRECTOR,0.94
+593,391,673,405,Babak Najan,0.99
+591,439,663,455,SYNOPSIS,1.0
+593,459,657,478,The seque,0.86
+661,461,829,475,to the worldwidesmashhit,0.4
+831,457,1220,481,"""Olympu: Has Fallen"" beginis in Londan where the Brltish Prime",0.48
+592,478,1037,496,Minister has passed away under mysterious circumstances His funeral is-,0.75
+1045,481,1179,495,mustattend eventtor,0.75
+593,498,1185,515,"leaclersofthewesteriworl, But what starts out asthe most protected event on earthturns into",0.27
+593,517,765,533,deadly pintto kill the worlc =,0.71
+769,517,1199,533,"most powerfril lezders, devzstate every known lanclmark inthe British",0.39
+593,537,715,553,capital  andunleash,0.75
+725,537,1219,553,temifying vision of the future. Only three people have anv hope 0f stoppingit: the,0.34
+593,555,1213,571,"President ofthe United States, his formidable secret service head Gerzrd Butler) and a English Ml-6",0.35
+592,574,785,592,agent who rightly trustsnoone,0.53
+603,625,739,637,~o,0.26
+773,625,919,637,PanW:,0.0
+927,625,1109,641,"328073,1 330~3",0.02
+1123,625,1185,637,*T:,0.07
+593,645,643,657,~nae,0.03
+653,645,687,657,{un,0.08
+695,643,783,657,Wninceo ennro,0.0
+795,645,837,657,705h,0.13
+845,643,963,657,"""e[h 427",0.03
+980,646,1046,654,6 0n~jc2r  ,0.01
+1055,643,1099,657,T,0.86
+1143,645,1193,657,:2 57~,0.02
+665,663,707,675,E3=,0.08
+717,663,825,675,3ifmfo on=,0.0
+846,664,880,672,0 Fac,0.02
+889,663,935,675,~ttrtn 0,0.01

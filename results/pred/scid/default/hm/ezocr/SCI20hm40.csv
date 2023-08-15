@@ -1,0 +1,114 @@
+left,top,right,bottom,text,conf
+53,0,384,26,"Compare products, prices and stores",0.97
+143,47,225,65,Computers,1.0
+735,47,929,65,Fashion; shoes & jewellery,0.77
+125,65,179,81,Laptops,1.0
+185,61,615,81,"Tablets , Multifunction Printer; LCD & LED Monitor, Toner Cartridges",0.54
+717,65,775,79,Watches,1.0
+781,65,895,81,Sandals_ flip ilops,0.61
+899,65,999,79,Women'$ boots,0.74
+1005,65,1063,81,Luggage,1.0
+1069,65,1235,81,Sunglasses. Sponts shoes,0.69
+127,81,267,97,Router. Ink Cartridges_,0.51
+273,81,389,97,See All categories,0.96
+717,81,879,97,(men); See All categories,0.57
+143,123,227,139,Electronics,1.0
+735,122,867,141,Health and Beauty,0.95
+124,136,526,160,"Smartphones. Digital Cameras, Headphones; LED TV. LCD TV,",0.36
+529,141,631,155,Camera Lenses,0.59
+717,141,925,157,"Women's perfume, Supplements",0.91
+939,141,993,155,vitamins;,0.72
+997,141,1163,157,Men's Cologne & perfume,0.96
+1169,141,1231,157,Shampoo,1.0
+125,157,221,171,Action Camera;,0.72
+227,157,449,173,"Activity Tracker, See All categories_",0.85
+731,157,861,171,hair mask; Skin care,0.61
+867,157,983,173,See All categories,0.9
+143,199,233,215,Accessories,0.99
+735,199,929,215,Furniture & Interior Design,0.96
+125,215,387,233,Laptop Cases. Printer Other Accessories,0.75
+391,217,525,231,Mobile Phone Cases,0.59
+531,217,623,231,Camera Other,0.81
+717,215,785,231,Bar Stools,0.74
+789,217,883,231,Kitchen Stools_,0.94
+889,217,947,231,Bathtubs,1.0
+953,217,1009,231,Blankets,1.0
+1025,215,1165,233,"Throws , Kitchen Sinks_",0.73
+125,231,327,249,"Accessories, See All categories",0.87
+717,233,797,249,Kitchenware,0.89
+803,233,887,247,Office Chairs,1.0
+893,233,1009,249,See AIl categories,0.75
+143,275,223,293,Appliances,1.0
+735,273,865,291,Garden and Tools,1.0
+125,293,241,309,Vacuum Cleaners,0.96
+247,293,289,307,Ovens,1.0
+294,290,519,310,"Fridge Freezers, Washing Machine",0.64
+523,293,583,307,Radiator;,0.7
+587,293,615,307,Gas,0.99
+717,291,1053,309,"Measuring equipment, Barbecues, Home Automation:",0.51
+1057,293,1221,309,Pool cleaning; Chainsaws,0.61
+125,309,177,323,Heaters,1.0
+183,309,227,323,Coffee,0.71
+240,306,361,326,Espresso Machine,1.0
+365,309,483,325,See All categories,0.71
+717,309,875,325,Torches and Headlamps;,0.82
+879,309,997,325,See All categories,0.92
+143,350,181,370,Toys,1.0
+735,351,869,367,Children and Baby,1.0
+125,369,167,383,Drone,1.0
+173,367,227,385,RC toys,0.63
+231,369,331,385,Outdoor games,0.99
+337,369,401,385,Baby toys,0.71
+407,367,605,385,"Pretend play, Ride-on Vehicles",0.7
+715,366,983,387,"Baby monitors, Changing mats and tables_",0.88
+989,367,1237,387,"Girls shoes, Playpens. Strollers, Nappy",0.71
+125,383,213,401,Board games;,0.82
+219,385,347,403,Construction games,0.95
+351,385,469,401,See All categories,0.95
+717,383,931,401,"Bags, Boys shoes, Baby Bedding;",0.55
+935,385,1051,401,See All categories,0.8
+145,427,295,443,Sports and Outdoors,0.86
+735,425,841,443,Wine and Gifts,0.86
+125,443,359,459,GPS Watches & Heart Rate Monitors_,0.93
+365,445,643,461,"Running shoes, Cycling clothing; Binoculars",0.68
+717,445,837,461,"Whisky, Costumes",0.75
+841,445,981,461,Wine; Sparkling Wine;,0.5
+985,445,1123,459,Costume Accessories,1.0
+1129,443,1221,461,Party supplies,0.95
+125,459,259,475,"Tents , GPS Outdoor;",0.65
+263,461,379,477,See All categories,0.81
+717,461,799,477,Champagne;,0.95
+803,461,843,475,Beers,1.0
+847,461,965,477,See All categories,0.88
+143,503,179,519,Pets,0.91
+735,503,789,519,Motors,0.99
+125,519,181,535,Pet care,0.65
+187,519,435,537,"Pet food, Pet cage. Pet house. Pet bed_",0.5
+441,519,495,537,Pet toys,0.56
+499,521,575,537,Pet carriers_,1.0
+581,519,627,535,Collars,1.0
+717,519,857,537,"GPS, In-Dash Players_",0.8
+863,519,945,535,GPS Mounts,1.0
+951,519,1041,535,GPS Batteries_,0.98
+1047,519,1123,535,GPS Cases;,0.68
+1127,521,1219,535,Boat Motors &,0.98
+125,535,281,553,Harnesses and Leashes,1.0
+287,535,403,553,See AIl categories,0.67
+717,533,911,551,"Parts, GPS Other Accessories_",0.62
+915,537,1033,553,See All categories,0.77
+143,579,327,595,"Music, Movies and Books",0.98
+735,579,831,595,Video Games,1.0
+125,597,209,613,Microphones,1.0
+215,597,341,611,Pontable Recorders,0.55
+345,597,423,611,Professionab,0.62
+427,595,641,613,"Audio, Piano Keyboards, Lighting",0.88
+716,594,855,614,Sony PS4 Controllers,0.86
+861,594,1105,614,"Sony PS4 (PlayStation 4), PS4 Games",0.85
+1111,594,1217,613,Sony PS4 Other,0.99
+125,610,241,630,and Stage Effects_,0.81
+245,613,363,629,See All categories,0.73
+717,613,797,627,Accessories,1.0
+801,613,873,627,PC Games,0.92
+877,613,995,629,See All categories,0.9
+143,655,273,673,All the Categories,0.64
+125,673,243,689,See All categories,0.91

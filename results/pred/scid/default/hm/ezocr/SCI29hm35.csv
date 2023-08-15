@@ -1,0 +1,98 @@
+left,top,right,bottom,text,conf
+266,12,378,40,Abstract,1.0
+865,21,1079,39,small black and brown dog play with,0.95
+1087,21,1205,39,red ball in the grass,0.96
+997,73,1019,87,dogE,0.25
+1038,74,1060,82,with,0.96
+1068,74,1114,82,rediballin,0.63
+64,73,608,102,In this paper; we propose multimodal convolutional neu-,0.82
+1054,88,1076,96,erss,0.42
+34,104,310,130,ral networks (m-CNNs) for,0.82
+306,98,607,134,matching image and sentence:,0.68
+1021,117,1065,129,black and,0.64
+1067,117,1117,129,brown dog,0.59
+1013,131,1057,143,play with,0.97
+1064,132,1100,140,redinall,0.58
+36,129,600,158,Our m-CNN provides an end-to-end framework with convo,0.52
+34,159,608,188,"lutional architectures to exploit image representation, word",0.8
+1123,179,1169,191,black and,0.99
+983,187,1023,199,red ball,0.98
+33,186,564,218,"composition, and the matching relations between the",0.64
+570,194,607,213,two,1.0
+1122,194,1152,202,brown,0.95
+34,216,142,242,modalities:,0.7
+148,216,608,247,More specifically; it consists of one image CNN,0.71
+33,242,608,275,encoding the image content and one matching CNN mod-,0.67
+936,262,960,270,Eras5,0.49
+90,275,556,304,the joint representation of image and sentence.,0.68
+566,276,608,300,The,0.91
+33,300,608,333,matching CNN composes different semantic fragments from,0.83
+656,310,718,338,Figure,1.0
+752,306,1228,339,Multimodal   matching  relations   between  image   and,0.57
+36,331,609,361,words and learns the inter-modal relations between image,0.91
+657,343,741,359,sentence.,0.98
+752,336,1048,364,"The   words and phrases, such as",0.7
+1060,340,1130,364,grass,1.0
+1185,339,1227,359,red,1.0
+34,359,608,391,"and the composed fragments at different levels, thus ful-",0.48
+656,364,724,388,"ball"" ",0.53
+763,365,797,385,and,1.0
+836,362,982,389,small black,1.0
+989,363,1035,388,and,1.0
+1041,367,1111,387,brown,1.0
+1120,366,1164,390,dog,1.0
+1170,366,1226,390,play,1.0
+33,384,561,420,ly exploit the matching relations between image and,0.83
+565,397,607,413,sen-,0.97
+657,391,711,411,with,0.98
+745,389,1100,417,"red ball"", correspond to the image",0.8
+1105,391,1229,411,areas of their,0.9
+34,417,609,448,tence. Experimental results demonstrate that the proposed,0.67
+656,412,849,443,grounding   meanings,0.48
+883,417,921,437,The,1.0
+931,419,1009,437,sentence,1.0
+1030,416,1098,440,small,1.0
+1106,416,1176,440,black,1.0
+1184,416,1228,440,and,1.0
+38,448,608,474,m-CNNs can effectively capture the information necessary,0.57
+657,445,725,465,brown,1.0
+734,442,842,470,dog play,1.0
+851,445,905,465,with,1.0
+940,442,984,466,red,1.0
+991,445,1045,465,ball,1.0
+1057,445,1087,465,in,1.0
+1094,443,1216,470,the grass,0.7
+32,472,374,505,for image and sentence matching:,0.81
+388,474,564,502,More specifically;,0.84
+571,483,609,499,our,0.84
+654,468,1032,497,expresses the meaning of the whole image.,0.96
+32,503,130,534,proposed,1.0
+136,504,356,532,m-CNNs  significantly,0.9
+361,501,606,534,outperform the state-of-,0.85
+34,531,606,563,the-art approaches for bidirectional image and sentence re -,0.85
+658,522,720,546,whole,1.0
+729,525,815,545,sentence,1.0
+835,522,982,549,'small black,0.65
+989,522,1228,551,and brown dog play,0.87
+34,560,492,587,trieval on the Flickr8K and Flickr3OK datasets:,0.53
+657,555,711,575,with,1.0
+747,555,789,575,red,1.0
+799,555,853,575,ball,1.0
+863,555,893,575,in,1.0
+900,552,1022,580,the grass,1.0
+1041,549,1150,580,expressing,0.86
+1157,555,1227,575,a com-,0.98
+655,573,915,612,plete meaning  associates,0.66
+920,580,1006,604,with the,0.99
+1014,579,1147,609,whole image.,0.8
+1166,580,1228,604,These,1.0
+653,602,1231,639,matching relations should be all taken into consideration for,0.94
+656,636,890,662,an accurate multimodal,0.97
+890,631,1229,667,matching between image and sen-,1.0
+36,646,226,676,1. Introduction,0.99
+654,662,1229,694,"tence. Recently, much research work focuses 0 modeling",0.88
+66,695,608,720,Associating image with natural language sentence plays,0.83
+654,690,1228,720,the image and sentence matching relation at the specific lev-,0.78
+1016,74,1038,82,pLv,0.39
+994,119,1022,128,siall,0.42
+36,270,91,306,eling,1.0

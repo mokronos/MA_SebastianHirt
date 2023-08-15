@@ -1,0 +1,45 @@
+left,top,right,bottom,text,conf
+1244,2,1280,26,#Y,0.07
+138,32,396,130,#2+*,0.02
+144,122,384,150,HUAQIAO UNIVERSITY,0.69
+1211,163,1269,183,Search,1.0
+3,209,49,225,News,1.0
+91,207,143,225,About,1.0
+183,207,269,225,Admission,1.0
+311,207,399,225,Academics,1.0
+443,209,519,225,Research,1.0
+559,205,693,225,HQU & the World,0.99
+734,207,835,228,Campus Life,1.0
+879,209,947,225,Services,0.96
+989,207,1093,227,Employment,0.91
+7,239,55,259,Home,0.77
+69,241,115,259,About,0.89
+138,294,206,318,About,1.0
+396,304,590,336,Huaqiao University,1.0
+402,333,808,362,Huaqiao University (HQU) was established,0.98
+832,334,1228,362,the Chinese central government in 1960 in,0.85
+108,348,290,374,Huaqiao University,0.99
+402,360,508,386,Quanzhou;,0.55
+524,358,1236,386,"coastal city in Fujian Province in the Southeast of China, for the education of",0.81
+402,384,564,408,overseas Chinese_,0.76
+570,380,1256,413,The first president of HQU was Mr: LLAO Chengzhi; an outstanding social,0.74
+107,399,280,426,Message from the,0.82
+402,408,1244,436,"activist and senior state leader of China. In 2004,a landmark decision was made to build a",0.78
+80,424,176,448,President,1.0
+402,434,948,462,"second campus in Xiamen city, one of China s four earliest",0.71
+1014,434,1254,460,"economic zones, and that",0.75
+403,465,521,485,campus was,0.94
+519,459,718,489,inaugurated in 2006_,0.83
+108,476,262,504,Facts & Figures,0.95
+402,507,1260,538,For more than half a century; HQU has developed into a comprehensive institution of higher,0.6
+108,528,250,552,Points of Pride,0.73
+402,531,1196,564,"education capable of program offerings in 12 disciplines--philosophy; economics, law,",0.77
+402,558,1276,588,"education; literature; histoly; science, engineering; agriculture; medical science, management;",0.49
+401,581,1275,617,and arts: HQU has a comparative strength in Chinese language and culture education; science,0.59
+402,610,1260,638,"and engineering programs, such as Mechanical Engineering; Civil Engineering, Architecture_",0.78
+401,629,1271,665,"Material Science and Pharmacy: Overall, the 29 colleges and 90 research institutes have been",0.74
+402,657,1268,688,supporting numerous projects funded by both government and industries; one of which led to,0.61
+400,684,756,708,the award of the National Science and,0.76
+753,677,1245,716,Technology Development by the central government:,0.89
+808,329,839,366,by,0.99
+943,439,1015,457,special,1.0

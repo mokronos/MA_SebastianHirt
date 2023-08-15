@@ -1,0 +1,14 @@
+left,top,right,bottom,text,conf
+61,17,965,106,Histogram based Enhancement,0.97
+81,156,716,198,We have discussed various forms of mapping,0.7
+47,196,541,235,function f(r) that leads to different,0.82
+47,235,351,272,enhancement results:,0.67
+81,275,655,317,The natural question is: How to select an,0.83
+44,310,622,361,appropriate f(x) for an arbitrary image?,0.74
+988,352,1022,360,Intl Gx,0.01
+990,362,1020,370,126} Ant,0.07
+81,351,633,393,One systematic solution is based 0n the,0.87
+46,391,552,435,histogram information of an image:,0.84
+80,430,727,474,Histogram of an image represents the relative,0.76
+47,473,709,513,frequency  of occurrence of various gray levels,0.72
+47,511,236,553,in the image.,0.52

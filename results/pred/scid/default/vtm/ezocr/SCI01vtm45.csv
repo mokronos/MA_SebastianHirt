@@ -1,0 +1,42 @@
+left,top,right,bottom,text,conf
+1230,2,1280,26,'+Y,0.23
+138,32,396,130,#2+0,0.02
+144,122,384,150,HUAQIAO UNIVERSITY,0.99
+1211,163,1269,183,Search,1.0
+3,207,49,225,News,1.0
+91,207,143,225,About,1.0
+183,207,269,225,Admission,0.66
+313,209,399,225,Academics,0.96
+443,209,519,225,Research,1.0
+559,205,695,225,HQU & the World,0.99
+734,207,835,228,Campus Life,0.99
+879,209,947,225,Services,1.0
+987,203,1092,229,Employment,1.0
+7,239,55,259,Home,0.99
+69,241,115,259,About,0.99
+138,294,206,318,About,1.0
+396,304,590,336,Huaqiao University,1.0
+401,332,1228,363,Huaqiao University (HQU) was established by the Chinese central government in 1960 in,0.84
+108,348,290,374,Huaqiao University,0.99
+402,358,1236,386,"Quanzhou; a coastal city in Fujian Province in the Southeast of China, for the education of",0.6
+402,384,564,408,overseas Chinese_,0.6
+570,380,1254,413,"The first president of HQU was Mr: LIAO Chengzhi, an outstanding social",0.68
+107,399,280,426,Message from the,0.76
+402,407,1244,436,"activist and senior state leader of China. In 2004,& landmark decision was made to build a",0.81
+80,424,176,448,President,0.99
+402,434,650,462,second campus in Xiamen,1.0
+694,433,1254,463,"one of China's four earliest special economic zones, and that",0.69
+402,460,718,488,campus was inaugurated in 2006_,0.93
+108,476,262,504,Facts & Figures,0.96
+402,507,1260,538,For more than half a century; HQU has developed into a comprehensive institution of higher,0.87
+108,528,250,552,Points of Pride,0.96
+402,531,1156,564,"education capable of program offerings in 12 disciplines--philosophy; economics,",0.82
+401,557,1276,589,"education, literature, history; science, engineering; agriculture, medical science, management;",0.47
+402,583,1274,616,"and arts. HQU has a comparative strength in Chinese language and culture education, science",0.66
+402,608,1264,639,"and engineering programs, such as Mechanical Engineering, Civil Engineering, Architecture,",0.65
+401,629,1271,665,"Material Science and Pharmacy: Overall, the 29 colleges and 90 research institutes have been",0.74
+402,657,1268,688,supporting numerous projects funded by both government and industries; one of which led to,0.78
+400,684,758,708,the award of the National Science and,0.75
+753,677,1245,716,Technology Development by the central government:,0.74
+651,432,697,464,"city,",1.0
+1155,531,1203,563,"law,",0.97

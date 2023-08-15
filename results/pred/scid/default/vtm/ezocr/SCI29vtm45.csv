@@ -1,0 +1,97 @@
+left,top,right,bottom,text,conf
+266,12,378,40,Abstract,1.0
+865,21,1079,39,small black and brown dog play with,0.83
+1087,21,1205,39,red ball in the grass,0.73
+1017,73,1115,87,play writh a red ball in,0.65
+62,73,608,102,In this paper; we propose multimodal convolutional neu-,0.95
+1054,88,1076,96,2rss,0.64
+34,104,310,130,ral networks (r-CNNs) for,0.78
+305,98,607,134,matching image and sentence:,0.78
+995,117,1117,129,small black and brown dog,0.61
+1013,131,1055,143,play with,0.94
+1064,132,1100,140,rediall,0.65
+36,129,606,158,Our m-CNN provides an end-to-end framework with convo-,0.7
+34,159,608,189,"lutional architectures to exploit image representation, word",0.88
+1123,179,1169,191,black and,0.82
+983,187,1023,199,reo ball,0.79
+33,185,609,218,"composition, and the matching relations between the two",0.95
+1121,193,1173,205,brown dog,0.67
+34,216,142,242,modalities,1.0
+148,216,608,247,More specifically; it consists of one image CNN,0.75
+34,241,607,277,encoding the image content and one matching CNN mod-,0.8
+90,275,556,304,the joint representation of image and sentence.,0.66
+566,276,608,300,The,1.0
+33,300,608,333,matching CNN composes different semantic fragments from,0.69
+656,310,718,338,Figure,1.0
+752,306,1228,338,Multimodal  matching   relations   between  image and,0.49
+36,331,609,361,words and learns the inter-modal relations between image,0.97
+657,343,741,359,sentence.,0.94
+752,338,1020,364,"The words and phrases, such",0.64
+1025,343,1047,359,as,0.95
+1060,340,1130,364,grass,1.0
+1185,339,1227,359,red,1.0
+34,360,608,391,"and the composed fragments at different levels,  thus ful-",0.81
+656,364,724,388,"ball""-",0.53
+763,365,797,385,and,1.0
+836,362,982,389,small black,1.0
+989,363,1035,388,and,0.69
+1041,367,1111,385,brown,1.0
+1120,366,1164,390,dog,1.0
+1170,366,1228,390,play,1.0
+33,384,561,420,ly exploit the matching relations between image and,0.97
+565,397,607,413,sen-,1.0
+657,391,711,411,with,1.0
+747,391,789,411,red,1.0
+796,389,1100,418,"ball"", correspond to the image",0.79
+1105,391,1229,411,areas of their,0.55
+34,417,609,448,tence. Experimental results demonstrate that the proposed,0.69
+656,412,849,443,grounding   meanings,0.79
+883,417,921,437,The,1.0
+931,419,1009,437,sentence,1.0
+1030,416,1096,440,small,0.97
+1105,414,1176,441,black,1.0
+1184,416,1228,440,and,0.93
+36,446,608,474,m-CNNs can effectively capture the information necessary,0.95
+657,445,725,465,brown,1.0
+734,444,778,470,dog,1.0
+784,444,842,468,play,1.0
+851,445,905,465,with,0.85
+941,445,983,465,red,1.0
+991,445,1045,465,ball,1.0
+1057,445,1087,465,in,1.0
+1095,445,1137,465,the,0.99
+1146,446,1216,470,grass,1.0
+32,472,375,505,for image and sentence matching:,0.77
+388,474,564,502,More specifically;,0.8
+571,483,607,499,our,0.95
+653,467,1031,498,expresses the meaning of the whole image.,0.8
+32,503,130,534,proposed,0.96
+134,504,474,532,m-CNNs   significantly outperform,0.65
+480,506,606,532,the   state-of-,0.51
+34,531,606,563,the-art approaches for bidirectional image and sentence re-,0.87
+656,522,720,546,whole,1.0
+729,525,815,545,sentence,0.82
+837,525,903,545,small,1.0
+912,524,982,548,black,1.0
+990,522,1228,551,and brown dog play,0.94
+34,559,492,587,trieval on the Flickr8K and Flickr3OK datasets:,0.83
+657,555,711,575,with,0.59
+747,555,789,575,red,1.0
+799,555,853,575,ball,1.0
+863,555,893,575,in,0.99
+901,555,945,575,the,0.51
+952,556,1022,580,grass,1.0
+1042,552,1152,580,expressing,1.0
+1157,555,1227,575,a com-,0.61
+655,573,1007,612,plete meaning  associates with the,0.53
+1012,579,1151,610,whole image.,0.7
+1166,580,1228,604,These,1.0
+655,604,1230,636,matching relations should be all taken into consideration for,0.56
+656,636,890,662,an accurate multimodal,0.87
+890,631,1229,667,matching between image and sen-,0.98
+36,646,226,676,1. Introduction,0.98
+654,662,1229,694,"tence. Recently, much research work focuses 0n modeling",0.76
+64,691,609,720,Associating image with natural language sentence plays,0.87
+654,690,1228,720,the image and sentence matching relation at the specific lev-,0.81
+997,71,1020,88,dog [,0.17
+36,270,92,306,eling,0.57

@@ -1,0 +1,3 @@
+ocr_algo,cer,cer_comp,cer_std,cer_comp_std
+ezocr,0.17,83.25,0.1,10.26
+tess,0.21,79.08,0.12,12.0

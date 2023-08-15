@@ -1,0 +1,21 @@
+left,top,right,bottom,text,conf
+3,9,1280,76,KEY STAGESIN DIGITAL IMAGE PROESSNG:,0.43
+197,83,1095,143,MORPHOLOGIGAL FOCSXNG,0.12
+423,178,524,220,Image,0.87
+705,173,918,222,Moiphological,0.99
+391,217,561,253,Restoration,1.0
+726,215,897,259,Proceeilg ,0.62
+142,307,241,350,Image,1.0
+91,345,297,383,Enhancement,1.0
+989,327,1193,369,Segmentation,1.0
+141,428,242,470,Image,1.0
+1043,429,1143,467,Object,0.46
+111,467,275,505,Acquisition,1.0
+1009,467,1175,505,Recognition,1.0
+987,548,1199,588,Representation,1.0
+69,571,317,609,Problem Domain,0.95
+999,587,1187,625,& Description,0.96
+379,616,582,660,Colour Image,0.97
+747,616,848,660,Image,1.0
+393,650,567,700,Processing,1.0
+697,653,898,701,Compression,1.0

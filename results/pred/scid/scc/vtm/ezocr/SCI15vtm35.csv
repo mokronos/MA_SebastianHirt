@@ -1,0 +1,48 @@
+left,top,right,bottom,text,conf
+71,12,199,43,CATHAY,1.0
+341,33,387,49,HOME,1.0
+407,31,499,49,SHOW TIMES,1.0
+521,33,577,49,MOVIES,1.0
+599,33,697,49,PROMOTIONS,1.0
+715,31,811,49,EXPERIENCES,1.0
+833,33,899,49,CINEMAS,1.0
+919,31,1025,49,EVENTS / GIFTS,0.98
+1045,31,1167,49,CHECK BOOKING,0.77
+75,43,135,55,CINEPLEXES,1.0
+27,97,111,113,Select Movie,1.0
+449,97,545,113,Select Cinema,0.9
+763,99,835,115,Select Day,1.0
+945,99,1023,113,Select Time,0.99
+1121,97,1207,115,BOOK NOW,0.68
+603,149,1003,194,London Has Fallen NC16,1.0
+628,220,671,237,DOLBY,0.98
+593,237,629,251,D | G,0.75
+981,229,1069,245,SHOWTIMES,0.94
+1107,229,1205,245,VIEW TRAILER,0.69
+593,299,631,315,CAST,1.0
+593,319,791,338,Gerard Butler; Morgan Freeman,0.68
+593,369,665,385,DIRECTOR,0.96
+593,391,635,405,Babak,1.0
+631,387,673,407,Najafi,0.67
+593,439,663,455,SYNOPSIS,1.0
+593,459,831,477,The sequel to the worldwide smash hit,0.54
+832,457,1220,481,"'Olympus Has Fallen"" begins in London; where the British Prime",0.51
+593,479,1037,495,Minister has passed away under mysterious circumstances: His funeral is,0.71
+1045,479,1179,495,mustattend eventfor,0.73
+593,499,769,515,leaders of the western world,0.79
+773,497,1185,515,But what starts out asthe most protected event on earth; turns into,0.78
+593,517,1199,533,deadly plot to kill the world s most powerful leaders devastate every known landmark in the British,0.69
+593,536,1219,554,"capital,and unleasha terrifying vision ofthe future. Only three people have any hope of stopping it: the",0.72
+593,555,1213,571,"President ofthe United States; his formidable secret service head (Gerard Butler), and an English MI-6",0.43
+592,574,785,592,agentwho rightly trusts noone,0.55
+593,625,691,639,Cineeiure Omnon,0.29
+707,625,833,637,83323 :0 enowcaze Ecreen,0.01
+841,625,1053,639,:ng:tegzure: Only couple  ec:in}: Crolig you,0.01
+1065,625,1193,637,Ier- 0 movie :ericn Ihg: i:,0.01
+591,643,643,657,Enejuied,0.25
+653,643,697,657,rrisnall,0.23
+703,643,925,657,leaze nore rnarall:icker: raveto b? purcrgzed,0.05
+935,643,1049,657,rair: (i.e even number:,0.27
+1055,641,1133,659,The zeatirgplan,0.34
+1143,641,1203,659,tre bookirg,0.35
+591,663,937,675,webzie wll refecttngfoi :eat: Ore -Ovoie :ea:: for ycureory rejererte,0.0

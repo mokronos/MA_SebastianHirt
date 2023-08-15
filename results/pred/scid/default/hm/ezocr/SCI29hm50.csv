@@ -1,0 +1,97 @@
+left,top,right,bottom,text,conf
+266,12,378,40,Abstract,0.99
+865,22,1135,37,~IAII ulack Wdbtowridog olv wlth a (eri hall,0.07
+1149,23,1203,37,ljrs,0.11
+1017,73,1039,87,pL,0.31
+64,72,608,102,In tlns puper we propase multimutlal comolutional neu -,0.22
+34,99,607,132,"ral nerwork"" (m-CNNs) fon maching image ana Sentence:",0.28
+996,120,1022,126,Eei,0.06
+1068,120,1096,126,ITmrtn,0.01
+1035,131,1101,143,FMindball,0.08
+34,129,608,158,Qur m-CNN provides ( enal-Io-end framework with <omo-,0.3
+34,158,608,189,luttonal architectures Itv exploit Image representution: word,0.44
+1124,182,1168,188,Wm  Eumm,0.01
+33,186,564,218,compoviticm; Qnd the mutching' relatians between the,0.25
+571,195,607,213,nvn,0.55
+1122,194,1170,202,hocnuci,0.02
+34,216,608,244,modalites . More speeificulh; ir consis of one image CNN,0.29
+31,239,609,277,encahng (he image content uil (ne matching CNN med-,0.31
+90,273,324,302,the joimt repre Scntation,0.36
+350,274,556,305,image ad Sentence,0.47
+564,273,609,300,The,0.96
+32,298,609,337,matching CNN composes different semantic fregmens from,0.67
+656,311,719,339,Figure,0.47
+751,303,1123,339,Multirnodul   nutchiug reluticus   between,0.16
+1129,317,1187,337,IMgC,0.23
+1193,315,1227,331,MD,0.37
+34,331,609,361,Worls und learns Ilie inter-mtlul relations between imuge,0.26
+659,343,739,359,sennce:,0.51
+754,338,966,362,Tic worula unl phrses_,0.12
+972,336,1048,360,slch JS,0.38
+1058,337,1131,364,'grass',0.73
+1185,341,1227,359,red,0.92
+34,359,512,391,und the composed frugments at diffetent lwvels;,0.55
+518,362,608,388,iluts fil -,0.18
+657,365,723,385,"ball""_",0.58
+835,365,903,385,'Sma11,0.12
+912,364,982,388,black,0.75
+990,362,1164,391,ard brown dog,0.91
+1172,364,1228,390,play,0.95
+33,383,561,420,ly expluit Ihe matching relations betwcen imuge unl,0.32
+565,395,607,411,em -,0.38
+659,395,713,411,wiFh,0.14
+749,391,789,411,red,0.99
+796,390,976,418,"ball"" . cunesponal",0.7
+980,390,1100,417,lu Ihc image,0.18
+1103,397,1151,411,MEA,0.08
+1183,391,1229,411,Ihcir,0.63
+33,417,609,448,tence: Experimentul results demenstrate that the proposed,0.55
+656,416,752,442,groundiug,0.58
+760,420,851,441,"mezlg ,",0.12
+883,417,921,437,Tlie,0.59
+933,421,1009,437,seneuce,0.58
+1030,416,1096,440,small,0.85
+1106,416,1176,440,black,0.32
+1184,416,1228,440,and,1.0
+34,446,608,476,m-CNNs cn effeetively capture Ihe information necessoy,0.34
+659,449,725,465,brown,0.98
+732,442,842,471,dog play,0.94
+849,445,907,465,with,0.99
+941,445,985,465,red,0.99
+993,445,1045,465,ball,0.54
+1057,445,1085,465,in,1.0
+1094,443,1216,470,che grass,0.71
+31,469,377,506,for image and Sentenc e matehing:,0.33
+388,474,564,502,More speeifieally;,0.75
+569,481,607,499,OllI,0.24
+654,464,1032,496,espressex Ihe Ineaning Of Ile whole image:,0.23
+32,499,607,535,proposed m-CNNs   significamly ouperform the stte-of,0.39
+34,534,106,558,the-utt,0.69
+103,531,606,563,appvuches for bidirectitnat imuge ul sentence re -,0.31
+656,522,720,546,whole,0.98
+728,524,904,548,"senence "" small",0.43
+912,524,982,548,black,0.94
+990,524,1036,548,2nd,0.11
+1042,522,1228,551,brown  Joj play,0.64
+34,559,494,586,trieval un the FlickrSK and FlickrJOK dutusets,0.57
+657,557,713,575,Wih,0.36
+747,555,789,575,rad,0.75
+801,557,851,575,pell,0.22
+865,559,893,575,in,0.88
+903,555,945,575,clla,0.28
+954,556,1022,580,Jr?e ?,0.24
+1042,554,1152,580,expressing,0.97
+1156,554,1228,578,4 com-,0.61
+656,580,710,606,plele,0.92
+709,573,1152,612,meaning; assOciales with the whole innge,0.48
+1164,580,1228,604,These,0.6
+655,604,1230,636,maching relations should be all taken into considerition for,0.47
+36,646,226,674,L Introduction,0.57
+656,635,1180,667,an accurale multimodil malehing belween image ud,0.42
+1185,643,1229,661,sem -,0.16
+654,665,1130,694,tence. Recently. much reseurch work [ocuses 0n,0.44
+1129,659,1230,697,modeling,0.99
+66,695,608,720,Associaling image will nalurul langujge senlence pluys,0.55
+656,690,1228,720,the imuge uud sentence malchug rclutiUn { the specitic lev-,0.32
+35,270,92,306,eling,0.9
+759,366,799,385,ad,0.34

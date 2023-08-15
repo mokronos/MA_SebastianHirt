@@ -161,6 +161,7 @@ cython_debug/
 
 # custom stuff
 data/raw
+images/analyze/*.png
 
 # LaTeX
 *.acn
@@ -176,3 +177,8 @@ data/raw
 *.lot
 *.out
 *.toc
+*.acr
+*.alg
+*.symbols-glg
+*.symbols-glo
+*.symbols-gls

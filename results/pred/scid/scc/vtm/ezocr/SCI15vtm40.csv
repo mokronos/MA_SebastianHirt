@@ -1,0 +1,47 @@
+left,top,right,bottom,text,conf
+71,12,199,43,CATHAY,0.98
+341,33,387,49,HOME,1.0
+407,31,499,49,SHOW TIMES,1.0
+521,33,577,49,MOVIES,1.0
+599,33,697,49,PROMOTIONS,1.0
+715,31,811,49,EXPERIENCES,1.0
+833,33,899,49,CINEMAS,1.0
+919,31,1025,49,EVENTS / GIFTS,0.99
+1047,29,1167,49,CHECK BOOKING,0.98
+75,43,135,55,CINEPLEXES,0.99
+27,97,111,113,Select Movie,1.0
+449,97,545,113,Select Cinema,1.0
+763,99,835,115,Select Day,0.99
+945,99,1023,113,Select Time,0.71
+1121,97,1207,115,BOOK NOW,0.99
+603,149,1003,194,London Has Fallen NC16,1.0
+629,221,671,237,DOLBY,0.99
+593,237,629,251,D | G,0.65
+981,229,1069,245,SHOWTIMES,1.0
+1107,229,1203,245,VIEW TRAILER,0.62
+593,299,631,315,CAST,1.0
+593,319,791,338,Gerard Butler; Morgan Freeman,0.75
+593,369,665,385,DIRECTOR,1.0
+593,391,635,405,Babak,1.0
+631,387,673,407,Najafi,0.89
+593,439,663,455,SYNOPSIS,0.97
+593,459,829,477,The sequel to the worldwide smash hit,0.67
+832,457,1220,481,"'Olympus Has Fallen"" begins in London; where the British Prime",0.58
+593,479,1037,495,Minister has passed away under mysterious circumstances: His funeral is,0.63
+1045,479,1179,495,mustattend eventfor,0.62
+593,497,1185,515,leaders of the western world. But what starts out as the most protected event on earth; turns into,0.6
+593,517,1199,533,deadly plot to kill the world s most powerful leaders devastate every known landmark in the British,0.64
+593,536,1219,554,"capital,and unleasha terrifyingvision ofthe future: Only three people have any hope of stopping it: the",0.61
+593,555,1213,571,"President ofthe United States, his formidable secret service head (Gerard Butler). and an English MI-6",0.45
+592,574,785,592,agentwhorightly trustsnoone,0.97
+593,625,691,639,Cingezure Orenr,0.12
+699,625,833,637,Piec ed j0 enowca eEcrezn,0.01
+841,625,961,637,{nof jeo-Ume:Only Cupi?,0.0
+959,625,1035,641,eeoting: Choud,0.04
+1033,625,1193,637,You fele-0 movie :ericnthafi;,0.01
+593,643,643,657,{nejuled,0.33
+653,643,697,657,rri:nall,0.33
+703,643,925,657,leare nore Irarall-icker: rzveto Decuncngzed,0.01
+935,643,1049,657,rair: (.e ever number:,0.1
+1055,641,1203,659,The eotirgplan in rra bockirg,0.14
+591,663,937,675,web ite wll renectIroroieege: Ore -oupie  eGz jorycued y rejerer-e,0.0

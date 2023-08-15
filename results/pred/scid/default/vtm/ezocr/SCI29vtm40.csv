@@ -1,0 +1,98 @@
+left,top,right,bottom,text,conf
+266,12,378,40,Abstract,1.0
+865,21,1079,39,small black and brown dog play with,0.98
+1087,21,1205,39,red ball in the grass,0.98
+997,73,1019,87,dog E,0.32
+1040,74,1114,82,with 3rediballin,0.48
+64,73,608,102,In this paper; we propose multimodal convolutional neu-,0.95
+1054,88,1076,96,2rss,0.2
+34,100,606,133,ral networks (m-CNNs) for matching image and sentence:,0.83
+995,117,1065,129,small black anc,0.52
+1067,117,1117,129,Drown dCg,0.16
+1013,131,1055,143,play with,0.87
+1064,132,1100,140,redinall,0.47
+36,129,600,158,Our m-CNN provides an end-to-end framework with convo,0.78
+34,159,608,188,"lutional architectures to exploit image representation, word",0.89
+1123,179,1169,191,black and,0.97
+983,187,1023,199,red ball,0.92
+33,185,564,218,"composition, and the matching relations between the",0.72
+571,195,607,213,two,1.0
+1122,194,1152,202,brown,0.88
+34,216,142,242,modalities:,0.72
+148,216,608,247,More specifically; it consists of one image CNN,0.7
+33,242,606,275,encoding the image content and one matching CNN mod-,0.79
+936,264,960,270,24ass,0.05
+1189,261,1211,273,dog,1.0
+90,275,556,305,the joint representation of image and sentence.,0.61
+566,276,608,300,The,0.99
+33,300,608,333,matching CNN composes different semantic fragments from,0.73
+656,310,718,338,Figure,1.0
+752,306,1228,339,Multimodal   matching  relations   between image   and,0.43
+36,331,609,361,words and learns the inter-modal relations between image,0.83
+657,343,741,359,sentence.,0.97
+752,337,1048,364,"The words and phrases, such as",0.95
+1060,340,1130,364,grass ,0.51
+1185,339,1227,359,red,1.0
+34,359,608,391,and the composed fragments at different levels; thus ful-,0.66
+657,365,723,385,"ball""",1.0
+763,365,797,385,and,1.0
+836,362,1035,389,'small black and,0.72
+1043,369,1111,387,brown,1.0
+1120,366,1164,390,dog,1.0
+1170,366,1228,390,play,1.0
+33,383,561,420,ly exploit the matching relations between image and,0.82
+565,397,607,413,sen-,0.99
+657,391,711,411,with,0.98
+746,390,790,414,red,1.0
+796,388,1100,418,"ball"", correspond to the image",0.82
+1105,395,1153,411,areas,1.0
+1159,391,1229,411,of their,0.98
+34,417,609,448,tence. Experimental results demonstrate that the proposed,0.63
+656,412,849,443,grounding   meanings,0.74
+883,417,921,437,The,0.99
+931,419,1009,437,sentence,1.0
+1030,416,1096,440,small,1.0
+1105,414,1176,441,black,1.0
+1184,416,1228,440,and,1.0
+38,448,608,474,m-CNNs can effectively capture the information necessary,0.91
+657,445,725,465,brown,1.0
+734,442,842,470,dog play,1.0
+851,445,905,465,with,1.0
+940,442,984,466,red,1.0
+991,445,1045,465,ball,1.0
+1057,445,1085,465,in,1.0
+1095,445,1137,465,the,0.98
+1146,446,1216,470,grass,1.0
+32,472,375,505,for image and sentence matching:,0.76
+388,474,564,502,More specifically;,0.87
+571,483,609,499,our,0.99
+654,468,1028,497,expresses the meaning of the whole image.,0.85
+32,503,130,534,proposed,1.0
+134,504,606,532,m-CNNs  significantly outperform the   state-of:,0.29
+34,531,606,563,the-art approaches for bidirectional image and sentence re -,0.82
+656,522,720,546,whole,1.0
+729,525,815,545,sentence,1.0
+835,522,904,549,small,1.0
+912,523,1035,548,black and,0.93
+1042,523,1228,551,brown dog play,0.94
+34,560,492,586,trieval on the Flickr8K and Flickr3OK datasets:,0.76
+657,555,711,575,with,1.0
+747,555,789,575,red,1.0
+799,555,853,575,ball,0.99
+863,555,893,575,in,1.0
+902,552,1022,580,the grass,1.0
+1041,549,1150,580,expressing,0.91
+1157,555,1227,575,a com-,0.91
+655,574,915,612,"plete meaning, associates",0.77
+920,580,1006,604,with the,1.0
+1012,579,1151,609,whole image.,0.76
+1166,580,1228,604,These,1.0
+655,604,1230,636,matching relations should be all taken into consideration for,0.78
+656,636,890,662,an accurate multimodal,0.97
+890,631,1229,667,matching between image and sen-,1.0
+36,646,226,676,1. Introduction,0.99
+654,662,1229,694,"tence. Recently, much research work focuses 0n modeling",0.83
+66,695,608,720,Associating image with natural language sentence plays,0.7
+654,690,1228,720,the image and sentence matching relation at the specific lev-,0.74
+1016,74,1038,82,ply,0.16
+36,270,91,306,eling,1.0

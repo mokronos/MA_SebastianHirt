@@ -1,0 +1,54 @@
+left,top,right,bottom,text,conf
+71,12,199,43,CATHAY,1.0
+339,31,387,49,HOME,1.0
+407,31,499,49,SHOW TIMES,0.99
+521,33,577,49,MOVIES,1.0
+599,33,697,49,PROMOTIONS,1.0
+715,31,811,49,EXPERIENCES,1.0
+833,33,899,49,CINEMAS,1.0
+919,31,977,49,EVENTS,0.99
+983,33,1025,49,GIFTS,0.99
+1045,29,1167,49,CHECK BOOKING,0.95
+75,43,135,55,CINEPLEXES,1.0
+27,97,111,113,Select Movie,1.0
+449,97,545,113,Select Cinema,1.0
+763,97,835,113,Select Dav,0.71
+945,99,1023,113,Select Time,0.86
+1121,97,1207,115,BOOK NOW,0.95
+589,149,1003,194,*London Has Fallen NC16,0.83
+629,221,673,237,DoLBY,0.66
+981,229,1069,245,SHOWTIMES,0.75
+1106,229,1204,245,VIEWTRAILER,1.0
+593,237,629,251,D | 0,0.59
+593,299,631,315,CAST,1.0
+593,319,791,338,Gerard Butler; Morgan Freeman,0.79
+593,369,665,385,DIRECTOR,1.0
+593,391,635,405,Babak,1.0
+632,388,673,408,Najafi,0.88
+591,439,663,455,SYNOPSIS,1.0
+593,458,1219,478,"The sequel to the worldwide smash hit ""Olympus Has Fallen"" begins in London  where the British Prime",0.54
+593,479,1019,495,Minister has passed away under mysterious circumstances: His funeral,0.66
+1045,479,1179,495,mustattend eventfor,0.83
+593,497,1185,515,leaders of the western world. But what starts out asthe most protected event on earth; turns into,0.45
+593,517,765,533,deadly plot to killthe world =,0.69
+769,517,1199,533,most powerful leaders devastate every known landmark in the British,0.77
+593,536,1219,554,capital andunleasha terrifyingvision ofthe future: Only three people have any hope of stopping it: the,0.52
+593,555,1213,571,"President ofthe United States; his formidable secret service head (Gerard Butler), andan English MI-6",0.48
+593,575,785,591,agentwho rightly trusts noone,0.87
+593,625,691,639,Cireeizure Orcrsrs,0.03
+699,625,769,637,Cnd,0.07
+775,625,833,637,{3eiareen,0.03
+841,625,953,639,3n3:t0336ne: Onty -oue,0.0
+961,625,1053,639,~,0.05
+1065,625,1191,637,lciomzwie %e3-icnino: ;,0.0
+593,643,645,657,:neauled_,0.24
+653,643,697,657,rri: noll,0.14
+703,645,783,657,6338 roecinoro,0.0
+787,643,859,657,~cker: nave -o,0.02
+871,643,925,657,Furtra:e,0.01
+935,643,977,657,Fat:#.2,0.07
+979,645,1049,657,MVen Cmoer:,0.0
+1055,643,1203,659,Tnazearirg pln intha bookin,0.1
+594,664,630,672,Mr,0.04
+649,663,841,675,retecttr3 o :830:Or? cobbiezeor jj,0.0
+845,663,935,675,3u golv {gieren 2,0.01

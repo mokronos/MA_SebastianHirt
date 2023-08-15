@@ -1,0 +1,53 @@
+left,top,right,bottom,text,conf
+71,12,199,43,CATHAY,1.0
+341,33,387,49,HOME,1.0
+407,31,499,49,SHOW TIMES,0.99
+521,33,577,49,MOVIES,1.0
+599,33,695,49,PROMOTIONS,1.0
+717,33,811,49,EXPERIENCES,0.91
+833,33,899,49,CINEMAS,1.0
+919,31,977,49,EVENTS,1.0
+983,33,1025,49,GIFTS,1.0
+1047,33,1167,49,CHECK BOOKING,0.99
+75,43,135,55,CINEPLEXES,0.99
+27,97,111,113,Select Movie,1.0
+449,97,545,113,Select Cinema,1.0
+763,99,833,115,Select Day,0.89
+945,99,1023,113,Select Time,0.81
+1121,97,1207,115,BOOK NOW,0.72
+603,151,1003,193,London Has Fallen NC16,1.0
+627,221,673,237,DOLBY,0.91
+981,229,1069,245,SHOWTIMES,1.0
+1107,229,1203,245,VIEW TRAILER,0.59
+605,237,629,251,10,0.18
+593,299,631,315,CAST,1.0
+593,319,791,338,Gerard Butler Morgan Freeman,0.8
+593,369,665,385,DIRECTOR,1.0
+593,391,673,407,Babak Najaf,0.77
+593,439,663,455,SYNOPSIS,1.0
+593,458,1219,478,"The sequel to the worldwide smash hit ""Olympus Has Fallen"" begins in London. where the British Prime",0.58
+593,479,1037,495,Minister has passed away under mysteriouscircumstances His funeral is,0.79
+1045,479,1179,495,mustattend eventfor,0.84
+593,497,1185,515,"leaders of the western world, But what starts out asthe most protected event on earth; turns into",0.52
+593,517,765,533,deadly plot to killthe worlcl =,0.6
+769,515,1199,533,most powerful leaders. devastate every known landmark inthe British,0.74
+593,537,717,553,capital; and unleash -,0.68
+725,536,1219,554,terrifying vision of the future: Only three people have any hope of stopping ic: the,0.54
+593,555,1213,571,President ofthe United States; his formidable secret service head (Gerard Butler). and an English MI-6,0.52
+593,575,785,591,agentwhorightly trusts noone,0.78
+592,622,691,639,Ciraleizure Orzror,0.16
+699,625,769,637,Dect enc,0.0
+775,625,833,637,{3-creen,0.05
+841,624,1117,639,Inffeature: onlcoupezednn}; Srauldyouz e3:2 mov,0.0
+1121,625,1193,637,R3icnin; :,0.03
+593,643,643,657,:nezuled,0.16
+653,643,697,657,Ininjll,0.05
+703,643,859,657,lejze nor? In-rsijicker: njve ??,0.0
+871,645,925,657,Sornj3e,0.0
+935,643,977,657,pir i.,0.07
+985,645,1049,657,Ven nunger:,0.1
+1055,641,1111,659,Tne zentin},0.17
+1160,641,1203,659,ronking,0.08
+593,663,789,675,Mb: :e ill renec--n cieenfcre:ouon,0.0
+795,663,823,675,W,0.1
+845,663,935,675,Ouceneu Feterente,0.0

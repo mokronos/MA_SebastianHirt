@@ -1,0 +1,21 @@
+left,top,right,bottom,text,conf
+3,11,1280,75,KEY STAGES IN DIGITAL MMAGE PROCESSING:,0.45
+193,81,1094,141,MORPHOLOGICAL PROCESSING,0.72
+425,178,524,220,Image,1.0
+707,175,915,219,Morphological,1.0
+391,217,559,253,Restoration,1.0
+728,216,897,259,Processing,1.0
+141,308,242,350,Image,1.0
+90,346,296,382,Enhancement,1.0
+991,327,1193,369,Segmentation,1.0
+142,428,241,469,Image,1.0
+1042,428,1143,468,Object,1.0
+111,467,275,507,Acquisition,1.0
+1009,467,1175,505,Recognition,1.0
+986,548,1197,590,Representation,1.0
+69,573,317,609,Problem Domain,0.98
+1029,587,1187,625,Description,1.0
+379,617,581,660,Colour Image,0.93
+748,617,847,660,Image,1.0
+394,654,568,704,Processing_,0.55
+696,654,898,704,Compression,1.0

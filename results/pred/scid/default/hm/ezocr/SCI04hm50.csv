@@ -1,0 +1,12 @@
+left,top,right,bottom,text,conf
+63,20,965,104,Histogram based Enhancement,1.0
+81,157,717,199,We have discussed various forTs of mapping,0.6
+47,195,539,235,function f(r) that leads to different,0.73
+46,234,351,273,enhancement results:,0.63
+79,273,657,318,The atural question is: How to select an,0.41
+44,311,622,361,appropriate f(T) for an arhitrary iage?,0.33
+81,349,635,394,One systeniatic solution is based on the,0.68
+44,392,552,436,histogram information of an image:,0.63
+78,431,727,475,Histogram Of an image represents the relative,0.73
+45,471,709,516,frequency of occurrence of various gray levels,0.82
+47,510,236,554,"in the image,",0.8
