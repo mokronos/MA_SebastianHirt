@@ -53,6 +53,10 @@ I think i wrote 1 test for converting the MATLAB nonlinear transformation code t
 And one for character error rate :).
 So, broad test coverage was just an early ambition.
 
+# Questions
+
+Feel free to contact me at sebastian.hirt@fau.de and I'll try my best to answer any questions.
+
 # Timeline
 
 - Begin: 01.02.2023
