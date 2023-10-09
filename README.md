@@ -1,5 +1,8 @@
-# Master Thesis (Sebastian Hirt)
-![Unit Tests](https://github.com/Mokronos/MA_SebastianHirt/workflows/Unit%20Tests/badge.svg)
+# Master Thesis
+
+This thesis is about using optical character recognition (OCR) to assess the image quality of screen content images.
+For more details I recommend reading the abstract and conclusion of the written thesis.
+The final version of my thesis can be found in the latex folder or directly [here](https://github.com/mokronos/MA_SebastianHirt/blob/main/latex/Masterthesis_SebastianHirt.pdf).
 
 # Setup
 
